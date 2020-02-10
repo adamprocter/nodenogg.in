@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Vue Canvas &amp; testing ground" />
+    <HelloWorld msg="Welcome to Vue &amp; Canvas testing ground" />
   </div>
 </template>
 
