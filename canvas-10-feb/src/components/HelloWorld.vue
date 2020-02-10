@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 var canvas = null
 
 export default {
@@ -27,24 +28,12 @@ export default {
   props: {
     msg: String
   },
-  data: function() {
-    return {
-      configRect: {
-        x: -25,
-        y: -25,
-        height: 50,
-        width: 50,
-        fill: 'rgb(200, 0, 0)'
-      },
-      configHandle: {
-        x: 25,
-        y: 25,
-        height: 4,
-        width: 4,
-        fill: 'black'
-      }
-    }
-  },
+
+  computed: mapState({
+    configRect: state => state.configRect,
+    configHandle: state => state.configHandle
+  }),
+
   mounted() {
     canvas = this.$refs.canvas
     this.ctx = canvas.getContext('2d')
@@ -53,7 +42,6 @@ export default {
   methods: {
     draw() {
       this.box(this.ctx, this.x, this.y)
-      console.log('draw')
     },
 
     box(ctx, x, y) {
