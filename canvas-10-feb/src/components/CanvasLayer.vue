@@ -17,7 +17,7 @@ export default {
   mixins: [draw],
 
   computed: mapState({
-    configRect: state => state.configRect,
+    configConnect: state => state.configConnect,
     configHandle: state => state.configHandle
   }),
 

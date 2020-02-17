@@ -1,5 +1,5 @@
 <template>
-  <div class="editor">
+  <div class="node" ref="nodes">
     <form id="editForm" class="myScroll">
       <textarea></textarea>
       <p>markdown supported</p>
@@ -16,7 +16,11 @@ export default {
   name: 'NodesLayer',
   mixins: [drag],
 
-  mounted() {},
+  mounted() {
+    var nodes = this.$refs.nodes
+
+    this.makeDraggable(nodes)
+  },
   methods: {
     setFocus() {
       this.$refs.notetext.focus()
@@ -30,7 +34,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.editor {
+.node {
   background-color: aquamarine;
   position: absolute;
 }

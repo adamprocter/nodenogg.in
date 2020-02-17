@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    configRect: {
+    // this will be objects containing arrays of all the handles / connections and nodes
+    configConnect: {
       x: -25,
       y: -25,
       height: 50,
@@ -15,10 +16,11 @@ export default new Vuex.Store({
     configHandle: {
       x: 25,
       y: 25,
-      height: 4,
-      width: 4,
+      height: 10,
+      width: 10,
       fill: 'black'
-    }
+    },
+    configNodes: {}
   },
   mutations: {},
   actions: {},

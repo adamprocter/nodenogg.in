@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+    <!-- The number of NodesLayers comes from store -->
+    <NodesLayer />
     <NodesLayer />
     <CanvasLayer />
     <ControlsLayer />
@@ -12,13 +14,18 @@ import CanvasLayer from '@/components/CanvasLayer.vue'
 import NodesLayer from '@/components/NodesLayer.vue'
 import ControlsLayer from '@/components/ControlsLayer.vue'
 
+import { mapState } from 'vuex'
+
 export default {
   name: 'Home',
   components: {
     CanvasLayer,
     NodesLayer,
     ControlsLayer
-  }
+  },
+  computed: mapState({
+    configNodes: state => state.configNodes
+  })
 }
 </script>
 
