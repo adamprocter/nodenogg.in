@@ -23,6 +23,7 @@
 import { mapState } from 'vuex'
 import { draw } from './mixins/draw.js'
 var canvas = null
+var textarea = null
 
 export default {
   name: 'HelloWorld',
