@@ -1,17 +1,32 @@
 <template>
   <div class="home">
-    <HelloWorld />
+    <!-- The number of NodesLayers comes from store -->
+    <NodesLayer />
+    <NodesLayer />
+    <CanvasLayer />
+    <ControlsLayer />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import CanvasLayer from '@/components/CanvasLayer.vue'
+import NodesLayer from '@/components/NodesLayer.vue'
+import ControlsLayer from '@/components/ControlsLayer.vue'
+
+import { mapState } from 'vuex'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
-  }
+    CanvasLayer,
+    NodesLayer,
+    ControlsLayer
+  },
+  computed: mapState({
+    configNodes: state => state.configNodes
+  })
 }
 </script>
+
+<style scoped></style>

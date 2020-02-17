@@ -7,12 +7,12 @@ export const draw = {
     box(ctx, x, y) {
       ctx.setTransform(1, 0, 0, 1, x, y)
 
-      ctx.fillStyle = this.configRect.fill
+      ctx.fillStyle = this.configConnect.fill
       ctx.fillRect(
-        this.configRect.x,
-        this.configRect.y,
-        this.configRect.height,
-        this.configRect.width
+        this.configConnect.x,
+        this.configConnect.y,
+        this.configConnect.height,
+        this.configConnect.width
       )
 
       ctx.fillStyle = this.configHandle.fill
