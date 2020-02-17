@@ -1,17 +1,25 @@
 <template>
   <div class="home">
-    <HelloWorld />
+    <NodesLayer />
+    <CanvasLayer />
+    <ControlsLayer />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import CanvasLayer from '@/components/CanvasLayer.vue'
+import NodesLayer from '@/components/NodesLayer.vue'
+import ControlsLayer from '@/components/ControlsLayer.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    CanvasLayer,
+    NodesLayer,
+    ControlsLayer
   }
 }
 </script>
+
+<style scoped></style>
