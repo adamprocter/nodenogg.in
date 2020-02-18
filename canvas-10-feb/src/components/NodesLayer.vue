@@ -1,7 +1,7 @@
 <template>
-  <div class="node" ref="nodes">
+  <div ref="nodes" class="node" v-bind:id="nodeid">
     <form id="editForm" class="myScroll">
-      <textarea></textarea>
+      <textarea v-model="nodetext"></textarea>
       <p>markdown supported</p>
       <button>delete</button>
     </form>
@@ -9,26 +9,32 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { drag } from './mixins/drag.js'
 
 export default {
   name: 'NodesLayer',
   mixins: [drag],
+  // FIXME : these probably need to be data/ computed and not props
+  // as will be editable
+  props: { nodetext: String, nodeid: Number },
+
+  // data() {
+  //   return {
+  //
+  //   }
+  // },
 
   mounted() {
     var nodes = this.$refs.nodes
-
     this.makeDraggable(nodes)
   },
   methods: {
     setFocus() {
-      this.$refs.notetext.focus()
+      this.$refs.nodetext.focus()
     },
     editNodeText() {},
     deleteFlag() {}
-  },
-  computed: mapState({})
+  }
 }
 </script>
 

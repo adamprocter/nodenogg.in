@@ -1,8 +1,12 @@
 <template>
   <div class="home">
     <!-- The number of NodesLayers comes from store -->
-    <NodesLayer />
-    <NodesLayer />
+    <NodesLayer
+      v-for="(value, index) in configNodes"
+      v-bind:key="index"
+      v-bind:nodeid="value.id"
+      v-bind:nodetext="value.text"
+    />
     <CanvasLayer />
     <ControlsLayer />
   </div>
