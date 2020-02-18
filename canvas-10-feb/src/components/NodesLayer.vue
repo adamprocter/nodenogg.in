@@ -1,14 +1,10 @@
 <template>
-  <!-- make container draggable using ref suppose to help with rapid dragging, DOESNT -->
-  <div ref="nodes">
-    <div class="node">
-      <form id="editForm" class="myScroll">
-        <textarea ref="notetext" v-model="nodetext"></textarea>
-
-        <p>{{ nodetext }} markdown supported</p>
-        <button>delete</button>
-      </form>
-    </div>
+  <div ref="nodes" class="node" v-bind:id="nodeid">
+    <form id="editForm" class="myScroll">
+      <textarea v-model="nodetext"></textarea>
+      <p>markdown supported</p>
+      <button>delete</button>
+    </form>
   </div>
 </template>
 
@@ -18,17 +14,23 @@ import { drag } from './mixins/drag.js'
 export default {
   name: 'NodesLayer',
   mixins: [drag],
+  // FIXME : these probably need to be data/ computed and not props
+  // as will be editable
+  props: { nodetext: String, nodeid: Number },
 
-  props: {
-    nodetext: String
-  },
+  // data() {
+  //   return {
+  //
+  //   }
+  // },
+
   mounted() {
     var nodes = this.$refs.nodes
     this.makeDraggable(nodes)
   },
   methods: {
     setFocus() {
-      this.$refs.notetext.focus()
+      this.$refs.nodetext.focus()
     },
     editNodeText() {},
     deleteFlag() {}
