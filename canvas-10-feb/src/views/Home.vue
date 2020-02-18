@@ -4,8 +4,8 @@
     <NodesLayer
       v-for="(value, index) in configNodes"
       v-bind:key="index"
-      v-bind:nodeid="value.id"
-      v-bind:nodetext="value.text"
+      v-bind:nodeid="value.nodeid"
+      v-bind:nodetext="value.nodetext"
     />
     <CanvasLayer />
     <ControlsLayer />
