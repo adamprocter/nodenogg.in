@@ -20,7 +20,11 @@ export default new Vuex.Store({
       width: 10,
       fill: 'black'
     },
-    configNodes: {}
+    configNodes: [
+      { id: 1, text: 'node 1' },
+      { id: 2, text: 'node 2' },
+      { id: 3, text: 'node 3' }
+    ]
   },
   mutations: {},
   actions: {},
