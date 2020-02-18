@@ -1,7 +1,7 @@
 <template>
-  <div ref="nodes" class="node" v-bind:id="nodeid">
+  <div ref="nodes" class="node">
     <form id="editForm" class="myScroll">
-      <textarea v-model="nodetext"></textarea>
+      <textarea @input="editNode" v-model="thistext" :id="nodeid"></textarea>
       <p>markdown supported</p>
       <button>delete</button>
     </form>
@@ -14,15 +14,14 @@ import { drag } from './mixins/drag.js'
 export default {
   name: 'NodesLayer',
   mixins: [drag],
-  // FIXME : these probably need to be data/ computed and not props
-  // as will be editable
-  props: { nodetext: String, nodeid: Number },
+  // FIXME : these probably need to be data or computed and not props
+  props: { nodeid: Number, nodetext: String },
 
-  // data() {
-  //   return {
-  //
-  //   }
-  // },
+  data() {
+    return {
+      thistext: this.nodetext
+    }
+  },
 
   mounted() {
     var nodes = this.$refs.nodes
@@ -30,9 +29,13 @@ export default {
   },
   methods: {
     setFocus() {
-      this.$refs.nodetext.focus()
+      // this.$refs.nodetext.focus()
     },
-    editNodeText() {},
+    editNode(e) {
+      var nodeid = e.target.id
+      var nodetext = e.target.value
+      this.$store.dispatch('editNode', { nodeid, nodetext })
+    },
     deleteFlag() {}
   }
 }
