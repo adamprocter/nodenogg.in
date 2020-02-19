@@ -82,7 +82,6 @@ const store = new Vuex.Store({
               }
             }
           }
-          console.log(state.otherNodes)
         })
         .catch(function(err) {
           console.log(err)
