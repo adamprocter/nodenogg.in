@@ -9,6 +9,7 @@
           :id="nodeid"
         ></textarea>
       </div>
+
       <p>markdown supported</p>
       <button>delete</button>
     </form>

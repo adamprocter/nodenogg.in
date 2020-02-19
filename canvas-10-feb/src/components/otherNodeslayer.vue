@@ -1,15 +1,12 @@
 <template>
-  <div ref="othernodes" class="othernodes">
-    <form>
-      <p :id="nodeid">{{ nodetext }}</p>
-      <p>markdown supported</p>
-    </form>
+  <div ref="othernodes" class="node">
+    <p :id="nodeid">{{ nodetext }}</p>
+    <p>markdown supported</p>
   </div>
 </template>
 
 <script>
 import { drag } from './mixins/drag.js'
-// import { mapState } from 'vuex'
 
 export default {
   name: 'otherNodeslayer',
@@ -26,8 +23,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.othernodes {
+.node {
   background-color: aquamarine;
-  /* position: absolute; */
+  position: absolute;
 }
 </style>

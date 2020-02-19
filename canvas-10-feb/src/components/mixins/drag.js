@@ -1,6 +1,6 @@
 export const drag = {
   methods: {
-    makeDraggable(nodes) {
+    makeDraggable(incoming) {
       var active = false
       var currentX
       var currentY
@@ -9,15 +9,15 @@ export const drag = {
       var xOffset = 0
       var yOffset = 0
 
-      nodes.addEventListener('mousedown', startDrag)
-      nodes.addEventListener('mousemove', drag)
-      nodes.addEventListener('mouseup', endDrag)
-      nodes.addEventListener('mouseleave', endDrag)
-      nodes.addEventListener('touchstart', startDrag)
-      nodes.addEventListener('touchmove', drag)
-      nodes.addEventListener('touchend', endDrag)
-      nodes.addEventListener('touchleave', endDrag)
-      nodes.addEventListener('touchcancel', endDrag)
+      incoming.addEventListener('mousedown', startDrag)
+      incoming.addEventListener('mousemove', drag)
+      incoming.addEventListener('mouseup', endDrag)
+      incoming.addEventListener('mouseleave', endDrag)
+      incoming.addEventListener('touchstart', startDrag)
+      incoming.addEventListener('touchmove', drag)
+      incoming.addEventListener('touchend', endDrag)
+      incoming.addEventListener('touchleave', endDrag)
+      incoming.addEventListener('touchcancel', endDrag)
 
       function startDrag(e) {
         if (e.type === 'touchstart') {
@@ -47,7 +47,7 @@ export const drag = {
           xOffset = currentX
           yOffset = currentY
 
-          setTranslate(currentX, currentY, nodes)
+          setTranslate(currentX, currentY, incoming)
         }
       }
 
