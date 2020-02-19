@@ -1,12 +1,18 @@
 <template>
   <div class="home">
-    <!-- The number of NodesLayers comes from store -->
-    <NodesLayer
-      v-for="(value, index) in configNodes"
-      v-bind:key="index"
+    <otherNodeslayer
+      v-for="value in otherNodes"
+      v-bind:key="value.nodeid"
       v-bind:nodeid="value.nodeid"
       v-bind:nodetext="value.nodetext"
     />
+    <NodesLayer
+      v-for="value in myNodes"
+      v-bind:key="value.nodeid"
+      v-bind:nodeid="value.nodeid"
+      v-bind:nodetext="value.nodetext"
+    />
+
     <CanvasLayer />
     <ControlsLayer />
   </div>
@@ -16,6 +22,7 @@
 // @ is an alias to /src
 import CanvasLayer from '@/components/CanvasLayer.vue'
 import NodesLayer from '@/components/NodesLayer.vue'
+import otherNodeslayer from '@/components/otherNodeslayer.vue'
 import ControlsLayer from '@/components/ControlsLayer.vue'
 
 import { mapState } from 'vuex'
@@ -25,10 +32,12 @@ export default {
   components: {
     CanvasLayer,
     NodesLayer,
+    otherNodeslayer,
     ControlsLayer
   },
   computed: mapState({
-    configNodes: state => state.configNodes
+    myNodes: state => state.myNodes,
+    otherNodes: state => state.otherNodes
   })
 }
 </script>
