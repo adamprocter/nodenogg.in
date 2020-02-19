@@ -23,7 +23,6 @@ import { mapState } from 'vuex'
 export default {
   name: 'NodesLayer',
   mixins: [drag],
-  // FIXME : these probably need to be data or computed and not props
   props: { nodeid: Number, nodetext: String },
 
   data() {

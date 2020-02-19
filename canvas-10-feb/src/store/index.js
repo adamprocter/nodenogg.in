@@ -2,28 +2,33 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import PouchDB from 'pouchdb'
 import accounts from '../assets/settings.json'
+//PouchDB.debug.enable('*')
 
 Vue.use(Vuex)
-// var rando = Math.random()
-//   .toString(16)
-//   .slice(2)
-var microcosm = 'podcast2020'
-var pouchdb = new PouchDB(microcosm)
+
+if (localStorage.getItem('mylastMicrocosm') == null) {
+  var localmicrocosm = 'firstvisit'
+} else {
+  localmicrocosm = localStorage.getItem('mylastMicrocosm')
+}
+
+var pouchdb = new PouchDB(localmicrocosm)
 var remote =
   'https://' +
   accounts.settings[0].name +
   ':' +
   accounts.settings[0].password +
   '@nn.adamprocter.co.uk/' +
-  microcosm +
+  localmicrocosm +
   '/'
 
 const store = new Vuex.Store({
   state: {
     localnodeid: null,
     global_pos_name: 'positions',
-    // this is set with localStorage or could be random on Every Load
-    // so long as you can edit all nodes
+    global_con_name: 'connections',
+    global_emoji_name: 'emojis',
+    microcosm: '',
     myclient: 'mac',
     activeNode: {},
     // this will be objects containing arrays of all the handles / connections and nodes
@@ -49,9 +54,68 @@ const store = new Vuex.Store({
     ],
     configPositions: [
       //{}
+    ],
+    configConnections: [
+      //{}
+    ],
+    configEmoji: [
+      //{}
     ]
   },
   mutations: {
+    CREATE_MICROCOSM(state, doc) {
+      pouchdb.close().then(function() {
+        localmicrocosm = doc
+        pouchdb = new PouchDB(localmicrocosm)
+        remote =
+          'https://' +
+          accounts.settings[0].name +
+          ':' +
+          accounts.settings[0].password +
+          '@nn.adamprocter.co.uk/' +
+          localmicrocosm +
+          '/'
+        store.dispatch('syncDB')
+      })
+    },
+
+    SET_CLIENT(state, doc) {
+      state.myclient = doc
+      console.log(state.myclient)
+      store.commit('SET_MY_NODE')
+      store.commit('GET_NODES')
+    },
+
+    SET_MY_NODE(state) {
+      pouchdb
+        .get(state.myclient)
+        .then(function(doc) {
+          state.myNodes = doc.nodes
+        })
+        .catch(function(err) {
+          if (err.status == 404) {
+            var uniqueid =
+              Math.random()
+                .toString(36)
+                .substring(2, 15) +
+              Math.random()
+                .toString(36)
+                .substring(2, 15)
+            return pouchdb.put({
+              _id: state.myclient,
+              _attachments: {},
+              myNodes: [
+                {
+                  // FIXME: these are here as GET_NODES cant hunt a blank
+                  nodeid: uniqueid,
+                  nodetext: 'Device ' + state.myclient
+                }
+              ]
+            })
+          }
+        })
+    },
+
     GET_NODES(state) {
       pouchdb
         .allDocs({
@@ -72,8 +136,8 @@ const store = new Vuex.Store({
               state.global_emoji_name != doc.rows[i].key
             ) {
               for (j = 0; j < Object.keys(doc.rows[i].doc.nodes).length; j++) {
-                console.log(doc.rows[i].doc.nodes[j].nodeid)
-                console.log(doc.rows[i].doc.nodes[j].nodetext)
+                // console.log(doc.rows[i].doc.nodes[j].nodeid)
+                // console.log(doc.rows[i].doc.nodes[j].nodetext)
                 const newNode = {
                   nodeid: doc.rows[i].doc.nodes[j].nodeid,
                   nodetext: doc.rows[i].doc.nodes[j].nodetext
@@ -237,7 +301,12 @@ const store = new Vuex.Store({
           })
       })
     },
-
+    createMicrocosm: ({ commit }, e) => {
+      commit('CREATE_MICROCOSM', e)
+    },
+    setClient: ({ commit }, e) => {
+      commit('SET_CLIENT', e)
+    },
     editNode: ({ commit }, { nodeid, nodetext }) => {
       commit('EDIT_NODE', { nodeid, nodetext })
     }
