@@ -1,31 +1,39 @@
 <template>
   <div ref="nodes" class="node">
-    <vue-draggable-resizable
-      :w="200"
-      :h="250"
-      @dragging="onDrag"
-      @resizing="onResize"
-      @dragstop="onDragstop"
-      style="background-color: rgb(205, 234, 255);"
-    >
-      <form>
-        <div v-for="value in myNodes" v-bind:key="value.nodeid">
-          <textarea
-            v-if="nodeid == value.nodeid"
-            @input="editNode"
-            v-model="value.nodetext"
-            :id="nodeid"
-          ></textarea>
-        </div>
-        <div v-for="(value, index) in configPositions" v-bind:key="index">
-          <p v-if="nodeid == value.nodeid">{{ x }}, {{ y }}</p>
-        </div>
-        <p>markdown supported</p>
-        <button class="danger" @click="deleteFlag()">
-          Delete
-        </button>
-      </form>
-    </vue-draggable-resizable>
+    <div v-for="(value, index) in configPositions" v-bind:key="index">
+      <vue-draggable-resizable
+        v-if="nodeid == value.nodeid"
+        :w="200"
+        :h="250"
+        :x="value.xpos"
+        :y="value.ypos"
+        @dragging="onDrag"
+        @resizing="onResize"
+        @dragstop="onDragstop"
+        style="background-color: rgb(205, 234, 255);"
+      >
+        <form>
+          <div v-for="value in myNodes" v-bind:key="value.nodeid">
+            <textarea
+              v-if="nodeid == value.nodeid"
+              @input="editNode"
+              v-model="value.nodetext"
+              :id="nodeid"
+            ></textarea>
+          </div>
+          <!-- <div v-for="(value, index) in configPositions" v-bind:key="index">
+          <p v-if="nodeid == value.nodeid">
+            {{ localx }}, ({{ value.xpos }}) {{ localy }}
+          </p>
+        </div> -->
+
+          <p>markdown supported</p>
+          <button class="danger" @click="deleteFlag()">
+            Delete
+          </button>
+        </form>
+      </vue-draggable-resizable>
+    </div>
   </div>
 </template>
 
@@ -35,21 +43,20 @@ import { mapState } from 'vuex'
 export default {
   name: 'NodesLayer',
 
-  props: { nodeid: String, nodetext: String, xpos: Number, ypos: Number },
+  props: { nodeid: String, nodetext: String },
 
   data() {
     return {
       thistext: this.nodetext,
       width: 0,
       height: 0,
-      x: this.xpos,
-      y: this.ypos
+      localx: 0,
+      localy: 0
     }
   },
 
   mounted() {
-    //  var nodes = this.$refs.nodes
-    //   this.makeDraggable(nodes)
+    //
   },
   computed: mapState({
     myNodes: state => state.myNodes,
@@ -57,24 +64,27 @@ export default {
   }),
   methods: {
     onResize(x, y, width, height) {
-      this.x = x
-      this.y = y
+      this.localx = x
+      this.localy = y
       this.width = width
       this.height = height
     },
     onDrag(x, y) {
-      this.x = x
-      this.y = y
+      this.localx = x
+      this.localy = y
     },
     onDragstop(x, y) {
       var localnodeid = this.nodeid
-      // console.log(x)
-      // console.log(y)
-      // console.log(localnodeid)
+
+      var i
+      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+        if (this.configPositions[i].nodeid == this.nodeid) {
+          this.localx = this.configPositions[i].xpos
+          this.localy = this.configPositions[i].ypos
+        }
+      }
       this.$store.dispatch('movePos', { localnodeid, x, y })
     },
-    // end DRAG update the right positions in DB
-    //   this.$store.dispatch('movePos', {this.nodeid, this.x, this.y})
 
     setFocus() {
       // this.$refs.nodetext.focus()

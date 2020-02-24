@@ -54,8 +54,7 @@ export default {
   },
   computed: mapState({
     myNodes: state => state.myNodes,
-    otherNodes: state => state.otherNodes,
-    configPositions: state => state.configPositions
+    otherNodes: state => state.otherNodes
   }),
   methods: {
     clientAdded() {

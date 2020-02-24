@@ -1,33 +1,39 @@
 <template>
   <div ref="othernodes" class="node">
-    <vue-draggable-resizable
-      :w="200"
-      :h="200"
-      @dragging="onDrag"
-      @resizing="onResize"
-      style="border: 1px solid black; background-color: rgb(205, 234, 255);"
-    >
-      <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
-    </vue-draggable-resizable>
+    <div v-for="(value, index) in configPositions" v-bind:key="index">
+      <vue-draggable-resizable
+        v-if="nodeid == value.nodeid"
+        :w="200"
+        :h="250"
+        :x="value.xpos"
+        :y="value.ypos"
+        @dragging="onDrag"
+        @resizing="onResize"
+        @dragstop="onDragstop"
+        style="border: 1px solid black; background-color: rgb(205, 234, 255);"
+      >
+        <p :id="nodeid" :inner-html.prop="nodetext | marked">{{ nodeid }}</p>
+      </vue-draggable-resizable>
+    </div>
   </div>
 </template>
 
 <script>
-//import { drag } from './mixins/drag.js'
+import { mapState } from 'vuex'
 import marked from 'marked'
 
 export default {
   name: 'otherNodeslayer',
-  //mixins: [drag],
 
   props: { nodeid: String, nodetext: String },
 
-  data: function() {
+  data() {
     return {
+      thistext: this.nodetext,
       width: 0,
       height: 0,
-      x: 0,
-      y: 0
+      localx: 0,
+      localy: 0
     }
   },
 
@@ -35,20 +41,33 @@ export default {
     marked: marked
   },
 
-  mounted() {
-    //  var othernodes = this.$refs.othernodes
-    // this.makeDraggable(othernodes)
-  },
+  mounted() {},
+  computed: mapState({
+    otherNodes: state => state.otherNodes,
+    configPositions: state => state.configPositions
+  }),
   methods: {
-    onResize: function(x, y, width, height) {
-      this.x = x
-      this.y = y
+    onResize(x, y, width, height) {
+      this.localx = x
+      this.localy = y
       this.width = width
       this.height = height
     },
-    onDrag: function(x, y) {
-      this.x = x
-      this.y = y
+    onDrag(x, y) {
+      this.localx = x
+      this.localy = y
+    },
+    onDragstop(x, y) {
+      var localnodeid = this.nodeid
+
+      var i
+      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+        if (this.configPositions[i].nodeid == this.nodeid) {
+          this.localx = this.configPositions[i].xpos
+          this.localy = this.configPositions[i].ypos
+        }
+      }
+      this.$store.dispatch('movePos', { localnodeid, x, y })
     }
   }
 }
