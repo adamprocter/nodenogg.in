@@ -1,13 +1,28 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import PouchDB from 'pouchdb'
+PouchDB.plugin(require('pouchdb-find'))
+import VueDraggableResizable from 'vue-draggable-resizable'
+
 import accounts from '../assets/settings.json'
+// PouchDB.debug.enable('*')
 
 Vue.use(Vuex)
-// var rando = Math.random()
-//   .toString(16)
-//   .slice(2)
-var microcosm = 'podcast2020'
+Vue.component('vue-draggable-resizable', VueDraggableResizable)
+var myclient = 'firstvisit'
+
+if (localStorage.getItem('mylastMicrocosm') == null) {
+  var microcosm = 'firstvisit'
+} else {
+  microcosm = localStorage.getItem('mylastMicrocosm')
+}
+
+if (localStorage.getItem('myNNClient') == null) {
+  myclient = 'firstvisit'
+} else {
+  myclient = localStorage.getItem('myNNClient')
+}
+
 var pouchdb = new PouchDB(microcosm)
 var remote =
   'https://' +
@@ -20,11 +35,12 @@ var remote =
 
 const store = new Vuex.Store({
   state: {
-    localnodeid: null,
+    localnodeid: '',
     global_pos_name: 'positions',
-    // this is set with localStorage or could be random on Every Load
-    // so long as you can edit all nodes
-    myclient: 'mac',
+    global_con_name: 'connections',
+    global_emoji_name: 'emojis',
+    microcosm: '',
+    myclient: myclient,
     activeNode: {},
     // this will be objects containing arrays of all the handles / connections and nodes
     configConnect: {
@@ -41,6 +57,7 @@ const store = new Vuex.Store({
       width: 10,
       fill: 'black'
     },
+    allNodes: [],
     myNodes: [
       // { nodeid: 1, nodetext: 'node 1' },
     ],
@@ -49,44 +66,117 @@ const store = new Vuex.Store({
     ],
     configPositions: [
       //{}
+    ],
+    configConnections: [
+      //{}
+    ],
+    configEmoji: [
+      //{}
     ]
   },
   mutations: {
-    GET_NODES(state) {
+    CREATE_MICROCOSM(state, doc) {
+      pouchdb.close().then(function() {
+        // console.log(doc)
+        microcosm = doc
+        pouchdb = new PouchDB(microcosm)
+        remote =
+          'https://' +
+          accounts.settings[0].name +
+          ':' +
+          accounts.settings[0].password +
+          '@nn.adamprocter.co.uk/' +
+          microcosm +
+          '/'
+
+        store.dispatch('syncDB')
+      })
+    },
+
+    GET_ALL_NODES(state) {
       pouchdb
         .allDocs({
           include_docs: true,
           attachments: true
         })
         .then(function(doc) {
-          var i
-          var j
-          for (i = 0; i < Object.keys(doc.rows).length; i++) {
-            if (state.myclient == doc.rows[i].key) {
-              state.myNodes = doc.rows[i].doc.nodes
-            }
-            if (
-              state.myclient != doc.rows[i].key &&
-              state.global_pos_name != doc.rows[i].key &&
-              state.global_con_name != doc.rows[i].key &&
-              state.global_emoji_name != doc.rows[i].key
-            ) {
-              for (j = 0; j < Object.keys(doc.rows[i].doc.nodes).length; j++) {
-                console.log(doc.rows[i].doc.nodes[j].nodeid)
-                console.log(doc.rows[i].doc.nodes[j].nodetext)
-                const newNode = {
-                  nodeid: doc.rows[i].doc.nodes[j].nodeid,
-                  nodetext: doc.rows[i].doc.nodes[j].nodetext
-                }
-                state.otherNodes.push(newNode)
-              }
-            }
-          }
+          state.microcosm = microcosm
+          state.allNodes = doc.rows
+          store.commit('SET_OTHER_NODES')
         })
         .catch(function(err) {
           console.log(err)
         })
     },
+
+    SET_OTHER_NODES(state) {
+      state.otherNodes = []
+      var i
+      var j
+      for (i = 0; i < Object.keys(state.allNodes).length; i++) {
+        if (
+          state.allNodes[i].id != state.myclient &&
+          state.allNodes[i].id != state.global_pos_name
+        ) {
+          for (
+            j = 0;
+            j < Object.keys(state.allNodes[i].doc.nodes).length;
+            j++
+          ) {
+            const newNode = {
+              nodeid: state.allNodes[i].doc.nodes[j].nodeid,
+              nodetext: state.allNodes[i].doc.nodes[j].nodetext
+            }
+
+            state.otherNodes.push(newNode)
+          }
+        }
+      }
+      //console.log(state.otherNodes)
+    },
+
+    SET_CLIENT(state, doc) {
+      state.myclient = doc
+      store.commit('GET_MY_NODES')
+    },
+
+    GET_MY_NODES(state) {
+      pouchdb
+        .get(state.myclient)
+        .then(function(doc) {
+          state.myNodes = doc.nodes
+        })
+        .catch(function(err) {
+          if (err.status == 404) {
+            var uniqueid =
+              Math.random()
+                .toString(36)
+                .substring(2, 15) +
+              Math.random()
+                .toString(36)
+                .substring(2, 15)
+            return pouchdb.put({
+              _id: state.myclient,
+              _attachments: {},
+              nodes: [
+                {
+                  // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
+                  // this shouldnt need to be here
+                  index: uniqueid,
+                  nodeid: uniqueid,
+                  nodetext: state.myclient,
+                  nodeowner: state.myclient,
+                  content_type: 'sheet',
+                  // TEMP: this hides this node card as its effectivly auto deleted
+                  deleted: true,
+                  attachment_name: ''
+                }
+              ]
+            })
+          }
+        })
+    },
+
     GET_POSITIONS(state) {
       pouchdb
         .get(state.global_pos_name)
@@ -118,7 +208,8 @@ const store = new Vuex.Store({
 
       pouchdb.get(state.myclient).then(function(doc) {
         if (e == undefined) {
-          doc.notes.push({
+          doc.nodes.push({
+            index: uniqueid,
             nodeid: uniqueid,
             nodetext: '',
             nodeowner: state.myclient,
@@ -133,16 +224,17 @@ const store = new Vuex.Store({
             _id: state.myclient,
             _rev: doc._rev,
             _attachments: doc._attachments,
-            nodes: doc.notes
+            index: doc.uniqueid,
+            nodes: doc.nodes
           })
           .then(function() {
             return pouchdb.get(state.myclient).then(function(doc) {
               state.myNodes = doc.nodes
               var end = Object.keys(state.myNodes).length - 1
               const newNode = {
-                nodetext: state.myNodes[end].text,
                 nodeid: state.myNodes[end].id,
-                content_type: state.notes[end].content_type
+                nodetext: state.myNodes[end].text
+                //  content_type: state.notes[end].content_type
               }
               state.activeNode = newNode
             })
@@ -182,6 +274,7 @@ const store = new Vuex.Store({
         .get(state.myclient)
         .then(function(doc) {
           // put the store into pouchdb
+
           return pouchdb.bulkDocs([
             {
               _id: state.myclient,
@@ -206,15 +299,16 @@ const store = new Vuex.Store({
   actions: {
     syncDB: () => {
       pouchdb.replicate.from(remote).on('complete', function() {
-        store.commit('GET_NODES')
+        store.commit('GET_ALL_NODES')
+        store.commit('GET_MY_NODES')
         store.commit('GET_POSITIONS')
         // turn on two-way, continuous, retriable sync
         pouchdb
           .sync(remote, { live: true, retry: true, attachments: true })
           .on('change', function() {
             // pop info into function to find out more
-            console.log('change')
-            store.commit('GET_NODES')
+            store.commit('GET_ALL_NODES')
+            store.commit('GET_MY_NODES')
             store.commit('GET_POSITIONS')
           })
           .on('paused', function() {
@@ -237,7 +331,12 @@ const store = new Vuex.Store({
           })
       })
     },
-
+    createMicrocosm: ({ commit }, e) => {
+      commit('CREATE_MICROCOSM', e)
+    },
+    setClient: ({ commit }, e) => {
+      commit('SET_CLIENT', e)
+    },
     editNode: ({ commit }, { nodeid, nodetext }) => {
       commit('EDIT_NODE', { nodeid, nodetext })
     }
