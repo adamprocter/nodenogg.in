@@ -29,7 +29,8 @@
     <ul>
       <li>&nbsp;Data is not yet encrypted.</li>
       <li>&nbsp;Export is not turned on yet.</li>
-      <li>&nbsp;Attachment viewing is broken.</li>
+      <li>&nbsp;Delete only flags for deletion.</li>
+      <li>&nbsp;Positions are not synd'd</li>
       <li>
         Some devices seem to have a bug when you first try to create or join an
         microcosm, on second attempt it will work allowing device name.
