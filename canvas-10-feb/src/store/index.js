@@ -75,12 +75,6 @@ const store = new Vuex.Store({
     ]
   },
   mutations: {
-    // CREATE_INDEX() {
-    //   pouchdb.createIndex({
-    //     index: { fields: ['name'] }
-    //   })
-    // },
-
     CREATE_MICROCOSM(state, doc) {
       pouchdb.close().then(function() {
         // console.log(doc)
@@ -97,6 +91,48 @@ const store = new Vuex.Store({
 
         store.dispatch('syncDB')
       })
+    },
+
+    GET_ALL_NODES(state) {
+      pouchdb
+        .allDocs({
+          include_docs: true,
+          attachments: true
+        })
+        .then(function(doc) {
+          state.microcosm = microcosm
+          state.allNodes = doc.rows
+          store.commit('SET_OTHER_NODES')
+        })
+        .catch(function(err) {
+          console.log(err)
+        })
+    },
+
+    SET_OTHER_NODES(state) {
+      state.otherNodes = []
+      var i
+      var j
+      for (i = 0; i < Object.keys(state.allNodes).length; i++) {
+        if (
+          state.allNodes[i].id != state.myclient &&
+          state.allNodes[i].id != state.global_pos_name
+        ) {
+          for (
+            j = 0;
+            j < Object.keys(state.allNodes[i].doc.nodes).length;
+            j++
+          ) {
+            const newNode = {
+              nodeid: state.allNodes[i].doc.nodes[j].nodeid,
+              nodetext: state.allNodes[i].doc.nodes[j].nodetext
+            }
+
+            state.otherNodes.push(newNode)
+          }
+        }
+      }
+      //console.log(state.otherNodes)
     },
 
     SET_CLIENT(state, doc) {
@@ -124,14 +160,14 @@ const store = new Vuex.Store({
               _attachments: {},
               nodes: [
                 {
-                  // FIXME: these values are here as GET_NODES cant hunt a blank
-                  // this shouldnt be here
+                  // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
+                  // this shouldnt need to be here
                   index: uniqueid,
                   nodeid: uniqueid,
                   nodetext: state.myclient,
                   nodeowner: state.myclient,
                   content_type: 'sheet',
-                  // TEMP: this hides it by being auto deleted
+                  // TEMP: this hides this node card as its effectivly auto deleted
                   deleted: true,
                   attachment_name: ''
                 }
@@ -140,64 +176,6 @@ const store = new Vuex.Store({
           }
         })
     },
-
-    GET_ALL_NODES(state) {
-      pouchdb
-        .allDocs({
-          include_docs: true,
-          attachments: true
-        })
-        .then(function(doc) {
-          state.microcosm = microcosm
-          state.allNodes = doc.rows
-          console.log(state.allNodes)
-        })
-        .catch(function(err) {
-          console.log(err)
-        })
-    },
-
-    // GET_NODES(state) {
-    //   //console.log(state)
-    //   pouchdb
-    //     .allDocs({
-    //       include_docs: true,
-    //       attachments: true
-    //     })
-    //     .then(function(doc) {
-    //       state.microcosm = microcosm
-    //     })
-    //     .catch(function(err) {
-    //       console.log(err)
-    //     })
-    // },
-
-    // GET_ALL_NODES(state) {
-    //   pouchdb
-    //     .allDocs({
-    //       include_docs: true,
-    //       attachments: true
-    //     })
-    //     .then(function(doc) {
-    //       //state.otherNodes = doc.rows
-    //       var i
-    //       for (i = 0; i < Object.keys(doc.rows).length; i++) {
-    //         console.log(doc.rows[i].doc.nodes)
-    //         //state.otherNodes = doc.rows[i].doc.nodes
-    //         const newNode = {
-    //           index: doc.rows[i].doc.nodes,
-    //           nodeid: doc.rows[i].doc.nodes,
-    //           nodetext: doc.rows[i].doc.nodes
-    //         }
-    //         state.otherNodes.push(newNode)
-    //       }
-    //       console.log(state.otherNodes)
-    //       // doc.rows[i].doc.nodes
-    //     })
-    //     .catch(function(err) {
-    //       console.log(err)
-    //     })
-    // },
 
     GET_POSITIONS(state) {
       pouchdb
@@ -230,7 +208,7 @@ const store = new Vuex.Store({
 
       pouchdb.get(state.myclient).then(function(doc) {
         if (e == undefined) {
-          doc.notes.push({
+          doc.nodes.push({
             index: uniqueid,
             nodeid: uniqueid,
             nodetext: '',
@@ -289,15 +267,7 @@ const store = new Vuex.Store({
       var i
       for (i = 0; i < Object.keys(state.myNodes).length; i++) {
         if (e.nodeid == state.myNodes[i].nodeid) {
-          var uniqueid =
-            Math.random()
-              .toString(36)
-              .substring(2, 15) +
-            Math.random()
-              .toString(36)
-              .substring(2, 15)
-          ;(state.myNodes[i].nodetext = e.nodetext),
-            (state.myNodes[i].index = uniqueid)
+          state.myNodes[i].nodetext = e.nodetext
         }
       }
       pouchdb

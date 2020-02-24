@@ -1,18 +1,19 @@
 <template>
   <div class="home">
     <div v-if="clientset">
-      <NodesLayer
-        v-for="value in myNodes"
-        v-bind:key="value.nodeid"
-        v-bind:nodeid="value.nodeid"
-        v-bind:nodetext="value.nodetext"
-      />
       <OtherNodeslayer
         v-for="value in otherNodes"
         v-bind:key="value.nodeid"
         v-bind:nodeid="value.nodeid"
         v-bind:nodetext="value.nodetext"
       />
+      <NodesLayer
+        v-for="value in myNodes"
+        v-bind:key="value.nodeid"
+        v-bind:nodeid="value.nodeid"
+        v-bind:nodetext="value.nodetext"
+      />
+
       <CanvasLayer />
       <ControlsLayer />
     </div>
