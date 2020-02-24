@@ -92,6 +92,7 @@ export default {
         this.$store.dispatch('setClient', this.clientid),
         localStorage.setItem('myNNClient', this.clientid)
     },
+
     letsGo() {
       this.$emit('clientAdded')
       // this.$emit('readyMode')

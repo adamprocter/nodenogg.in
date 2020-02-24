@@ -1,35 +1,46 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import PouchDB from 'pouchdb'
+PouchDB.plugin(require('pouchdb-find'))
+import VueDraggableResizable from 'vue-draggable-resizable'
+
 import accounts from '../assets/settings.json'
-//PouchDB.debug.enable('*')
+// PouchDB.debug.enable('*')
 
 Vue.use(Vuex)
+Vue.component('vue-draggable-resizable', VueDraggableResizable)
+var myclient = 'firstvisit'
 
 if (localStorage.getItem('mylastMicrocosm') == null) {
-  var localmicrocosm = 'firstvisit'
+  var microcosm = 'firstvisit'
 } else {
-  localmicrocosm = localStorage.getItem('mylastMicrocosm')
+  microcosm = localStorage.getItem('mylastMicrocosm')
 }
 
-var pouchdb = new PouchDB(localmicrocosm)
+if (localStorage.getItem('myNNClient') == null) {
+  myclient = 'firstvisit'
+} else {
+  myclient = localStorage.getItem('myNNClient')
+}
+
+var pouchdb = new PouchDB(microcosm)
 var remote =
   'https://' +
   accounts.settings[0].name +
   ':' +
   accounts.settings[0].password +
   '@nn.adamprocter.co.uk/' +
-  localmicrocosm +
+  microcosm +
   '/'
 
 const store = new Vuex.Store({
   state: {
-    localnodeid: null,
+    localnodeid: '',
     global_pos_name: 'positions',
     global_con_name: 'connections',
     global_emoji_name: 'emojis',
     microcosm: '',
-    myclient: 'mac',
+    myclient: myclient,
     activeNode: {},
     // this will be objects containing arrays of all the handles / connections and nodes
     configConnect: {
@@ -46,6 +57,7 @@ const store = new Vuex.Store({
       width: 10,
       fill: 'black'
     },
+    allNodes: [],
     myNodes: [
       // { nodeid: 1, nodetext: 'node 1' },
     ],
@@ -63,30 +75,36 @@ const store = new Vuex.Store({
     ]
   },
   mutations: {
+    // CREATE_INDEX() {
+    //   pouchdb.createIndex({
+    //     index: { fields: ['name'] }
+    //   })
+    // },
+
     CREATE_MICROCOSM(state, doc) {
       pouchdb.close().then(function() {
-        localmicrocosm = doc
-        pouchdb = new PouchDB(localmicrocosm)
+        // console.log(doc)
+        microcosm = doc
+        pouchdb = new PouchDB(microcosm)
         remote =
           'https://' +
           accounts.settings[0].name +
           ':' +
           accounts.settings[0].password +
           '@nn.adamprocter.co.uk/' +
-          localmicrocosm +
+          microcosm +
           '/'
+
         store.dispatch('syncDB')
       })
     },
 
     SET_CLIENT(state, doc) {
       state.myclient = doc
-      console.log(state.myclient)
-      store.commit('SET_MY_NODE')
-      store.commit('GET_NODES')
+      store.commit('GET_MY_NODES')
     },
 
-    SET_MY_NODE(state) {
+    GET_MY_NODES(state) {
       pouchdb
         .get(state.myclient)
         .then(function(doc) {
@@ -104,11 +122,18 @@ const store = new Vuex.Store({
             return pouchdb.put({
               _id: state.myclient,
               _attachments: {},
-              myNodes: [
+              nodes: [
                 {
-                  // FIXME: these are here as GET_NODES cant hunt a blank
+                  // FIXME: these values are here as GET_NODES cant hunt a blank
+                  // this shouldnt be here
+                  index: uniqueid,
                   nodeid: uniqueid,
-                  nodetext: 'Device ' + state.myclient
+                  nodetext: state.myclient,
+                  nodeowner: state.myclient,
+                  content_type: 'sheet',
+                  // TEMP: this hides it by being auto deleted
+                  deleted: true,
+                  attachment_name: ''
                 }
               ]
             })
@@ -116,41 +141,64 @@ const store = new Vuex.Store({
         })
     },
 
-    GET_NODES(state) {
+    GET_ALL_NODES(state) {
       pouchdb
         .allDocs({
           include_docs: true,
           attachments: true
         })
         .then(function(doc) {
-          var i
-          var j
-          for (i = 0; i < Object.keys(doc.rows).length; i++) {
-            if (state.myclient == doc.rows[i].key) {
-              state.myNodes = doc.rows[i].doc.nodes
-            }
-            if (
-              state.myclient != doc.rows[i].key &&
-              state.global_pos_name != doc.rows[i].key &&
-              state.global_con_name != doc.rows[i].key &&
-              state.global_emoji_name != doc.rows[i].key
-            ) {
-              for (j = 0; j < Object.keys(doc.rows[i].doc.nodes).length; j++) {
-                // console.log(doc.rows[i].doc.nodes[j].nodeid)
-                // console.log(doc.rows[i].doc.nodes[j].nodetext)
-                const newNode = {
-                  nodeid: doc.rows[i].doc.nodes[j].nodeid,
-                  nodetext: doc.rows[i].doc.nodes[j].nodetext
-                }
-                state.otherNodes.push(newNode)
-              }
-            }
-          }
+          state.microcosm = microcosm
+          state.allNodes = doc.rows
+          console.log(state.allNodes)
         })
         .catch(function(err) {
           console.log(err)
         })
     },
+
+    // GET_NODES(state) {
+    //   //console.log(state)
+    //   pouchdb
+    //     .allDocs({
+    //       include_docs: true,
+    //       attachments: true
+    //     })
+    //     .then(function(doc) {
+    //       state.microcosm = microcosm
+    //     })
+    //     .catch(function(err) {
+    //       console.log(err)
+    //     })
+    // },
+
+    // GET_ALL_NODES(state) {
+    //   pouchdb
+    //     .allDocs({
+    //       include_docs: true,
+    //       attachments: true
+    //     })
+    //     .then(function(doc) {
+    //       //state.otherNodes = doc.rows
+    //       var i
+    //       for (i = 0; i < Object.keys(doc.rows).length; i++) {
+    //         console.log(doc.rows[i].doc.nodes)
+    //         //state.otherNodes = doc.rows[i].doc.nodes
+    //         const newNode = {
+    //           index: doc.rows[i].doc.nodes,
+    //           nodeid: doc.rows[i].doc.nodes,
+    //           nodetext: doc.rows[i].doc.nodes
+    //         }
+    //         state.otherNodes.push(newNode)
+    //       }
+    //       console.log(state.otherNodes)
+    //       // doc.rows[i].doc.nodes
+    //     })
+    //     .catch(function(err) {
+    //       console.log(err)
+    //     })
+    // },
+
     GET_POSITIONS(state) {
       pouchdb
         .get(state.global_pos_name)
@@ -183,6 +231,7 @@ const store = new Vuex.Store({
       pouchdb.get(state.myclient).then(function(doc) {
         if (e == undefined) {
           doc.notes.push({
+            index: uniqueid,
             nodeid: uniqueid,
             nodetext: '',
             nodeowner: state.myclient,
@@ -197,16 +246,17 @@ const store = new Vuex.Store({
             _id: state.myclient,
             _rev: doc._rev,
             _attachments: doc._attachments,
-            nodes: doc.notes
+            index: doc.uniqueid,
+            nodes: doc.nodes
           })
           .then(function() {
             return pouchdb.get(state.myclient).then(function(doc) {
               state.myNodes = doc.nodes
               var end = Object.keys(state.myNodes).length - 1
               const newNode = {
-                nodetext: state.myNodes[end].text,
                 nodeid: state.myNodes[end].id,
-                content_type: state.notes[end].content_type
+                nodetext: state.myNodes[end].text
+                //  content_type: state.notes[end].content_type
               }
               state.activeNode = newNode
             })
@@ -239,13 +289,22 @@ const store = new Vuex.Store({
       var i
       for (i = 0; i < Object.keys(state.myNodes).length; i++) {
         if (e.nodeid == state.myNodes[i].nodeid) {
-          state.myNodes[i].nodetext = e.nodetext
+          var uniqueid =
+            Math.random()
+              .toString(36)
+              .substring(2, 15) +
+            Math.random()
+              .toString(36)
+              .substring(2, 15)
+          ;(state.myNodes[i].nodetext = e.nodetext),
+            (state.myNodes[i].index = uniqueid)
         }
       }
       pouchdb
         .get(state.myclient)
         .then(function(doc) {
           // put the store into pouchdb
+
           return pouchdb.bulkDocs([
             {
               _id: state.myclient,
@@ -270,15 +329,16 @@ const store = new Vuex.Store({
   actions: {
     syncDB: () => {
       pouchdb.replicate.from(remote).on('complete', function() {
-        store.commit('GET_NODES')
+        store.commit('GET_ALL_NODES')
+        store.commit('GET_MY_NODES')
         store.commit('GET_POSITIONS')
         // turn on two-way, continuous, retriable sync
         pouchdb
           .sync(remote, { live: true, retry: true, attachments: true })
           .on('change', function() {
             // pop info into function to find out more
-            console.log('change')
-            store.commit('GET_NODES')
+            store.commit('GET_ALL_NODES')
+            store.commit('GET_MY_NODES')
             store.commit('GET_POSITIONS')
           })
           .on('paused', function() {

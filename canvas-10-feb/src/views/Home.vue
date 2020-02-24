@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <OnBoard @clientAdded="clientAdded()" />
     <div v-if="clientset">
       <NodesLayer
         v-for="value in myNodes"
@@ -17,6 +16,7 @@
       <CanvasLayer />
       <ControlsLayer />
     </div>
+    <OnBoard v-else @clientAdded="clientAdded()" />
   </div>
 </template>
 
@@ -53,7 +53,6 @@ export default {
   methods: {
     clientAdded() {
       this.clientset = !this.clientset
-      console.log(this.clientset)
     }
   }
 }
