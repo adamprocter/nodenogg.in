@@ -5,6 +5,7 @@
       :h="200"
       @dragging="onDrag"
       @resizing="onResize"
+      @dragstop="onDragstop"
       style="background-color: rgb(205, 234, 255);"
     >
       <form>
@@ -16,30 +17,33 @@
             :id="nodeid"
           ></textarea>
         </div>
-
+        <div v-for="(value, index) in configPositions" v-bind:key="index">
+          <p v-if="nodeid == value.nodeid">{{ x }}, {{ y }}</p>
+        </div>
         <p>markdown supported</p>
-        <button>delete</button>
+        <button class="danger" @click="deleteFlag()">
+          Delete
+        </button>
       </form>
     </vue-draggable-resizable>
   </div>
 </template>
 
 <script>
-//import { drag } from './mixins/drag.js'
 import { mapState } from 'vuex'
 
 export default {
   name: 'NodesLayer',
-  // mixins: [drag],
-  props: { nodeid: String, nodetext: String },
+
+  props: { nodeid: String, nodetext: String, xpos: Number, ypos: Number },
 
   data() {
     return {
       thistext: this.nodetext,
       width: 0,
       height: 0,
-      x: 0,
-      y: 0
+      x: this.xpos,
+      y: this.ypos
     }
   },
 
@@ -48,19 +52,30 @@ export default {
     //   this.makeDraggable(nodes)
   },
   computed: mapState({
-    myNodes: state => state.myNodes
+    myNodes: state => state.myNodes,
+    configPositions: state => state.configPositions
   }),
   methods: {
-    onResize: function(x, y, width, height) {
+    onResize(x, y, width, height) {
       this.x = x
       this.y = y
       this.width = width
       this.height = height
     },
-    onDrag: function(x, y) {
+    onDrag(x, y) {
       this.x = x
       this.y = y
     },
+    onDragstop(x, y) {
+      var localnodeid = this.nodeid
+      // console.log(x)
+      // console.log(y)
+      // console.log(localnodeid)
+      this.$store.dispatch('movePos', { localnodeid, x, y })
+    },
+    // end DRAG update the right positions in DB
+    //   this.$store.dispatch('movePos', {this.nodeid, this.x, this.y})
+
     setFocus() {
       // this.$refs.nodetext.focus()
     },
@@ -69,7 +84,10 @@ export default {
       var nodetext = e.target.value
       this.$store.dispatch('editNode', { nodeid, nodetext })
     },
-    deleteFlag() {}
+    deleteFlag(e) {
+      e = this.nodeid
+      this.$store.dispatch('deleteFlag', { e })
+    }
   }
 }
 </script>

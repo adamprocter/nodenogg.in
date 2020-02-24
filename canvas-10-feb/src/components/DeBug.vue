@@ -1,0 +1,87 @@
+<template>
+  <div class="debug">
+    <hr />
+    <!-- <h2>Debug Options</h2> -->
+    <h4>LAST UPDATE 24th Feb 2020.</h4>
+    <p>You need to know what these buttons do before you press them.</p>
+    <button class="danger" @click="removeLocal()">
+      Join another microcosm
+    </button>
+    <!-- <button @click="exportStorage()">Export my contributions</button>
+    <button class="danger" v-on:click="deleteClient">
+      Delete my contributions (inc. attachments) permanently
+    </button>
+    <button @click="handleConnection()">Online check</button> -->
+    <p>That's why they are red.</p>
+  </div>
+</template>
+
+<script>
+var serverUrl = 'https://nodenogg.in'
+
+export default {
+  mounted() {
+    window.addEventListener('online', this.handleConnection)
+    window.addEventListener('offline', this.handleConnection)
+  },
+  methods: {
+    exportStorage: function() {
+      // Save local indexeddb document-store to JSON file
+      // or export state.notes to JSON file
+    },
+    removeLocal: function() {
+      localStorage.removeItem('myNNClient')
+      localStorage.removeItem('mylastMicrocosm')
+      // Hardcoded in thye case that a URL had parameters the reload fails
+      location.assign('https://alpha.nodenogg.in/')
+      //location.assign('http://localhost:8080/')
+    },
+
+    deleteClient() {
+      this.$store.dispatch('deleteClient')
+    },
+    handleConnection: function() {
+      var ref = this
+      if (navigator.onLine) {
+        this.isReachable(this.getServerUrl()).then(function(online) {
+          if (online) {
+            // handle online status
+            console.log('online')
+            location.reload()
+          } else {
+            console.log('no connectivity')
+          }
+        })
+      } else {
+        // handle offline status
+        console.log('offline')
+        ref.$emit('offlineTriggered')
+      }
+    },
+    isReachable: function(url) {
+      return fetch(url, { method: 'HEAD', mode: 'no-cors' })
+        .then(function(resp) {
+          return resp && (resp.ok || resp.type === 'opaque')
+        })
+        .catch(function(err) {
+          console.warn('[conn test failure]:', err)
+        })
+    },
+    getServerUrl: function() {
+      return serverUrl || window.location.origin
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+li:before {
+  content: '';
+}
+
+b {
+  background-color: yellow;
+  padding-right: 2em;
+}
+</style>

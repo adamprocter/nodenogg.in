@@ -7,14 +7,14 @@
       @resizing="onResize"
       style="border: 1px solid black; background-color: rgb(205, 234, 255);"
     >
-      <p :id="nodeid">{{ nodetext }}</p>
-      <p>markdown supported</p>
+      <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
     </vue-draggable-resizable>
   </div>
 </template>
 
 <script>
 //import { drag } from './mixins/drag.js'
+import marked from 'marked'
 
 export default {
   name: 'otherNodeslayer',
@@ -29,6 +29,10 @@ export default {
       x: 0,
       y: 0
     }
+  },
+
+  filters: {
+    marked: marked
   },
 
   mounted() {

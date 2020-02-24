@@ -1,7 +1,10 @@
 <template>
   <div class="controls">
     <div class="btn-row">
-      <button on:click="popups.showPane = !popups.showPane">Button</button>
+      <!-- <button on:click="popups.showPane = !popups.showPane"> -->
+      <button @click="addNode()">
+        Create Node
+      </button>
     </div>
     <!--
       <div class="popup" v-if="popups.showPane">
@@ -13,7 +16,19 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {}
+  },
+  methods: {
+    addNode() {
+      this.$store.dispatch('addNode')
+      //      this.$store.dispatch('shortcutsState', true)
+    }
+  }
+}
+</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

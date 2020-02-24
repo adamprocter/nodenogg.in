@@ -162,12 +162,12 @@ const store = new Vuex.Store({
                 {
                   // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
                   // this shouldnt need to be here
-                  index: uniqueid,
+
                   nodeid: uniqueid,
-                  nodetext: state.myclient,
+                  nodetext: 'Ignore this node' + state.myclient,
                   nodeowner: state.myclient,
                   content_type: 'sheet',
-                  // TEMP: this hides this node card as its effectivly auto deleted
+                  // TEMP: this hides the first node card as its effectivly auto deleted
                   deleted: true,
                   attachment_name: ''
                 }
@@ -194,9 +194,42 @@ const store = new Vuex.Store({
         })
     },
 
-    MOVE_POS() {},
+    MOVE_POS(state, e) {
+      console.log(e.localnodeid)
+      var i
+      for (i = 0; i < Object.keys(state.configPositions).length; i++) {
+        if (e.localnodeid == state.configPositions[i].nodeid) {
+          state.configPositions[i].xpos = e.x
+          state.configPositions[i].ypos = e.y
+        }
+      }
 
-    ADD_DOC(state, e) {
+      pouchdb
+        .get(state.global_pos_name)
+        .then(function(doc) {
+          //  console.log(doc)
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.global_pos_name,
+              _rev: doc._rev,
+              positions: state.configPositions
+            }
+          ])
+        })
+        .then(function() {
+          return pouchdb.get(state.global_pos_name).then(function(doc) {
+            state.configPositions = doc.positions
+          })
+        })
+        .catch(function(err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
+    ADD_NODE(state, e) {
       var uniqueid =
         Math.random()
           .toString(36)
@@ -209,7 +242,6 @@ const store = new Vuex.Store({
       pouchdb.get(state.myclient).then(function(doc) {
         if (e == undefined) {
           doc.nodes.push({
-            index: uniqueid,
             nodeid: uniqueid,
             nodetext: '',
             nodeowner: state.myclient,
@@ -224,7 +256,6 @@ const store = new Vuex.Store({
             _id: state.myclient,
             _rev: doc._rev,
             _attachments: doc._attachments,
-            index: doc.uniqueid,
             nodes: doc.nodes
           })
           .then(function() {
@@ -294,6 +325,38 @@ const store = new Vuex.Store({
             // pouchdb.put({  })
           }
         })
+    },
+
+    DELETE_FLAG(state, e) {
+      var i
+      for (i = 0; i < Object.keys(state.myNodes).length; i++) {
+        if (e.e == state.myNodes[i].nodeid) {
+          state.myNodes[i].deleted = true
+        }
+      }
+      pouchdb
+        .get(state.myclient)
+        .then(function(doc) {
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.myclient,
+              _rev: doc._rev,
+              _attachments: doc._attachments,
+              nodes: state.myNodes
+            }
+          ])
+        })
+        .then(function() {
+          return pouchdb.get(state.myclient).then(function(doc) {
+            state.myNodes = doc.nodes
+          })
+        })
+        .catch(function(err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
     }
   },
   actions: {
@@ -337,8 +400,20 @@ const store = new Vuex.Store({
     setClient: ({ commit }, e) => {
       commit('SET_CLIENT', e)
     },
+
+    movePos: ({ commit }, nodeid, xpos, ypos) => {
+      commit('MOVE_POS', nodeid, xpos, ypos)
+    },
+
+    addNode: ({ commit }, e) => {
+      commit('ADD_NODE', e)
+    },
     editNode: ({ commit }, { nodeid, nodetext }) => {
       commit('EDIT_NODE', { nodeid, nodetext })
+    },
+    deleteFlag: ({ commit }, e) => {
+      // var text = e.target.value
+      commit('DELETE_FLAG', e)
     }
   },
   modules: {}

@@ -7,6 +7,7 @@
         v-bind:nodeid="value.nodeid"
         v-bind:nodetext="value.nodetext"
       />
+
       <NodesLayer
         v-for="value in myNodes"
         v-bind:key="value.nodeid"
@@ -15,6 +16,7 @@
       />
 
       <CanvasLayer />
+      <DeBug />
       <ControlsLayer />
     </div>
     <OnBoard v-else @clientAdded="clientAdded()" />
@@ -27,6 +29,7 @@ import OnBoard from '@/components/OnBoard.vue'
 import CanvasLayer from '@/components/CanvasLayer.vue'
 import NodesLayer from '@/components/NodesLayer.vue'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
+import DeBug from '@/components/DeBug.vue'
 import ControlsLayer from '@/components/ControlsLayer.vue'
 
 import { mapState } from 'vuex'
@@ -36,7 +39,8 @@ export default {
 
   data: function() {
     return {
-      clientset: false
+      clientset: false,
+      offline: false
     }
   },
 
@@ -45,15 +49,24 @@ export default {
     CanvasLayer,
     NodesLayer,
     OtherNodeslayer,
+    DeBug,
     ControlsLayer
   },
   computed: mapState({
     myNodes: state => state.myNodes,
-    otherNodes: state => state.otherNodes
+    otherNodes: state => state.otherNodes,
+    configPositions: state => state.configPositions
   }),
   methods: {
     clientAdded() {
       this.clientset = !this.clientset
+    },
+
+    offlineTriggered() {
+      this.offline = true
+    },
+    onlineTriggered() {
+      this.offline = false
     }
   }
 }
