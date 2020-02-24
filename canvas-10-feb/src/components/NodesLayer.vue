@@ -2,7 +2,7 @@
   <div ref="nodes" class="node">
     <vue-draggable-resizable
       :w="200"
-      :h="200"
+      :h="250"
       @dragging="onDrag"
       @resizing="onResize"
       @dragstop="onDragstop"

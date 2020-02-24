@@ -195,7 +195,7 @@ const store = new Vuex.Store({
     },
 
     MOVE_POS(state, e) {
-      console.log(e.localnodeid)
+      //console.log(e.localnodeid)
       var i
       for (i = 0; i < Object.keys(state.configPositions).length; i++) {
         if (e.localnodeid == state.configPositions[i].nodeid) {
