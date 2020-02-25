@@ -15,7 +15,13 @@
         v-bind:nodetext="value.nodetext"
       />
 
-      <CanvasLayer />
+      <!-- <CanvasLayer /> -->
+      <LinksLayer
+        v-bind:width="width"
+        v-bind:height="height"
+        v-bind:nodes="nodes"
+        v-bind:links="links"
+      />
       <DeBug />
       <ControlsLayer />
     </div>
@@ -26,7 +32,7 @@
 <script>
 // @ is an alias to /src
 import OnBoard from '@/components/OnBoard.vue'
-import CanvasLayer from '@/components/CanvasLayer.vue'
+import LinksLayer from '@/components/LinksLayer.vue'
 import NodesLayer from '@/components/NodesLayer.vue'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import DeBug from '@/components/DeBug.vue'
@@ -40,13 +46,15 @@ export default {
   data: function() {
     return {
       clientset: false,
-      offline: false
+      offline: false,
+      width: 1200,
+      height: 800
     }
   },
 
   components: {
     OnBoard,
-    CanvasLayer,
+    LinksLayer,
     NodesLayer,
     OtherNodeslayer,
     DeBug,
