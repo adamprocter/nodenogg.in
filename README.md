@@ -14,7 +14,7 @@ The main site is located at https://nodenogg.in
 
 For blog and short information on development you can see them at my discursive blog under the PhD [category](https://discursive.adamprocter.co.uk/categories/phd/).
 
-There are also development videos on my [YouTube Channel ](https://www.youtube.com/channel/UCiFY1PKloMcquwuOoWmWTwg) or these can be seen live on [Twitch](https://www.twitch.tv/procterbot).
+There are also development videos on my [YouTube Channel ](https://www.youtube.com/channel/UCiFY1PKloMcquwuOoWmWTwg) or these can be seen live on [Twitch](https://www.twitch.tv/adamprocter).
 
 You read more specific details on development at [researchnot.es](https://researchnot.es/). We also have a [discourse forum](https://discourse.adamprocter.co.uk/) you can join for feedback. If you are contributing to the code we recommend joining the [discord](https://discord.gg/hEADgC7).
 
