@@ -45,25 +45,6 @@ We use the feature branch workflow. Please do not work from master, check out ma
 
 There are special branches which will deploy to online versions of nodenogg.in, beta, alpha and release. Do not work from or pull request to these branches. These are used for deployment only.
 
-```
-plantuml
-!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.1.0
-skinparam defaultTextAlignment center
-!include ICONURL/common.puml
-!include ICONURL/font-awesome-5/gitlab.puml
-!include ICONURL/font-awesome-5/java.puml
-!include ICONURL/font-awesome-5/rocket.puml
-!include ICONURL/font-awesome/newspaper_o.puml
-#White {
-FA5_GITLAB(gitlab,master,node) #White
-FA5_GITLAB(gitlab2,Beta,node) #White
-FA5_ROCKET(rocket,Integrated,node) #White
-}
-gitlab ..> gitlab2
-gitlab2 ..> rocket
-
-```
-
 ## Changelog
 
 Please update the [Changelog](CHANGELOG.md) as part of a pull request to the master.
