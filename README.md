@@ -4,9 +4,6 @@ nodenogg.in empowers communities of practice to build and create knowledge by br
 
 nodenogg.in is free open source software, built in the open, inclusive by design, private by design, humane centered by design, delightful by design, intuitive and decentralised by design.
 
-![](https://nodenogg.in/img/interface.7e7c21ca.png)
-![](https://nodenogg.in/img/interface2.8e05b906.png)
-
 # Overarching Guide for Contributions
 
 Contributions to nodenogg.in must abide by the [Delightful Design Manifesto](MANIFESTO.md). More detail on Contributing can be read [here](CONTRIIBUTING.md).
@@ -28,3 +25,6 @@ You can get all of the above via RSS using this [OPML file](https://nodenogg.in/
 # Thank you
 
 Built with 💛 using open web tech HTML, CSS, Javascript, Vue.js, PouchDB and CouchDB.
+
+![](https://nodenogg.in/img/interface.7e7c21ca.png)
+![](https://nodenogg.in/img/interface2.8e05b906.png)

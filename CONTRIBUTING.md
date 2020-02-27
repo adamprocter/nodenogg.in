@@ -45,7 +45,8 @@ We use the feature branch workflow. Please do not work from master, check out ma
 
 There are special branches which will deploy to online versions of nodenogg.in, beta, alpha and release. Do not work from or pull request to these branches. These are used for deployment only.
 
-```plantuml
+```
+plantuml
 !define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.1.0
 skinparam defaultTextAlignment center
 !include ICONURL/common.puml
@@ -60,6 +61,7 @@ FA5_ROCKET(rocket,Integrated,node) #White
 }
 gitlab ..> gitlab2
 gitlab2 ..> rocket
+
 ```
 
 ## Changelog
