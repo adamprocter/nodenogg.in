@@ -3,7 +3,6 @@ node_modules
 /dist
 /src/assets/settings.json
 
-
 # local env files
 .env
 .env.local

@@ -4,8 +4,7 @@ import PouchDB from 'pouchdb'
 PouchDB.plugin(require('pouchdb-find'))
 import VueDraggableResizable from 'vue-draggable-resizable'
 
-//import accounts from '../assets/settings.json'
-// PouchDB.debug.enable('*')
+import accounts from '../assets/settings.json'
 
 Vue.use(Vuex)
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
@@ -24,16 +23,16 @@ if (localStorage.getItem('myNNClient') == null) {
 }
 
 var pouchdb = new PouchDB(microcosm)
-// var remote =
-//   'https://' +
-//   accounts.settings[0].name +
-//   ':' +
-//   accounts.settings[0].password +
-//   accounts.settings[0].url +
-//   microcosm +
-//   '/'
+var remote =
+  'https://' +
+  accounts.settings[0].name +
+  ':' +
+  accounts.settings[0].password +
+  accounts.settings[0].url +
+  microcosm +
+  '/'
 
-var remote = 'http://127.0.0.1:5984/localcouch'
+//var remote = 'http://127.0.0.1:5984/localcouch'
 
 const store = new Vuex.Store({
   state: {
@@ -82,15 +81,15 @@ const store = new Vuex.Store({
         // console.log(doc)
         microcosm = doc
         pouchdb = new PouchDB(microcosm)
-        // remote =
-        //   'https://' +
-        //   accounts.settings[0].name +
-        //   ':' +
-        //   accounts.settings[0].password +
-        //   accounts.settings[0].url +
-        //   microcosm +
-        //   '/'
-        remote = 'http://127.0.0.1:5984/localcouch'
+        remote =
+          'https://' +
+          accounts.settings[0].name +
+          ':' +
+          accounts.settings[0].password +
+          accounts.settings[0].url +
+          microcosm +
+          '/'
+        // remote = 'http://127.0.0.1:5984/localcouch'
 
         store.dispatch('syncDB')
       })
