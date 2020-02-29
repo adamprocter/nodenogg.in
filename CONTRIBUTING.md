@@ -28,7 +28,7 @@ VUE_APP_COUCH_PASS=yourpassword
 
 Please note we use [PouchDB](https://pouchdb.com/) to talk to CouchDB. This is what enables offline and local first support.
 
-All the internal code should use the GNU Affero General Public [License](LICENSE.md).Any dependancies that are brought into nodenogg.in must have as open a License as possible. Dependancies should be loaded in via Vue.js ui cli.
+All the internal code should use the GNU Affero General Public [License](LICENSE).Any dependancies that are brought into nodenogg.in must have as open a License as possible. Dependancies should be loaded in via Vue.js ui cli.
 
 Please Use arrow functions,and as much ES6 as possible. The code should be as neat as possible. However all code should be human understandable. So again verbose is good.
 

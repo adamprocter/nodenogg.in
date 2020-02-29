@@ -33,6 +33,7 @@ var remote =
 
 const store = new Vuex.Store({
   state: {
+    version: process.env.VUE_APP_VERSION,
     localnodeid: '',
     global_pos_name: 'positions',
     global_con_name: 'connections',
@@ -91,6 +92,7 @@ const store = new Vuex.Store({
     },
 
     GET_ALL_NODES(state) {
+      console.log(state.deploydate)
       pouchdb
         .allDocs({
           include_docs: true,

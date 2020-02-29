@@ -14,7 +14,8 @@
       <em>(+ helpers &amp; supporters)</em>
     </p>
 
-    <h3>version 0.1.0</h3>
+    <h3>version {{ myVersion }}</h3>
+
     <ul>
       <li>
         Co-create and contribute ideas, with text, links and attachments with
@@ -88,3 +89,17 @@
     </ul>
   </div>
 </template>
+<script>
+import { mapState } from 'vuex'
+
+export default {
+  name: 'About',
+
+  data: function() {
+    return {}
+  },
+  computed: mapState({
+    myVersion: state => state.version
+  })
+}
+</script>
