@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <DeBug />
     <div v-if="clientset">
       <OtherNodeslayer
         v-for="value in otherNodes"
@@ -16,7 +17,7 @@
       />
 
       <CanvasLayer />
-      <DeBug />
+
       <ControlsLayer />
     </div>
     <OnBoard v-else @clientAdded="clientAdded()" />

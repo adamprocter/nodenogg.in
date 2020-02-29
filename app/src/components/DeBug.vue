@@ -3,14 +3,14 @@
     <hr />
     <!-- <h2>Debug Options</h2> -->
     <h4>LAST UPDATE 29th Feb 2020.</h4>
-    <p>You need to know what these buttons do before you press them.</p>
+    <p>You need to know what this button does before you press it.</p>
     <button class="danger" @click="removeLocal()">Join another microcosm</button>
     <!-- <button @click="exportStorage()">Export my contributions</button>
     <button class="danger" v-on:click="deleteClient">
       Delete my contributions (inc. attachments) permanently
     </button>
     <button @click="handleConnection()">Online check</button>-->
-    <p>That's why they are red.</p>
+    <hr />
   </div>
 </template>
 
@@ -78,6 +78,29 @@ export default {
 <style scoped>
 li:before {
   content: '';
+}
+.danger {
+  background-color: red;
+}
+
+button {
+  font-size: 1em;
+  touch-action: manipulation;
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 1px 1px 1px #000000;
+  padding: 0.6em;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
 }
 
 b {
