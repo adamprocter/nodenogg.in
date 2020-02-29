@@ -2,21 +2,20 @@
   <div class="debug">
     <hr />
     <!-- <h2>Debug Options</h2> -->
-    <h4>LAST UPDATE 24th Feb 2020.</h4>
+    <h4>LAST UPDATE 29th Feb 2020.</h4>
     <p>You need to know what these buttons do before you press them.</p>
-    <button class="danger" @click="removeLocal()">
-      Join another microcosm
-    </button>
+    <button class="danger" @click="removeLocal()">Join another microcosm</button>
     <!-- <button @click="exportStorage()">Export my contributions</button>
     <button class="danger" v-on:click="deleteClient">
       Delete my contributions (inc. attachments) permanently
     </button>
-    <button @click="handleConnection()">Online check</button> -->
+    <button @click="handleConnection()">Online check</button>-->
     <p>That's why they are red.</p>
   </div>
 </template>
 
 <script>
+// This is for detecting offline issues
 var serverUrl = 'https://nodenogg.in'
 
 export default {
@@ -32,9 +31,10 @@ export default {
     removeLocal: function() {
       localStorage.removeItem('myNNClient')
       localStorage.removeItem('mylastMicrocosm')
-      // Hardcoded in thye case that a URL had parameters the reload fails
-      location.assign('https://alpha.nodenogg.in/')
+      // Hardcoded as when I set a URL had parameters the reload fails
+      //location.assign('https://alpha.nodenogg.in/')
       //location.assign('http://localhost:8080/')
+      location.reload()
     },
 
     deleteClient() {
