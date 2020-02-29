@@ -92,7 +92,6 @@ const store = new Vuex.Store({
     },
 
     GET_ALL_NODES(state) {
-      console.log(state.deploydate)
       pouchdb
         .allDocs({
           include_docs: true,
