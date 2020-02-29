@@ -6,7 +6,7 @@ nodenogg.in is free open source software, built in the open, inclusive by design
 
 # Overarching Guide for Contributions
 
-Contributions to nodenogg.in must abide by the [Delightful Design Manifesto](MANIFESTO.md). More detail on Contributing can be read [here](CONTRIIBUTING.md).
+Contributions to nodenogg.in must abide by the [Delightful Design Manifesto](MANIFESTO.md). More detail on Contributing can be read [here](CONTRIBUTING.md).
 
 # Keeping up with nodenogg.in
 
