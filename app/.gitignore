@@ -4,7 +4,6 @@ node_modules
 /src/assets/settings.json
 
 # local env files
-.env
 .env.local
 .env.*.local
 

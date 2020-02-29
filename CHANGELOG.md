@@ -1,3 +1,17 @@
+# 0.1.1
+
+_29th Feb 2020_
+
+After Toby tried to start working on the main code base it soon become evident that the CouchDB set up was problematic. So I have moved this to environmental variables and now you can set up and use local and remote CouchDBs. The CouchDB needs to be on and have a server admin account so you can enter these into the environment variables. This reduces the process for onboard developers a lot!
+
+### Changed
+
+- Now using CouchDB 3
+- Now using Environmental Variables (.env) to store the URL and log in for CouchDB meaning you can now change this information to suit your setup.
+- Changed DeBug.vue to reload to your current install local or otherwise.
+
+# Guide
+
 ## Use the following headers for each log
 
 Delete as you see fit and use # for version number
