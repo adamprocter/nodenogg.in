@@ -2,9 +2,11 @@
   <div class="debug">
     <hr />
     <!-- <h2>Debug Options</h2> -->
-    <h4>LAST UPDATE 29th Feb 2020.</h4>
+    <h4>LAST UPDATE 1st March 2020.</h4>
     <p>You need to know what this button does before you press it.</p>
-    <button class="danger" @click="removeLocal()">Join another microcosm</button>
+    <button class="danger" @click="removeLocal()">
+      Join another microcosm
+    </button>
     <!-- <button @click="exportStorage()">Export my contributions</button>
     <button class="danger" v-on:click="deleteClient">
       Delete my contributions (inc. attachments) permanently

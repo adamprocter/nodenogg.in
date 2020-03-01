@@ -1,3 +1,12 @@
+# 0.1.2
+
+_1st March 2020_
+
+### Added
+
+- Imported missing css for handles for vue draggable, nodes are now resizable
+- Size of node is also sync'd in realtime cross devices
+
 # 0.1.1
 
 _29th Feb 2020_
