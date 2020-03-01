@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import PouchDB from 'pouchdb'
 PouchDB.plugin(require('pouchdb-find'))
 import VueDraggableResizable from 'vue-draggable-resizable'
+import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 
 Vue.use(Vuex)
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
@@ -193,12 +194,13 @@ const store = new Vuex.Store({
     },
 
     MOVE_POS(state, e) {
-      //console.log(e.localnodeid)
       var i
       for (i = 0; i < Object.keys(state.configPositions).length; i++) {
         if (e.localnodeid == state.configPositions[i].nodeid) {
           state.configPositions[i].xpos = e.x
           state.configPositions[i].ypos = e.y
+          state.configPositions[i].width = e.width
+          state.configPositions[i].height = e.height
         }
       }
 
@@ -278,7 +280,9 @@ const store = new Vuex.Store({
         doc.positions.push({
           nodeid: uniqueid,
           xpos: 50,
-          ypos: 50
+          ypos: 50,
+          width: 200,
+          height: 250
         })
         return pouchdb
           .put({
@@ -399,8 +403,8 @@ const store = new Vuex.Store({
       commit('SET_CLIENT', e)
     },
 
-    movePos: ({ commit }, nodeid, xpos, ypos) => {
-      commit('MOVE_POS', nodeid, xpos, ypos)
+    movePos: ({ commit }, nodeid, xpos, ypos, width, height) => {
+      commit('MOVE_POS', nodeid, xpos, ypos, width, height)
     },
 
     addNode: ({ commit }, e) => {
