@@ -24,6 +24,10 @@
               :id="nodeid"
             ></textarea>
           </div>
+          <h3>Reactions</h3>
+          <div v-for="(emojis, index) in configEmoji" :key="index">
+            <p class="allemoji" v-if="nodeid == emojis.docid">{{ emojis.emojitext }}</p>
+          </div>
           <!-- <div v-for="(value, index) in configPositions" v-bind:key="index">
           <p v-if="nodeid == value.nodeid">
             {{ localx }}, ({{ value.xpos }}) {{ localy }}
@@ -66,7 +70,8 @@ export default {
   },
   computed: mapState({
     myNodes: state => state.myNodes,
-    configPositions: state => state.configPositions
+    configPositions: state => state.configPositions,
+    configEmoji: state => state.configEmoji
   }),
   methods: {
     onActivated() {

@@ -359,14 +359,58 @@ const store = new Vuex.Store({
             // pouchdb.put({  })
           }
         })
+    },
+    GET_EMOJI(state) {
+      console.log
+      pouchdb
+        .get(state.global_emoji_name)
+        .then(function(doc) {
+          state.configEmoji = doc.emojis
+        })
+        .catch(function(err) {
+          console.log(err)
+          if (err.status == 404) {
+            return pouchdb.put({
+              _id: state.global_emoji_name,
+              emojis: []
+            })
+          }
+        })
+    },
+    ADD_EMOJI(state, e) {
+      var uniqueid =
+        Math.random()
+          .toString(36)
+          .substring(2, 15) +
+        Math.random()
+          .toString(36)
+          .substring(2, 15)
+      pouchdb.get(state.global_emoji_name).then(function(doc) {
+        doc.emojis.push({
+          id: uniqueid,
+          docid: e.docid,
+          emojitext: e.emojitext
+        })
+        return pouchdb
+          .put({
+            _id: state.global_emoji_name,
+            _rev: doc._rev,
+            emojis: doc.emojis
+          })
+          .catch(function(err) {
+            console.log(err)
+          })
+      })
     }
   },
+
   actions: {
     syncDB: () => {
       pouchdb.replicate.from(remote).on('complete', function() {
         store.commit('GET_ALL_NODES')
         store.commit('GET_MY_NODES')
         store.commit('GET_POSITIONS')
+        store.commit('GET_EMOJI')
         // turn on two-way, continuous, retriable sync
         pouchdb
           .sync(remote, { live: true, retry: true, attachments: true })
@@ -375,6 +419,7 @@ const store = new Vuex.Store({
             store.commit('GET_ALL_NODES')
             store.commit('GET_MY_NODES')
             store.commit('GET_POSITIONS')
+            store.commit('GET_EMOJI')
           })
           .on('paused', function() {
             // replication paused (e.g. replication up to date, user went offline)
@@ -416,6 +461,12 @@ const store = new Vuex.Store({
     deleteFlag: ({ commit }, e) => {
       // var text = e.target.value
       commit('DELETE_FLAG', e)
+    },
+    addEmoji: ({ commit }, { docid, emojitext }) => {
+      commit('ADD_EMOJI', {
+        docid,
+        emojitext
+      })
     }
   },
   modules: {}
