@@ -4,21 +4,19 @@
     <!-- <h2>Debug Options</h2> -->
     <h4>LAST UPDATE 24th Feb 2020.</h4>
     <p>You need to know what these buttons do before you press them.</p>
-    <button class="danger" @click="removeLocal()">
-      Join another microcosm
-    </button>
+    <Button @click="removeLocal()">Join another microcosm</Button>
     <!-- <button @click="exportStorage()">Export my contributions</button>
     <button class="danger" v-on:click="deleteClient">
       Delete my contributions (inc. attachments) permanently
     </button>
-    <button @click="handleConnection()">Online check</button> -->
+    <button @click="handleConnection()">Online check</button>-->
     <p>That's why they are red.</p>
   </div>
 </template>
 
 <script>
 var serverUrl = 'https://nodenogg.in'
-
+import { Button } from '@nodenogg.in/components'
 export default {
   mounted() {
     window.addEventListener('online', this.handleConnection)
@@ -70,6 +68,9 @@ export default {
     getServerUrl: function() {
       return serverUrl || window.location.origin
     }
+  },
+  components: {
+    Button
   }
 }
 </script>

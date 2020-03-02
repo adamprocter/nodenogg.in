@@ -1,5 +1,5 @@
 {
-  "name": "nodenogg.in",
+  "name": "@nodenogg.in/app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -19,6 +19,9 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@nodenogg.in/components": "^0.0.1",
+    "@nodenogg.in/node-editor": "^0.0.1",
+    "@nodenogg.in/utils": "^0.0.1",
     "@vue/cli-plugin-babel": "^4.2.0",
     "@vue/cli-plugin-eslint": "^4.2.0",
     "@vue/cli-plugin-router": "^4.2.0",
