@@ -1,5 +1,12 @@
 var script = {
-  name: "NodeEditor"
+  name: "NodeEditor",
+
+  data() {
+    return {
+      example: 'My data'
+    };
+  }
+
 };
 
 function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
@@ -145,7 +152,7 @@ var __vue_render__ = function () {
 
   return _c('div', {
     staticClass: "editor"
-  }, [_vm._v("Placeholder")]);
+  }, [_vm._v(_vm._s(_vm.example))]);
 };
 
 var __vue_staticRenderFns__ = [];
@@ -153,8 +160,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-55d4c831_0", {
-    source: ".editor[data-v-55d4c831]{display:block;width:400px;height:400px;border:1px solid #ccc;background:#eaeaea;text-align:center;padding:25px;font-size:24px}",
+  inject("data-v-1a03436e_0", {
+    source: ".editor[data-v-1a03436e]{display:block;width:400px;height:400px;border:1px solid #ccc;background:#eaeaea;text-align:center;padding:25px;font-size:24px}",
     map: undefined,
     media: undefined
   });
@@ -162,7 +169,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-55d4c831";
+const __vue_scope_id__ = "data-v-1a03436e";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;

@@ -113,7 +113,9 @@ function _nonIterableRest() {
         }
     }
     return script;
-}function createInjectorSSR(context) {
+}
+//# sourceMappingURL=normalize-component.mjs.map
+function createInjectorSSR(context) {
     if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
         context = __VUE_SSR_CONTEXT__;
     }
@@ -153,7 +155,9 @@ function renderStyles(styles) {
                 '</style>';
     }
     return css;
-}/* script */
+}
+//# sourceMappingURL=server.mjs.map
+/* script */
 var __vue_script__ = script;
 /* template */
 
@@ -172,8 +176,8 @@ var __vue_staticRenderFns__ = [];
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-25089962_0", {
-    source: "button[data-v-25089962]{border:none;background:var(--dark-mono);color:#fff;padding:10px;outline:0;font-family:inherit;font-size:16px;border-radius:6px}",
+  inject("data-v-325c5863_0", {
+    source: "button[data-v-325c5863]{border:none;background:var(--dark-coral);color:#fff;padding:10px;outline:0;font-family:inherit;font-size:16px;border-radius:6px}",
     map: undefined,
     media: undefined
   });
@@ -181,10 +185,10 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__ = "data-v-25089962";
+var __vue_scope_id__ = "data-v-325c5863";
 /* module identifier */
 
-var __vue_module_identifier__ = "data-v-25089962";
+var __vue_module_identifier__ = "data-v-325c5863";
 /* functional template */
 
 var __vue_is_functional_template__ = false;

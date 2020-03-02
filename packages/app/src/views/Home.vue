@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <DeBug />
+    <NodeEditor/>
     <div v-if="clientset">
       <OtherNodeslayer
         v-for="value in otherNodes"
@@ -32,6 +33,7 @@ import NodesLayer from '@/components/NodesLayer.vue'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import DeBug from '@/components/DeBug.vue'
 import ControlsLayer from '@/components/ControlsLayer.vue'
+import NodeEditor from '@nodenogg.in/node-editor'
 
 import { mapState } from 'vuex'
 
@@ -49,9 +51,10 @@ export default {
     OnBoard,
     CanvasLayer,
     NodesLayer,
+    NodeEditor,
     OtherNodeslayer,
     DeBug,
-    ControlsLayer
+    ControlsLayer,
   },
   computed: mapState({
     myNodes: state => state.myNodes,

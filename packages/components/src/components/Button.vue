@@ -13,7 +13,7 @@ export default {
 <style scoped>
 button {
   border: none;
-  background: var(--dark-mono);
+  background: var(--dark-coral);
   color: white;
   padding: 10px;
   outline: none;

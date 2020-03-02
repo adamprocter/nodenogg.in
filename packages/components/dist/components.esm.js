@@ -78,6 +78,7 @@ function normalizeComponent(template, style, script, scopeId, isFunctionalTempla
     }
     return script;
 }
+//# sourceMappingURL=normalize-component.mjs.map
 
 const isOldIE = typeof navigator !== 'undefined' &&
     /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
@@ -131,6 +132,7 @@ function addStyle(id, css) {
         }
     }
 }
+//# sourceMappingURL=browser.mjs.map
 
 /* script */
 const __vue_script__ = script;
@@ -151,8 +153,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-25089962_0", {
-    source: "button[data-v-25089962]{border:none;background:var(--dark-mono);color:#fff;padding:10px;outline:0;font-family:inherit;font-size:16px;border-radius:6px}",
+  inject("data-v-325c5863_0", {
+    source: "button[data-v-325c5863]{border:none;background:var(--dark-coral);color:#fff;padding:10px;outline:0;font-family:inherit;font-size:16px;border-radius:6px}",
     map: undefined,
     media: undefined
   });
@@ -160,7 +162,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-25089962";
+const __vue_scope_id__ = "data-v-325c5863";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;

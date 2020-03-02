@@ -1,11 +1,16 @@
 <script>
 export default {
-  name: "NodeEditor"
+  name: "NodeEditor",
+  data() {
+    return {
+      example: 'My data'
+    }
+  }
 };
 </script>
 
 <template>
-  <div class="editor">Placeholder</div>
+  <div class="editor">{{example}}</div>
 </template>
 
 <style scoped>
