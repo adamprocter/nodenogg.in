@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import ComponentLibrary from "@nodenogg.in/components"
+import ComponentLibrary from '@nodenogg.in/components'
 
 Vue.config.productionTip = false
 
