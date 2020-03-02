@@ -1,5 +1,6 @@
 // Import vue components
-import * as components from '@/components/index';
+import * as components from '@/index';
+import { dom, color } from '@nodenogg.in/utils'
 
 // install function executed by Vue.use()
 const install = function installComponents(Vue) {
@@ -9,6 +10,9 @@ const install = function installComponents(Vue) {
     Vue.component(componentName, component);
   });
 };
+
+// add css colour variables
+dom.addPaletteToCSSVariables(document.documentElement, color.palette)
 
 // Create module definition for Vue.use()
 const plugin = {
@@ -33,4 +37,4 @@ export default plugin;
 
 // To allow individual component use, export components
 // each can be registered via Vue.component()
-export * from '@/components/index';
+export * from '@/index';

@@ -1,6 +1,7 @@
-var script = {
-  name: "Button" // vue component name
+import { dom, color } from '@nodenogg.in/utils';
 
+var script = {
+  name: "Button"
 };
 
 function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
@@ -77,6 +78,7 @@ function normalizeComponent(template, style, script, scopeId, isFunctionalTempla
     }
     return script;
 }
+//# sourceMappingURL=normalize-component.mjs.map
 
 const isOldIE = typeof navigator !== 'undefined' &&
     /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
@@ -130,6 +132,7 @@ function addStyle(id, css) {
         }
     }
 }
+//# sourceMappingURL=browser.mjs.map
 
 /* script */
 const __vue_script__ = script;
@@ -142,7 +145,7 @@ var __vue_render__ = function () {
 
   var _c = _vm._self._c || _h;
 
-  return _c('button', [_vm._t("default")], 2);
+  return _c('button', _vm._g(_vm._b({}, 'button', _vm.$attrs, false), _vm.$listeners), [_vm._t("default")], 2);
 };
 
 var __vue_staticRenderFns__ = [];
@@ -150,8 +153,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-ccd2bb26_0", {
-    source: "button[data-v-ccd2bb26]{border:none;background:#142896;color:#fff;padding:10px;outline:0}",
+  inject("data-v-25089962_0", {
+    source: "button[data-v-25089962]{border:none;background:var(--dark-mono);color:#fff;padding:10px;outline:0;font-family:inherit;font-size:16px;border-radius:6px}",
     map: undefined,
     media: undefined
   });
@@ -159,7 +162,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-ccd2bb26";
+const __vue_scope_id__ = "data-v-25089962";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;
@@ -190,8 +193,10 @@ const install = function installComponents(Vue) {
   Object.entries(components).forEach(([componentName, component]) => {
     Vue.component(componentName, component);
   });
-}; // Create module definition for Vue.use()
+}; // add css colour variables
 
+
+dom.addPaletteToCSSVariables(document.documentElement, color.palette); // Create module definition for Vue.use()
 
 const plugin = {
   install

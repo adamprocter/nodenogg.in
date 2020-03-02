@@ -509,13 +509,30 @@ const removeEvent = (el, event, handler) => {
     el['on' + event] = null;
   }
 };
+/**
+ * Adds a color palette to a specified DOM element as CSS variables
+ * 
+ * @param {HTMLElement} target - root to which variables will be attached
+ * @param {Object} palette - color palette
+ *  */
+
+const addPaletteToCSSVariables = (targetElement, palette) => {
+  if (isClient && targetElement) {
+    Object.keys(palette).forEach(p => {
+      Object.keys(palette[p]).forEach(h => {
+        targetElement.style.setProperty(`--${h}-${p}`, palette[p][h]);
+      });
+    });
+  }
+};
 
 var dom = /*#__PURE__*/Object.freeze({
     __proto__: null,
     getInteractionPoint: getInteractionPoint,
     matchesSelectorToParentElements: matchesSelectorToParentElements,
     addEvent: addEvent,
-    removeEvent: removeEvent
+    removeEvent: removeEvent,
+    addPaletteToCSSVariables: addPaletteToCSSVariables
 });
 
 const generateBezierCurve = (from, to, tension) => {
@@ -540,4 +557,70 @@ var svg = /*#__PURE__*/Object.freeze({
     makeBezier: makeBezier
 });
 
-export { canvas, dom, domWindow, groupBy, isClient, isFunction, nodes, number, pluralize, shallowRemoveFromArray, shallowUnique, svg };
+const palette = {
+  coral: {
+    light: '#FFD8E1',
+    dark: '#F56789'
+  },
+  lime: {
+    light: '#EEFFBC',
+    dark: '#B9DF4E'
+  },
+  blue: {
+    light: '#CDEAFF',
+    dark: '#4EB4FF'
+  },
+  coral: {
+    light: '#FFD8CC',
+    dark: '#FF8762'
+  },
+  purple: {
+    light: '#DAD9FE',
+    dark: '#8A80F6'
+  },
+  pink: {
+    light: '#FBE9FF',
+    dark: '#E47EFD'
+  },
+  yellow: {
+    light: '#FFF3CA',
+    dark: '#FFD84F'
+  },
+  mono: {
+    light: "#FFFFFF",
+    dark: "#A3A3A3"
+  }
+};
+
+/**
+ * Selects a HEX color value depending on a supplied key reference,
+ * providing a default (mono) value if none is found.
+ *
+ * @param {string} color - Target palette (from above)
+ * @param {string} type - Target color type (light or dark)
+ * @returns {string} hex color value
+ *
+ *  */
+
+const getPalette = (color = 'mono', type) => palette[color] ? palette[color][type] : palette.mono[type];
+const paletteArray = () => {
+  const result = [];
+  Object.keys(palette).forEach(p => {
+    Object.keys(palette[p]).forEach(h => {
+      result.push({
+        name: `${k}-${h}`,
+        value: palette[p][h]
+      });
+    });
+  });
+  return result;
+};
+
+var color = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    getPalette: getPalette,
+    paletteArray: paletteArray,
+    palette: palette
+});
+
+export { canvas, color, dom, domWindow, groupBy, isClient, isFunction, nodes, number, pluralize, shallowRemoveFromArray, shallowUnique, svg };

@@ -14,7 +14,8 @@
       <em>(+ helpers &amp; supporters)</em>
     </p>
 
-    <h3>version 0.1.0</h3>
+    <h3>version {{ myVersion }}</h3>
+
     <ul>
       <li>
         Co-create and contribute ideas, with text, links and attachments with
@@ -30,7 +31,7 @@
       <li>&nbsp;Data is not yet encrypted.</li>
       <li>&nbsp;Export is not turned on yet.</li>
       <li>&nbsp;Delete only flags for deletion.</li>
-      <li>&nbsp;Positions are not synd'd</li>
+
       <li>
         Some devices seem to have a bug when you first try to create or join an
         microcosm, on second attempt it will work allowing device name.
@@ -53,9 +54,9 @@
       </li>
       <li>
         &nbsp;
-        <a href="https://discursive.adamprocter.co.uk/categories/phd/"
-          >discursive (phd catergory link)</a
-        >
+        <a
+          href="https://discursive.adamprocter.co.uk/categories/phd/"
+        >discursive (phd catergory link)</a>
         (blog)
       </li>
       <li>
@@ -73,18 +74,28 @@
       </li>
       <li>
         &nbsp;
-        <a href="https://gitlab.adamprocter.co.uk/adamprocter/couchdocs"
-          >gitlab</a
-        >
+        <a href="https://gitlab.adamprocter.co.uk/adamprocter/couchdocs">gitlab</a>
         (code)
       </li>
       <li>
         &nbsp;
-        <a href="https://github.com/adamprocter/couchdoc-mirror/issues"
-          >issues</a
-        >
+        <a href="https://github.com/adamprocter/couchdoc-mirror/issues">issues</a>
         (raise and review)
       </li>
     </ul>
   </div>
 </template>
+<script>
+import { mapState } from 'vuex'
+
+export default {
+  name: 'About',
+
+  data: function() {
+    return {}
+  },
+  computed: mapState({
+    myVersion: state => state.version
+  })
+}
+</script>

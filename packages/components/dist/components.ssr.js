@@ -1,4 +1,4 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _slicedToArray(arr, i) {
+'use strict';Object.defineProperty(exports,'__esModule',{value:true});var utils=require('@nodenogg.in/utils');function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
 }
 
@@ -39,8 +39,7 @@ function _iterableToArrayLimit(arr, i) {
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }var script = {
-  name: "Button" // vue component name
-
+  name: "Button"
 };function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
     if (typeof shadowMode !== 'boolean') {
         createInjectorSSR = createInjector;
@@ -114,7 +113,9 @@ function _nonIterableRest() {
         }
     }
     return script;
-}function createInjectorSSR(context) {
+}
+//# sourceMappingURL=normalize-component.mjs.map
+function createInjectorSSR(context) {
     if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
         context = __VUE_SSR_CONTEXT__;
     }
@@ -154,7 +155,9 @@ function renderStyles(styles) {
                 '</style>';
     }
     return css;
-}/* script */
+}
+//# sourceMappingURL=server.mjs.map
+/* script */
 var __vue_script__ = script;
 /* template */
 
@@ -165,7 +168,7 @@ var __vue_render__ = function __vue_render__() {
 
   var _c = _vm._self._c || _h;
 
-  return _c('button', [_vm._t("default")], 2);
+  return _c('button', _vm._g(_vm._b({}, 'button', _vm.$attrs, false), _vm.$listeners), [_vm._t("default")], 2);
 };
 
 var __vue_staticRenderFns__ = [];
@@ -173,8 +176,8 @@ var __vue_staticRenderFns__ = [];
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-ccd2bb26_0", {
-    source: "button[data-v-ccd2bb26]{border:none;background:#142896;color:#fff;padding:10px;outline:0}",
+  inject("data-v-25089962_0", {
+    source: "button[data-v-25089962]{border:none;background:var(--dark-mono);color:#fff;padding:10px;outline:0;font-family:inherit;font-size:16px;border-radius:6px}",
     map: undefined,
     media: undefined
   });
@@ -182,10 +185,10 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__ = "data-v-ccd2bb26";
+var __vue_scope_id__ = "data-v-25089962";
 /* module identifier */
 
-var __vue_module_identifier__ = "data-v-ccd2bb26";
+var __vue_module_identifier__ = "data-v-25089962";
 /* functional template */
 
 var __vue_is_functional_template__ = false;
@@ -204,8 +207,10 @@ var __vue_component__ = normalizeComponent({
 
     Vue.component(componentName, component);
   });
-}; // Create module definition for Vue.use()
+}; // add css colour variables
 
+
+utils.dom.addPaletteToCSSVariables(document.documentElement, utils.color.palette); // Create module definition for Vue.use()
 
 var plugin = {
   install: install

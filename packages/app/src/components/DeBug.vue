@@ -2,21 +2,24 @@
   <div class="debug">
     <hr />
     <!-- <h2>Debug Options</h2> -->
-    <h4>LAST UPDATE 24th Feb 2020.</h4>
-    <p>You need to know what these buttons do before you press them.</p>
-    <Button @click="removeLocal()">Join another microcosm</Button>
+    <h4>LAST UPDATE 1st March 2020.</h4>
+    <p>You need to know what this button does before you press it.</p>
+    <Button class="danger" @click="removeLocal()">
+      Join another microcosm
+    </Button>
     <!-- <button @click="exportStorage()">Export my contributions</button>
     <button class="danger" v-on:click="deleteClient">
       Delete my contributions (inc. attachments) permanently
     </button>
     <button @click="handleConnection()">Online check</button>-->
-    <p>That's why they are red.</p>
+    <hr />
   </div>
 </template>
 
 <script>
+// This is for detecting offline issues
 var serverUrl = 'https://nodenogg.in'
-import { Button } from '@nodenogg.in/components'
+
 export default {
   mounted() {
     window.addEventListener('online', this.handleConnection)
@@ -30,9 +33,10 @@ export default {
     removeLocal: function() {
       localStorage.removeItem('myNNClient')
       localStorage.removeItem('mylastMicrocosm')
-      // Hardcoded in thye case that a URL had parameters the reload fails
-      location.assign('https://alpha.nodenogg.in/')
+      // Hardcoded as when I set a URL had parameters the reload fails
+      //location.assign('https://alpha.nodenogg.in/')
       //location.assign('http://localhost:8080/')
+      location.reload()
     },
 
     deleteClient() {
@@ -68,9 +72,6 @@ export default {
     getServerUrl: function() {
       return serverUrl || window.location.origin
     }
-  },
-  components: {
-    Button
   }
 }
 </script>
@@ -79,6 +80,29 @@ export default {
 <style scoped>
 li:before {
   content: '';
+}
+.danger {
+  background-color: red;
+}
+
+button {
+  font-size: 1em;
+  touch-action: manipulation;
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 1px 1px 1px #000000;
+  padding: 0.6em;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
 }
 
 b {

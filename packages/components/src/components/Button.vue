@@ -1,11 +1,11 @@
 <script>
 export default {
-  name: "Button" // vue component name
+  name: "Button"
 };
 </script>
 
 <template>
-  <button>
+  <button v-bind="$attrs" v-on="$listeners">
     <slot />
   </button>
 </template>
@@ -13,9 +13,12 @@ export default {
 <style scoped>
 button {
   border: none;
-  background: rgb(20, 40, 150);
+  background: var(--dark-mono);
   color: white;
   padding: 10px;
   outline: none;
+  font-family: inherit;
+  font-size: 16px;
+  border-radius: 6px;
 }
 </style>

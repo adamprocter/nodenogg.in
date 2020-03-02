@@ -1,4 +1,4 @@
-import { isFunction } from '@/helpers'
+import { isFunction, isClient } from '@/helpers'
 
 //////////////////////////////////////////////////////////////////////
 // DOM UTILITIES
@@ -14,66 +14,82 @@ import { isFunction } from '@/helpers'
  *
  *  */
 export const getInteractionPoint = (target, event) => {
-  const rect = target.getBoundingClientRect();
+    const rect = target.getBoundingClientRect();
 
-  return {
-    x: parseInt(
-      ((event.clientX - rect.left) / (rect.right - rect.left)) *
-      target.offsetWidth
-    ),
-    y: parseInt(
-      ((event.clientY - rect.top) / (rect.bottom - rect.top)) *
-      target.offsetHeight
-    )
-  };
+    return {
+        x: parseInt(
+            ((event.clientX - rect.left) / (rect.right - rect.left)) *
+            target.offsetWidth
+        ),
+        y: parseInt(
+            ((event.clientY - rect.top) / (rect.bottom - rect.top)) *
+            target.offsetHeight
+        )
+    };
 }
 
 const matches = [
-  'matches',
-  'webkitMatchesSelector',
-  'mozMatchesSelector',
-  'msMatchesSelector',
-  'oMatchesSelector'
+    'matches',
+    'webkitMatchesSelector',
+    'mozMatchesSelector',
+    'msMatchesSelector',
+    'oMatchesSelector'
 ]
 
 export const matchesSelectorToParentElements = (el, selector, baseNode) => {
-  let node = el
+    let node = el
 
-  const matchesSelectorFunc = matches.find(func => isFunction(node[func]))
+    const matchesSelectorFunc = matches.find(func => isFunction(node[func]))
 
-  if (!isFunction(node[matchesSelectorFunc])) return false
+    if (!isFunction(node[matchesSelectorFunc])) return false
 
-  do {
-    if (node[matchesSelectorFunc](selector)) return true
-    if (node === baseNode) return false
-    node = node.parentNode
-  } while (node)
+    do {
+        if (node[matchesSelectorFunc](selector)) return true
+        if (node === baseNode) return false
+        node = node.parentNode
+    } while (node)
 
-  return false
+    return false
 }
 
 export const addEvent = (el, event, handler) => {
-  if (!el) {
-    return
-  }
-  if (el.attachEvent) {
-    el.attachEvent('on' + event, handler)
-  } else if (el.addEventListener) {
-    el.addEventListener(event, handler, true)
-  } else {
-    el['on' + event] = handler
-  }
+    if (!el) {
+        return
+    }
+    if (el.attachEvent) {
+        el.attachEvent('on' + event, handler)
+    } else if (el.addEventListener) {
+        el.addEventListener(event, handler, true)
+    } else {
+        el['on' + event] = handler
+    }
 }
 
 export const removeEvent = (el, event, handler) => {
-  if (!el) {
-    return
-  }
-  if (el.detachEvent) {
-    el.detachEvent('on' + event, handler)
-  } else if (el.removeEventListener) {
-    el.removeEventListener(event, handler, true)
-  } else {
-    el['on' + event] = null
-  }
+    if (!el) {
+        return
+    }
+    if (el.detachEvent) {
+        el.detachEvent('on' + event, handler)
+    } else if (el.removeEventListener) {
+        el.removeEventListener(event, handler, true)
+    } else {
+        el['on' + event] = null
+    }
+}
+
+/**
+ * Adds a color palette to a specified DOM element as CSS variables
+ * 
+ * @param {HTMLElement} target - root to which variables will be attached
+ * @param {Object} palette - color palette
+ *  */
+export const addPaletteToCSSVariables = (targetElement, palette) => {
+    if (isClient && targetElement) {
+        Object.keys(palette).forEach(p => {
+            Object.keys(palette[p]).forEach(h => {
+                targetElement.style.setProperty(`--${h}-${p}`, palette[p][h]);
+            })
+        })
+    }
 }

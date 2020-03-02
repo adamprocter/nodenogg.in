@@ -28,7 +28,7 @@
         autocapitalize="none"
         autofocus
       />
-      <button @click="createMicrocosm(), setFocus()">+</button>
+      <Button @click="createMicrocosm(), setFocus()">+</Button>
     </form>
 
     <form v-show="partb">
@@ -46,13 +46,13 @@
         autocapitalize="none"
         ref="objectname"
       />
-      <button @click="setClient()">+</button>
+      <Button @click="setClient()">+</Button>
     </form>
 
     <form v-show="partc">
       <h2>3</h2>
       <h3>start</h3>
-      <button @click="letsGo()">+</button>
+      <Button @click="letsGo()">+</Button>
     </form>
   </div>
 </template>

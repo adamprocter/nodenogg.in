@@ -14,12 +14,15 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve src/serve-dev.js",
+    "dev": "cross-env NODE_ENV=production rollup --config config/rollup.config.js --watch",
     "build": "cross-env NODE_ENV=production rollup --config config/rollup.config.js",
     "build:ssr": "cross-env NODE_ENV=production rollup --config config/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config config/rollup.config.js --format es",
     "build:unpkg": "cross-env NODE_ENV=production rollup --config config/rollup.config.js --format iife"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@nodenogg.in/utils": "^0.0.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",

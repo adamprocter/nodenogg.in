@@ -2,9 +2,7 @@
   <div class="controls">
     <div class="btn-row">
       <!-- <button on:click="popups.showPane = !popups.showPane"> -->
-      <button @click="addNode()">
-        Create Node
-      </button>
+      <Button @click="addNode()">Create Node</Button>
     </div>
     <!--
       <div class="popup" v-if="popups.showPane">
@@ -20,6 +18,11 @@
 export default {
   data() {
     return {}
+  },
+  props: {
+    click: {
+      type: Function
+    }
   },
   methods: {
     addNode() {

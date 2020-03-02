@@ -636,7 +636,23 @@ var removeEvent = function removeEvent(el, event, handler) {
   } else {
     el['on' + event] = null;
   }
-};var dom=/*#__PURE__*/Object.freeze({__proto__:null,getInteractionPoint: getInteractionPoint,matchesSelectorToParentElements: matchesSelectorToParentElements,addEvent: addEvent,removeEvent: removeEvent});var generateBezierCurve = function generateBezierCurve(from, to, tension) {
+};
+/**
+ * Adds a color palette to a specified DOM element as CSS variables
+ * 
+ * @param {HTMLElement} target - root to which variables will be attached
+ * @param {Object} palette - color palette
+ *  */
+
+var addPaletteToCSSVariables = function addPaletteToCSSVariables(targetElement, palette) {
+  if (isClient && targetElement) {
+    Object.keys(palette).forEach(function (p) {
+      Object.keys(palette[p]).forEach(function (h) {
+        targetElement.style.setProperty("--".concat(h, "-").concat(p), palette[p][h]);
+      });
+    });
+  }
+};var dom=/*#__PURE__*/Object.freeze({__proto__:null,getInteractionPoint: getInteractionPoint,matchesSelectorToParentElements: matchesSelectorToParentElements,addEvent: addEvent,removeEvent: removeEvent,addPaletteToCSSVariables: addPaletteToCSSVariables});var generateBezierCurve = function generateBezierCurve(from, to, tension) {
   if (from && to) {
     var _generateLinkHandles = generateLinkHandles(from, to),
         _generateLinkHandles2 = _slicedToArray(_generateLinkHandles, 2),
@@ -654,4 +670,60 @@ var makeBezier = function makeBezier(fromHandle, toHandle, tension) {
   // on the distance the link covers
   var adjustedTension = mapRange(distance(fromHandle, toHandle), 0, domWindow.width, tension * 0.01, tension * 2.);
   return "M".concat(fromHandle.x, ",").concat(fromHandle.y, " C").concat(fromHandle.x * (1 + adjustedTension), ",").concat(fromHandle.y, " ").concat(toHandle.x * (1 - adjustedTension), ",").concat(toHandle.y, " ").concat(toHandle.x, ",").concat(toHandle.y);
-};var svg=/*#__PURE__*/Object.freeze({__proto__:null,generateBezierCurve: generateBezierCurve,makeBezier: makeBezier});exports.canvas=canvas;exports.dom=dom;exports.domWindow=domWindow;exports.groupBy=groupBy;exports.isClient=isClient;exports.isFunction=isFunction;exports.nodes=nodes;exports.number=number;exports.pluralize=pluralize;exports.shallowRemoveFromArray=shallowRemoveFromArray;exports.shallowUnique=shallowUnique;exports.svg=svg;
+};var svg=/*#__PURE__*/Object.freeze({__proto__:null,generateBezierCurve: generateBezierCurve,makeBezier: makeBezier});var _palette;
+
+var palette = (_palette = {
+  coral: {
+    light: '#FFD8E1',
+    dark: '#F56789'
+  },
+  lime: {
+    light: '#EEFFBC',
+    dark: '#B9DF4E'
+  },
+  blue: {
+    light: '#CDEAFF',
+    dark: '#4EB4FF'
+  }
+}, _defineProperty(_palette, "coral", {
+  light: '#FFD8CC',
+  dark: '#FF8762'
+}), _defineProperty(_palette, "purple", {
+  light: '#DAD9FE',
+  dark: '#8A80F6'
+}), _defineProperty(_palette, "pink", {
+  light: '#FBE9FF',
+  dark: '#E47EFD'
+}), _defineProperty(_palette, "yellow", {
+  light: '#FFF3CA',
+  dark: '#FFD84F'
+}), _defineProperty(_palette, "mono", {
+  light: "#FFFFFF",
+  dark: "#A3A3A3"
+}), _palette);/**
+ * Selects a HEX color value depending on a supplied key reference,
+ * providing a default (mono) value if none is found.
+ *
+ * @param {string} color - Target palette (from above)
+ * @param {string} type - Target color type (light or dark)
+ * @returns {string} hex color value
+ *
+ *  */
+
+var getPalette = function getPalette() {
+  var color = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'mono';
+  var type = arguments.length > 1 ? arguments[1] : undefined;
+  return palette[color] ? palette[color][type] : palette.mono[type];
+};
+var paletteArray = function paletteArray() {
+  var result = [];
+  Object.keys(palette).forEach(function (p) {
+    Object.keys(palette[p]).forEach(function (h) {
+      result.push({
+        name: "".concat(k, "-").concat(h),
+        value: palette[p][h]
+      });
+    });
+  });
+  return result;
+};var color=/*#__PURE__*/Object.freeze({__proto__:null,getPalette: getPalette,paletteArray: paletteArray,palette: palette});exports.canvas=canvas;exports.color=color;exports.dom=dom;exports.domWindow=domWindow;exports.groupBy=groupBy;exports.isClient=isClient;exports.isFunction=isFunction;exports.nodes=nodes;exports.number=number;exports.pluralize=pluralize;exports.shallowRemoveFromArray=shallowRemoveFromArray;exports.shallowUnique=shallowUnique;exports.svg=svg;
