@@ -1,51 +1,5 @@
 var script = {
-  name: 'NodeEditor',
-
-  data() {
-    return {
-      counter: 5,
-      initCounter: 5,
-      message: {
-        action: null,
-        amount: null
-      }
-    };
-  },
-
-  computed: {
-    changedBy() {
-      var _message$amount;
-
-      const {
-        message
-      } = this;
-      if (!message.action) return 'initialized';
-      return `${message === null || message === void 0 ? void 0 : message.action} ${(_message$amount = message.amount) !== null && _message$amount !== void 0 ? _message$amount : ''}`.trim();
-    }
-
-  },
-  methods: {
-    increment(arg) {
-      const amount = typeof arg !== 'number' ? 1 : arg;
-      this.counter += amount;
-      this.message.action = 'incremented by';
-      this.message.amount = amount;
-    },
-
-    decrement(arg) {
-      const amount = typeof arg !== 'number' ? 1 : arg;
-      this.counter -= amount;
-      this.message.action = 'decremented by';
-      this.message.amount = amount;
-    },
-
-    reset() {
-      this.counter = this.initCounter;
-      this.message.action = 'reset';
-      this.message.amount = null;
-    }
-
-  }
+  name: "NodeEditor"
 };
 
 function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
@@ -122,6 +76,7 @@ function normalizeComponent(template, style, script, scopeId, isFunctionalTempla
     }
     return script;
 }
+//# sourceMappingURL=normalize-component.mjs.map
 
 const isOldIE = typeof navigator !== 'undefined' &&
     /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
@@ -175,6 +130,7 @@ function addStyle(id, css) {
         }
     }
 }
+//# sourceMappingURL=browser.mjs.map
 
 /* script */
 const __vue_script__ = script;
@@ -189,31 +145,7 @@ var __vue_render__ = function () {
 
   return _c('div', {
     staticClass: "editor"
-  }, [_c('p', [_vm._v("The counter was " + _vm._s(_vm.changedBy) + " to "), _c('b', [_vm._v(_vm._s(_vm.counter))]), _vm._v(".")]), _vm._v(" "), _c('button', {
-    on: {
-      "click": _vm.increment
-    }
-  }, [_vm._v("\n    Click +1\n  ")]), _vm._v(" "), _c('button', {
-    on: {
-      "click": _vm.decrement
-    }
-  }, [_vm._v("\n    Click -1\n  ")]), _vm._v(" "), _c('button', {
-    on: {
-      "click": function ($event) {
-        return _vm.increment(5);
-      }
-    }
-  }, [_vm._v("\n    Click +5\n  ")]), _vm._v(" "), _c('button', {
-    on: {
-      "click": function ($event) {
-        return _vm.decrement(5);
-      }
-    }
-  }, [_vm._v("\n    Click -5\n  ")]), _vm._v(" "), _c('button', {
-    on: {
-      "click": _vm.reset
-    }
-  }, [_vm._v("\n    Reset\n  ")])]);
+  }, [_vm._v("Placeholder")]);
 };
 
 var __vue_staticRenderFns__ = [];
@@ -221,8 +153,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-75d96718_0", {
-    source: ".editor[data-v-75d96718]{display:block;width:400px;margin:25px auto;border:1px solid #ccc;background:#eaeaea;text-align:center;padding:25px}.editor p[data-v-75d96718]{margin:0 0 1em}",
+  inject("data-v-55d4c831_0", {
+    source: ".editor[data-v-55d4c831]{display:block;width:400px;height:400px;border:1px solid #ccc;background:#eaeaea;text-align:center;padding:25px;font-size:24px}",
     map: undefined,
     media: undefined
   });
@@ -230,7 +162,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-75d96718";
+const __vue_scope_id__ = "data-v-55d4c831";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;

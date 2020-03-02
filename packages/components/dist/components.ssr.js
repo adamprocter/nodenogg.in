@@ -113,9 +113,7 @@ function _nonIterableRest() {
         }
     }
     return script;
-}
-//# sourceMappingURL=normalize-component.mjs.map
-function createInjectorSSR(context) {
+}function createInjectorSSR(context) {
     if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
         context = __VUE_SSR_CONTEXT__;
     }
@@ -155,9 +153,7 @@ function renderStyles(styles) {
                 '</style>';
     }
     return css;
-}
-//# sourceMappingURL=server.mjs.map
-/* script */
+}/* script */
 var __vue_script__ = script;
 /* template */
 

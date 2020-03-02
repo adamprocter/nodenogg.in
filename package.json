@@ -11,8 +11,8 @@
     "bootstrap": "lerna bootstrap",
     "changed": "lerna changed",
     "diff": "lerna diff",
-    "packages:dev": "lerna run dev",
-    "packages:serve": "lerna run serve",
+    "packages:dev": "lerna run dev --parallel",
+    "packages:serve": "lerna run serve --parallel",
     "packages:build": "lerna run build",
     "packages:lint": "lerna run lint"
   },

@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link>&nbsp;|
       <router-link to="/about">About</router-link>
     </div>
+    <NodeEditor />
     <h1>nodenogg.in</h1>
     <router-view />
   </div>

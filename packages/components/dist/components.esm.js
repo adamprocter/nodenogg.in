@@ -78,7 +78,6 @@ function normalizeComponent(template, style, script, scopeId, isFunctionalTempla
     }
     return script;
 }
-//# sourceMappingURL=normalize-component.mjs.map
 
 const isOldIE = typeof navigator !== 'undefined' &&
     /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
@@ -132,7 +131,6 @@ function addStyle(id, css) {
         }
     }
 }
-//# sourceMappingURL=browser.mjs.map
 
 /* script */
 const __vue_script__ = script;

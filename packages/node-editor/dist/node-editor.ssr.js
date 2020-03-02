@@ -1,43 +1,5 @@
 'use strict';Object.defineProperty(exports,'__esModule',{value:true});var script = {
-  name: 'NodeEditor',
-  data: function data() {
-    return {
-      counter: 5,
-      initCounter: 5,
-      message: {
-        action: null,
-        amount: null
-      }
-    };
-  },
-  computed: {
-    changedBy: function changedBy() {
-      var _message$amount;
-
-      var message = this.message;
-      if (!message.action) return 'initialized';
-      return "".concat(message === null || message === void 0 ? void 0 : message.action, " ").concat((_message$amount = message.amount) !== null && _message$amount !== void 0 ? _message$amount : '').trim();
-    }
-  },
-  methods: {
-    increment: function increment(arg) {
-      var amount = typeof arg !== 'number' ? 1 : arg;
-      this.counter += amount;
-      this.message.action = 'incremented by';
-      this.message.amount = amount;
-    },
-    decrement: function decrement(arg) {
-      var amount = typeof arg !== 'number' ? 1 : arg;
-      this.counter -= amount;
-      this.message.action = 'decremented by';
-      this.message.amount = amount;
-    },
-    reset: function reset() {
-      this.counter = this.initCounter;
-      this.message.action = 'reset';
-      this.message.amount = null;
-    }
-  }
+  name: "NodeEditor"
 };function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
     if (typeof shadowMode !== 'boolean') {
         createInjectorSSR = createInjector;
@@ -111,7 +73,9 @@
         }
     }
     return script;
-}function createInjectorSSR(context) {
+}
+//# sourceMappingURL=normalize-component.mjs.map
+function createInjectorSSR(context) {
     if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
         context = __VUE_SSR_CONTEXT__;
     }
@@ -151,7 +115,9 @@ function renderStyles(styles) {
                 '</style>';
     }
     return css;
-}/* script */
+}
+//# sourceMappingURL=server.mjs.map
+/* script */
 var __vue_script__ = script;
 /* template */
 
@@ -164,7 +130,7 @@ var __vue_render__ = function __vue_render__() {
 
   return _c('div', {
     staticClass: "editor"
-  }, [_vm._ssrNode("<p>" + _vm._ssrEscape("The counter was " + _vm._s(_vm.changedBy) + " to ") + "<b>" + _vm._ssrEscape(_vm._s(_vm.counter)) + "</b>.</p> <button>\n    Click +1\n  </button> <button>\n    Click -1\n  </button> <button>\n    Click +5\n  </button> <button>\n    Click -5\n  </button> <button>\n    Reset\n  </button>")]);
+  }, [_vm._ssrNode("Placeholder")]);
 };
 
 var __vue_staticRenderFns__ = [];
@@ -172,8 +138,8 @@ var __vue_staticRenderFns__ = [];
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-75d96718_0", {
-    source: ".editor[data-v-75d96718]{display:block;width:400px;margin:25px auto;border:1px solid #ccc;background:#eaeaea;text-align:center;padding:25px}.editor p[data-v-75d96718]{margin:0 0 1em}",
+  inject("data-v-55d4c831_0", {
+    source: ".editor[data-v-55d4c831]{display:block;width:400px;height:400px;border:1px solid #ccc;background:#eaeaea;text-align:center;padding:25px;font-size:24px}",
     map: undefined,
     media: undefined
   });
@@ -181,10 +147,10 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__ = "data-v-75d96718";
+var __vue_scope_id__ = "data-v-55d4c831";
 /* module identifier */
 
-var __vue_module_identifier__ = "data-v-75d96718";
+var __vue_module_identifier__ = "data-v-55d4c831";
 /* functional template */
 
 var __vue_is_functional_template__ = false;
