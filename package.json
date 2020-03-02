@@ -13,9 +13,16 @@
     "diff": "lerna diff",
     "packages:dev": "lerna run dev",
     "packages:serve": "lerna run serve",
-    "packages:build": "lerna run build"
+    "packages:build": "lerna run build",
+    "packages:lint": "lerna run lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lerna run lint"
+    }
   },
   "devDependencies": {
+    "husky": "^4.2.3",
     "lerna": "^3.20.2"
   }
 }
