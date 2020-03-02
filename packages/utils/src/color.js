@@ -1,4 +1,4 @@
-import { palette } from "@/constants/color"
+import { palette } from "@/constants/palettes"
 
 /**
  * Selects a HEX color value depending on a supplied key reference,
