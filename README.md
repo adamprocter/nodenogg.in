@@ -1,12 +1,37 @@
 # Welcome to nodenogg.in
 
-nodenogg.in empowers communities of practice to build and create knowledge by bridging the physical and digital studio spaces.Designers and makers spatially arrange materials, links and thoughts within the shared digital platform.
+nodenogg.in empowers communities of practice to build and create knowledge by bridging the physical and digital studio spaces. Designers and makers spatially arrange materials, links and thoughts within the shared digital platform.
 
 nodenogg.in is free open source software, built in the open, inclusive by design, private by design, humane centered by design, delightful by design, intuitive and decentralised by design.
 
 # Overarching Guide for Contributions
 
 Contributions to nodenogg.in must abide by the [Delightful Design Manifesto](MANIFESTO.md). More detail on Contributing can be read [here](CONTRIIBUTING.md).
+
+# Getting started
+
+1. Install project dependencies with `yarn` or `npm install`
+2. Install packages with `yarn bootstrap` or `npm run bootstrap`
+
+# Installing and removing dependencies
+Using `yarn add ...` or `npm install ...` in specific packages will break the links between local dependencies within the project. Instead use lerna to install/remove dependencies:
+
+## Add a NPM dependency to a package
+`lerna add example-npm-package packages/app` 
+Adds `example-npm-package` to the app and updates the relevant package.json
+
+## Remove a dependency from a package
+`lerna remove example-npm-package packages/app`
+Removes `example-npm-package` from the app and updates package.json
+
+# Scripts
+
+The `packages:*` scripts will run the following commands in each of the packages that have the associated script available in their package.json file.
+
+* `packages:dev` runs `dev`
+* `packages:serve` runs `serve`
+* `packages:build` runs `build`
+* `packages:lint` runs `lint`
 
 # Keeping up with nodenogg.in
 
