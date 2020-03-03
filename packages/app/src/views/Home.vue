@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <DeBug />
-    <NodeEditor/>
+    <NodeEditor />
     <div v-if="clientset">
       <OtherNodeslayer
         v-for="value in otherNodes"
@@ -54,7 +54,7 @@ export default {
     NodeEditor,
     OtherNodeslayer,
     DeBug,
-    ControlsLayer,
+    ControlsLayer
   },
   computed: mapState({
     myNodes: state => state.myNodes,
