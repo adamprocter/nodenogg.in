@@ -13,11 +13,10 @@ _4th March 2020_
 
 ### Fixed
 
-– Box sizing so textarea now is same width.
-
 - Textarea ignores drag allowing selections.
 - Markdown images now resize to fit node card width.
 - About.vue link to code now correct to nn group repo.
+- CSS Box-sizing so textarea is correct width.
 
 # 0.1.2
 
