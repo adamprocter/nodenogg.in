@@ -13,7 +13,12 @@
       Made by Adam Procter
       <em>(+ helpers &amp; supporters)</em>
     </p>
-
+    <ul>
+      <li>
+        Co-create and contribute ideas, with text, links and attachments with
+        other people in realtime.
+      </li>
+    </ul>
     <h3>
       version {{ myVersion }} - See full
       <a
@@ -22,16 +27,6 @@
       >
     </h3>
 
-    <ul>
-      <li>
-        Co-create and contribute ideas, with text, links and attachments with
-        other people in realtime.
-      </li>
-      <li>
-        Contributions displayed as a list and shared spatial view across all
-        devices.
-      </li>
-    </ul>
     <h3>known issues</h3>
     <ul>
       <li>&nbsp;Data is not yet encrypted.</li>
