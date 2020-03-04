@@ -17,6 +17,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+img {
+  width: 100%;
+}
 
 #nav a {
   font-weight: bold;

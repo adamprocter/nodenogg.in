@@ -13,7 +13,8 @@
         @resizing="onResize"
         @dragstop="onDragstop"
         @resizestop="onResizestop"
-        style="background-color: rgb(205, 234, 255);"
+        :drag-cancel="'.drag-cancel'"
+        style="background-color: rgb(205, 234, 255)"
       >
         <form>
           <div v-for="value in myNodes" v-bind:key="value.nodeid">
@@ -22,6 +23,7 @@
               @input="editNode"
               v-model="value.nodetext"
               :id="nodeid"
+              class="drag-cancel"
             ></textarea>
           </div>
           <h3>Reactions</h3>
@@ -61,7 +63,8 @@ export default {
       width: this.nodewidth,
       height: this.nodeheight,
       localx: 0,
-      localy: 0
+      localy: 0,
+      globalscale: 0.7
     }
   },
 
@@ -143,9 +146,17 @@ export default {
   position: relative;
 }
 
+img {
+  width: 100%;
+}
+/* .draggable {
+  transform: scale(0.7);
+} */
+
 textarea {
   width: 100%;
   height: 120px;
   resize: none;
+  box-sizing: border-box;
 }
 </style>
