@@ -14,7 +14,13 @@
       <em>(+ helpers &amp; supporters)</em>
     </p>
 
-    <h3>version {{ myVersion }}</h3>
+    <h3>
+      version {{ myVersion }} - See full
+      <a
+        href="https://gitlab.adamprocter.co.uk/nn/nodenoggin/-/blob/master/CHANGELOG.md"
+        >Changelog</a
+      >
+    </h3>
 
     <ul>
       <li>
@@ -54,9 +60,9 @@
       </li>
       <li>
         &nbsp;
-        <a
-          href="https://discursive.adamprocter.co.uk/categories/phd/"
-        >discursive (phd catergory link)</a>
+        <a href="https://discursive.adamprocter.co.uk/categories/phd/"
+          >discursive (phd catergory link)</a
+        >
         (blog)
       </li>
       <li>
@@ -74,12 +80,14 @@
       </li>
       <li>
         &nbsp;
-        <a href="https://gitlab.adamprocter.co.uk/adamprocter/couchdocs">gitlab</a>
+        <a href="https://gitlab.adamprocter.co.uk/nn/">gitlab</a>
         (code)
       </li>
       <li>
         &nbsp;
-        <a href="https://github.com/adamprocter/couchdoc-mirror/issues">issues</a>
+        <a href="https://github.com/adamprocter/couchdoc-mirror/issues"
+          >issues</a
+        >
         (raise and review)
       </li>
     </ul>
