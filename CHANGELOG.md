@@ -1,11 +1,32 @@
+# 0.1.3
+
+_4th March 2020_
+
+### Added
+
+- Emoji Reaction support. You can now add Emoji reactions to node cards.
+
+### Changed
+
+- Version stated in package.json is pulled into About.vue. Meaning version can now be updated in one place.
+- Added link to this CHANGELOG.md on About.vue
+
+### Fixed
+
+– Box sizing so textarea now is same width.
+
+- Textarea ignores drag allowing selections.
+- Markdown images now resize to fit node card width.
+- About.vue link to code now correct to nn group repo.
+
 # 0.1.2
 
 _1st March 2020_
 
 ### Added
 
-- Imported missing css for handles for vue draggable, nodes are now resizable
-- Size of node is also sync'd in realtime cross devices
+- Imported missing css for handles for vue draggable, nodes are now resizable.
+- Size of node is also sync'd in realtime cross devices.
 
 # 0.1.1
 
@@ -15,7 +36,7 @@ After Toby tried to start working on the main code base it soon become evident t
 
 ### Changed
 
-- Now using CouchDB 3
+- Now using CouchDB 3.
 - Now using Environmental Variables (.env) to store the URL and log in for CouchDB meaning you can now change this information to suit your setup.
 - Changed DeBug.vue to reload to your current install local or otherwise.
 
