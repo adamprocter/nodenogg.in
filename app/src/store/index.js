@@ -110,6 +110,7 @@ const store = new Vuex.Store({
 
     SET_OTHER_NODES(state) {
       state.otherNodes = []
+
       var i
       var j
       for (i = 0; i < Object.keys(state.allNodes).length; i++) {
@@ -126,7 +127,6 @@ const store = new Vuex.Store({
               nodeid: state.allNodes[i].doc.nodes[j].nodeid,
               nodetext: state.allNodes[i].doc.nodes[j].nodetext
             }
-
             state.otherNodes.push(newNode)
           }
         }

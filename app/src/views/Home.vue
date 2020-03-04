@@ -16,7 +16,7 @@
         v-bind:nodetext="value.nodetext"
       />
 
-      <CanvasLayer />
+      <ConnectorsLayer />
 
       <ControlsLayer />
     </div>
@@ -27,7 +27,7 @@
 <script>
 // @ is an alias to /src
 import OnBoard from '@/components/OnBoard.vue'
-import CanvasLayer from '@/components/CanvasLayer.vue'
+import ConnectorsLayer from '@/components/ConnectorsLayer.vue'
 import NodesLayer from '@/components/NodesLayer.vue'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import DeBug from '@/components/DeBug.vue'
@@ -47,7 +47,7 @@ export default {
 
   components: {
     OnBoard,
-    CanvasLayer,
+    ConnectorsLayer,
     NodesLayer,
     OtherNodeslayer,
     DeBug,
