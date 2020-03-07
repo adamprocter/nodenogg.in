@@ -23,24 +23,20 @@
       version {{ myVersion }} - See full
       <a
         href="https://gitlab.adamprocter.co.uk/nn/nodenoggin/-/blob/master/CHANGELOG.md"
-        >Changelog</a
-      >
+      >Changelog</a>
     </h3>
 
     <h3>known issues</h3>
     <ul>
       <li>&nbsp;Data is not yet encrypted.</li>
       <li>&nbsp;Export is not turned on yet.</li>
-      <li>&nbsp;Delete only flags for deletion.</li>
+      <li>&nbsp;Delete only flags for deletion (aka it wont disappear yet).</li>
 
       <li>
         Some devices seem to have a bug when you first try to create or join an
         microcosm, on second attempt it will work allowing device name.
       </li>
-      <li>
-        When moving nodes on touch devices to confirm new location you must tap
-        with a second finger.
-      </li>
+
       <li>
         Please consider all data as not backed up, data structures and data will
         ocasssionaly be deleted or changed remotely which may effect and break
@@ -55,9 +51,9 @@
       </li>
       <li>
         &nbsp;
-        <a href="https://discursive.adamprocter.co.uk/categories/phd/"
-          >discursive (phd catergory link)</a
-        >
+        <a
+          href="https://discursive.adamprocter.co.uk/categories/phd/"
+        >discursive (phd catergory link)</a>
         (blog)
       </li>
       <li>
@@ -80,9 +76,7 @@
       </li>
       <li>
         &nbsp;
-        <a href="https://github.com/adamprocter/couchdoc-mirror/issues"
-          >issues</a
-        >
+        <a href="https://github.com/adamprocter/couchdoc-mirror/issues">issues</a>
         (raise and review)
       </li>
     </ul>
