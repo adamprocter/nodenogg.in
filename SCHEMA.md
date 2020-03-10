@@ -41,7 +41,9 @@ This is version 1 of the API documents to be created. For now this document outl
 {
 "nodeid": "xwio4e5etcevxag3lzyj4",
 "xpos": 831,
-"ypos": 293
+"ypos": 293,
+"width": 386,
+"height": 417
 }
 ]
 
