@@ -115,7 +115,9 @@ const store = new Vuex.Store({
       for (i = 0; i < Object.keys(state.allNodes).length; i++) {
         if (
           state.allNodes[i].id != state.myclient &&
-          state.allNodes[i].id != state.global_pos_name
+          state.allNodes[i].id != state.global_pos_name &&
+          state.allNodes[i].id != state.global_emoji_name &&
+          state.allNodes[i].id != state.global_con_name
         ) {
           for (
             j = 0;

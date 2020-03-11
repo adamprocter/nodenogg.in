@@ -7,9 +7,9 @@ This is version 1 of the API documents to be created. For now this document outl
 ```
  "nodes": [
     {
-      "nodeid": "wanxtrk54ulhl0k8bd5mqd",
-      "nodetext": "#\nhello",
-      "nodeowner": "iPhoneX",
+      "node_id": "wanxtrk54ulhl0k8bd5mqd",
+      "node_text": "#\nhello",
+      "node_owner": "iPhoneX",
       "content_type": "sheet",
       "deleted": true,
       "attachment_name": ""
@@ -23,9 +23,9 @@ This is version 1 of the API documents to be created. For now this document outl
 
 "connections": [
     {
-      "connectid": "xboi6bducmngjv0yrgdhpf",
-      "startid": "7nltu5jdotbeb6t9hgm9dd",
-      "endid": "z67hbvdxr8nrsixn5nt6b9",
+      "connect_id": "xboi6bducmngjv0yrgdhpf",
+      "start_id": "7nltu5jdotbeb6t9hgm9dd",
+      "end_id": "z67hbvdxr8nrsixn5nt6b9",
       "connected": "true"
     }
 
@@ -39,9 +39,12 @@ This is version 1 of the API documents to be created. For now this document outl
 
 "positions": [
 {
-"nodeid": "xwio4e5etcevxag3lzyj4",
-"xpos": 831,
-"ypos": 293
+"node_id": "xwio4e5etcevxag3lzyj4",
+"x_pos": 831,
+"y_pos": 293,
+"width": 386,
+"height": 417,
+"z_index":1
 }
 ]
 
@@ -53,9 +56,9 @@ This is version 1 of the API documents to be created. For now this document outl
 
 "emojis": [
 {
-"emojiid": "nxs9836kgelncf4bg61w7",
-"nodeid": "cejt3ul3b7awnh5gin8b2c",
-"emojitext": "👍"
+"emoji_id": "nxs9836kgelncf4bg61w7",
+"node_id": "cejt3ul3b7awnh5gin8b2c",
+"emoji_text": "👍"
 }
 ]
 
