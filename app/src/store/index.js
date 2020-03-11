@@ -43,20 +43,8 @@ const store = new Vuex.Store({
     myclient: myclient,
     activeNode: {},
     // this will be objects containing arrays of all the handles / connections and nodes
-    configConnect: {
-      x: -25,
-      y: -25,
-      height: 50,
-      width: 50,
-      fill: 'rgb(200, 0, 0)'
-    },
-    configHandle: {
-      x: 25,
-      y: 25,
-      height: 10,
-      width: 10,
-      fill: 'black'
-    },
+    configConnect: {},
+    configHandle: {},
     allNodes: [],
     myNodes: [
       // { nodeid: 1, nodetext: 'node 1' },
@@ -115,7 +103,9 @@ const store = new Vuex.Store({
       for (i = 0; i < Object.keys(state.allNodes).length; i++) {
         if (
           state.allNodes[i].id != state.myclient &&
-          state.allNodes[i].id != state.global_pos_name
+          state.allNodes[i].id != state.global_pos_name &&
+          state.allNodes[i].id != state.global_emoji_name &&
+          state.allNodes[i].id != state.global_con_name
         ) {
           for (
             j = 0;
@@ -123,8 +113,8 @@ const store = new Vuex.Store({
             j++
           ) {
             const newNode = {
-              nodeid: state.allNodes[i].doc.nodes[j].nodeid,
-              nodetext: state.allNodes[i].doc.nodes[j].nodetext
+              node_id: state.allNodes[i].doc.nodes[j].node_id,
+              node_text: state.allNodes[i].doc.nodes[j].node_text
             }
 
             state.otherNodes.push(newNode)
@@ -162,9 +152,9 @@ const store = new Vuex.Store({
                   // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
                   // this shouldnt need to be here
 
-                  nodeid: uniqueid,
-                  nodetext: 'Ignore this node' + state.myclient,
-                  nodeowner: state.myclient,
+                  node_id: uniqueid,
+                  node_text: 'Ignore this node' + state.myclient,
+                  node_owner: state.myclient,
                   content_type: 'sheet',
                   // TEMP: this hides the first node card as its effectivly auto deleted
                   deleted: true,
@@ -196,11 +186,12 @@ const store = new Vuex.Store({
     MOVE_POS(state, e) {
       var i
       for (i = 0; i < Object.keys(state.configPositions).length; i++) {
-        if (e.localnodeid == state.configPositions[i].nodeid) {
-          state.configPositions[i].xpos = e.x
-          state.configPositions[i].ypos = e.y
+        if (e.localnodeid == state.configPositions[i].node_id) {
+          state.configPositions[i].x_pos = e.x
+          state.configPositions[i].y_pos = e.y
           state.configPositions[i].width = e.width
           state.configPositions[i].height = e.height
+          state.configPositions[i].z_index = e.zindex
         }
       }
 
@@ -242,9 +233,9 @@ const store = new Vuex.Store({
       pouchdb.get(state.myclient).then(function(doc) {
         if (e == undefined) {
           doc.nodes.push({
-            nodeid: uniqueid,
-            nodetext: '',
-            nodeowner: state.myclient,
+            node_id: uniqueid,
+            node_text: '',
+            node_owner: state.myclient,
             content_type: 'sheet',
             deleted: false,
             attachment_name: e
@@ -278,11 +269,12 @@ const store = new Vuex.Store({
       })
       pouchdb.get(state.global_pos_name).then(function(doc) {
         doc.positions.push({
-          nodeid: uniqueid,
-          xpos: 50,
-          ypos: 50,
+          node_id: uniqueid,
+          x_pos: 50,
+          y_pos: 50,
           width: 200,
-          height: 250
+          height: 250,
+          z_index: 1
         })
         return pouchdb
           .put({
@@ -299,8 +291,8 @@ const store = new Vuex.Store({
     EDIT_NODE(state, e) {
       var i
       for (i = 0; i < Object.keys(state.myNodes).length; i++) {
-        if (e.nodeid == state.myNodes[i].nodeid) {
-          state.myNodes[i].nodetext = e.nodetext
+        if (e.nodeid == state.myNodes[i].node_id) {
+          state.myNodes[i].node_text = e.nodetext
         }
       }
       pouchdb
@@ -332,7 +324,7 @@ const store = new Vuex.Store({
     DELETE_FLAG(state, e) {
       var i
       for (i = 0; i < Object.keys(state.myNodes).length; i++) {
-        if (e.e == state.myNodes[i].nodeid) {
+        if (e.e == state.myNodes[i].node_id) {
           state.myNodes[i].deleted = true
         }
       }
@@ -387,9 +379,9 @@ const store = new Vuex.Store({
           .substring(2, 15)
       pouchdb.get(state.global_emoji_name).then(function(doc) {
         doc.emojis.push({
-          id: uniqueid,
-          docid: e.docid,
-          emojitext: e.emojitext
+          emoji_id: uniqueid,
+          node_id: e.nodeid,
+          emoji_text: e.emojitext
         })
         return pouchdb
           .put({
@@ -448,8 +440,8 @@ const store = new Vuex.Store({
       commit('SET_CLIENT', e)
     },
 
-    movePos: ({ commit }, nodeid, xpos, ypos, width, height) => {
-      commit('MOVE_POS', nodeid, xpos, ypos, width, height)
+    movePos: ({ commit }, nodeid, xpos, ypos, width, height, zindex) => {
+      commit('MOVE_POS', nodeid, xpos, ypos, width, height, zindex)
     },
 
     addNode: ({ commit }, e) => {
@@ -462,9 +454,9 @@ const store = new Vuex.Store({
       // var text = e.target.value
       commit('DELETE_FLAG', e)
     },
-    addEmoji: ({ commit }, { docid, emojitext }) => {
+    addEmoji: ({ commit }, { nodeid, emojitext }) => {
       commit('ADD_EMOJI', {
-        docid,
+        nodeid,
         emojitext
       })
     }

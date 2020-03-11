@@ -2,11 +2,12 @@
   <div ref="othernodes" class="node">
     <div v-for="(value, index) in configPositions" v-bind:key="index">
       <vue-draggable-resizable
-        v-if="nodeid == value.nodeid"
+        v-if="nodeid == value.node_id"
         :w="value.width"
         :h="value.height"
-        :x="value.xpos"
-        :y="value.ypos"
+        :x="value.x_pos"
+        :y="value.y_pos"
+        :z="value.z_index"
         @activated="onActivated"
         @dragging="onDrag"
         @resizing="onResize"
@@ -17,7 +18,7 @@
         <p :id="nodeid" :inner-html.prop="nodetext | marked">{{ nodeid }}</p>
         <h3>Reactions</h3>
         <div v-for="(emojis, index) in configEmoji" :key="index">
-          <p class="allemoji" v-if="nodeid == emojis.docid">{{ emojis.emojitext }}</p>
+          <p class="allemoji" v-if="nodeid == emojis.node_id">{{ emojis.emoji_text }}</p>
         </div>
         <div class="react" v-if="nodeid != undefined">
           <h2>React</h2>
@@ -91,13 +92,9 @@ export default {
 
   data() {
     return {
-      thistext: this.nodetext,
-      width: this.nodewidth,
-      height: this.nodeheight,
-      localx: 0,
-      localy: 0,
       input: '',
-      search: ''
+      search: '',
+      pickupz: 99
     }
   },
 
@@ -115,9 +112,10 @@ export default {
     onActivated() {
       var i
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        if (this.configPositions[i].nodeid == this.nodeid) {
+        if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
+          this.pickupz = this.configPositions[i].z_index
         }
       }
     },
@@ -127,44 +125,62 @@ export default {
       this.width = width
       this.height = height
     },
-    onResizestop(x, y, width, height) {
+    onResizestop(x, y, width, height, zindex) {
       var localnodeid = this.nodeid
+      zindex = this.pickupz
       var i
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        if (this.configPositions[i].nodeid == this.nodeid) {
+        if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
+          this.pickupz = this.configPositions[i].z_index
         }
       }
       this.width = width
       this.height = height
-      this.$store.dispatch('movePos', { localnodeid, x, y, width, height })
+      this.$store.dispatch('movePos', {
+        localnodeid,
+        x,
+        y,
+        width,
+        height,
+        zindex
+      })
     },
     onDrag(x, y) {
       this.localx = x
       this.localy = y
     },
-    onDragstop(x, y, width, height) {
+    onDragstop(x, y, width, height, zindex) {
       var localnodeid = this.nodeid
+      zindex = this.pickupz
       width = this.width
       height = this.height
       var i
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        if (this.configPositions[i].nodeid == this.nodeid) {
-          this.localx = this.configPositions[i].xpos
-          this.localy = this.configPositions[i].ypos
+        if (this.configPositions[i].node_id == this.nodeid) {
+          this.localx = this.configPositions[i].x_pos
+          this.localy = this.configPositions[i].y_pos
+          this.pickupz = this.configPositions[i].z_index
         }
       }
-      this.$store.dispatch('movePos', { localnodeid, x, y, width, height })
+      this.$store.dispatch('movePos', {
+        localnodeid,
+        x,
+        y,
+        width,
+        height,
+        zindex
+      })
     },
     append(emoji) {
       this.input += emoji
     },
-    sentReact(docid, emojitext) {
+    sentReact(nodeid, emojitext) {
       emojitext = this.input
-      docid = this.nodeid
+      nodeid = this.nodeid
       this.$store.dispatch('addEmoji', {
-        docid,
+        nodeid,
         emojitext
       })
 
@@ -183,7 +199,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .node {
   background-color: aquamarine;
   position: absolute;

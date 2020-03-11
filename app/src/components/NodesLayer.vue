@@ -3,11 +3,12 @@
     <div v-for="(value, index) in configPositions" v-bind:key="index">
       <vue-draggable-resizable
         class="innernode"
-        v-if="nodeid == value.nodeid"
+        v-if="nodeid == value.node_id"
         :w="value.width"
         :h="value.height"
-        :x="value.xpos"
-        :y="value.ypos"
+        :x="value.x_pos"
+        :y="value.y_pos"
+        :z="value.z_index"
         @activated="onActivated"
         @dragging="onDrag"
         @resizing="onResize"
@@ -17,24 +18,19 @@
         style="background-color: rgb(205, 234, 255)"
       >
         <form>
-          <div v-for="value in myNodes" v-bind:key="value.nodeid">
+          <div v-for="value in myNodes" v-bind:key="value.node_id">
             <textarea
-              v-if="nodeid == value.nodeid"
+              v-if="nodeid == value.node_id"
               @input="editNode"
-              v-model="value.nodetext"
+              v-model="value.node_text"
               :id="nodeid"
               class="drag-cancel"
             ></textarea>
           </div>
           <h3>Reactions</h3>
           <div v-for="(emojis, index) in configEmoji" :key="index">
-            <p class="allemoji" v-if="nodeid == emojis.docid">{{ emojis.emojitext }}</p>
+            <p class="allemoji" v-if="nodeid == emojis.node_id">{{ emojis.emoji_text }}</p>
           </div>
-          <!-- <div v-for="(value, index) in configPositions" v-bind:key="index">
-          <p v-if="nodeid == value.nodeid">
-            {{ localx }}, ({{ value.xpos }}) {{ localy }}
-          </p>
-          </div>-->
 
           <p>markdown supported</p>
           <button class="danger" @click="deleteFlag()">Delete</button>
@@ -59,12 +55,7 @@ export default {
 
   data() {
     return {
-      thistext: this.nodetext,
-      width: this.nodewidth,
-      height: this.nodeheight,
-      localx: 0,
-      localy: 0,
-      globalscale: 0.7
+      pickupz: 99
     }
   },
 
@@ -79,8 +70,9 @@ export default {
   methods: {
     onActivated() {
       var i
+
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        if (this.configPositions[i].nodeid == this.nodeid) {
+        if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
         }
@@ -92,36 +84,53 @@ export default {
       this.width = width
       this.height = height
     },
-    onResizestop(x, y, width, height) {
+    onResizestop(x, y, width, height, zindex) {
       var localnodeid = this.nodeid
+      zindex = this.pickupz
       var i
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        if (this.configPositions[i].nodeid == this.nodeid) {
+        if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
+          this.pickupz = this.configPositions[i].z_index
         }
       }
       this.width = width
       this.height = height
-      this.$store.dispatch('movePos', { localnodeid, x, y, width, height })
+      this.$store.dispatch('movePos', {
+        localnodeid,
+        x,
+        y,
+        width,
+        height,
+        zindex
+      })
     },
     onDrag(x, y) {
       this.localx = x
       this.localy = y
     },
-    onDragstop(x, y, width, height) {
+    onDragstop(x, y, width, height, zindex) {
       var localnodeid = this.nodeid
-
+      zindex = this.pickupz
       width = this.width
       height = this.height
       var i
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        if (this.configPositions[i].nodeid == this.nodeid) {
-          this.localx = this.configPositions[i].xpos
-          this.localy = this.configPositions[i].ypos
+        if (this.configPositions[i].node_id == this.nodeid) {
+          this.localx = this.configPositions[i].x_pos
+          this.localy = this.configPositions[i].y_pos
+          this.pickupz = this.configPositions[i].z_index
         }
       }
-      this.$store.dispatch('movePos', { localnodeid, x, y, width, height })
+      this.$store.dispatch('movePos', {
+        localnodeid,
+        x,
+        y,
+        width,
+        height,
+        zindex
+      })
     },
 
     setFocus() {

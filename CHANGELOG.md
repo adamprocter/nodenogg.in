@@ -1,3 +1,15 @@
+# 0.1.4
+
+_11th March 2020_
+
+### Added
+
+- Added a SCHEMA.md document to the repo to outline the way to call to the data in PouchDB/ CouchDB
+
+### Changed
+
+- Changed store/index.js, Home.vue, NodesLayer.vue and OtherNodeslayer.vue to work with new Schema structure
+
 # 0.1.3
 
 _4th March 2020_

@@ -4,16 +4,16 @@
     <div v-if="clientset">
       <OtherNodeslayer
         v-for="value in otherNodes"
-        v-bind:key="value.nodeid"
-        v-bind:nodeid="value.nodeid"
-        v-bind:nodetext="value.nodetext"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
       />
 
       <NodesLayer
         v-for="value in myNodes"
-        v-bind:key="value.nodeid"
-        v-bind:nodeid="value.nodeid"
-        v-bind:nodetext="value.nodetext"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
       />
 
       <CanvasLayer />

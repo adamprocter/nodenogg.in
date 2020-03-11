@@ -26,7 +26,7 @@ This is version 1 of the API documents to be created. For now this document outl
       "connect_id": "xboi6bducmngjv0yrgdhpf",
       "start_id": "7nltu5jdotbeb6t9hgm9dd",
       "end_id": "z67hbvdxr8nrsixn5nt6b9",
-      "connected": true
+      "connected": "true"
     }
 
 ]
@@ -43,7 +43,8 @@ This is version 1 of the API documents to be created. For now this document outl
 "x_pos": 831,
 "y_pos": 293,
 "width": 386,
-"height": 417
+"height": 417,
+"z_index":1
 }
 ]
 
