@@ -4,7 +4,9 @@
       nodenogg.in is a
       <span>work in progress</span> collaborative co-creation research and
       design thinking tool, read more details and links in the
-      <a href="/#/about">about</a> section.
+      <a
+        href="/about"
+      >about</a> section.
     </p>
 
     <form v-show="parta">
@@ -25,9 +27,7 @@
         autocapitalize="none"
         autofocus
       />
-      <BaseButton buttonClass="onboard" @click="createMicrocosm(), setFocus()"
-        >+</BaseButton
-      >
+      <BaseButton buttonClass="onboard" @click="createMicrocosm(), setFocus()">+</BaseButton>
     </form>
 
     <form v-show="partb">
@@ -82,8 +82,8 @@ export default {
 
   methods: {
     createMicrocosm() {
-      ;(this.partb = true),
-        this.$store.dispatch('createMicrocosm', this.localmicrocosm)
+      this.partb = true
+      this.$store.dispatch('createMicrocosm', this.localmicrocosm)
       localStorage.setItem('mylastMicrocosm', this.localmicrocosm)
     },
     setClient() {

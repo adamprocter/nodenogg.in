@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- FIXME: Maybe need to use $attrs at somepoint -->
-    <button v-on="$listeners" class="button" :class="buttonClass">
+    <button v-on="$listeners" class="button" :class="buttonClass" type="button">
       <slot>DEFAULT</slot>
     </button>
   </div>
