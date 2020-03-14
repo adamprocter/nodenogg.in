@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <DeBug />
     <div v-if="clientset">
       <OtherNodeslayer
         v-for="value in otherNodes"
@@ -16,8 +15,6 @@
         v-bind:nodetext="value.node_text"
       />
 
-      <CanvasLayer />
-
       <ControlsLayer />
     </div>
     <OnBoard v-else @clientAdded="clientAdded()" />
@@ -27,10 +24,8 @@
 <script>
 // @ is an alias to /src
 import OnBoard from '@/components/OnBoard.vue'
-import CanvasLayer from '@/components/CanvasLayer.vue'
 import NodesLayer from '@/components/NodesLayer.vue'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
-import DeBug from '@/components/DeBug.vue'
 import ControlsLayer from '@/components/ControlsLayer.vue'
 
 import { mapState } from 'vuex'
@@ -47,10 +42,8 @@ export default {
 
   components: {
     OnBoard,
-    CanvasLayer,
     NodesLayer,
     OtherNodeslayer,
-    DeBug,
     ControlsLayer
   },
   computed: mapState({
