@@ -1,3 +1,15 @@
+# 0.1.6
+
+_14th March 2020_
+
+### Changed
+
+- Changed to HTML History mode, removing Hash from URL
+
+### Fixed
+
+- Safari reload bug on initial creation of microcosms
+
 # 0.1.5
 
 _14th March 2020_
