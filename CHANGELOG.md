@@ -9,6 +9,7 @@ _14th March 2020_
 ### Fixed
 
 - Safari reload bug on initial creation of microcosms
+- Pressing Enter allows quick onboard aswell, also no reload
 
 # 0.1.5
 

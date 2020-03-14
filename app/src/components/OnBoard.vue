@@ -9,7 +9,7 @@
       >about</a> section.
     </p>
 
-    <form v-show="parta">
+    <form v-show="parta" onsubmit="return false;">
       <h2>1</h2>
       <h3>microcosm</h3>
       <p>
@@ -26,11 +26,12 @@
         autocorrect="off"
         autocapitalize="none"
         autofocus
+        v-on:keyup.enter="createMicrocosm(), setFocus()"
       />
       <BaseButton buttonClass="onboard" @click="createMicrocosm(), setFocus()">+</BaseButton>
     </form>
 
-    <form v-show="partb">
+    <form v-show="partb" onsubmit="return false;">
       <h2>2</h2>
       <h3>object</h3>
       <p>
@@ -44,11 +45,13 @@
         autocorrect="off"
         autocapitalize="none"
         ref="objectname"
+        v-on:keyup.enter="setClient()"
       />
-      <BaseButton buttonClass="onboard" @click="setClient()">+</BaseButton>
+      <BaseButton buttonClass="onboard" @click="setClient(), setFocusTwo()">+</BaseButton>
     </form>
 
     <form v-show="partc">
+      <input type="text" hidden v-on:keyup.enter="letsGo()" ref="objectnametwo" />
       <h2>3</h2>
       <h3>start</h3>
       <BaseButton buttonClass="onboard" @click="letsGo()">+</BaseButton>
@@ -58,6 +61,7 @@
 
 <script>
 var delay = 100
+var delaytwo = 100
 
 export default {
   data: function() {
@@ -99,8 +103,14 @@ export default {
     setFocus() {
       setTimeout(this.readyFocus, delay)
     },
+    setFocusTwo() {
+      setTimeout(this.readyFocusTwo, delaytwo)
+    },
     readyFocus() {
       this.$refs.objectname.focus()
+    },
+    readyFocusTwo() {
+      this.$refs.objectnametwo.focus()
     }
   }
 }
