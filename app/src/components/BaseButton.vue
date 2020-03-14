@@ -17,7 +17,6 @@ export default {
 }
 </script>
 
-
 <style lang="css" scoped>
 button {
   font-size: 1em;

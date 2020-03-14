@@ -29,11 +29,15 @@
           </div>
           <h3>Reactions</h3>
           <div v-for="(emojis, index) in configEmoji" :key="index">
-            <p class="allemoji" v-if="nodeid == emojis.node_id">{{ emojis.emoji_text }}</p>
+            <p class="allemoji" v-if="nodeid == emojis.node_id">
+              {{ emojis.emoji_text }}
+            </p>
           </div>
 
           <p>markdown supported</p>
-          <BaseButton buttonClass="danger" @click="deleteFlag()">Delete</BaseButton>
+          <BaseButton buttonClass="danger" @click="deleteFlag()"
+            >Delete</BaseButton
+          >
         </form>
       </vue-draggable-resizable>
     </div>

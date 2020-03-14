@@ -1,8 +1,12 @@
 <template>
   <div class="controls">
     <div class="btn-row">
-      <BaseButton buttonClass="action" @click="addNode()">Create Node</BaseButton>
-      <BaseButton buttonClass="action" @click="removeLocal()">Join another microcosm</BaseButton>
+      <BaseButton buttonClass="action" @click="addNode()"
+        >Create Node</BaseButton
+      >
+      <BaseButton buttonClass="action" @click="removeLocal()"
+        >Join another microcosm</BaseButton
+      >
       <!-- <BaseButton @click="exportStorage()">Export my contributions</BaseButton>
     <BaseButton buttonClass="danger" v-on:click="deleteClient">
       Delete my contributions (inc. attachments) permanently
