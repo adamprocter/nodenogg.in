@@ -45,13 +45,13 @@
         autocorrect="off"
         autocapitalize="none"
         ref="objectname"
-        v-on:keyup.enter="setClient()"
+        v-on:keyup.enter="setClient(), setFocusTwo()"
       />
       <BaseButton buttonClass="onboard" @click="setClient(), setFocusTwo()">+</BaseButton>
     </form>
 
     <form v-show="partc">
-      <input type="text" hidden v-on:keyup.enter="letsGo()" ref="objectnametwo" />
+      <input class="start" type="text" v-on:keyup.enter="letsGo()" ref="objectnametwo" />
       <h2>3</h2>
       <h3>start</h3>
       <BaseButton buttonClass="onboard" @click="letsGo()">+</BaseButton>
@@ -117,6 +117,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.start {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
 h1,
 h2,
 h3,
