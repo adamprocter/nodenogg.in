@@ -1,3 +1,13 @@
+# 0.1.5
+
+_14th March 2020_
+
+### Changed
+
+- Added BaseButton Component to use for all buttons
+- removed CanvasLayer. and DeBug.vue no longer necessary as CanvasLayer is being rebuilt and Debug buttons all moved to ControlsLayer.vue
+- Minor CSS changes as well
+
 # 0.1.4
 
 _11th March 2020_

@@ -1,11 +1,12 @@
 <template>
   <div class="notlogged">
-    <h1>nodenogg.in</h1>
     <p>
       nodenogg.in is a
       <span>work in progress</span> collaborative co-creation research and
       design thinking tool, read more details and links in the
-      <a href="/#/about">about</a> section.
+      <a
+        href="/#/about"
+      >about</a> section.
     </p>
 
     <form v-show="parta">
@@ -26,7 +27,7 @@
         autocapitalize="none"
         autofocus
       />
-      <button @click="createMicrocosm(), setFocus()">+</button>
+      <BaseButton buttonClass="onboard" @click="createMicrocosm(), setFocus()">+</BaseButton>
     </form>
 
     <form v-show="partb">
@@ -44,13 +45,13 @@
         autocapitalize="none"
         ref="objectname"
       />
-      <button @click="setClient()">+</button>
+      <BaseButton buttonClass="onboard" @click="setClient()">+</BaseButton>
     </form>
 
     <form v-show="partc">
       <h2>3</h2>
       <h3>start</h3>
-      <button @click="letsGo()">+</button>
+      <BaseButton buttonClass="onboard" @click="letsGo()">+</BaseButton>
     </form>
   </div>
 </template>
@@ -106,45 +107,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
-@import url('https://rsms.me/inter/inter.css');
-html {
-  font-family: 'Inter', sans-serif;
-}
-@supports (font-variation-settings: normal) {
-  html {
-    font-family: 'Inter var', sans-serif;
-  }
-}
-ul {
-  font-family: 'Pica 10 Pitch W01';
-  font-size: 16px;
-  line-height: 20px;
-}
-
-li:before {
-  content: '';
-}
-
-b {
-  background-color: yellow;
-  padding-right: 2em;
-}
-
-h1 {
-  font-size: 3em;
-}
-
 h1,
 h2,
 h3,
 p {
-  font-family: 'Inter var', sans-serif;
-  color: black;
   margin: 0px;
-}
-
-p {
-  margin-top: 2em;
 }
 
 h2 {
@@ -170,24 +137,6 @@ input {
   border-width: 1px;
   border-color: #cab6ff;
   padding: 0.5em;
-}
-
-button {
-  font-size: 1.8em;
-  color: black;
-  border-style: solid;
-  border-width: 5px;
-  border-color: black;
-  border-radius: 50%;
-  background-color: white;
-  box-shadow: none;
-  height: 1.5em;
-  width: 1.5em;
-  padding: 0px;
-}
-
-button:active {
-  background-color: #cab6ff;
 }
 
 @media only screen and (min-width: 640px) {

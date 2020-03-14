@@ -1,11 +1,16 @@
 <template>
   <div class="controls">
     <div class="btn-row">
-      <!-- <button on:click="popups.showPane = !popups.showPane"> -->
-      <button @click="addNode()">
-        Create Node
-      </button>
+      <BaseButton buttonClass="action" @click="addNode()">Create Node</BaseButton>
+      <BaseButton buttonClass="action" @click="removeLocal()">Join another microcosm</BaseButton>
+      <!-- <BaseButton @click="exportStorage()">Export my contributions</BaseButton>
+    <BaseButton buttonClass="danger" v-on:click="deleteClient">
+      Delete my contributions (inc. attachments) permanently
+    </BaseButton>
+      <BaseButton @click="handleConnection()">Online check</BaseButton>-->
     </div>
+    <!-- TEMP: This was old code for possible pop up panes  -->
+    <!-- <button on:click="popups.showPane = !popups.showPane"> -->
     <!--
       <div class="popup" v-if="popups.showPane">
         <div class="popup-title">Pane Title</div>
@@ -17,14 +22,63 @@
 </template>
 
 <script>
+// This is for detecting offline issues
+var serverUrl = 'https://nodenogg.in'
+
 export default {
-  data() {
-    return {}
+  mounted() {
+    window.addEventListener('online', this.handleConnection)
+    window.addEventListener('offline', this.handleConnection)
   },
   methods: {
     addNode() {
       this.$store.dispatch('addNode')
-      //      this.$store.dispatch('shortcutsState', true)
+    },
+    exportStorage: function() {
+      // Save local indexeddb document-store to JSON file
+      // or export state.notes to JSON file
+    },
+    removeLocal: function() {
+      localStorage.removeItem('myNNClient')
+      localStorage.removeItem('mylastMicrocosm')
+      // Hardcoded as when I set a URL had parameters the reload fails
+      //location.assign('https://alpha.nodenogg.in/')
+      //location.assign('http://localhost:8080/')
+      location.reload()
+    },
+
+    deleteClient() {
+      this.$store.dispatch('deleteClient')
+    },
+    handleConnection: function() {
+      var ref = this
+      if (navigator.onLine) {
+        this.isReachable(this.getServerUrl()).then(function(online) {
+          if (online) {
+            // handle online status
+            console.log('online')
+            location.reload()
+          } else {
+            console.log('no connectivity')
+          }
+        })
+      } else {
+        // handle offline status
+        console.log('offline')
+        ref.$emit('offlineTriggered')
+      }
+    },
+    isReachable: function(url) {
+      return fetch(url, { method: 'HEAD', mode: 'no-cors' })
+        .then(function(resp) {
+          return resp && (resp.ok || resp.type === 'opaque')
+        })
+        .catch(function(err) {
+          console.warn('[conn test failure]:', err)
+        })
+    },
+    getServerUrl: function() {
+      return serverUrl || window.location.origin
     }
   }
 }
