@@ -1,15 +1,23 @@
+# 0.1.7
+
+_15th March 2020_
+
+### Changed
+
+- Delete will now remove the node from view.
+
 # 0.1.6
 
 _14th March 2020_
 
 ### Changed
 
-- Changed to HTML History mode, removing Hash from URL
+- Changed to HTML History mode, removing Hash from URL.
 
 ### Fixed
 
-- Safari reload bug on initial creation of microcosms
-- Pressing Enter allows quick onboard aswell, also no reload
+- Safari reload bug on initial creation of microcosms.
+- Pressing Enter allows quick onboard aswell, also no reload.
 
 # 0.1.5
 
@@ -17,9 +25,9 @@ _14th March 2020_
 
 ### Changed
 
-- Added BaseButton Component to use for all buttons
-- removed CanvasLayer. and DeBug.vue no longer necessary as CanvasLayer is being rebuilt and Debug buttons all moved to ControlsLayer.vue
-- Minor CSS changes as well
+- Added BaseButton Component to use for all buttons.
+- removed CanvasLayer. and DeBug.vue no longer necessary as CanvasLayer is being rebuilt and Debug buttons all moved to ControlsLayer.vue.
+- Minor CSS changes as well.
 
 # 0.1.4
 
@@ -27,11 +35,11 @@ _11th March 2020_
 
 ### Added
 
-- Added a SCHEMA.md document to the repo to outline the way to call to the data in PouchDB/ CouchDB
+- Added a SCHEMA.md document to the repo to outline the way to call to the data in PouchDB/ CouchDB.
 
 ### Changed
 
-- Changed store/index.js, Home.vue, NodesLayer.vue and OtherNodeslayer.vue to work with new Schema structure
+- Changed store/index.js, Home.vue, NodesLayer.vue and OtherNodeslayer.vue to work with new Schema structure.
 
 # 0.1.3
 
@@ -44,7 +52,7 @@ _4th March 2020_
 ### Changed
 
 - Version stated in package.json is pulled into About.vue. Meaning version can now be updated in one place.
-- Added link to this CHANGELOG.md on About.vue
+- Added link to this CHANGELOG.md on About.vue.
 
 ### Fixed
 

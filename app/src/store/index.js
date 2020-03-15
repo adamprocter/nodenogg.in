@@ -98,6 +98,7 @@ const store = new Vuex.Store({
 
     SET_OTHER_NODES(state) {
       state.otherNodes = []
+
       var i
       var j
       for (i = 0; i < Object.keys(state.allNodes).length; i++) {
@@ -105,19 +106,22 @@ const store = new Vuex.Store({
           state.allNodes[i].id != state.myclient &&
           state.allNodes[i].id != state.global_pos_name &&
           state.allNodes[i].id != state.global_emoji_name &&
-          state.allNodes[i].id != state.global_con_name
+          state.allNodes[i].id != state.global_con_name //&&
+          //
         ) {
           for (
             j = 0;
             j < Object.keys(state.allNodes[i].doc.nodes).length;
             j++
           ) {
-            const newNode = {
-              node_id: state.allNodes[i].doc.nodes[j].node_id,
-              node_text: state.allNodes[i].doc.nodes[j].node_text
-            }
+            if (state.allNodes[i].doc.nodes[j].deleted != true) {
+              const newNode = {
+                node_id: state.allNodes[i].doc.nodes[j].node_id,
+                node_text: state.allNodes[i].doc.nodes[j].node_text
+              }
 
-            state.otherNodes.push(newNode)
+              state.otherNodes.push(newNode)
+            }
           }
         }
       }
@@ -133,7 +137,13 @@ const store = new Vuex.Store({
       pouchdb
         .get(state.myclient)
         .then(function(doc) {
-          state.myNodes = doc.nodes
+          var i
+          for (i = 0; i < Object.keys(doc.nodes).length; i++) {
+            if (doc.nodes[i].deleted == true) {
+              doc.nodes.splice(i, 1)
+            }
+            state.myNodes = doc.nodes
+          }
         })
         .catch(function(err) {
           if (err.status == 404) {
@@ -150,13 +160,13 @@ const store = new Vuex.Store({
               nodes: [
                 {
                   // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
-                  // this shouldnt need to be here
+                  // this shouldnt need to be here though
 
                   node_id: uniqueid,
-                  node_text: 'Ignore this node' + state.myclient,
+                  node_text: 'Ignore this node ' + state.myclient,
                   node_owner: state.myclient,
                   content_type: 'sheet',
-                  // TEMP: this hides the first node card as its effectivly auto deleted
+                  // NOTE: first node is hidden due to no position
                   deleted: true,
                   attachment_name: ''
                 }
