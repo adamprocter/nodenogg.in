@@ -11,7 +11,10 @@
     </p>
     <p>
       Made by Adam Procter
-      <em>(+ helpers &amp; supporters)</em>
+      <em
+        >(+ many helpers &amp;
+        <a href="https://patreon.com/procterbot">supporters</a>)</em
+      >
     </p>
     <ul>
       <li>
@@ -27,21 +30,15 @@
       >
     </h3>
 
-    <h3>known issues</h3>
+    <h3>Considerations</h3>
     <ul>
       <li>&nbsp;Data is not yet encrypted.</li>
-      <li>&nbsp;Export is not turned on yet.</li>
-      <li>&nbsp;Delete only flags for deletion (aka it wont disappear yet).</li>
+      <li>&nbsp;There is no Export yet.</li>
 
       <li>
-        Some devices seem to have a bug when you first try to create or join an
-        microcosm, on second attempt it will work allowing device name.
-      </li>
-
-      <li>
-        Please consider all data as not backed up, data structures and data will
-        ocasssionaly be deleted or changed remotely which may effect and break
-        your local data.
+        Please <strong>UNDERSTAND</strong> all data as not backed up, data
+        structures and data will ocasssionaly be deleted or changed remotely
+        which may effect and break your local data.
       </li>
     </ul>
     <h2>Design-led ethical Edutech</h2>
