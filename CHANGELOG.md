@@ -1,3 +1,15 @@
+# 0.1.8
+
+_25th March 2020_
+
+### Added
+
+- New start of Keyboard Shortcut support, pressing n key now creates new nodes.
+
+### Changed
+
+- Simplified About page opening text
+
 # 0.1.7
 
 _15th March 2020_

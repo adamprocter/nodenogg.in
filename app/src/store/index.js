@@ -34,6 +34,7 @@ var remote =
 
 const store = new Vuex.Store({
   state: {
+    shortcutstate: false,
     version: process.env.VUE_APP_VERSION,
     localnodeid: '',
     global_pos_name: 'positions',
@@ -228,6 +229,12 @@ const store = new Vuex.Store({
             // pouchdb.put({  })
           }
         })
+    },
+
+    //
+
+    SHORTCUT_STATE(state, e) {
+      state.shortcutstate = e
     },
 
     ADD_NODE(state, e) {
@@ -459,6 +466,10 @@ const store = new Vuex.Store({
     },
     editNode: ({ commit }, { nodeid, nodetext }) => {
       commit('EDIT_NODE', { nodeid, nodetext })
+    },
+
+    shortcutState: ({ commit }, e) => {
+      commit('SHORTCUT_STATE', e)
     },
     deleteFlag: ({ commit }, e) => {
       // var text = e.target.value
