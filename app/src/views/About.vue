@@ -2,12 +2,9 @@
   <div class="about">
     <h1>About</h1>
     <p>
-      Currently digital tools do a really poor job of extending the design
-      studio design thinking processes.
-    </p>
-    <p>
-      This tool is designed to support a new type of co-creation, a spatial and
-      messy area to work together connecting ideas and concepts.
+      nodenogg.in is designed to support a new type of co-creation, a messy
+      spatial area in which you work together creating and connecting ideas and
+      concepts
     </p>
     <p>
       Made by Adam Procter

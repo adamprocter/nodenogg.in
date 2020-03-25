@@ -1,6 +1,6 @@
 {
   "name": "nodenogg.in",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
-    "marked": "^0.8.0",
+    "marked": "^0.8.2",
     "pouchdb": "^7.2.1",
     "pouchdb-find": "^7.2.1",
     "vue": "^2.6.11",
-    "vue-context": "^5.0.0",
+    "vue-context": "^5.1.0",
     "vue-draggable-resizable": "^2.1.0",
     "vue-emoji-picker": "^1.0.1",
     "vue-router": "^3.1.6",

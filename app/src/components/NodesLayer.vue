@@ -20,11 +20,15 @@
         <form>
           <div v-for="value in myNodes" v-bind:key="value.node_id">
             <textarea
+              @focus="editTrue(true)"
+              @blur="editTrue(false)"
+              autofocus
               v-if="nodeid == value.node_id"
               @input="editNode"
               v-model="value.node_text"
               :id="nodeid"
               class="drag-cancel"
+              ref="nodetext"
             ></textarea>
           </div>
           <h3>Reactions</h3>
@@ -59,10 +63,20 @@ export default {
       pickupz: 99
     }
   },
+  // FIXME: how do we know how to focus on the newest node ?
+  // FIXME: Tab between them would also be good
+  // var delay = 100
+  // var input
+  // mounted() {
+  //   setTimeout(this.setFocus, delay)
+  //   input = this.$refs.nodetext
+  //   console.log(input)
+  // },
+  // method
+  // setFocus() {
+  //   this.$refs.nodetext.focus()
+  // },
 
-  mounted() {
-    //
-  },
   computed: mapState({
     myNodes: state => state.myNodes,
     configPositions: state => state.configPositions,
@@ -134,9 +148,11 @@ export default {
       })
     },
 
-    setFocus() {
-      // this.$refs.nodetext.focus()
+    editTrue(e) {
+      this.$emit('editTrue', e)
+      //  console.log(e)
     },
+
     editNode(e) {
       var nodeid = e.target.id
       var nodetext = e.target.value
