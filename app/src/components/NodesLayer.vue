@@ -18,26 +18,37 @@
         style="background-color: rgb(205, 234, 255)"
       >
         <form>
-          <div v-for="value in myNodes" v-bind:key="value.node_id">
-            <textarea
-              @focus="editTrue(true)"
-              @blur="editTrue(false)"
-              autofocus
-              v-if="nodeid == value.node_id"
-              @input="editNode"
-              v-model="value.node_text"
-              :id="nodeid"
-              class="drag-cancel"
-              ref="nodetext"
-            ></textarea>
+          <div v-if="readmode == false">
+            <div v-for="value in myNodes" v-bind:key="value.node_id">
+              <!-- <div v-if="readmode == false"> -->
+              <textarea
+                v-if="nodeid == value.node_id"
+                @focus="editTrue(true)"
+                @blur="editTrue(false)"
+                autofocus
+                @input="editNode"
+                v-model="value.node_text"
+                :id="nodeid"
+                class="drag-cancel"
+                ref="nodetext"
+                placeholder="Idea goes here!"
+              ></textarea>
+            </div>
           </div>
+          <div v-else>
+            <p :id="nodeid" :inner-html.prop="nodetext | marked">{{ nodeid }}</p>
+          </div>
+
           <h3>Reactions</h3>
           <div v-for="(emojis, index) in configEmoji" :key="index">
             <p class="allemoji" v-if="nodeid == emojis.node_id">{{ emojis.emoji_text }}</p>
           </div>
 
-          <p>markdown supported</p>
-          <BaseButton buttonClass="danger" @click="deleteFlag()">Delete</BaseButton>
+          <p class="info">*markdown supported</p>
+          <div class="btn-row">
+            <BaseButton buttonClass="danger" @click="deleteFlag()">Delete</BaseButton>
+            <BaseButton class="read" buttonClass="action" @click="readFlag()">{{ mode }}</BaseButton>
+          </div>
         </form>
       </vue-draggable-resizable>
     </div>
@@ -46,6 +57,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import marked from 'marked'
 
 export default {
   name: 'NodesLayer',
@@ -60,9 +72,16 @@ export default {
 
   data() {
     return {
-      pickupz: 99
+      pickupz: 99,
+      readmode: false,
+      mode: 'Read'
     }
   },
+
+  filters: {
+    marked: marked
+  },
+
   // FIXME: how do we know how to focus on the newest node ?
   // FIXME: Tab between them would also be good
   // var delay = 100
@@ -161,6 +180,15 @@ export default {
     deleteFlag(e) {
       e = this.nodeid
       this.$store.dispatch('deleteFlag', { e })
+    },
+    readFlag() {
+      if (this.readmode == true) {
+        this.readmode = false
+        this.mode = 'Read'
+      } else {
+        this.readmode = true
+        this.mode = 'Edit'
+      }
     }
   }
 }
@@ -172,17 +200,35 @@ export default {
   position: relative;
 }
 
+.info {
+  font-size: 0.8em;
+}
+
+textarea {
+  width: 100%;
+  height: 125px;
+  resize: none;
+  box-sizing: border-box;
+  font-family: 'Inter var', Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  outline: #cab6ff;
+}
+
+.btn-row {
+  position: relative;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 15px;
+  border-radius: 4px;
+}
+
 img {
   width: 100%;
 }
 /* .draggable {
   transform: scale(0.7);
 } */
-
-textarea {
-  width: 100%;
-  height: 120px;
-  resize: none;
-  box-sizing: border-box;
-}
 </style>
