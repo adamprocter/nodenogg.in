@@ -31,6 +31,7 @@
                 :id="nodeid"
                 class="drag-cancel"
                 ref="nodetext"
+                placeholder="Idea goes here!"
               ></textarea>
             </div>
           </div>
@@ -43,9 +44,11 @@
             <p class="allemoji" v-if="nodeid == emojis.node_id">{{ emojis.emoji_text }}</p>
           </div>
 
-          <p>markdown supported</p>
-          <BaseButton buttonClass="danger" @click="deleteFlag()">Delete</BaseButton>
-          <BaseButton class="read" buttonClass="action" @click="readFlag()">{{ mode }}</BaseButton>
+          <p class="info">*markdown supported</p>
+          <div class="btn-row">
+            <BaseButton buttonClass="danger" @click="deleteFlag()">Delete</BaseButton>
+            <BaseButton class="read" buttonClass="action" @click="readFlag()">{{ mode }}</BaseButton>
+          </div>
         </form>
       </vue-draggable-resizable>
     </div>
@@ -197,9 +200,29 @@ export default {
   position: relative;
 }
 
-.read {
-  /* FIXME: make this a nice little CSS grid */
-  float: right;
+.info {
+  font-size: 0.8em;
+}
+
+textarea {
+  width: 100%;
+  height: 125px;
+  resize: none;
+  box-sizing: border-box;
+  font-family: 'Inter var', Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  outline: #cab6ff;
+}
+
+.btn-row {
+  position: relative;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 15px;
+  border-radius: 4px;
 }
 
 img {
@@ -208,11 +231,4 @@ img {
 /* .draggable {
   transform: scale(0.7);
 } */
-
-textarea {
-  width: 100%;
-  height: 120px;
-  resize: none;
-  box-sizing: border-box;
-}
 </style>
