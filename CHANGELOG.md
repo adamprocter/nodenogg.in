@@ -1,3 +1,15 @@
+# 0.1.9
+
+_26th March 2020_
+
+### Added
+
+- Simple read mode for your own nodes can now be activated
+
+### Changed
+
+- made some minor changes to textarea CSS
+
 # 0.1.8
 
 _25th March 2020_
