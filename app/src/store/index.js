@@ -5,6 +5,8 @@ PouchDB.plugin(require('pouchdb-find'))
 import VueDraggableResizable from 'vue-draggable-resizable'
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 
+import Router from '@/router'
+
 Vue.use(Vuex)
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
 var myclient = 'firstvisit'
@@ -65,8 +67,15 @@ const store = new Vuex.Store({
   },
   mutations: {
     CREATE_MICROCOSM(state, doc) {
+      const urldevice = Router.currentRoute.params.device
+      const urlmicrocosm = Router.currentRoute.params.microcosm
       pouchdb.close().then(function() {
-        microcosm = doc
+        if (urlmicrocosm != undefined) {
+          myclient = urldevice
+          microcosm = urlmicrocosm
+        } else {
+          microcosm = doc
+        }
         pouchdb = new PouchDB(microcosm)
         remote =
           process.env.VUE_APP_COUCH_HTTP +
@@ -132,6 +141,12 @@ const store = new Vuex.Store({
     SET_CLIENT(state, doc) {
       state.myclient = doc
       store.commit('GET_MY_NODES')
+    },
+
+    GET_URL_MICROCOSM(state, doc) {
+      state.microcosm = doc
+      localStorage.setItem('mylastMicrocosm', doc)
+      // store.commit('GET_MY_NODES')
     },
 
     GET_MY_NODES(state) {
@@ -414,6 +429,12 @@ const store = new Vuex.Store({
   },
 
   actions: {
+    getURLParam: () => {
+      const urlparam = Router.currentRoute.params.microcosm
+      console.log(urlparam)
+      store.commit('GET_URL_MICROCOSM', urlparam)
+    },
+
     syncDB: () => {
       pouchdb.replicate.from(remote).on('complete', function() {
         store.commit('GET_ALL_NODES')
