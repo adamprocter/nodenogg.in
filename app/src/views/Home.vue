@@ -1,7 +1,12 @@
 <template>
   <div class="home">
     <div v-if="clientset">
-      <p>microcosm/{{ myMicrocosm }}</p>
+      <p>
+        microcosm/
+        <b>{{ myMicrocosm }}</b> | client
+        <b>{{ myClient }}</b>
+      </p>
+
       <OtherNodeslayer
         v-for="value in otherNodes"
         v-bind:key="value.node_id"
@@ -32,6 +37,8 @@ import ControlsLayer from '@/components/ControlsLayer.vue'
 
 import { mapState } from 'vuex'
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
+// import Router from '@/router'
+// console.log(Router.currentRoute.params.microcosm)
 
 export default {
   name: 'Home',
@@ -40,6 +47,11 @@ export default {
   created() {
     if (typeof window !== 'undefined') {
       document.addEventListener('keydown', this.handleKeyPress)
+    }
+    if (localStorage.myNNClient == null) {
+      // visiting from URL get them to name client
+      // localStorage.setItem('myNNClient', 'unknown client')
+      // console.log(localStorage.myNNClient)
     }
   },
   beforeDestroy() {
@@ -63,6 +75,7 @@ export default {
   },
   computed: mapState({
     myMicrocosm: state => state.microcosm,
+    myClient: state => state.myclient,
     myNodes: state => state.myNodes,
     otherNodes: state => state.otherNodes,
     shortcutstate: state => state.shortcutstate

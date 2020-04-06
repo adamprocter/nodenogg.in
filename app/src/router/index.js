@@ -21,7 +21,7 @@ const routes = [
   },
   // dynamic segement `:microcosm` is added to the path
   {
-    path: '/:device/microcosm/:microcosm',
+    path: '/microcosm/:microcosm',
     component: Home
   }
   // TODO: Nodecard ID in URL
