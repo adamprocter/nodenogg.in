@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -23,17 +24,18 @@ const routes = [
   {
     path: '/microcosm/:microcosm',
     component: Home
+  },
+
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
   }
-  // TODO: Nodecard ID in URL
-  // to get into editing a specific node??
-  // {
-  //   path: '/microcosm/:microcosm/:nodecard',
-  //   component: Home
-  // }
 ]
 
 const router = new VueRouter({
   mode: 'history',
+  base: process.env.VUE_APP_HTTP + '://' + process.env.VUE_APP_URL + '/',
   routes
 })
 
