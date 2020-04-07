@@ -12,6 +12,11 @@
       Delete my contributions (inc. attachments) permanently
     </BaseButton>
       <BaseButton @click="handleConnection()">Online check</BaseButton>-->
+      <p class="who">
+        microcosm =
+        <b>{{ myMicrocosm }}</b> | object =
+        <b>{{ myClient }}</b>
+      </p>
     </div>
     <!-- TEMP: This was old code for possible pop up panes  -->
     <!-- <button on:click="popups.showPane = !popups.showPane"> -->
@@ -28,12 +33,18 @@
 <script>
 // This is for detecting offline issues
 var serverUrl = 'https://nodenogg.in'
+import { mapState } from 'vuex'
 
 export default {
   mounted() {
     window.addEventListener('online', this.handleConnection)
     window.addEventListener('offline', this.handleConnection)
   },
+
+  computed: mapState({
+    myMicrocosm: state => state.microcosm,
+    myClient: state => state.myclient
+  }),
   methods: {
     addNode() {
       this.$store.dispatch('addNode')
@@ -48,7 +59,11 @@ export default {
       // Hardcoded as when I set a URL had parameters the reload fails
       //location.assign('https://alpha.nodenogg.in/')
       //location.assign('http://localhost:8080/')
-      location.reload()
+
+      location.assign(
+        process.env.VUE_APP_HTTP + '://' + process.env.VUE_APP_URL + '/'
+      )
+      // location.reload()
     },
 
     deleteClient() {
@@ -102,6 +117,10 @@ export default {
   justify-content: center;
   align-items: center;
   user-select: none;
+}
+
+.who {
+  color: white;
 }
 
 .btn-row {

@@ -18,7 +18,18 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  // dynamic segement `:microcosm` is added to the path
+  {
+    path: '/microcosm/:microcosm',
+    component: Home
   }
+  // TODO: Nodecard ID in URL
+  // to get into editing a specific node??
+  // {
+  //   path: '/microcosm/:microcosm/:nodecard',
+  //   component: Home
+  // }
 ]
 
 const router = new VueRouter({

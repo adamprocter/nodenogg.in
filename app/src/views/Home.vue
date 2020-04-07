@@ -9,7 +9,7 @@
       />
 
       <NodesLayer
-        @editTrue="(e) => editTrue(e)"
+        @editTrue="e => editTrue(e)"
         v-for="value in myNodes"
         v-bind:key="value.node_id"
         v-bind:nodeid="value.node_id"
@@ -31,6 +31,8 @@ import ControlsLayer from '@/components/ControlsLayer.vue'
 
 import { mapState } from 'vuex'
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
+// import Router from '@/router'
+// console.log(Router.currentRoute.params.microcosm)
 
 export default {
   name: 'Home',
@@ -39,6 +41,11 @@ export default {
   created() {
     if (typeof window !== 'undefined') {
       document.addEventListener('keydown', this.handleKeyPress)
+    }
+    if (localStorage.myNNClient == null) {
+      // visiting from URL get them to name client
+      // localStorage.setItem('myNNClient', 'unknown client')
+      // console.log(localStorage.myNNClient)
     }
   },
   beforeDestroy() {

@@ -63,10 +63,12 @@
 var delay = 100
 var delaytwo = 100
 
+import Router from '@/router'
+
 export default {
   data: function() {
     return {
-      localmicrocosm: '',
+      localmicrocosm: Router.currentRoute.params.microcosm,
       clientid: '',
       parta: true,
       partb: false,

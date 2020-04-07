@@ -1,3 +1,19 @@
+# 0.1.10
+
+_7th April 2020_
+
+### Added
+
+- You can now visit a microcosm by using URL followed by https://baseurl.com/microcosm/**microcosmname**/ to direct someone to a specific microcosm, if they have used any microcosm before they will enter with there device/ object name. If they have not they need to assign a object name.
+
+### Changed
+
+- You can now see the microcosm you are connected to and your object name.
+
+### Fixed
+
+- Create/ Join a new microcosm now reloads URL dependant on whether in development or prodction enviroment
+
 # 0.1.9
 
 _26th March 2020_
