@@ -1,12 +1,6 @@
 <template>
   <div class="home">
     <div v-if="clientset">
-      <p>
-        microcosm/
-        <b>{{ myMicrocosm }}</b> | client
-        <b>{{ myClient }}</b>
-      </p>
-
       <OtherNodeslayer
         v-for="value in otherNodes"
         v-bind:key="value.node_id"
@@ -74,8 +68,6 @@ export default {
     ControlsLayer
   },
   computed: mapState({
-    myMicrocosm: state => state.microcosm,
-    myClient: state => state.myclient,
     myNodes: state => state.myNodes,
     otherNodes: state => state.otherNodes,
     shortcutstate: state => state.shortcutstate
