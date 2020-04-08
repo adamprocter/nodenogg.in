@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p>A real 404</p>
+    <h1>This is a Custom 404</h1>
+    <p>Delightful one coming soon</p>
   </div>
 </template>
 
@@ -8,5 +9,4 @@
 export default {}
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -27,15 +26,21 @@ const routes = [
   },
 
   {
+    // catches 404 errors
     path: '*',
-    name: 'NotFound',
-    component: NotFound
+    name: '404',
+    component: () =>
+      import(
+        /* webpackChunkName: "NotFoundComponent" */ '../views/NotFound.vue'
+      )
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.VUE_APP_HTTP + '://' + process.env.VUE_APP_URL + '/',
+  //base: 'https://alpha.nodenogg.in/',
+  //base: process.env.VUE_APP_HTTP + '://' + process.env.VUE_APP_URL + '',
+  //base: process.env.VUE_APP_HTTP,
   routes
 })
 
