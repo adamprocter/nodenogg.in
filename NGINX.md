@@ -1,6 +1,6 @@
 server {
 listen 217.147.85.104:80;
-server_name \*.nodenogg.in;
+server_name *.nodenogg.in;
 root /var/www/vhosts/nodenogg.in/alpha.nodenogg.in;
 
 location / {
