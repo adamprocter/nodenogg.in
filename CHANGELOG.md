@@ -1,3 +1,15 @@
+# 0.1.11
+
+_10th April 2020_
+
+### Added
+
+- You can now switch between spatial view (organise) and list view (bucket mode).
+
+### Fixed
+
+- Typo in CHANGELOG.md
+
 # 0.1.10
 
 _7th April 2020_
@@ -12,7 +24,7 @@ _7th April 2020_
 
 ### Fixed
 
-- Create/ Join a new microcosm now reloads URL dependant on whether in development or prodction enviroment
+- Create/ Join a new microcosm now reloads URL dependant on whether in development or production environment.
 
 # 0.1.9
 
