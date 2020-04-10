@@ -8,6 +8,8 @@ import store from './store'
 import BaseButton from './components/BaseButton.vue'
 Vue.component('BaseButton', BaseButton)
 
+
+console.log(process.env)
 Vue.config.productionTip = false
 
 new Vue({

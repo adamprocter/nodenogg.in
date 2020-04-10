@@ -1,14 +1,26 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>&nbsp;|
-      <router-link to="/about">About</router-link>
+      <navigation/>
     </div>
-    <h1>nodenogg.in</h1>
     <router-view />
   </div>
 </template>
 
+<script>
+import { routes } from './router'
+import Navigation from './components/Navigation'
+export default {
+  data: function() {
+    return {
+      routes: routes.filter(route => !!route.name)
+    }
+  },
+  components: {
+    navigation: Navigation
+  }
+}
+</script>
 <style>
 @import url('https://rsms.me/inter/inter.css');
 
@@ -23,14 +35,5 @@ h1 {
 }
 img {
   width: 100%;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
