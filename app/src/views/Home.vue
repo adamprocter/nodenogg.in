@@ -22,6 +22,13 @@
           v-bind:nodeid="value.node_id"
           v-bind:nodetext="value.node_text"
         />
+
+        <OtherListlayer
+          v-for="value in otherNodes"
+          v-bind:key="value.node_id"
+          v-bind:nodeid="value.node_id"
+          v-bind:nodetext="value.node_text"
+        />
       </div>
       <ControlsLayer @listView="listView()" />
     </div>
@@ -35,6 +42,7 @@ import OnBoard from '@/components/OnBoard.vue'
 import NodesLayer from '@/components/NodesLayer.vue'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import ListLayer from '@/components/ListLayer.vue'
+import OtherListlayer from '@/components/OtherListlayer.vue'
 import ControlsLayer from '@/components/ControlsLayer.vue'
 
 import { mapState } from 'vuex'
@@ -75,6 +83,7 @@ export default {
     NodesLayer,
     OtherNodeslayer,
     ListLayer,
+    OtherListlayer,
     ControlsLayer
   },
   computed: mapState({

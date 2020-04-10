@@ -1,11 +1,11 @@
 <template>
-  <div class="list">
-    <ul v-for="value in myNodes" v-bind:key="value.node_id">
+  <div class="otherlist">
+    <ul v-for="value in otherNodes" v-bind:key="value.node_id">
       <li
         class="dataeach"
         v-if="nodeid == value.node_id"
         :inner-html.prop="value.node_text | marked"
-      ></li>
+      >{{ nodeid }}</li>
     </ul>
   </div>
 </template>
@@ -15,14 +15,14 @@ import { mapState } from 'vuex'
 import marked from 'marked'
 
 export default {
-  name: 'ListLayer',
+  name: 'OtherListlayer',
   props: {
     nodeid: String,
     nodetext: String
   },
 
   computed: mapState({
-    myNodes: state => state.myNodes
+    otherNodes: state => state.otherNodes
   }),
 
   filters: {
