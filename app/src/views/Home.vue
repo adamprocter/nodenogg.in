@@ -1,20 +1,6 @@
 <template>
   <div class="home">
     <div v-if="clientset">
-      <OtherNodeslayer
-        v-for="value in otherNodes"
-        v-bind:key="value.node_id"
-        v-bind:nodeid="value.node_id"
-        v-bind:nodetext="value.node_text"
-      />
-
-      <NodesLayer
-        @editTrue="e => editTrue(e)"
-        v-for="value in myNodes"
-        v-bind:key="value.node_id"
-        v-bind:nodeid="value.node_id"
-        v-bind:nodetext="value.node_text"
-      />
       <div v-if="listview">
         <ListLayer
           v-for="value in myNodes"
@@ -25,6 +11,22 @@
 
         <OtherListlayer
           v-for="value in otherNodes"
+          v-bind:key="value.node_id"
+          v-bind:nodeid="value.node_id"
+          v-bind:nodetext="value.node_text"
+        />
+      </div>
+      <div v-else>
+        <OtherNodeslayer
+          v-for="value in otherNodes"
+          v-bind:key="value.node_id"
+          v-bind:nodeid="value.node_id"
+          v-bind:nodetext="value.node_text"
+        />
+
+        <NodesLayer
+          @editTrue="e => editTrue(e)"
+          v-for="value in myNodes"
           v-bind:key="value.node_id"
           v-bind:nodeid="value.node_id"
           v-bind:nodetext="value.node_text"
