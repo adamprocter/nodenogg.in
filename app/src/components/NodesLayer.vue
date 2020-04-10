@@ -35,6 +35,7 @@
               ></textarea>
             </div>
           </div>
+          <!-- FIXME: What is this doing below now ? Looks old -->
           <div v-else>
             <p :id="nodeid" :inner-html.prop="nodetext | marked">{{ nodeid }}</p>
           </div>
