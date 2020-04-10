@@ -15,8 +15,15 @@
         v-bind:nodeid="value.node_id"
         v-bind:nodetext="value.node_text"
       />
-
-      <ControlsLayer />
+      <div v-if="listview">
+        <ListLayer
+          v-for="value in myNodes"
+          v-bind:key="value.node_id"
+          v-bind:nodeid="value.node_id"
+          v-bind:nodetext="value.node_text"
+        />
+      </div>
+      <ControlsLayer @listView="listView()" />
     </div>
     <OnBoard v-else @clientAdded="clientAdded()" />
   </div>
@@ -27,6 +34,7 @@
 import OnBoard from '@/components/OnBoard.vue'
 import NodesLayer from '@/components/NodesLayer.vue'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
+import ListLayer from '@/components/ListLayer.vue'
 import ControlsLayer from '@/components/ControlsLayer.vue'
 
 import { mapState } from 'vuex'
@@ -57,6 +65,7 @@ export default {
   data: function() {
     return {
       clientset: false,
+      listview: false,
       offline: false
     }
   },
@@ -65,6 +74,7 @@ export default {
     OnBoard,
     NodesLayer,
     OtherNodeslayer,
+    ListLayer,
     ControlsLayer
   },
   computed: mapState({
@@ -84,6 +94,14 @@ export default {
     // This is here to support the shortcuts
     addNode() {
       this.$store.dispatch('addNode')
+    },
+
+    listView() {
+      if (this.listview == false) {
+        this.listview = true
+      } else {
+        this.listview = false
+      }
     },
 
     offlineTriggered() {
