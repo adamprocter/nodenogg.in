@@ -29,6 +29,7 @@ nav {
   align-items: center;
   justify-content: flex-start;
   padding: 10px;
+  height: 40px;
 }
 nav a {
   font-weight: bold;

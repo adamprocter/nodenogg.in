@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <navigation/>
-    </div>
+    <navigation />
     <router-view />
   </div>
 </template>
@@ -23,11 +21,25 @@ export default {
 </script>
 <style>
 @import url('https://rsms.me/inter/inter.css');
+body {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
 
 #app {
   font-family: 'Inter var', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-top: 40px;
 }
 
 h1 {

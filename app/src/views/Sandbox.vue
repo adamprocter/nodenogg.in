@@ -1,10 +1,9 @@
 <template>
-  <div class="container">
-    <pzc>
-      <div class="board">Inner</div>
-    </pzc>
-  </div>
+  <pzc v-bind:width="2000" v-bind:height="2000">
+    <h1>Inner</h1>
+  </pzc>
 </template>
+
 <script>
 import { mapState } from 'vuex'
 import PanZoomContainer from '../experimental/PanZoomContainer'

@@ -10,38 +10,31 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  border: 5px solid red;
 }
 .inner {
   width: 2000px;
   height: 2000px;
-  background-color: rgb(50, 50, 50);
-  background-image: linear-gradient(
-      0deg,
-      transparent 24%,
-      rgba(255, 255, 255, 0.05) 25%,
-      rgba(255, 255, 255, 0.05) 26%,
-      transparent 27%,
-      transparent 74%,
-      rgba(255, 255, 255, 0.05) 75%,
-      rgba(255, 255, 255, 0.05) 76%,
-      transparent 77%,
-      transparent
-    ),
-    linear-gradient(
-      90deg,
-      transparent 24%,
-      rgba(255, 255, 255, 0.05) 25%,
-      rgba(255, 255, 255, 0.05) 26%,
-      transparent 27%,
-      transparent 74%,
-      rgba(255, 255, 255, 0.05) 75%,
-      rgba(255, 255, 255, 0.05) 76%,
-      transparent 77%,
-      transparent
-    );
-
   position: relative;
   transform-origin: 0 0;
+  background-size: 40px 40px;
+  background-color: rgb(245, 245, 245);
+  background-image: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.5) 1px,
+    rgba(0, 0, 0, 0) 1px
+  );
+}
+.indicator {
+  position: absolute;
+  z-index: 4;
+  top: 20px;
+  right: 20px;
+  font-size: 12px;
+  color: white;
+  padding: 10px;
+  border-radius: 3px;
+  background: rgb(50, 50, 50);
 }
 </style>
 
@@ -64,11 +57,14 @@
     <div
       class="inner"
       v-bind:style="{
+        width: `${width}px`,
+        height: `${height}px`,
         transform: `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
       }"
     >
       <slot></slot>
     </div>
+    <div class="indicator">{{ scalePercentage }}</div>
   </div>
 </template>
 <script>
@@ -125,16 +121,23 @@ export default {
     translationBounds: {
       type: Object,
       default() {
-        return { xMin: -1000, xMax: 1000, yMin: -1000, yMax: 1000 }
+        return { xMin: -500, xMax: 500, yMin: -500, yMax: 500 }
       }
     },
+    width: Number,
+    height: Number,
     minScale: {
       type: Number,
-      default: 0.05
+      default: 0.3
     },
     maxScale: {
       type: Number,
-      default: 3.0
+      default: 2.0
+    }
+  },
+  computed: {
+    scalePercentage() {
+      return `${(this.scale * 100).toFixed(0)}%`
     }
   },
   methods: {
