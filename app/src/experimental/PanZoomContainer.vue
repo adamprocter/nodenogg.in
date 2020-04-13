@@ -15,6 +15,7 @@
   transform-origin: 0 0;
   background-size: 40px 40px;
   background-color: rgb(245, 245, 245);
+  border: 1px solid rgba(0, 0, 0, 0.25);
   background-image: radial-gradient(
     circle,
     rgba(0, 0, 0, 0.5) 1px,
@@ -37,7 +38,7 @@
     v-on:wheel.capture="onWheel"
     v-on:touchstart.passive="onTouchStart"
     v-on:mousedown="onMouseDown"
-    v-on:touchmove.passive="onTouchMove"
+    v-on:touchmove="onTouchMove"
     v-on:mousemove="onMouseMove"
     v-on:touchend.passive.capture="onTouchEnd"
     v-on:mouseup.passive.capture="onMouseUp"
@@ -46,32 +47,38 @@
   >
     <div
       ref="innerContainer"
-      v-bind:class="{ inner: true, active: pan }"
+      v-bind:class="{ inner: true, active: true }"
       v-bind:style="{
         width: `${width}px`,
         height: `${height}px`,
         transform: `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
       }"
     >
+      {{ JSON.stringify(interaction) }}
       <slot />
     </div>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
+import { constrainTranslation } from '@/experimental/utils/numbers'
 import {
-  clamp,
-  midpoint,
-  touchPt,
-  touchDistance,
-  coordChange
-} from './geometry'
-// import { mapRange } from '@/experimental/utils/numbers'
+  getNormalisedInteraction,
+  changeViewFromWheelEvent,
+  changeViewFromMultiTouchEvent
+} from '@/experimental/utils/view'
+
 export default {
   name: 'map-interaction',
   data() {
     return {
       shouldPreventTouchEndDefault: false
     }
+  },
+  computed: {
+    ...mapState({
+      interaction: state => state.ui.interaction
+    })
   },
   props: {
     translationBounds: {
@@ -84,14 +91,6 @@ export default {
     scale: Number,
     width: Number,
     height: Number,
-    pan: {
-      type: Boolean,
-      default: true
-    },
-    zoom: {
-      type: Boolean,
-      default: true
-    },
     minScale: {
       type: Number,
       default: 0.3
@@ -108,60 +107,63 @@ export default {
         this.shouldPreventTouchEndDefault = false
       }
 
-      const rect = this.$refs.container.getBoundingClientRect()
-
-      const x = e.clientX - parseInt(rect.left, 10)
-      const y = e.clientY - parseInt(rect.top, 10)
-
-      const result = {
-        relative: { x, y },
-        canvas: {
-          x: parseInt((x + -this.translation.x) / this.scale, 10),
-          y: parseInt((y + -this.translation.y) / this.scale, 10)
-        }
-      }
-      console.log(result)
+      const { relativePoint, boardPoint } = getNormalisedInteraction(
+        this.$refs.container,
+        e,
+        this.translation,
+        this.scale
+      )
+      console.log(relativePoint, boardPoint)
     },
+    reset() {},
     onMouseDown(e) {
       e.preventDefault()
       this.setPointerState([e])
+    },
+    onMouseMove(e) {
+      if (!this.interaction.origin) {
+        return
+      }
+      e.preventDefault()
+      this.handleDrag(e)
+    },
+    onMouseUp() {
+      this.setPointerState([])
     },
     onTouchStart(e) {
       e.preventDefault()
       this.setPointerState(e.touches)
     },
-    onMouseUp() {
-      this.setPointerState([])
+    onTouchMove(e) {
+      if (!this.interaction.origin) {
+        return
+      }
+  console.log('touch')
+      e.preventDefault()
+      const isPinchAction =
+        e.touches.length == 2 && this.interaction.origin.points.length > 1
+
+      if (isPinchAction) {
+        this.handleMultiTouch(e)
+      } else if (e.touches.length === 1 && this.interaction.origin) {
+        this.handleDrag(e.touches[0])
+      }
     },
     onTouchEnd(e) {
       this.setPointerState(e.touches)
     },
-    onMouseMove(e) {
-      if (!this.startPointerInfo || !this.pan) {
-        return
-      }
-
+    onWheel(e) {
       e.preventDefault()
-      this.onDrag(e)
-    },
-    onTouchMove(e) {
-      if (!this.startPointerInfo) {
-        return
-      }
+      e.stopPropagation()
 
-      e.preventDefault()
-      const isPinchAction =
-        e.touches.length == 2 && this.startPointerInfo.pointers.length > 1
+        console.log(e)
 
-      if (isPinchAction && this.zoom) {
-        this.scaleFromMultiTouch(e)
-      } else if (e.touches.length === 1 && this.startPointerInfo && this.pan) {
-        this.onDrag(e.touches[0])
-      }
+      this.handleWheel(e)
     },
-    onDrag(pointer) {
-      const { translation, pointers } = this.startPointerInfo
-      const startPointer = pointers[0]
+
+    handleDrag(pointer) {
+      const { translation, points } = this.interaction.origin
+      const startPointer = points[0]
       const dragX = pointer.clientX - startPointer.clientX
       const dragY = pointer.clientY - startPointer.clientY
       const newTranslation = {
@@ -169,155 +171,51 @@ export default {
         y: translation.y + dragY
       }
 
+      console.log(dragX, dragY)
+
       this.$store.commit(
         'ui/setTranslation',
-        this.clampTranslation(newTranslation)
+        constrainTranslation(newTranslation, this.translationBounds)
       )
       this.shouldPreventTouchEndDefault = true
     },
-    onWheel(e) {
-      if (!this.zoom) {
+    setPointerState(points) {
+      if (!points || points.length === 0) {
+        this.$store.commit('ui/resetOrigin')
         return
       }
 
-      e.preventDefault()
-      e.stopPropagation()
-      const scaleChange = 2 ** (e.deltaY * 0.002)
-      const newScale = clamp(
-        this.minScale,
-        this.scale + (1 - scaleChange),
-        this.maxScale
-      )
-      const mousePos = this.clientPosToTranslatedPos({
-        x: e.clientX,
-        y: e.clientY
-      })
-      this.scaleFromPoint(newScale, mousePos)
-    },
-    setPointerState(pointers) {
-      if (!pointers || pointers.length === 0) {
-        this.startPointerInfo = undefined
-        return
-      }
-
-      this.startPointerInfo = {
-        pointers,
+      this.$store.commit('ui/setOrigin', {
+        points,
         scale: this.scale,
         translation: this.translation
-      }
-    },
-    clampTranslation(desiredTranslation = this) {
-      const { x, y } = desiredTranslation
-      let { xMax, xMin, yMax, yMin } = this.translationBounds
-      xMin = xMin != undefined ? xMin : -Infinity
-      yMin = yMin != undefined ? yMin : -Infinity
-      xMax = xMax != undefined ? xMax : Infinity
-      yMax = yMax != undefined ? yMax : Infinity
-      return {
-        x: clamp(xMin, x, xMax),
-        y: clamp(yMin, y, yMax)
-      }
-    },
-    translatedOrigin(translation = this.translation) {
-      const clientOffset = this.$refs.container.getBoundingClientRect()
-      return {
-        x: clientOffset.left + translation.x,
-        y: clientOffset.top + translation.y
-      }
-    },
-    clientPosToTranslatedPos({ x, y }, translation = this.translation) {
-      const origin = this.translatedOrigin(translation)
-      return {
-        x: x - origin.x,
-        y: y - origin.y
-      }
-    },
-    scaleFromPoint(newScale, focalPt) {
-      const { translation, scale } = this
-      const scaleRatio = newScale / (scale != 0 ? scale : 1)
-      const focalPtDelta = {
-        x: coordChange(focalPt.x, scaleRatio),
-        y: coordChange(focalPt.y, scaleRatio)
-      }
-      const newTranslation = {
-        x: translation.x - focalPtDelta.x,
-        y: translation.y - focalPtDelta.y
-      }
-      this.$store.commit('ui/setScale', newScale)
-
-      this.$store.commit(
-        'ui/setTranslation',
-        this.clampTranslation(newTranslation)
-      )
-    },
-    scaleFromMultiTouch(e) {
-      const startTouches = this.startPointerInfo.pointers
-      const newTouches = e.touches
-      // calculate new scale
-      const dist0 = touchDistance(startTouches[0], startTouches[1])
-      const dist1 = touchDistance(newTouches[0], newTouches[1])
-      const scaleChange = dist1 / dist0
-      const startScale = this.startPointerInfo.scale
-      const targetScale = startScale + (scaleChange - 1) * startScale
-      const newScale = clamp(this.minScale, targetScale, this.maxScale)
-      // calculate mid points
-      const newMidPoint = midpoint(
-        touchPt(newTouches[0]),
-        touchPt(newTouches[1])
-      )
-      const startMidpoint = midpoint(
-        touchPt(startTouches[0]),
-        touchPt(startTouches[1])
-      )
-      const dragDelta = {
-        x: newMidPoint.x - startMidpoint.x,
-        y: newMidPoint.y - startMidpoint.y
-      }
-      const scaleRatio = newScale / startScale
-      const focalPt = this.clientPosToTranslatedPos(
-        startMidpoint,
-        this.startPointerInfo.translation
-      )
-      const focalPtDelta = {
-        x: coordChange(focalPt.x, scaleRatio),
-        y: coordChange(focalPt.y, scaleRatio)
-      }
-      const newTranslation = {
-        x: this.startPointerInfo.translation.x - focalPtDelta.x + dragDelta.x,
-        y: this.startPointerInfo.translation.y - focalPtDelta.y + dragDelta.y
-      }
-
-      this.$store.commit('ui/setScale', newScale)
-
-      this.$store.commit(
-        'ui/setTranslation',
-        this.clampTranslation(newTranslation)
-      )
-    },
-    discreteScaleStepSize() {
-      const { minScale, maxScale } = this
-      const delta = Math.abs(maxScale - minScale)
-      return delta / 10
-    },
-    changeScale(delta) {
-      const targetScale = this.scale + delta
-      const { minScale, maxScale } = this
-      const scale = clamp(minScale, targetScale, maxScale)
-      const rect = this.$refs.container.getBoundingClientRect()
-      const x = rect.left + rect.width / 2
-      const y = rect.top + rect.height / 2
-      const focalPoint = this.clientPosToTranslatedPos({
-        x,
-        y
       })
-      this.scaleFromPoint(scale, focalPoint)
+    },
+    handleWheel(e) {
+      const [newScale, newTranslation] = changeViewFromWheelEvent(
+        e,
+        this.$refs.container,
+        this
+      )
+      this.$store.commit('ui/setScale', newScale)
+      this.$store.commit(
+        'ui/setTranslation',
+        constrainTranslation(newTranslation, this.translationBounds)
+      )
+    },
+    handleMultiTouch(e) {
+      const [newTranslation, newScale] = changeViewFromMultiTouchEvent(
+        this.interaction.origin.points,
+        e.touches,
+        this.$refs.container,
+        this
+      )
+      this.$store.commit('ui/setScale', newScale)
+      this.$store.commit(
+        'ui/setTranslation',
+        constrainTranslation(newTranslation, this.translationBounds)
+      )
     }
-  },
-  mounted() {
-    this.containerNode = this.$refs.container
-  },
-  created() {
-    this.startPointerInfo = undefined
   }
 }
 </script>

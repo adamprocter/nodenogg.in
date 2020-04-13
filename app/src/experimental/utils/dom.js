@@ -5,7 +5,6 @@ import { isFunction } from '@/experimental/utils/helpers'
 //////////////////////////////////////////////////////////////////////
 
 /**
- * !! INCOMPLETE !!
  * Normalises mouse/touch interaction events
  *
  * @param {HTMLElement} target - base element for event
@@ -19,11 +18,11 @@ export const getInteractionPoint = (target, event) => {
   return {
     x: parseInt(
       ((event.clientX - rect.left) / (rect.right - rect.left)) *
-        target.offsetWidth
+      target.offsetWidth
     ),
     y: parseInt(
       ((event.clientY - rect.top) / (rect.bottom - rect.top)) *
-        target.offsetHeight
+      target.offsetHeight
     )
   }
 }

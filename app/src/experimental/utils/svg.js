@@ -1,6 +1,6 @@
 import * as win from '@/experimental/constants/window'
 import { generateLinkHandles } from '@/experimental/utils/nodes'
-import { mapRange, distance } from '@/experimental/utils/numbers'
+import { mapRange, distanceBetween } from '@/experimental/utils/numbers'
 
 export const generateBezierCurve = (from, to, tension) => {
   if (from && to) {
@@ -9,7 +9,7 @@ export const generateBezierCurve = (from, to, tension) => {
     // This is a simple way to adjust the link tension depending
     // on the distance the link covers
     const adjustedTension = mapRange(
-      distance(fromHandle, toHandle),
+      distanceBetween(fromHandle, toHandle),
       0,
       win.width,
       tension * 0.01,
@@ -27,7 +27,7 @@ export const makeBezier = (fromHandle, toHandle, tension) => {
   // This is a simple way to adjust the link tension depending
   // on the distance the link covers
   const adjustedTension = mapRange(
-    distance(fromHandle, toHandle),
+    distanceBetween(fromHandle, toHandle),
     0,
     win.width,
     tension * 0.01,

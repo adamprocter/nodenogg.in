@@ -6,7 +6,12 @@ const store = {
     interaction: {
       active: false,
       origin: null,
-      shape: null
+      shape: {
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 200
+      }
     },
     selection: {
       links: [],
@@ -36,6 +41,12 @@ const store = {
     }
   },
   mutations: {
+    setOrigin(state, origin) {
+      state.interaction.origin = origin
+    },
+    resetOrigin(state) {
+      state.interaction.origin = null
+    },
     setMode(state, mode) {
       if (allModes[mode]) {
         state.mode = mode

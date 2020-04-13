@@ -1,6 +1,6 @@
 import * as win from '@/experimental/constants/window'
 import { generateLinkHandles } from '@/experimental/utils/nodes'
-import { mapRange, distance, angleBetween } from '@/experimental/utils/numbers'
+import { mapRange, distanceBetween, angleBetween } from '@/experimental/utils/numbers'
 
 //////////////////////////////////////////////////////////////////////
 // CANVAS UTILITIES
@@ -23,7 +23,7 @@ export const drawLinkBezierCurve = (context, from, to, tension) => {
   // This is a simple way to adjust the link tension depending
   // on the distance the link covers
   const adjustedTension = mapRange(
-    distance(fromHandle, toHandle),
+    distanceBetween(fromHandle, toHandle),
     0,
     win.width,
     tension * 0.01,

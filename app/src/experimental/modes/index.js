@@ -2,7 +2,7 @@ export const select = {
   name: 'select',
   view: {
     pan: false,
-    zoom: true
+    zoom: false
   },
   icon: 'select',
   cursor: 'initial',

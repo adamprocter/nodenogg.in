@@ -63,3 +63,51 @@ export const mapRange = (value, from1, to1, from2, to2) =>
  *  */
 export const angleBetween = (point1, point2) =>
   Math.atan2(point2.y - point1.y, point2.x - point1.x)
+
+/**
+* Constrains a value within a range
+*
+* @param {number} value
+* @param {number} min
+* @param {number} max
+* @return {number}
+*
+*  */
+export const clamp = (value, min, max) => {
+  return Math.max(min, Math.min(value, max))
+}
+
+/**
+ * ! TODO ! confusing naming
+* Scales a coordinate value
+*/
+export const scaleCoordinate = (coordinate, scaleRatio) => {
+  return scaleRatio * coordinate - coordinate
+}
+
+/**
+ * ! TODO ! confusing naming
+* Scales a @Point
+*/
+export const scalePoint = ({ x, y }, scale) => {
+  return {
+    x: scaleCoordinate(x, scale),
+    y: scaleCoordinate(y, scale)
+  }
+}
+
+/**
+ * ! TODO ! dynamic contraints based on width/height of board
+ */
+export const constrainTranslation = (targetTranslation, translationBounds) => {
+  const { x, y } = targetTranslation
+  let { xMax, xMin, yMax, yMin } = translationBounds
+  xMin = xMin != undefined ? xMin : -Infinity
+  yMin = yMin != undefined ? yMin : -Infinity
+  xMax = xMax != undefined ? xMax : Infinity
+  yMax = yMax != undefined ? yMax : Infinity
+  return {
+    x: clamp(x, xMin, xMax),
+    y: clamp(y, yMin, yMax)
+  }
+}
