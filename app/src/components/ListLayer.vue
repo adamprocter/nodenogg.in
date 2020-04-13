@@ -18,17 +18,17 @@ export default {
   name: 'ListLayer',
   props: {
     nodeid: String,
-    nodetext: String
+    nodetext: String,
   },
 
   computed: mapState({
-    myNodes: state => state.myNodes
+    myNodes: (state) => state.myNodes,
   }),
 
   filters: {
     // need to write a reverse data filter I suspect here so new data is at the top of list
-    marked: marked
-  }
+    marked: marked,
+  },
 }
 </script>
 

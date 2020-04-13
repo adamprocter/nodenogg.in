@@ -1,9 +1,15 @@
 <template>
   <div class="controls">
     <div class="btn-row">
-      <BaseButton buttonClass="action" @click="addNode()">Create Node</BaseButton>
-      <BaseButton buttonClass="action" @click="listView()">Switch View</BaseButton>
-      <BaseButton buttonClass="action" @click="removeLocal()">Join another microcosm</BaseButton>
+      <BaseButton buttonClass="action" @click="addNode()"
+        >Create Node</BaseButton
+      >
+      <BaseButton buttonClass="action" @click="listView()"
+        >Switch View</BaseButton
+      >
+      <BaseButton buttonClass="action" @click="removeLocal()"
+        >Join another microcosm</BaseButton
+      >
       <!-- <BaseButton @click="exportStorage()">Export my contributions</BaseButton>
     <BaseButton buttonClass="danger" v-on:click="deleteClient">
       Delete my contributions (inc. attachments) permanently
@@ -39,8 +45,8 @@ export default {
   },
 
   computed: mapState({
-    myMicrocosm: state => state.microcosm,
-    myClient: state => state.myclient
+    myMicrocosm: (state) => state.microcosm,
+    myClient: (state) => state.myclient,
   }),
   methods: {
     addNode() {
@@ -50,11 +56,11 @@ export default {
       // FIXME: add action here to toggle visiblity
       this.$emit('listView')
     },
-    exportStorage: function() {
+    exportStorage: function () {
       // Save local indexeddb document-store to JSON file
       // or export state.notes to JSON file
     },
-    removeLocal: function() {
+    removeLocal: function () {
       localStorage.removeItem('myNNClient')
       localStorage.removeItem('mylastMicrocosm')
       // Hardcoded as when I set a URL had parameters the reload fails
@@ -70,10 +76,10 @@ export default {
     deleteClient() {
       this.$store.dispatch('deleteClient')
     },
-    handleConnection: function() {
+    handleConnection: function () {
       var ref = this
       if (navigator.onLine) {
-        this.isReachable(this.getServerUrl()).then(function(online) {
+        this.isReachable(this.getServerUrl()).then(function (online) {
           if (online) {
             // handle online status
             console.log('online')
@@ -88,19 +94,19 @@ export default {
         ref.$emit('offlineTriggered')
       }
     },
-    isReachable: function(url) {
+    isReachable: function (url) {
       return fetch(url, { method: 'HEAD', mode: 'no-cors' })
-        .then(function(resp) {
+        .then(function (resp) {
           return resp && (resp.ok || resp.type === 'opaque')
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.warn('[conn test failure]:', err)
         })
     },
-    getServerUrl: function() {
+    getServerUrl: function () {
       return serverUrl || window.location.origin
-    }
-  }
+    },
+  },
 }
 </script>
 

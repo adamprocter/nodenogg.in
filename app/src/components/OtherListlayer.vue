@@ -5,7 +5,9 @@
         class="dataeach"
         v-if="nodeid == value.node_id"
         :inner-html.prop="value.node_text | marked"
-      >{{ nodeid }}</li>
+      >
+        {{ nodeid }}
+      </li>
     </ul>
   </div>
 </template>
@@ -18,17 +20,17 @@ export default {
   name: 'OtherListlayer',
   props: {
     nodeid: String,
-    nodetext: String
+    nodetext: String,
   },
 
   computed: mapState({
-    otherNodes: state => state.otherNodes
+    otherNodes: (state) => state.otherNodes,
   }),
 
   filters: {
     // need to write a reverse data filter I suspect here so new data is at the top of list
-    marked: marked
-  }
+    marked: marked,
+  },
 }
 </script>
 

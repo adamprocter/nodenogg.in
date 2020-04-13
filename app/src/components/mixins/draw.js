@@ -25,6 +25,6 @@ export const draw = {
 
       ctx.stroke()
       ctx.setTransform(1, 0, 0, 1, 0, 0)
-    }
-  }
+    },
+  },
 }

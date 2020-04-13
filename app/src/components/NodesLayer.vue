@@ -15,7 +15,7 @@
         @dragstop="onDragstop"
         @resizestop="onResizestop"
         :drag-cancel="'.drag-cancel'"
-        style="background-color: rgb(205, 234, 255)"
+        style="background-color: rgb(205, 234, 255);"
       >
         <form>
           <div v-if="readmode == false">
@@ -37,18 +37,26 @@
           </div>
           <!-- FIXME: What is this doing below now ? Looks old -->
           <div v-else>
-            <p :id="nodeid" :inner-html.prop="nodetext | marked">{{ nodeid }}</p>
+            <p :id="nodeid" :inner-html.prop="nodetext | marked">
+              {{ nodeid }}
+            </p>
           </div>
 
           <h3>Reactions</h3>
           <div v-for="(emojis, index) in configEmoji" :key="index">
-            <p class="allemoji" v-if="nodeid == emojis.node_id">{{ emojis.emoji_text }}</p>
+            <p class="allemoji" v-if="nodeid == emojis.node_id">
+              {{ emojis.emoji_text }}
+            </p>
           </div>
 
           <p class="info">*markdown supported</p>
           <div class="btn-row">
-            <BaseButton buttonClass="danger" @click="deleteFlag()">Delete</BaseButton>
-            <BaseButton class="read" buttonClass="action" @click="readFlag()">{{ mode }}</BaseButton>
+            <BaseButton buttonClass="danger" @click="deleteFlag()"
+              >Delete</BaseButton
+            >
+            <BaseButton class="read" buttonClass="action" @click="readFlag()">{{
+              mode
+            }}</BaseButton>
           </div>
         </form>
       </vue-draggable-resizable>
@@ -68,19 +76,19 @@ export default {
     nodetext: String,
     nodewidth: Number,
     nodeheight: Number,
-    deleted: Boolean
+    deleted: Boolean,
   },
 
   data() {
     return {
       pickupz: 99,
       readmode: false,
-      mode: 'Read'
+      mode: 'Read',
     }
   },
 
   filters: {
-    marked: marked
+    marked: marked,
   },
 
   // FIXME: how do we know how to focus on the newest node ?
@@ -98,9 +106,9 @@ export default {
   // },
 
   computed: mapState({
-    myNodes: state => state.myNodes,
-    configPositions: state => state.configPositions,
-    configEmoji: state => state.configEmoji
+    myNodes: (state) => state.myNodes,
+    configPositions: (state) => state.configPositions,
+    configEmoji: (state) => state.configEmoji,
   }),
   methods: {
     onActivated() {
@@ -138,7 +146,7 @@ export default {
         y,
         width,
         height,
-        zindex
+        zindex,
       })
     },
     onDrag(x, y) {
@@ -164,7 +172,7 @@ export default {
         y,
         width,
         height,
-        zindex
+        zindex,
       })
     },
 
@@ -190,8 +198,8 @@ export default {
         this.readmode = true
         this.mode = 'Edit'
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
