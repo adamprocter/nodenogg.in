@@ -5,7 +5,9 @@
         class="dataeach"
         v-if="nodeid == value.node_id"
         :inner-html.prop="value.node_text | marked"
-      >{{ nodeid }}</li>
+      >
+        {{ nodeid }}
+      </li>
     </ul>
   </div>
 </template>

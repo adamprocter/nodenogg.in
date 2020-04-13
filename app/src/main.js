@@ -6,10 +6,11 @@ import store from './store'
 // FIXME: Probably update this to the global import code from Vue
 // https://vuejs.org/v2/guide/components-registration.html#Automatic-Global-Registration-of-Base-Components
 import BaseButton from './components/BaseButton.vue'
+import Icon from '@/experimental/icons/Icon'
+
 Vue.component('BaseButton', BaseButton)
+Vue.component('Icon', Icon)
 
-
-console.log(process.env)
 Vue.config.productionTip = false
 
 new Vue({

@@ -37,18 +37,26 @@
           </div>
           <!-- FIXME: What is this doing below now ? Looks old -->
           <div v-else>
-            <p :id="nodeid" :inner-html.prop="nodetext | marked">{{ nodeid }}</p>
+            <p :id="nodeid" :inner-html.prop="nodetext | marked">
+              {{ nodeid }}
+            </p>
           </div>
 
           <h3>Reactions</h3>
           <div v-for="(emojis, index) in configEmoji" :key="index">
-            <p class="allemoji" v-if="nodeid == emojis.node_id">{{ emojis.emoji_text }}</p>
+            <p class="allemoji" v-if="nodeid == emojis.node_id">
+              {{ emojis.emoji_text }}
+            </p>
           </div>
 
           <p class="info">*markdown supported</p>
           <div class="btn-row">
-            <BaseButton buttonClass="danger" @click="deleteFlag()">Delete</BaseButton>
-            <BaseButton class="read" buttonClass="action" @click="readFlag()">{{ mode }}</BaseButton>
+            <BaseButton buttonClass="danger" @click="deleteFlag()"
+              >Delete</BaseButton
+            >
+            <BaseButton class="read" buttonClass="action" @click="readFlag()">{{
+              mode
+            }}</BaseButton>
           </div>
         </form>
       </vue-draggable-resizable>

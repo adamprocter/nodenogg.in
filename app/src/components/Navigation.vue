@@ -1,6 +1,8 @@
 <template>
-  <nav>
-    <router-link v-for="route in routes" :key="route.name" :to="route.path">{{route.name}}</router-link>
+  <nav class="navigation">
+    <router-link v-for="route in routes" :key="route.name" :to="route.path">{{
+      route.name
+    }}</router-link>
   </nav>
 </template>
 
@@ -16,8 +18,8 @@ export default {
 }
 </script>
 
-<style>
-nav {
+<style scoped>
+nav.navigation {
   position: fixed;
   top: 0;
   left: 0;

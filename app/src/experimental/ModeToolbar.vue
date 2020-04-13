@@ -1,0 +1,72 @@
+<template>
+  <nav>
+    <button
+      v-for="mode in allModes"
+      v-on:click="() => setMode(mode.name)"
+      v-bind:key="mode.name"
+      v-bind:class="isActive(mode) ? 'active' : 'inactive'"
+    >
+      <Icon v-bind:type="mode.icon" v-bind:theme="isActive(mode) ? 'light' : 'dark'" />
+    </button>
+  </nav>
+</template>
+
+<script>
+import { mapState, mapGetters } from 'vuex'
+
+import * as allModes from '@/experimental/modes'
+
+export default {
+  computed: {
+    ...mapState({
+      mode: state => state.ui.mode
+    }),
+    ...mapGetters({
+      activeMode: 'ui/activeMode'
+    })
+  },
+  methods: {
+    setMode(mode) {
+      this.$store.commit('ui/setMode', mode)
+    },
+    isActive(mode) {
+      return this.mode === mode.name
+    }
+  },
+  data() {
+    return {
+      allModes
+    }
+  }
+}
+</script>
+
+<style scoped>
+nav {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+button {
+  border: none;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  margin: 0;
+  background: white;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  outline: none;
+  box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.1);
+  margin-right: 10px;
+}
+button.active {
+  background: rgb(30, 30, 30);
+}
+</style>
