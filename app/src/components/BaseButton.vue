@@ -11,9 +11,9 @@
 export default {
   props: {
     buttonClass: {
-      type: String,
-    },
-  },
+      type: String
+    }
+  }
 }
 </script>
 

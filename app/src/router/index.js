@@ -9,7 +9,7 @@ export const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: Home
   },
   {
     path: '/sandbox',
@@ -23,12 +23,12 @@ export const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/About.vue'),
+      import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   // dynamic segement `:microcosm` is added to the path
   {
     path: '/microcosm/:microcosm',
-    component: Home,
+    component: Home
   },
 
   {
@@ -38,8 +38,8 @@ export const routes = [
     component: () =>
       import(
         /* webpackChunkName: "NotFoundComponent" */ '../views/NotFound.vue'
-      ),
-  },
+      )
+  }
 ]
 
 const router = new VueRouter({
@@ -47,7 +47,7 @@ const router = new VueRouter({
   //base: 'https://alpha.nodenogg.in/',
   //base: process.env.VUE_APP_HTTP + '://' + process.env.VUE_APP_URL + '',
   //base: process.env.VUE_APP_HTTP,
-  routes,
+  routes
 })
 
 export default router

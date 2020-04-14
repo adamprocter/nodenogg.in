@@ -6,7 +6,10 @@
       v-bind:key="mode.name"
       v-bind:class="isActive(mode) ? 'active' : 'inactive'"
     >
-      <Icon v-bind:type="mode.icon" v-bind:theme="isActive(mode) ? 'light' : 'dark'" />
+      <Icon
+        v-bind:type="mode.icon"
+        v-bind:theme="isActive(mode) ? 'light' : 'dark'"
+      />
     </button>
   </nav>
 </template>

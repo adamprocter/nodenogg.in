@@ -9,4 +9,15 @@ import person from './person'
 import plus from './plus'
 import select from './select'
 
-export { addNode, connection, draw, idea, magnify, minus, move, person, plus, select }
+export {
+  addNode,
+  connection,
+  draw,
+  idea,
+  magnify,
+  minus,
+  move,
+  person,
+  plus,
+  select
+}

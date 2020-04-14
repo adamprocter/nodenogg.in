@@ -1,6 +1,12 @@
 <template>
   <g>
-    <rect x="11" y="36.4246" width="10.5" height="4" transform="rotate(-45 11 36.4246)" />
+    <rect
+      x="11"
+      y="36.4246"
+      width="10.5"
+      height="4"
+      transform="rotate(-45 11 36.4246)"
+    />
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"

@@ -1,4 +1,3 @@
-
 <template>
   <path
     fill-rule="evenodd"

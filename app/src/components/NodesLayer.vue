@@ -76,19 +76,19 @@ export default {
     nodetext: String,
     nodewidth: Number,
     nodeheight: Number,
-    deleted: Boolean,
+    deleted: Boolean
   },
 
   data() {
     return {
       pickupz: 99,
       readmode: false,
-      mode: 'Read',
+      mode: 'Read'
     }
   },
 
   filters: {
-    marked: marked,
+    marked: marked
   },
 
   // FIXME: how do we know how to focus on the newest node ?
@@ -106,9 +106,9 @@ export default {
   // },
 
   computed: mapState({
-    myNodes: (state) => state.myNodes,
-    configPositions: (state) => state.configPositions,
-    configEmoji: (state) => state.configEmoji,
+    myNodes: state => state.myNodes,
+    configPositions: state => state.configPositions,
+    configEmoji: state => state.configEmoji
   }),
   methods: {
     onActivated() {
@@ -146,7 +146,7 @@ export default {
         y,
         width,
         height,
-        zindex,
+        zindex
       })
     },
     onDrag(x, y) {
@@ -172,7 +172,7 @@ export default {
         y,
         width,
         height,
-        zindex,
+        zindex
       })
     },
 
@@ -198,8 +198,8 @@ export default {
         this.readmode = true
         this.mode = 'Edit'
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

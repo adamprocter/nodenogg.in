@@ -186,10 +186,10 @@ export const generateAreaFromNodes = nodes => {
 
 /**
  * Generates a node shape from two given points
- * 
+ *
  * @param {Point} origin
  * @param {Point} target
- * @return {Node} 
+ * @return {Node}
  *  */
 export const generateNode = (origin, target) => {
   const minusX = origin.x > target.x

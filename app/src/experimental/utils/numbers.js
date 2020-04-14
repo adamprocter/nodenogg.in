@@ -65,30 +65,30 @@ export const angleBetween = (point1, point2) =>
   Math.atan2(point2.y - point1.y, point2.x - point1.x)
 
 /**
-* Constrains a value within a range
-*
-* @param {number} value
-* @param {number} min
-* @param {number} max
-* @return {number}
-*
-*  */
+ * Constrains a value within a range
+ *
+ * @param {number} value
+ * @param {number} min
+ * @param {number} max
+ * @return {number}
+ *
+ *  */
 export const clamp = (value, min, max) => {
   return Math.max(min, Math.min(value, max))
 }
 
 /**
  * ! TODO ! confusing naming
-* Scales a coordinate value
-*/
+ * Scales a coordinate value
+ */
 export const scaleCoordinate = (coordinate, scaleRatio) => {
   return scaleRatio * coordinate - coordinate
 }
 
 /**
  * ! TODO ! confusing naming
-* Scales a @Point
-*/
+ * Scales a @Point
+ */
 export const scalePoint = ({ x, y }, scale) => {
   return {
     x: scaleCoordinate(x, scale),

@@ -1,6 +1,10 @@
 import * as win from '@/experimental/constants/window'
 import { generateLinkHandles } from '@/experimental/utils/nodes'
-import { mapRange, distanceBetween, angleBetween } from '@/experimental/utils/numbers'
+import {
+  mapRange,
+  distanceBetween,
+  angleBetween
+} from '@/experimental/utils/numbers'
 
 //////////////////////////////////////////////////////////////////////
 // CANVAS UTILITIES

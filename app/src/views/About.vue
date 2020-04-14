@@ -86,11 +86,11 @@ import { mapState } from 'vuex'
 export default {
   name: 'About',
 
-  data: function () {
+  data: function() {
     return {}
   },
   computed: mapState({
-    myVersion: (state) => state.version,
-  }),
+    myVersion: state => state.version
+  })
 }
 </script>

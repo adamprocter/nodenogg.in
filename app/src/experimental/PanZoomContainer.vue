@@ -138,7 +138,7 @@ export default {
       if (!this.interaction.origin) {
         return
       }
-  console.log('touch')
+      console.log('touch')
       e.preventDefault()
       const isPinchAction =
         e.touches.length == 2 && this.interaction.origin.points.length > 1
@@ -156,7 +156,7 @@ export default {
       e.preventDefault()
       e.stopPropagation()
 
-        console.log(e)
+      console.log(e)
 
       this.handleWheel(e)
     },
