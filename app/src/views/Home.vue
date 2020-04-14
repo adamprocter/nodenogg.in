@@ -25,7 +25,7 @@
         />
 
         <NodesLayer
-          @editTrue="e => editTrue(e)"
+          @editTrue="(e) => editTrue(e)"
           v-for="value in myNodes"
           v-bind:key="value.node_id"
           v-bind:nodeid="value.node_id"
@@ -72,11 +72,11 @@ export default {
     }
   },
 
-  data: function() {
+  data: function () {
     return {
       clientset: false,
       listview: false,
-      offline: false
+      offline: false,
     }
   },
 
@@ -86,12 +86,12 @@ export default {
     OtherNodeslayer,
     ListLayer,
     OtherListlayer,
-    ControlsLayer
+    ControlsLayer,
   },
   computed: mapState({
-    myNodes: state => state.myNodes,
-    otherNodes: state => state.otherNodes,
-    shortcutstate: state => state.shortcutstate
+    myNodes: (state) => state.myNodes,
+    otherNodes: (state) => state.otherNodes,
+    shortcutstate: (state) => state.shortcutstate,
   }),
   methods: {
     clientAdded() {
@@ -120,8 +120,8 @@ export default {
     },
     onlineTriggered() {
       this.offline = false
-    }
-  }
+    },
+  },
 }
 </script>
 

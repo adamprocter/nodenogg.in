@@ -7,11 +7,11 @@
       concepts
     </p>
     <p>
-      Made by Adam Procter
-      <em
-        >(+ many helpers &amp;
-        <a href="https://patreon.com/procterbot">supporters</a>)</em
-      >
+      Made by Adam Procter and Toby Milner-Gulland.
+      <em>
+        (+ many helpers (Mathew Parker, im looking at you) &amp;
+        <a href="https://patreon.com/procterbot">supporters</a>)
+      </em>
     </p>
     <ul>
       <li>
@@ -33,9 +33,10 @@
       <li>&nbsp;There is no Export yet.</li>
 
       <li>
-        Please <strong>UNDERSTAND</strong> all data as not backed up, data
-        structures and data will ocasssionaly be deleted or changed remotely
-        which may effect and break your local data.
+        Please
+        <strong>UNDERSTAND</strong> all data as not backed up, data structures
+        and data will ocasssionaly be deleted or changed remotely which may
+        effect and break your local data.
       </li>
     </ul>
     <h2>Design-led ethical Edutech</h2>
@@ -85,11 +86,11 @@ import { mapState } from 'vuex'
 export default {
   name: 'About',
 
-  data: function() {
+  data: function () {
     return {}
   },
   computed: mapState({
-    myVersion: state => state.version
-  })
+    myVersion: (state) => state.version,
+  }),
 }
 </script>

@@ -99,32 +99,32 @@ export default {
   name: 'otherNodeslayer',
 
   components: {
-    EmojiPicker
+    EmojiPicker,
   },
   props: {
     nodeid: String,
     nodetext: String,
     nodewidth: Number,
-    nodeheight: Number
+    nodeheight: Number,
   },
 
   data() {
     return {
       input: '',
       search: '',
-      pickupz: 99
+      pickupz: 99,
     }
   },
 
   filters: {
-    marked: marked
+    marked: marked,
   },
 
   mounted() {},
   computed: mapState({
-    otherNodes: state => state.otherNodes,
-    configPositions: state => state.configPositions,
-    configEmoji: state => state.configEmoji
+    otherNodes: (state) => state.otherNodes,
+    configPositions: (state) => state.configPositions,
+    configEmoji: (state) => state.configEmoji,
   }),
   methods: {
     onActivated() {
@@ -162,7 +162,7 @@ export default {
         y,
         width,
         height,
-        zindex
+        zindex,
       })
     },
     onDrag(x, y) {
@@ -188,7 +188,7 @@ export default {
         y,
         width,
         height,
-        zindex
+        zindex,
       })
     },
     append(emoji) {
@@ -199,19 +199,19 @@ export default {
       nodeid = this.nodeid
       this.$store.dispatch('addEmoji', {
         nodeid,
-        emojitext
+        emojitext,
       })
 
       this.input = ''
-    }
+    },
   },
   directives: {
     focus: {
       inserted(el) {
         el.focus()
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>
 

@@ -11,6 +11,6 @@ export const shortcutsMixin = {
           this.addNode()
         }
       }
-    }
-  }
+    },
+  },
 }
