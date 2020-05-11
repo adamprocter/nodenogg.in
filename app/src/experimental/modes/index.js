@@ -2,53 +2,64 @@ export const select = {
   name: 'select',
   view: {
     pan: false,
-    zoom: false
+    zoom: false,
   },
   icon: 'select',
   cursor: 'initial',
-  shortcut: false
+  shortcut: false,
 }
 
 export const addNode = {
   name: 'addNode',
   view: {
     pan: false,
-    zoom: false
+    zoom: false,
   },
   icon: 'addNode',
   cursor: 'copy',
-  shortcut: false
+  shortcut: false,
 }
 
 export const move = {
   name: 'move',
   view: {
     pan: true,
-    zoom: true
+    zoom: true,
   },
   icon: 'move',
   cursor: 'all-scroll',
-  shortcut: false
+  shortcut: false,
 }
 
 export const connect = {
   name: 'connect',
   view: {
     pan: false,
-    zoom: false
+    zoom: false,
   },
   icon: 'connection',
   cursor: 'crosshair',
-  shortcut: false
+  shortcut: false,
 }
 
 export const draw = {
   name: 'draw',
   view: {
     pan: false,
-    zoom: false
+    zoom: false,
   },
   icon: 'draw',
   cursor: 'crosshair',
-  shortcut: false
+  shortcut: false,
+}
+
+export const upload = {
+  name: 'upload',
+  view: {
+    pan: false,
+    zoom: false,
+  },
+  icon: 'upload',
+  cursor: 'copy',
+  shortcut: false,
 }

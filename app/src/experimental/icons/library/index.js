@@ -8,6 +8,7 @@ import move from './move'
 import person from './person'
 import plus from './plus'
 import select from './select'
+import upload from './upload'
 
 export {
   addNode,
@@ -19,5 +20,6 @@ export {
   move,
   person,
   plus,
-  select
+  select,
+  upload,
 }
