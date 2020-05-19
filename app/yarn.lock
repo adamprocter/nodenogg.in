@@ -3197,7 +3197,7 @@ cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
 
-dag-cbor-links@^1.3.2:
+dag-cbor-links@^1.3.3:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/dag-cbor-links/-/dag-cbor-links-1.3.4.tgz#4567029124ffe07300a0faa4e58282b9ed6bbdb2"
   dependencies:
@@ -3210,7 +3210,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-datastore-core@^1.0.0:
+datastore-core@^1.0.0, datastore-core@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/datastore-core/-/datastore-core-1.1.0.tgz#e749da22ae4d9dd26b4e44f21379fcb36dba7c89"
   dependencies:
@@ -3218,40 +3218,33 @@ datastore-core@^1.0.0:
     debug "^4.1.1"
     interface-datastore "^1.0.2"
 
-datastore-core@~0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/datastore-core/-/datastore-core-0.7.0.tgz#c5d3cded07f3c81ca49c5ee6f20e9a60cc03adf1"
+datastore-fs@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/datastore-fs/-/datastore-fs-1.1.0.tgz#c5d60066bf9303bd6379015f083dd92177ea690d"
   dependencies:
-    debug "^4.1.1"
-    interface-datastore "~0.7.0"
-
-datastore-fs@~0.9.0, datastore-fs@~0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/datastore-fs/-/datastore-fs-0.9.1.tgz#8232bddf06877acc122ec699709d646ffe54d07b"
-  dependencies:
-    datastore-core "~0.7.0"
-    fast-write-atomic "~0.2.0"
+    datastore-core "^1.1.0"
+    fast-write-atomic "^0.2.0"
     glob "^7.1.3"
-    interface-datastore "~0.7.0"
-    mkdirp "~0.5.1"
+    interface-datastore "^1.0.2"
+    mkdirp "^1.0.4"
 
-datastore-level@^0.14.1, datastore-level@~0.14.0:
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/datastore-level/-/datastore-level-0.14.1.tgz#a935ed6fecfba3acfffaee78b2a3dd7654086230"
+datastore-idb@^1.0.2:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/datastore-idb/-/datastore-idb-1.1.0.tgz#2c69d8aa6c2ceac94f8098dd5834e8ae29c0dbb3"
   dependencies:
-    datastore-core "~0.7.0"
-    interface-datastore "^0.8.0"
+    buffer "^5.5.0"
+    idb "^5.0.2"
+    interface-datastore "^1.0.2"
+
+datastore-level@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/datastore-level/-/datastore-level-1.1.0.tgz#fde84ff1867bd5255a1fd90136b596bd51d98fcb"
+  dependencies:
+    datastore-core "^1.1.0"
+    interface-datastore "^1.0.2"
     level "^5.0.1"
 
-datastore-level@~0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/datastore-level/-/datastore-level-0.12.1.tgz#253ba375f039438e2b8e03e2cfb2d09f83416dc2"
-  dependencies:
-    datastore-core "~0.7.0"
-    interface-datastore "~0.7.0"
-    level "^5.0.1"
-
-datastore-pubsub@^0.3.0:
+datastore-pubsub@^0.3.1:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/datastore-pubsub/-/datastore-pubsub-0.3.2.tgz#7da35f1d3e8dd02b789555901a47ab5875c284ad"
   dependencies:
@@ -3759,10 +3752,6 @@ entities@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.0.tgz#68d6084cab1b079767540d80e56a39b423e4abf4"
 
-err-code@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/err-code/-/err-code-1.1.2.tgz#06e0116d3028f6aef4806849eb0ea6a748ae6960"
-
 err-code@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/err-code/-/err-code-2.0.0.tgz#452dadddde12356b1dd5a85f33b28ddda377ef2a"
@@ -4242,7 +4231,7 @@ fast-safe-stringify@^2.0.7:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.7.tgz#124aa885899261f68aedb42a7c080de9da608743"
 
-fast-write-atomic@~0.2.0:
+fast-write-atomic@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/fast-write-atomic/-/fast-write-atomic-0.2.1.tgz#7ee8ef0ce3c1f531043c09ae8e5143361ab17ede"
 
@@ -5037,6 +5026,10 @@ icss-utils@^4.0.0, icss-utils@^4.1.1:
   dependencies:
     postcss "^7.0.14"
 
+idb@^5.0.2:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/idb/-/idb-5.0.3.tgz#d69d8845ecfb9e7791edd77696e40e1fd9c3c82b"
+
 ieee754@^1.1.13, ieee754@^1.1.4:
   version "1.1.13"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.13.tgz#ec168558e95aa181fd87d37f55c32bbcb6708b84"
@@ -5197,7 +5190,7 @@ interactive-shape-recognition@^1.0.1:
     area-polygon "^1.0.1"
     convex-hull "^1.0.3"
 
-interface-datastore@^0.8.0, interface-datastore@~0.8.0:
+interface-datastore@^0.8.0, interface-datastore@^0.8.3, interface-datastore@~0.8.0, interface-datastore@~0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/interface-datastore/-/interface-datastore-0.8.3.tgz#1b948d9f8231edbaaec763a75a339e70e5f48883"
   dependencies:
@@ -5220,14 +5213,6 @@ interface-datastore@^1.0.2:
     it-all "^1.0.2"
     it-drain "^1.0.1"
     nanoid "^3.0.2"
-
-interface-datastore@~0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/interface-datastore/-/interface-datastore-0.7.0.tgz#3ab43d21089c03ac7d65651ed1e7e4d81397f4f4"
-  dependencies:
-    class-is "^1.1.0"
-    err-code "^1.1.2"
-    uuid "^3.2.2"
 
 internal-ip@^4.3.0:
   version "4.3.0"
@@ -5278,23 +5263,24 @@ ipaddr.js@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"
 
-ipfs-bitswap@0.27.1:
-  version "0.27.1"
-  resolved "https://registry.yarnpkg.com/ipfs-bitswap/-/ipfs-bitswap-0.27.1.tgz#e9aa6541d461cdedaacfca8608e4422b048f92ed"
+ipfs-bitswap@^0.27.2:
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/ipfs-bitswap/-/ipfs-bitswap-0.27.2.tgz#1c558060c7ff37ceb30c67a7c859dfe842b23ed9"
   dependencies:
     bignumber.js "^9.0.0"
-    cids "~0.7.0"
+    buffer "^5.6.0"
+    cids "~0.8.0"
     debug "^4.1.0"
-    ipfs-block "~0.8.0"
+    ipld-block "^0.9.1"
     it-length-prefixed "^3.0.0"
     it-pipe "^1.1.0"
     just-debounce-it "^1.1.0"
     moving-average "^1.0.0"
     multicodec "^1.0.0"
     multihashing-async "^0.8.0"
-    protons "^1.0.1"
+    protons "^1.2.0"
     streaming-iterables "^4.1.1"
-    varint-decoder "~0.1.1"
+    varint-decoder "~0.4.0"
 
 ipfs-block-service@^0.16.0:
   version "0.16.0"
@@ -5302,7 +5288,7 @@ ipfs-block-service@^0.16.0:
   dependencies:
     streaming-iterables "^4.1.0"
 
-ipfs-block@^0.8.1, ipfs-block@~0.8.0, ipfs-block@~0.8.1:
+ipfs-block@^0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/ipfs-block/-/ipfs-block-0.8.1.tgz#05e1068832775e8f1c2da5b64106cc837fd2acb9"
   dependencies:
@@ -5317,7 +5303,15 @@ ipfs-core-utils@^0.2.2:
     err-code "^2.0.0"
     ipfs-utils "^2.2.2"
 
-ipfs-http-client@^44.0.0, ipfs-http-client@^44.0.3:
+ipfs-core-utils@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/ipfs-core-utils/-/ipfs-core-utils-0.2.3.tgz#ac3a5574d9d25286746ea7d89ebb99a37710edb8"
+  dependencies:
+    buffer "^5.6.0"
+    err-code "^2.0.0"
+    ipfs-utils "^2.2.2"
+
+ipfs-http-client@^44.0.0:
   version "44.0.3"
   resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-44.0.3.tgz#7743e7faf0ea6b402dd441be3ab97ecc448fbae1"
   dependencies:
@@ -5349,6 +5343,38 @@ ipfs-http-client@^44.0.0, ipfs-http-client@^44.0.3:
     parse-duration "^0.1.2"
     stream-to-it "^0.2.0"
 
+ipfs-http-client@^44.1.0:
+  version "44.1.0"
+  resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-44.1.0.tgz#d74ccd691ce3d5ce87ee65826ac65fc3715537e0"
+  dependencies:
+    abort-controller "^3.0.0"
+    any-signal "^1.1.0"
+    bignumber.js "^9.0.0"
+    buffer "^5.6.0"
+    cids "^0.8.0"
+    debug "^4.1.0"
+    form-data "^3.0.0"
+    ipfs-core-utils "^0.2.3"
+    ipfs-utils "^2.2.2"
+    ipld-block "^0.9.1"
+    ipld-dag-cbor "^0.15.2"
+    ipld-dag-pb "^0.18.5"
+    ipld-raw "^4.0.1"
+    iso-url "^0.4.7"
+    it-tar "^1.2.2"
+    it-to-buffer "^1.0.0"
+    it-to-stream "^0.1.1"
+    merge-options "^2.0.0"
+    multiaddr "^7.4.3"
+    multiaddr-to-uri "^5.1.0"
+    multibase "^0.7.0"
+    multicodec "^1.0.0"
+    multihashes "^0.4.19"
+    nanoid "^3.0.2"
+    node-fetch "^2.6.0"
+    parse-duration "^0.1.2"
+    stream-to-it "^0.2.0"
+
 ipfs-http-response@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/ipfs-http-response/-/ipfs-http-response-0.5.0.tgz#2ab4f9ed6537c0876d7fcf785b7aa925957ab77e"
@@ -5365,43 +5391,46 @@ ipfs-http-response@^0.5.0:
     multihashes "~0.4.14"
     p-try-each "^1.0.1"
 
-ipfs-repo-migrations@~0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/ipfs-repo-migrations/-/ipfs-repo-migrations-0.1.1.tgz#63443c35f047dab1ec6079f8fe38615026eb1b4a"
+ipfs-repo-migrations@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/ipfs-repo-migrations/-/ipfs-repo-migrations-0.2.1.tgz#19a732f7565feea344d7362b46b0202a24988312"
   dependencies:
-    chalk "^2.4.2"
-    datastore-fs "~0.9.1"
-    datastore-level "~0.12.1"
+    buffer "^5.6.0"
+    chalk "^4.0.0"
+    datastore-fs "^1.0.0"
+    datastore-idb "^1.0.2"
     debug "^4.1.0"
-    interface-datastore "~0.8.0"
+    interface-datastore "~0.8.3"
     proper-lockfile "^4.1.1"
     yargs "^14.2.0"
     yargs-promise "^1.1.0"
 
-ipfs-repo@^1.0.1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ipfs-repo/-/ipfs-repo-1.1.0.tgz#7e8176462842610f8eade764398f2234c5a8c8fb"
+ipfs-repo@^2.0.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ipfs-repo/-/ipfs-repo-2.1.1.tgz#9e2e3fa7cb92b2263690575ec64a8a4647fc6bc3"
   dependencies:
-    base32.js "~0.1.0"
     bignumber.js "^9.0.0"
+    buffer "^5.6.0"
     bytes "^3.1.0"
     cids "^0.8.0"
-    datastore-core "~0.7.0"
-    datastore-fs "~0.9.0"
-    datastore-level "~0.14.0"
+    datastore-core "^1.0.0"
+    datastore-fs "^1.0.0"
+    datastore-idb "^1.0.2"
+    datastore-level "^1.0.0"
     debug "^4.1.0"
     err-code "^2.0.0"
-    interface-datastore "^0.8.0"
-    ipfs-block "~0.8.1"
-    ipfs-repo-migrations "~0.1.0"
+    interface-datastore "^0.8.3"
+    ipfs-repo-migrations "^0.2.1"
+    ipfs-utils "^2.2.0"
+    ipld-block "^0.9.1"
     just-safe-get "^2.0.0"
     just-safe-set "^2.1.0"
-    lodash.has "^4.5.2"
+    multibase "^0.7.0"
     p-queue "^6.0.0"
     proper-lockfile "^4.0.0"
     sort-keys "^4.0.0"
 
-ipfs-unixfs-exporter@^2.0.0:
+ipfs-unixfs-exporter@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ipfs-unixfs-exporter/-/ipfs-unixfs-exporter-2.0.1.tgz#b182b759b23ca40683bab97f56c365c60d43333f"
   dependencies:
@@ -5413,7 +5442,7 @@ ipfs-unixfs-exporter@^2.0.0:
     it-last "^1.0.1"
     multihashing-async "^0.8.0"
 
-ipfs-unixfs-importer@^2.0.0:
+ipfs-unixfs-importer@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ipfs-unixfs-importer/-/ipfs-unixfs-importer-2.0.1.tgz#586ce2569afc90733b02a66e4418bfffbb34f67d"
   dependencies:
@@ -5431,7 +5460,7 @@ ipfs-unixfs-importer@^2.0.0:
     multihashing-async "^0.8.0"
     rabin-wasm "^0.1.1"
 
-ipfs-unixfs@^1.0.1, ipfs-unixfs@^1.0.2:
+ipfs-unixfs@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ipfs-unixfs/-/ipfs-unixfs-1.0.2.tgz#205c0f802ffcd141b6bf0a076e2d24ef79cee4d6"
   dependencies:
@@ -5471,9 +5500,9 @@ ipfs-utils@^2.2.0, ipfs-utils@^2.2.2:
     node-fetch "^2.6.0"
     stream-to-it "^0.2.0"
 
-ipfs@^0.43.3:
-  version "0.43.3"
-  resolved "https://registry.yarnpkg.com/ipfs/-/ipfs-0.43.3.tgz#d3ba49f9f79d2b73a2ff2e0a3842d0270034a2b3"
+ipfs@^0.44.0:
+  version "0.44.0"
+  resolved "https://registry.yarnpkg.com/ipfs/-/ipfs-0.44.0.tgz#33bb3782aee50d28f8cecb38c3a9e4949e1933e7"
   dependencies:
     "@hapi/ammo" "^3.1.2"
     "@hapi/boom" "^7.4.3"
@@ -5485,16 +5514,17 @@ ipfs@^0.43.3:
     array-shuffle "^1.0.1"
     bignumber.js "^9.0.0"
     binary-querystring "^0.1.2"
-    bl "^4.0.0"
+    bl "^4.0.2"
     bs58 "^4.0.1"
+    buffer "^5.6.0"
     byteman "^1.3.5"
     cid-tool "^0.4.0"
     cids "^0.8.0"
     class-is "^1.1.0"
-    dag-cbor-links "^1.3.2"
+    dag-cbor-links "^1.3.3"
     datastore-core "^1.0.0"
-    datastore-level "^0.14.1"
-    datastore-pubsub "^0.3.0"
+    datastore-level "^1.0.0"
+    datastore-pubsub "^0.3.1"
     debug "^4.1.0"
     dlv "^1.1.3"
     err-code "^2.0.0"
@@ -5504,29 +5534,30 @@ ipfs@^0.43.3:
     hamt-sharding "^1.0.0"
     hapi-pino "^6.1.0"
     hashlru "^2.3.0"
-    interface-datastore "^0.8.0"
-    ipfs-bitswap "0.27.1"
-    ipfs-block "^0.8.1"
+    interface-datastore "^0.8.3"
+    ipfs-bitswap "^0.27.2"
     ipfs-block-service "^0.16.0"
-    ipfs-core-utils "^0.2.2"
-    ipfs-http-client "^44.0.3"
+    ipfs-core-utils "^0.2.3"
+    ipfs-http-client "^44.1.0"
     ipfs-http-response "^0.5.0"
-    ipfs-repo "^1.0.1"
-    ipfs-unixfs "^1.0.1"
-    ipfs-unixfs-exporter "^2.0.0"
-    ipfs-unixfs-importer "^2.0.0"
+    ipfs-repo "^2.0.1"
+    ipfs-unixfs "^1.0.2"
+    ipfs-unixfs-exporter "^2.0.1"
+    ipfs-unixfs-importer "^2.0.1"
     ipfs-utils "^2.2.2"
-    ipld "^0.25.0"
+    ipld "^0.26.2"
     ipld-bitcoin "^0.3.0"
-    ipld-dag-cbor "^0.15.1"
-    ipld-dag-pb "^0.18.3"
+    ipld-block "^0.9.1"
+    ipld-dag-cbor "^0.15.2"
+    ipld-dag-pb "^0.18.5"
     ipld-ethereum "^4.0.0"
     ipld-git "^0.5.0"
     ipld-raw "^4.0.1"
     ipld-zcash "^0.4.0"
-    ipns "^0.7.0"
+    ipns "^0.7.1"
     is-domain-name "^1.0.1"
-    is-ipfs "^1.0.0"
+    is-ipfs "^1.0.3"
+    iso-url "^0.4.7"
     it-all "^1.0.1"
     it-concat "^1.0.0"
     it-drain "^1.0.0"
@@ -5535,45 +5566,45 @@ ipfs@^0.43.3:
     it-map "^1.0.0"
     it-multipart "^1.0.1"
     it-pipe "^1.1.0"
-    it-tar "^1.2.1"
+    it-tar "^1.2.2"
     it-to-stream "^0.1.1"
     iterable-ndjson "^1.1.0"
     jsondiffpatch "^0.4.1"
     just-safe-set "^2.1.0"
-    libp2p "^0.27.2"
+    libp2p "^0.27.7"
     libp2p-bootstrap "^0.10.3"
-    libp2p-crypto "^0.17.1"
+    libp2p-crypto "^0.17.6"
     libp2p-delegated-content-routing "^0.4.4"
     libp2p-delegated-peer-routing "^0.4.2"
     libp2p-floodsub "^0.20.0"
-    libp2p-gossipsub "^0.2.3"
-    libp2p-kad-dht "^0.18.3"
+    libp2p-gossipsub "^0.3.0"
+    libp2p-kad-dht "^0.18.7"
     libp2p-keychain "^0.6.0"
     libp2p-mdns "^0.13.1"
     libp2p-mplex "^0.9.3"
-    libp2p-record "^0.7.0"
+    libp2p-record "^0.7.3"
     libp2p-secio "^0.12.2"
-    libp2p-tcp "^0.14.3"
-    libp2p-webrtc-star "^0.17.9"
+    libp2p-tcp "^0.14.5"
+    libp2p-webrtc-star "^0.17.10"
     libp2p-websockets "^0.13.3"
     mafmt "^7.0.0"
     merge-options "^2.0.0"
     mortice "^2.0.0"
-    multiaddr "^7.2.1"
+    multiaddr "^7.4.3"
     multiaddr-to-uri "^5.1.0"
     multibase "^0.7.0"
     multicodec "^1.0.0"
-    multihashes "^0.4.14"
+    multihashes "^0.4.19"
     multihashing-async "^0.8.0"
     p-defer "^3.0.0"
     p-queue "^6.1.0"
     parse-duration "^0.1.2"
-    peer-id "^0.13.5"
+    peer-id "^0.13.12"
     peer-info "^0.17.0"
     pretty-bytes "^5.3.0"
     progress "^2.0.1"
-    protons "^1.0.1"
-    semver "^7.1.2"
+    protons "^1.2.0"
+    semver "^7.3.2"
     stream-to-it "^0.2.0"
     streaming-iterables "^4.1.1"
     temp "^0.9.0"
@@ -5596,6 +5627,14 @@ ipld-bitcoin@^0.3.0:
     multicodec "^1.0.0"
     multihashes "~0.4.14"
     multihashing-async "~0.8.0"
+
+ipld-block@^0.9.1, ipld-block@~0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/ipld-block/-/ipld-block-0.9.1.tgz#3931029a6445ad06dd9847aeebf6ac32e72c6b39"
+  dependencies:
+    buffer "^5.5.0"
+    cids "~0.8.0"
+    class-is "^1.1.0"
 
 ipld-dag-cbor@^0.15.1, ipld-dag-cbor@^0.15.2, ipld-dag-cbor@~0.15.0:
   version "0.15.2"
@@ -5663,12 +5702,13 @@ ipld-zcash@^0.4.0:
     multihashing-async "~0.8.0"
     zcash-block "^2.0.0"
 
-ipld@^0.25.0:
-  version "0.25.5"
-  resolved "https://registry.yarnpkg.com/ipld/-/ipld-0.25.5.tgz#dc18f7d9458ac4428f69ae669cb784e5966eb2f5"
+ipld@^0.26.2:
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/ipld/-/ipld-0.26.2.tgz#76aacce15e9d7b35691615c71d0ca04de83e85a5"
   dependencies:
+    buffer "^5.6.0"
     cids "~0.8.0"
-    ipfs-block "~0.8.1"
+    ipld-block "~0.9.1"
     ipld-dag-cbor "~0.15.0"
     ipld-dag-pb "~0.18.1"
     ipld-raw "^4.0.0"
@@ -5676,14 +5716,14 @@ ipld@^0.25.0:
     multicodec "^1.0.0"
     typical "^6.0.0"
 
-ipns@^0.7.0:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/ipns/-/ipns-0.7.1.tgz#442e1a327197906090ce7aa200944cc9d522f76b"
+ipns@^0.7.1:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/ipns/-/ipns-0.7.2.tgz#145fd9d5a1d2a36abf4f61245242609cff87d262"
   dependencies:
     buffer "^5.6.0"
     debug "^4.1.1"
     err-code "^2.0.0"
-    interface-datastore "^0.8.0"
+    interface-datastore "^1.0.2"
     libp2p-crypto "^0.17.1"
     multibase "^0.7.0"
     multihashes "~0.4.14"
@@ -5873,7 +5913,7 @@ is-ip@^3.1.0:
   dependencies:
     ip-regex "^4.0.0"
 
-is-ipfs@^1.0.0:
+is-ipfs@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/is-ipfs/-/is-ipfs-1.0.3.tgz#4b8c4995c46beac38f0c05f8cecd77093dd6a6b3"
   dependencies:
@@ -6151,7 +6191,7 @@ it-reader@^2.0.0, it-reader@^2.1.0:
   dependencies:
     bl "^4.0.0"
 
-it-tar@^1.2.1:
+it-tar@^1.2.1, it-tar@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/it-tar/-/it-tar-1.2.2.tgz#8d79863dad27726c781a4bcc491f53c20f2866cf"
   dependencies:
@@ -6721,16 +6761,17 @@ libp2p-floodsub@^0.20.0:
     protons "^1.0.1"
     time-cache "^0.3.0"
 
-libp2p-gossipsub@^0.2.3:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/libp2p-gossipsub/-/libp2p-gossipsub-0.2.6.tgz#f79a1cb142fd8e0f96525b244ed7e8dbfd13c54c"
+libp2p-gossipsub@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/libp2p-gossipsub/-/libp2p-gossipsub-0.3.0.tgz#d1fb6bce3dc236d7eb8ec2235531f9e6025d6cef"
   dependencies:
+    buffer "^5.6.0"
     debug "^4.1.1"
     err-code "^2.0.0"
     it-length-prefixed "^3.0.0"
     it-pipe "^1.0.1"
-    libp2p-pubsub "~0.4.1"
-    p-map "^3.0.0"
+    libp2p-pubsub "~0.4.2"
+    p-map "^4.0.0"
     peer-id "~0.13.3"
     peer-info "~0.17.0"
     protons "^1.0.1"
@@ -6761,7 +6802,7 @@ libp2p-interfaces@^0.2.1, libp2p-interfaces@^0.2.3, libp2p-interfaces@^0.2.8:
     sinon "^9.0.2"
     streaming-iterables "^4.1.0"
 
-libp2p-kad-dht@^0.18.3:
+libp2p-kad-dht@^0.18.7:
   version "0.18.7"
   resolved "https://registry.yarnpkg.com/libp2p-kad-dht/-/libp2p-kad-dht-0.18.7.tgz#dbc8b2c3be0d41d60be5157748dc47ffaf1deb57"
   dependencies:
@@ -6830,7 +6871,7 @@ libp2p-mplex@^0.9.3:
     it-pushable "^1.3.1"
     varint "^5.0.0"
 
-libp2p-pubsub@~0.4.0, libp2p-pubsub@~0.4.1:
+libp2p-pubsub@~0.4.0, libp2p-pubsub@~0.4.2:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/libp2p-pubsub/-/libp2p-pubsub-0.4.4.tgz#ca2ee85dc0bd6f2b39ab38df522bf6d3f7a74336"
   dependencies:
@@ -6844,7 +6885,7 @@ libp2p-pubsub@~0.4.0, libp2p-pubsub@~0.4.1:
     multibase "^0.7.0"
     protons "^1.0.1"
 
-libp2p-record@^0.7.0, libp2p-record@~0.7.0:
+libp2p-record@^0.7.3, libp2p-record@~0.7.0:
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/libp2p-record/-/libp2p-record-0.7.3.tgz#4142b6d51fdf2a1f9bf695b93b2f8bd5081efa90"
   dependencies:
@@ -6871,7 +6912,7 @@ libp2p-secio@^0.12.2:
     peer-id "^0.13.6"
     protons "^1.0.2"
 
-libp2p-tcp@^0.14.1, libp2p-tcp@^0.14.3:
+libp2p-tcp@^0.14.1, libp2p-tcp@^0.14.5:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/libp2p-tcp/-/libp2p-tcp-0.14.5.tgz#a0a9e5afa49e874d436c9ba5334f30124786d8bc"
   dependencies:
@@ -6894,7 +6935,7 @@ libp2p-utils@^0.1.0, libp2p-utils@^0.1.2, libp2p-utils@~0.1.0:
     ip-address "^6.1.0"
     multiaddr "^7.3.0"
 
-libp2p-webrtc-star@^0.17.9:
+libp2p-webrtc-star@^0.17.10:
   version "0.17.10"
   resolved "https://registry.yarnpkg.com/libp2p-webrtc-star/-/libp2p-webrtc-star-0.17.10.tgz#4784723b26d1eb46924258d43f9a206be3e07da3"
   dependencies:
@@ -6938,7 +6979,7 @@ libp2p-websockets@^0.13.3:
     multiaddr-to-uri "^5.0.0"
     p-timeout "^3.2.0"
 
-libp2p@^0.27.2:
+libp2p@^0.27.7:
   version "0.27.8"
   resolved "https://registry.yarnpkg.com/libp2p/-/libp2p-0.27.8.tgz#a55151d97e1635f893e35b9082d16ba738e1f610"
   dependencies:
@@ -7057,10 +7098,6 @@ lodash.find@4.6.0:
 lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
-
-lodash.has@^4.5.2:
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/lodash.has/-/lodash.has-4.5.2.tgz#d19f4dc1095058cccbe2b0cdf4ee0fe4aa37c862"
 
 lodash.kebabcase@^4.1.1:
   version "4.1.1"
@@ -7190,9 +7227,9 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-1.0.0.tgz#d35784245a04871e5988a491e28867362e941693"
+marked@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-1.1.0.tgz#62504ad4d11550c942935ccc5e39d64e5a4c4e50"
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -7488,6 +7525,10 @@ mkdirp@^0.5.0, mkdirp@^0.5.3:
   dependencies:
     minimist "^1.2.5"
 
+mkdirp@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
+
 monotone-convex-hull-2d@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/monotone-convex-hull-2d/-/monotone-convex-hull-2d-1.0.1.tgz#47f5daeadf3c4afd37764baa1aa8787a40eee08c"
@@ -7591,7 +7632,7 @@ multicodec@^1.0.0, multicodec@^1.0.1:
     buffer "^5.5.0"
     varint "^5.0.0"
 
-multihashes@^0.4.14, multihashes@~0.4.14, multihashes@~0.4.15, multihashes@~0.4.17, multihashes@~0.4.19:
+multihashes@^0.4.14, multihashes@^0.4.19, multihashes@~0.4.14, multihashes@~0.4.15, multihashes@~0.4.17, multihashes@~0.4.19:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/multihashes/-/multihashes-0.4.19.tgz#d7493cf028e48747122f350908ea13d12d204813"
   dependencies:
@@ -8456,7 +8497,7 @@ peek-readable@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/peek-readable/-/peek-readable-3.1.0.tgz#250b08b7de09db8573d7fd8ea475215bbff14348"
 
-peer-id@^0.13.11, peer-id@^0.13.5, peer-id@^0.13.6, peer-id@~0.13.2, peer-id@~0.13.3, peer-id@~0.13.5:
+peer-id@^0.13.11, peer-id@^0.13.12, peer-id@^0.13.5, peer-id@^0.13.6, peer-id@~0.13.2, peer-id@~0.13.3, peer-id@~0.13.5:
   version "0.13.12"
   resolved "https://registry.yarnpkg.com/peer-id/-/peer-id-0.13.12.tgz#ab91dfe17f02cea3907173f89eb9799187b5251d"
   dependencies:
@@ -9786,7 +9827,7 @@ semver@^6.0.0, semver@^6.1.0, semver@^6.2.0, semver@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"
 
-semver@^7.1.2, semver@^7.2.1:
+semver@^7.2.1, semver@^7.3.2:
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.2.tgz#604962b052b81ed0786aae84389ffba70ffd3938"
 
@@ -10997,7 +11038,7 @@ uuid@3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.3.tgz#4568f0216e78760ee1dbf3a4d2cf53e224112866"
 
-uuid@^3.0.1, uuid@^3.2.2, uuid@^3.3.2:
+uuid@^3.0.1, uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
 
@@ -11012,10 +11053,11 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-varint-decoder@~0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/varint-decoder/-/varint-decoder-0.1.1.tgz#613d62f071d7e7576a20efd16ef4c1e335a0ddfd"
+varint-decoder@~0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/varint-decoder/-/varint-decoder-0.4.0.tgz#a196d26251949815e8c56a91550eb6c3517b15eb"
   dependencies:
+    is-buffer "^2.0.4"
     varint "^5.0.0"
 
 varint@^5.0.0, varint@~5.0.0:
@@ -11093,9 +11135,9 @@ vue-loader@^15.9.1:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-router@^3.1.6:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.1.6.tgz#45f5a3a3843e31702c061dd829393554e4328f89"
+vue-router@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.2.0.tgz#da35195ffe37fdf0bec9f5f8f72781d2a7718815"
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"
@@ -11119,9 +11161,9 @@ vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
 
-vuex@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.3.0.tgz#665b4630ea1347317139fcc5cb495aab3ec5e513"
+vuex@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.4.0.tgz#20cc086062d750769fce1febb34e7fceeaebde45"
 
 vuvuzela@1.0.3:
   version "1.0.3"
