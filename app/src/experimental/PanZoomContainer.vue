@@ -51,7 +51,7 @@
       v-bind:style="{
         width: `${width}px`,
         height: `${height}px`,
-        transform: `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
+        transform: `translate(${translation.x}px, ${translation.y}px) scale(${scale})`,
       }"
     >
       {{ JSON.stringify(interaction) }}
@@ -65,27 +65,27 @@ import { constrainTranslation } from '@/experimental/utils/numbers'
 import {
   getNormalisedInteraction,
   changeViewFromWheelEvent,
-  changeViewFromMultiTouchEvent
+  changeViewFromMultiTouchEvent,
 } from '@/experimental/utils/view'
 
 export default {
   name: 'map-interaction',
   data() {
     return {
-      shouldPreventTouchEndDefault: false
+      shouldPreventTouchEndDefault: false,
     }
   },
   computed: {
     ...mapState({
-      interaction: state => state.ui.interaction
-    })
+      interaction: (state) => state.ui.interaction,
+    }),
   },
   props: {
     translationBounds: {
       type: Object,
       default() {
         return { xMin: -500, xMax: 500, yMin: -500, yMax: 500 }
-      }
+      },
     },
     translation: Object,
     scale: Number,
@@ -93,12 +93,12 @@ export default {
     height: Number,
     minScale: {
       type: Number,
-      default: 0.3
+      default: 0.3,
     },
     maxScale: {
       type: Number,
-      default: 2.0
-    }
+      default: 2.0,
+    },
   },
   methods: {
     handleEventCapture(e) {
@@ -156,7 +156,7 @@ export default {
       e.preventDefault()
       e.stopPropagation()
 
-      console.log(e)
+      //  console.log(e)
 
       this.handleWheel(e)
     },
@@ -168,10 +168,10 @@ export default {
       const dragY = pointer.clientY - startPointer.clientY
       const newTranslation = {
         x: translation.x + dragX,
-        y: translation.y + dragY
+        y: translation.y + dragY,
       }
 
-      console.log(dragX, dragY)
+      //console.log(dragX, dragY)
 
       this.$store.commit(
         'ui/setTranslation',
@@ -188,7 +188,7 @@ export default {
       this.$store.commit('ui/setOrigin', {
         points,
         scale: this.scale,
-        translation: this.translation
+        translation: this.translation,
       })
     },
     handleWheel(e) {
@@ -215,7 +215,7 @@ export default {
         'ui/setTranslation',
         constrainTranslation(newTranslation, this.translationBounds)
       )
-    }
-  }
+    },
+  },
 }
 </script>

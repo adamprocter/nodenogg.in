@@ -22,11 +22,11 @@ import * as allModes from '@/experimental/modes'
 export default {
   computed: {
     ...mapState({
-      mode: state => state.ui.mode
+      mode: (state) => state.ui.mode,
     }),
     ...mapGetters({
-      activeMode: 'ui/activeMode'
-    })
+      activeMode: 'ui/activeMode',
+    }),
   },
   methods: {
     setMode(mode) {
@@ -34,13 +34,13 @@ export default {
     },
     isActive(mode) {
       return this.mode === mode.name
-    }
+    },
   },
   data() {
     return {
-      allModes
+      allModes,
     }
-  }
+  },
 }
 </script>
 

@@ -7,6 +7,19 @@
       v-bind:translation="translation"
     >
       <h1>Nodes</h1>
+
+      <OtherNodeslayer
+        v-for="value in otherNodes"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
+      />
+      <NodesLayer
+        v-for="value in myNodes"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
+      />
     </PanZoomContainer>
     <SelectionLayer
       v-if="domContainerReady"
@@ -21,6 +34,8 @@
 
 <script>
 import PanZoomContainer from '@/experimental/PanZoomContainer'
+import NodesLayer from '@/components/NodesLayer'
+import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import ModeToolbar from '@/experimental/ModeToolbar'
 import ViewToolbar from '@/experimental/ViewToolbar'
 import SelectionLayer from '@/experimental/layers/SelectionLayer'
@@ -28,12 +43,12 @@ import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'Sandbox',
-  data: function() {
+  data: function () {
     return {
       elementWidth: undefined,
       elementHeight: undefined,
       width: 2000,
-      height: 2000
+      height: 2000,
     }
   },
   computed: {
@@ -41,14 +56,16 @@ export default {
       return !!this.elementWidth && !!this.elementHeight
     },
     ...mapState({
-      interaction: state => state.ui.interaction,
-      scale: state => state.ui.scale,
-      translation: state => state.ui.translation
+      interaction: (state) => state.ui.interaction,
+      scale: (state) => state.ui.scale,
+      translation: (state) => state.ui.translation,
+      myNodes: (state) => state.myNodes,
+      otherNodes: (state) => state.otherNodes,
     }),
     ...mapGetters({
       activeMode: 'ui/activeMode',
-      modeContainerStyle: 'ui/modeContainerStyle'
-    })
+      modeContainerStyle: 'ui/modeContainerStyle',
+    }),
   },
   mounted() {
     window.addEventListener('resize', this.handleResize)
@@ -62,14 +79,16 @@ export default {
       const { offsetWidth, offsetHeight } = this.$refs.container
       this.elementWidth = offsetWidth
       this.elementHeight = offsetHeight
-    }
+    },
   },
   components: {
     ModeToolbar,
     ViewToolbar,
     PanZoomContainer,
-    SelectionLayer
-  }
+    SelectionLayer,
+    NodesLayer,
+    OtherNodeslayer,
+  },
 }
 </script>
 
