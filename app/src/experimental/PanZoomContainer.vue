@@ -1,38 +1,6 @@
-<style scoped>
-.outer {
-  height: 100%;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  background-color: rgb(245, 245, 245);
-}
-.inner {
-  width: 2000px;
-  height: 2000px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform-origin: 0 0;
-  background-size: 40px 40px;
-  background-color: rgb(245, 245, 245);
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  background-image: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 0.5) 1px,
-    rgba(0, 0, 0, 0) 1px
-  );
-}
-.inner.active {
-  touch-action: none;
-  -ms-touch-action: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-</style>
-
 <template>
   <div
+    v-if="mode == 'move'"
     ref="container"
     class="outer"
     v-on:wheel.capture="onWheel"
@@ -54,7 +22,23 @@
         transform: `translate(${translation.x}px, ${translation.y}px) scale(${scale})`,
       }"
     >
-      {{ JSON.stringify(interaction) }}
+      <!-- {{ JSON.stringify(interaction) }} -->
+      <!-- view paramaters not being utilised ? -->
+      <!-- {{ mode }} -->
+      <slot />
+    </div>
+  </div>
+
+  <div v-else ref="container" class="outer">
+    <div
+      ref="innerContainer"
+      v-bind:class="{ inner: true, active: true }"
+      v-bind:style="{
+        width: `${width}px`,
+        height: `${height}px`,
+        transform: `translate(${translation.x}px, ${translation.y}px) scale(${scale})`,
+      }"
+    >
       <slot />
     </div>
   </div>
@@ -78,6 +62,7 @@ export default {
   computed: {
     ...mapState({
       interaction: (state) => state.ui.interaction,
+      mode: (state) => state.ui.mode,
     }),
   },
   props: {
@@ -219,3 +204,36 @@ export default {
   },
 }
 </script>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.outer {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(245, 245, 245);
+}
+.inner {
+  width: 2000px;
+  height: 2000px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  background-size: 40px 40px;
+  background-color: rgb(245, 245, 245);
+  /* border: 1px solid rgba(0, 0, 0, 0.25); */
+  background-image: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.5) 1px,
+    rgba(0, 0, 0, 0) 1px
+  );
+}
+.inner.active {
+  touch-action: none;
+  -ms-touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+</style>

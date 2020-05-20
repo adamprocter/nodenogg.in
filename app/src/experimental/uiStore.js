@@ -17,7 +17,7 @@ const store = {
       links: [],
       nodes: [],
     },
-    mode: 'move',
+    mode: 'select',
     scale: 1,
     translation: {
       x: 0,
