@@ -66,13 +66,13 @@ const store = new Vuex.Store({
     ],
     configEmoji: [
       //{}
-    ]
+    ],
   },
   mutations: {
     CREATE_MICROCOSM(state, doc) {
       // const urldevice = Router.currentRoute.params.device
       const urlmicrocosm = Router.currentRoute.params.microcosm
-      pouchdb.close().then(function() {
+      pouchdb.close().then(function () {
         if (urlmicrocosm != undefined) {
           // myclient = urldevice
           microcosm = urlmicrocosm
@@ -97,14 +97,14 @@ const store = new Vuex.Store({
       pouchdb
         .allDocs({
           include_docs: true,
-          attachments: true
+          attachments: true,
         })
-        .then(function(doc) {
+        .then(function (doc) {
           state.microcosm = microcosm
           state.allNodes = doc.rows
           store.commit('SET_OTHER_NODES')
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err)
         })
     },
@@ -130,7 +130,7 @@ const store = new Vuex.Store({
             if (state.allNodes[i].doc.nodes[j].deleted != true) {
               const newNode = {
                 node_id: state.allNodes[i].doc.nodes[j].node_id,
-                node_text: state.allNodes[i].doc.nodes[j].node_text
+                node_text: state.allNodes[i].doc.nodes[j].node_text,
               }
 
               state.otherNodes.push(newNode)
@@ -155,7 +155,7 @@ const store = new Vuex.Store({
     GET_MY_NODES(state) {
       pouchdb
         .get(state.myclient)
-        .then(function(doc) {
+        .then(function (doc) {
           var i
           for (i = 0; i < Object.keys(doc.nodes).length; i++) {
             if (doc.nodes[i].deleted == true) {
@@ -164,15 +164,11 @@ const store = new Vuex.Store({
             state.myNodes = doc.nodes
           }
         })
-        .catch(function(err) {
+        .catch(function (err) {
           if (err.status == 404) {
             var uniqueid =
-              Math.random()
-                .toString(36)
-                .substring(2, 15) +
-              Math.random()
-                .toString(36)
-                .substring(2, 15)
+              Math.random().toString(36).substring(2, 15) +
+              Math.random().toString(36).substring(2, 15)
             return pouchdb.put({
               _id: state.myclient,
               _attachments: {},
@@ -187,9 +183,9 @@ const store = new Vuex.Store({
                   content_type: 'sheet',
                   // NOTE: first node is hidden due to no position
                   deleted: true,
-                  attachment_name: ''
-                }
-              ]
+                  attachment_name: '',
+                },
+              ],
             })
           }
         })
@@ -198,19 +194,126 @@ const store = new Vuex.Store({
     GET_POSITIONS(state) {
       pouchdb
         .get(state.global_pos_name)
-        .then(function(doc) {
+        .then(function (doc) {
           state.configPositions = doc.positions
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err)
           if (err.status == 404) {
             return pouchdb.put({
               _id: state.global_pos_name,
-              positions: []
+              positions: [],
             })
           }
         })
     },
+
+    GET_CONNECTIONS(state) {
+      pouchdb
+        .get(state.global_con_name)
+        .then(function (doc) {
+          state.configConnections = doc.connections
+        })
+        .catch(function (err) {
+          console.log(err)
+          if (err.status == 404) {
+            return pouchdb.put({
+              _id: state.global_con_name,
+              connections: [],
+            })
+          }
+        })
+    },
+
+    MAKE_CONNECT(state, e) {
+      // console.log(state.connections[1].connection.id)
+      //add the new info connection here
+      //console.log(e)
+      //var first = e.e
+      //var second = e.f
+      var connectid =
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15)
+
+      state.configConnections.push({
+        connectid: connectid,
+        startid: e.e,
+        endid: e.f,
+        startx: e.startx,
+        starty: e.starty,
+        endx: e.endx,
+        endy: e.endy,
+        connected: e.connected,
+      })
+
+      pouchdb
+        .get(state.global_con_name)
+        .then(function (doc) {
+          // put the store into pouchdb
+
+          return pouchdb.bulkDocs([
+            {
+              _id: state.global_con_name,
+              _rev: doc._rev,
+              connections: state.configConnections,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.global_con_name).then(function (doc) {
+            state.configConnections = doc.connections
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
+    // UPDATE_CONNECT(state, e) {
+    //   localnodeid = e.nodeid
+    //   connectid = e.connectid
+    //   var i
+    //   for (i = 0; i < Object.keys(state.configConnections).length; i++) {
+    //     //
+    //     // if endid matches update endx and endy else if startid matchs update startx /y
+    //     if (localnodeid == state.configConnections[i].startid) {
+    //       state.configConnections[i].startx = e.xpos
+    //       state.configConnections[i].starty = e.ypos
+    //       //state.connections[i].connected = e.connected
+    //       // console.log(state.connections)
+    //     } else if (localnodeid == state.configConnections[i].endid) {
+    //       state.configConnections[i].endx = e.xpos
+    //       state.configConnections[i].endy = e.ypos
+    //       //state.connections[i].connected = e.connected
+    //     } else {
+    //       //empty
+    //     }
+    //   }
+
+    //   pouchdb
+    //     .get(state.glo_con)
+    //     .then(function (doc) {
+    //       return pouchdb.bulkDocs([
+    //         {
+    //           _id: state.global_con_name,
+    //           _rev: doc._rev,
+    //           connections: state.configConnections,
+    //         },
+    //       ])
+    //     })
+    //     .then(function () {
+    //       return pouchdb.get(state.global_con_name).then(function (doc) {
+    //         state.connections = doc.connections
+    //       })
+    //     })
+    //     .catch(function (err) {
+    //       if (err.status == 404) {
+    //         // pouchdb.put({  })
+    //       }
+    //     })
+    // },
 
     MOVE_POS(state, e) {
       var i
@@ -226,23 +329,23 @@ const store = new Vuex.Store({
 
       pouchdb
         .get(state.global_pos_name)
-        .then(function(doc) {
+        .then(function (doc) {
           //  console.log(doc)
           // put the store into pouchdb
           return pouchdb.bulkDocs([
             {
               _id: state.global_pos_name,
               _rev: doc._rev,
-              positions: state.configPositions
-            }
+              positions: state.configPositions,
+            },
           ])
         })
-        .then(function() {
-          return pouchdb.get(state.global_pos_name).then(function(doc) {
+        .then(function () {
+          return pouchdb.get(state.global_pos_name).then(function (doc) {
             state.configPositions = doc.positions
           })
         })
-        .catch(function(err) {
+        .catch(function (err) {
           if (err.status == 404) {
             // pouchdb.put({  })
           }
@@ -257,15 +360,11 @@ const store = new Vuex.Store({
 
     ADD_NODE(state, e) {
       var uniqueid =
-        Math.random()
-          .toString(36)
-          .substring(2, 15) +
-        Math.random()
-          .toString(36)
-          .substring(2, 15)
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15)
       state.localnodeid = uniqueid
 
-      pouchdb.get(state.myclient).then(function(doc) {
+      pouchdb.get(state.myclient).then(function (doc) {
         if (e == undefined) {
           doc.nodes.push({
             node_id: uniqueid,
@@ -273,7 +372,7 @@ const store = new Vuex.Store({
             node_owner: state.myclient,
             content_type: 'sheet',
             deleted: false,
-            attachment_name: e
+            attachment_name: e,
           })
         }
 
@@ -282,42 +381,42 @@ const store = new Vuex.Store({
             _id: state.myclient,
             _rev: doc._rev,
             _attachments: doc._attachments,
-            nodes: doc.nodes
+            nodes: doc.nodes,
           })
-          .then(function() {
-            return pouchdb.get(state.myclient).then(function(doc) {
+          .then(function () {
+            return pouchdb.get(state.myclient).then(function (doc) {
               state.myNodes = doc.nodes
               var end = Object.keys(state.myNodes).length - 1
               const newNode = {
                 nodeid: state.myNodes[end].id,
-                nodetext: state.myNodes[end].text
+                nodetext: state.myNodes[end].text,
                 //  content_type: state.notes[end].content_type
               }
               state.activeNode = newNode
             })
           })
-          .catch(function(err) {
+          .catch(function (err) {
             if (err.status == 404) {
               // pouchdb.put({  })
             }
           })
       })
-      pouchdb.get(state.global_pos_name).then(function(doc) {
+      pouchdb.get(state.global_pos_name).then(function (doc) {
         doc.positions.push({
           node_id: uniqueid,
           x_pos: 50,
           y_pos: 50,
           width: 200,
           height: 275,
-          z_index: 1
+          z_index: 1,
         })
         return pouchdb
           .put({
             _id: state.global_pos_name,
             _rev: doc._rev,
-            positions: doc.positions
+            positions: doc.positions,
           })
-          .catch(function(err) {
+          .catch(function (err) {
             console.log(err)
           })
       })
@@ -332,7 +431,7 @@ const store = new Vuex.Store({
       }
       pouchdb
         .get(state.myclient)
-        .then(function(doc) {
+        .then(function (doc) {
           // put the store into pouchdb
 
           return pouchdb.bulkDocs([
@@ -340,16 +439,16 @@ const store = new Vuex.Store({
               _id: state.myclient,
               _rev: doc._rev,
               _attachments: doc._attachments,
-              nodes: state.myNodes
-            }
+              nodes: state.myNodes,
+            },
           ])
         })
-        .then(function() {
-          return pouchdb.get(state.myclient).then(function(doc) {
+        .then(function () {
+          return pouchdb.get(state.myclient).then(function (doc) {
             state.myNodes = doc.nodes
           })
         })
-        .catch(function(err) {
+        .catch(function (err) {
           if (err.status == 404) {
             // pouchdb.put({  })
           }
@@ -365,23 +464,23 @@ const store = new Vuex.Store({
       }
       pouchdb
         .get(state.myclient)
-        .then(function(doc) {
+        .then(function (doc) {
           // put the store into pouchdb
           return pouchdb.bulkDocs([
             {
               _id: state.myclient,
               _rev: doc._rev,
               _attachments: doc._attachments,
-              nodes: state.myNodes
-            }
+              nodes: state.myNodes,
+            },
           ])
         })
-        .then(function() {
-          return pouchdb.get(state.myclient).then(function(doc) {
+        .then(function () {
+          return pouchdb.get(state.myclient).then(function (doc) {
             state.myNodes = doc.nodes
           })
         })
-        .catch(function(err) {
+        .catch(function (err) {
           if (err.status == 404) {
             // pouchdb.put({  })
           }
@@ -391,44 +490,40 @@ const store = new Vuex.Store({
       console.log
       pouchdb
         .get(state.global_emoji_name)
-        .then(function(doc) {
+        .then(function (doc) {
           state.configEmoji = doc.emojis
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err)
           if (err.status == 404) {
             return pouchdb.put({
               _id: state.global_emoji_name,
-              emojis: []
+              emojis: [],
             })
           }
         })
     },
     ADD_EMOJI(state, e) {
       var uniqueid =
-        Math.random()
-          .toString(36)
-          .substring(2, 15) +
-        Math.random()
-          .toString(36)
-          .substring(2, 15)
-      pouchdb.get(state.global_emoji_name).then(function(doc) {
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15)
+      pouchdb.get(state.global_emoji_name).then(function (doc) {
         doc.emojis.push({
           emoji_id: uniqueid,
           node_id: e.nodeid,
-          emoji_text: e.emojitext
+          emoji_text: e.emojitext,
         })
         return pouchdb
           .put({
             _id: state.global_emoji_name,
             _rev: doc._rev,
-            emojis: doc.emojis
+            emojis: doc.emojis,
           })
-          .catch(function(err) {
+          .catch(function (err) {
             console.log(err)
           })
       })
-    }
+    },
   },
 
   actions: {
@@ -439,37 +534,39 @@ const store = new Vuex.Store({
     },
 
     syncDB: () => {
-      pouchdb.replicate.from(remote).on('complete', function() {
+      pouchdb.replicate.from(remote).on('complete', function () {
         store.commit('GET_ALL_NODES')
         store.commit('GET_MY_NODES')
         store.commit('GET_POSITIONS')
+        store.commit('GET_CONNECTIONS')
         store.commit('GET_EMOJI')
         // turn on two-way, continuous, retriable sync
         pouchdb
           .sync(remote, { live: true, retry: true, attachments: true })
-          .on('change', function() {
+          .on('change', function () {
             // pop info into function to find out more
             store.commit('GET_ALL_NODES')
             store.commit('GET_MY_NODES')
             store.commit('GET_POSITIONS')
+            store.commit('GET_CONNECTIONS')
             store.commit('GET_EMOJI')
           })
-          .on('paused', function() {
+          .on('paused', function () {
             // replication paused (e.g. replication up to date, user went offline)
             // console.log('replication paused')
           })
-          .on('active', function() {
+          .on('active', function () {
             // replicate resumed (e.g. new changes replicating, user went back online)
             //console.log('back active')
           })
-          .on('denied', function() {
+          .on('denied', function () {
             // a document failed to replicate (e.g. due to permissions)
           })
-          .on('complete', function() {
+          .on('complete', function () {
             // handle complete
             //console.log('complete')
           })
-          .on('error', function(err) {
+          .on('error', function (err) {
             console.log(err)
           })
       })
@@ -492,6 +589,35 @@ const store = new Vuex.Store({
       commit('EDIT_NODE', { nodeid, nodetext })
     },
 
+    startConnect: (
+      { commit },
+      { connectid, e, f, startx, starty, endx, endy, connected }
+    ) => {
+      commit('MAKE_CONNECT', {
+        connectid,
+        e,
+        f,
+        startx,
+        starty,
+        endx,
+        endy,
+        connected,
+      })
+    },
+
+    updateConnect: (
+      { commit },
+      { connectid, nodeid, xpos, ypos, connected }
+    ) => {
+      commit('UPDATE_CONNECT', {
+        connectid,
+        nodeid,
+        xpos,
+        ypos,
+        connected,
+      })
+    },
+
     shortcutState: ({ commit }, e) => {
       commit('SHORTCUT_STATE', e)
     },
@@ -502,13 +628,13 @@ const store = new Vuex.Store({
     addEmoji: ({ commit }, { nodeid, emojitext }) => {
       commit('ADD_EMOJI', {
         nodeid,
-        emojitext
+        emojitext,
       })
-    }
+    },
   },
   modules: {
-    ui: uiStore
-  }
+    ui: uiStore,
+  },
 })
 
 export default store

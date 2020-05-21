@@ -13,6 +13,7 @@
         v-bind:nodetext="value.node_text"
       />
       <NodesLayer
+        @editTrue="(e) => editTrue(e)"
         v-for="value in myNodes"
         v-bind:key="value.node_id"
         v-bind:nodeid="value.node_id"
@@ -27,11 +28,13 @@
     /> -->
     <ModeToolbar />
     <ViewToolbar />
+    <ConnectionsLayer />
   </div>
 </template>
 
 <script>
 import PanZoomContainer from '@/experimental/PanZoomContainer'
+import ConnectionsLayer from '@/experimental/layers/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import ModeToolbar from '@/experimental/ModeToolbar'
@@ -95,6 +98,10 @@ export default {
       this.elementHeight = offsetHeight
     },
 
+    editTrue(e) {
+      this.$store.dispatch('shortcutState', e)
+    },
+
     // This is here to support the shortcuts
     addNode() {
       this.$store.dispatch('addNode')
@@ -107,6 +114,7 @@ export default {
     // SelectionLayer,
     NodesLayer,
     OtherNodeslayer,
+    ConnectionsLayer,
   },
 }
 </script>
