@@ -42,10 +42,10 @@ import { getPalette } from '@/experimental/constants/color'
 
 // import { generateConnectionHandles } from '@/utils/nodes'
 // import { generateBezierCurve, makeBezier } from '@/utils/svg'
-
 //import { generateConnectionHandles } from '@/utils/nodes'
 import { generateBezierCurve } from '@/experimental/utils/svg'
 import { groupBy } from '@/experimental/utils/helpers'
+import { mapState } from 'vuex'
 
 const groupByFrom = groupBy('from')
 
@@ -102,6 +102,10 @@ export default {
         }
       })
     },
+
+    ...mapState({
+      connections: (state) => state.configConnections,
+    }),
   },
   methods: {
     getCurve(connection) {
@@ -119,6 +123,19 @@ export default {
     findNode(id) {
       return [...this.nodes].find((pt) => pt.id === id)
     },
+
+    // startConnect(connectid, fromNode, toNode, startx, starty, endx, endy, connected) {
+    //   this.$store.dispatch('startConnect', {
+    //     connectid,
+    //     fromNode,
+    //     toNode,
+    //     startx,
+    //     starty,
+    //     endx,
+    //     endy,
+    //     connected,
+    //   })
+    // },
   },
 }
 </script>

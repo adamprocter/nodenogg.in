@@ -65,6 +65,7 @@ export default {
       myNodes: (state) => state.myNodes,
       otherNodes: (state) => state.otherNodes,
       shortcutstate: (state) => state.shortcutstate,
+      connections: (state) => state.configConnections,
     }),
     ...mapGetters({
       activeMode: 'ui/activeMode',

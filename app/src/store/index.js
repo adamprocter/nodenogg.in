@@ -237,8 +237,8 @@ const store = new Vuex.Store({
 
       state.configConnections.push({
         connectid: connectid,
-        startid: e.e,
-        endid: e.f,
+        startid: e.fromNode,
+        endid: e.toNode,
         startx: e.startx,
         starty: e.starty,
         endx: e.endx,
@@ -591,12 +591,12 @@ const store = new Vuex.Store({
 
     startConnect: (
       { commit },
-      { connectid, e, f, startx, starty, endx, endy, connected }
+      { connectid, fromNode, toNode, startx, starty, endx, endy, connected }
     ) => {
       commit('MAKE_CONNECT', {
         connectid,
-        e,
-        f,
+        fromNode,
+        toNode,
         startx,
         starty,
         endx,
