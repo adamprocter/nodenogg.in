@@ -278,6 +278,7 @@ export default {
   position: relative;
 }
 
+
 .info {
   font-size: 0.8em;
 }

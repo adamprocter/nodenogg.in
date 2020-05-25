@@ -16,9 +16,11 @@ export const generateBezierCurve = (from, to, tension) => {
       tension * 2
     )
 
-    return `M${fromHandle.x},${fromHandle.y} C${fromHandle.x *
-      (1 + adjustedTension)},${fromHandle.y} ${toHandle.x *
-      (1 - adjustedTension)},${toHandle.y} ${toHandle.x},${toHandle.y}`
+    return `M${fromHandle.x},${fromHandle.y} C${
+      fromHandle.x * (1 + adjustedTension)
+    },${fromHandle.y} ${toHandle.x * (1 - adjustedTension)},${toHandle.y} ${
+      toHandle.x
+    },${toHandle.y}`
   }
 }
 
@@ -34,7 +36,9 @@ export const makeBezier = (fromHandle, toHandle, tension) => {
     tension * 2
   )
 
-  return `M${fromHandle.x},${fromHandle.y} C${fromHandle.x *
-    (1 + adjustedTension)},${fromHandle.y} ${toHandle.x *
-    (1 - adjustedTension)},${toHandle.y} ${toHandle.x},${toHandle.y}`
+  return `M${fromHandle.x},${fromHandle.y} C${
+    fromHandle.x * (1 + adjustedTension)
+  },${fromHandle.y} ${toHandle.x * (1 - adjustedTension)},${toHandle.y} ${
+    toHandle.x
+  },${toHandle.y}`
 }

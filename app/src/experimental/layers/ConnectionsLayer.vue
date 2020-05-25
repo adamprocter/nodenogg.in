@@ -4,50 +4,27 @@
     :width="width"
     :height="height"
   >
-    <template v-for="group in groups">
-      <path
-        v-on:click="(e) => onClick(curve, e)"
-        v-for="curve in group.connections"
-        v-bind:key="curve.id"
-        v-bind:d="curve.path"
-        v-bind:stroke="getPalette(curve.color, 'dark')"
-        v-bind:stroke-dasharray="
-          curve.lineDash
-            ? curve.lineDash.join(' ')
-            : defaultConnectionProps.lineDash.join(' ')
-        "
-        v-bind:stroke-width="
-          curve.lineWidth || defaultConnectionProps.lineWidth
-        "
-      />
-    </template>
     <path
-      v-bind:stroke="getPalette('blue', 'dark')"
-      v-bind:stroke-width="defaultConnectionProps.lineWidth"
-      v-if="newConnection && newConnection.target"
-      v-bind:d="getCurve(newConnection)"
+      v-for="(value, index) in configConnections"
+      v-bind:key="index"
+      v-bind:d="value.path"
+      v-bind:stroke="getPalette(value.color, 'dark')"
+      v-bind:stroke-dasharray="
+        value.linedash
+          ? value.linedash.join(' ')
+          : defaultConnectionProps.linedash.join(' ')
+      "
+      v-bind:stroke-width="value.linewidth || defaultConnectionProps.linewidth"
     />
-    <circle
-      v-bind:cx="newConnection.target.x"
-      v-bind:cy="newConnection.target.y"
-      r="10"
-      v-bind:fill="getPalette('blue', 'dark')"
-      v-if="newConnection && newConnection.target"
-    />
+
+    <!-- <path d="M 10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent" /> -->
   </svg>
 </template>
 
 <script>
 import { getPalette } from '@/experimental/constants/color'
-
-// import { generateConnectionHandles } from '@/utils/nodes'
-// import { generateBezierCurve, makeBezier } from '@/utils/svg'
-//import { generateConnectionHandles } from '@/utils/nodes'
 import { generateBezierCurve } from '@/experimental/utils/svg'
-import { groupBy } from '@/experimental/utils/helpers'
 import { mapState } from 'vuex'
-
-const groupByFrom = groupBy('from')
 
 export default {
   props: {
@@ -57,18 +34,6 @@ export default {
     height: {
       type: Number,
     },
-    nodes: {
-      type: Array,
-    },
-    connections: {
-      type: Array,
-    },
-    newConnection: {
-      type: Object,
-    },
-    onClickConnection: {
-      type: Function,
-    },
   },
   data() {
     return {
@@ -76,37 +41,40 @@ export default {
       defaultConnectionProps: {
         hue: 'dark',
         tension: 0.25,
-        lineWidth: 5,
-        lineDash: [0, 0],
+        linewidth: 5,
+        linedash: [0, 0],
       },
     }
   },
-  computed: {
-    groups() {
-      const grouped = groupByFrom(this.connections)
-      return Object.keys(grouped).map((id) => {
-        return {
-          id,
-          connections: grouped[id].map((connection) => {
-            const fromNode = this.findNode(connection.from)
-            const toNode = this.findNode(connection.to)
-            return {
-              ...connection,
-              path: generateBezierCurve(
-                fromNode,
-                toNode,
-                this.defaultConnectionProps.tension
-              ),
-            }
-          }),
-        }
-      })
-    },
 
-    ...mapState({
-      connections: (state) => state.configConnections,
-    }),
-  },
+  computed: mapState({
+    myNodes: (state) => state.myNodes,
+    otherNodes: (state) => state.otherNodes,
+    configConnections: (state) => state.configConnections,
+  }),
+
+  //  groups() {
+  //     const grouped = groupByFrom(this.links);
+  //     return Object.keys(grouped).map(id => {
+  //       return {
+  //         id,
+  //         links: grouped[id].map(link => {
+  //           const fromNode = this.findNode(link.from);
+  //           const toNode = this.findNode(link.to);
+  //           return {
+  //             ...link,
+  //             path: generateBezierCurve(
+  //               fromNode,
+  //               toNode,
+  //               this.defaultLinkProps.tension
+  //             )
+  //           };
+  //         })
+  //       };
+  //     });
+  //   }
+  // },
+
   methods: {
     getCurve(connection) {
       const fromNode = this.findNode(connection.from)
@@ -114,28 +82,6 @@ export default {
       const r = generateBezierCurve(fromNode, toNode, 0.1)
       return r
     },
-    onClick(connection) {
-      this.onClickConnection(
-        [connection.id],
-        !!event.shiftKey || !!event.metaKey
-      )
-    },
-    findNode(id) {
-      return [...this.nodes].find((pt) => pt.id === id)
-    },
-
-    // startConnect(connectid, fromNode, toNode, startx, starty, endx, endy, connected) {
-    //   this.$store.dispatch('startConnect', {
-    //     connectid,
-    //     fromNode,
-    //     toNode,
-    //     startx,
-    //     starty,
-    //     endx,
-    //     endy,
-    //     connected,
-    //   })
-    // },
   },
 }
 </script>

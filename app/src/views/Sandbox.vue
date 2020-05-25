@@ -1,5 +1,11 @@
 <template>
   <div ref="container" class="wrapper" v-bind:style="modeContainerStyle">
+    <ConnectionsLayer
+      v-bind:width="width"
+      v-bind:height="height"
+      v-bind:nodes="myNodes"
+      v-bind:connections="connections"
+    />
     <PanZoomContainer
       v-bind:width="width"
       v-bind:height="height"
@@ -28,7 +34,6 @@
     /> -->
     <ModeToolbar />
     <ViewToolbar />
-    <ConnectionsLayer />
   </div>
 </template>
 
