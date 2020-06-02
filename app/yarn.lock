@@ -3385,7 +3385,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-datastore-core@^1.0.0, datastore-core@^1.1.0:
+datastore-core@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/datastore-core/-/datastore-core-1.1.0.tgz#e749da22ae4d9dd26b4e44f21379fcb36dba7c89"
   dependencies:
@@ -3393,7 +3393,7 @@ datastore-core@^1.0.0, datastore-core@^1.1.0:
     debug "^4.1.1"
     interface-datastore "^1.0.2"
 
-datastore-fs@^1.0.0:
+datastore-fs@^1.0.0, datastore-fs@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/datastore-fs/-/datastore-fs-1.1.0.tgz#c5d60066bf9303bd6379015f083dd92177ea690d"
   dependencies:
@@ -3403,7 +3403,7 @@ datastore-fs@^1.0.0:
     interface-datastore "^1.0.2"
     mkdirp "^1.0.4"
 
-datastore-idb@^1.0.2:
+datastore-idb@^1.0.2, datastore-idb@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/datastore-idb/-/datastore-idb-1.1.0.tgz#2c69d8aa6c2ceac94f8098dd5834e8ae29c0dbb3"
   dependencies:
@@ -3411,7 +3411,7 @@ datastore-idb@^1.0.2:
     idb "^5.0.2"
     interface-datastore "^1.0.2"
 
-datastore-level@^1.0.0:
+datastore-level@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/datastore-level/-/datastore-level-1.1.0.tgz#fde84ff1867bd5255a1fd90136b596bd51d98fcb"
   dependencies:
@@ -3419,7 +3419,7 @@ datastore-level@^1.0.0:
     interface-datastore "^1.0.2"
     level "^5.0.1"
 
-datastore-pubsub@^0.3.1:
+datastore-pubsub@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/datastore-pubsub/-/datastore-pubsub-0.3.2.tgz#7da35f1d3e8dd02b789555901a47ab5875c284ad"
   dependencies:
@@ -5369,7 +5369,7 @@ interactive-shape-recognition@^1.0.1:
     area-polygon "^1.0.1"
     convex-hull "^1.0.3"
 
-interface-datastore@^0.8.0, interface-datastore@^0.8.3, interface-datastore@~0.8.0, interface-datastore@~0.8.3:
+interface-datastore@^0.8.0, interface-datastore@~0.8.0, interface-datastore@~0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/interface-datastore/-/interface-datastore-0.8.3.tgz#1b948d9f8231edbaaec763a75a339e70e5f48883"
   dependencies:
@@ -5438,12 +5438,13 @@ ipaddr.js@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"
 
-ipfs-bitswap@^0.27.2:
-  version "0.27.2"
-  resolved "https://registry.yarnpkg.com/ipfs-bitswap/-/ipfs-bitswap-0.27.2.tgz#1c558060c7ff37ceb30c67a7c859dfe842b23ed9"
+ipfs-bitswap@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ipfs-bitswap/-/ipfs-bitswap-1.0.0.tgz#4dfa99f068a12cc9ccf6cf5f835c00ebc70dd223"
   dependencies:
+    abort-controller "^3.0.0"
+    any-signal "^1.1.0"
     bignumber.js "^9.0.0"
-    buffer "^5.6.0"
     cids "~0.8.0"
     debug "^4.1.0"
     ipld-block "^0.9.1"
@@ -5453,14 +5454,15 @@ ipfs-bitswap@^0.27.2:
     moving-average "^1.0.0"
     multicodec "^1.0.0"
     multihashing-async "^0.8.0"
-    protons "^1.2.0"
+    protons "^1.0.1"
     streaming-iterables "^4.1.1"
-    varint-decoder "~0.4.0"
+    varint-decoder "^0.4.0"
 
-ipfs-block-service@^0.16.0:
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/ipfs-block-service/-/ipfs-block-service-0.16.0.tgz#bca30c6c04ce10f78790ee6ade3c4eb333add38e"
+ipfs-block-service@^0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/ipfs-block-service/-/ipfs-block-service-0.17.1.tgz#6e38f77872ce28d818341a8b1b8b952f7520b633"
   dependencies:
+    err-code "^2.0.0"
     streaming-iterables "^4.1.0"
 
 ipfs-block@^0.8.1:
@@ -5518,9 +5520,9 @@ ipfs-http-client@^44.0.0:
     parse-duration "^0.1.2"
     stream-to-it "^0.2.0"
 
-ipfs-http-client@^44.1.0:
-  version "44.1.0"
-  resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-44.1.0.tgz#d74ccd691ce3d5ce87ee65826ac65fc3715537e0"
+ipfs-http-client@^44.1.1:
+  version "44.1.1"
+  resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-44.1.1.tgz#d5d72874dcc805fbaaca2e1ac3876cb33f2100a2"
   dependencies:
     abort-controller "^3.0.0"
     any-signal "^1.1.0"
@@ -5580,24 +5582,26 @@ ipfs-repo-migrations@^0.2.1:
     yargs "^14.2.0"
     yargs-promise "^1.1.0"
 
-ipfs-repo@^2.0.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/ipfs-repo/-/ipfs-repo-2.1.1.tgz#9e2e3fa7cb92b2263690575ec64a8a4647fc6bc3"
+ipfs-repo@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/ipfs-repo/-/ipfs-repo-3.0.1.tgz#edd0a476347adbfe6aafed2f5908f224693208a5"
   dependencies:
     bignumber.js "^9.0.0"
     buffer "^5.6.0"
     bytes "^3.1.0"
     cids "^0.8.0"
-    datastore-core "^1.0.0"
-    datastore-fs "^1.0.0"
-    datastore-idb "^1.0.2"
-    datastore-level "^1.0.0"
+    datastore-core "^1.1.0"
+    datastore-fs "^1.1.0"
+    datastore-idb "^1.1.0"
+    datastore-level "^1.1.0"
     debug "^4.1.0"
     err-code "^2.0.0"
-    interface-datastore "^0.8.3"
+    interface-datastore "^1.0.2"
     ipfs-repo-migrations "^0.2.1"
     ipfs-utils "^2.2.0"
     ipld-block "^0.9.1"
+    it-map "^1.0.2"
+    it-pipe "^1.1.0"
     just-safe-get "^2.0.0"
     just-safe-set "^2.1.0"
     multibase "^0.7.0"
@@ -5675,9 +5679,9 @@ ipfs-utils@^2.2.0, ipfs-utils@^2.2.2:
     node-fetch "^2.6.0"
     stream-to-it "^0.2.0"
 
-ipfs@^0.44.0:
-  version "0.44.0"
-  resolved "https://registry.yarnpkg.com/ipfs/-/ipfs-0.44.0.tgz#33bb3782aee50d28f8cecb38c3a9e4949e1933e7"
+ipfs@^0.45.0:
+  version "0.45.0"
+  resolved "https://registry.yarnpkg.com/ipfs/-/ipfs-0.45.0.tgz#4931a8be8b0a7fdbe6a3fad5cd5cb4e65c9b4091"
   dependencies:
     "@hapi/ammo" "^3.1.2"
     "@hapi/boom" "^7.4.3"
@@ -5697,9 +5701,9 @@ ipfs@^0.44.0:
     cids "^0.8.0"
     class-is "^1.1.0"
     dag-cbor-links "^1.3.3"
-    datastore-core "^1.0.0"
-    datastore-level "^1.0.0"
-    datastore-pubsub "^0.3.1"
+    datastore-core "^1.1.0"
+    datastore-level "^1.1.0"
+    datastore-pubsub "^0.3.2"
     debug "^4.1.0"
     dlv "^1.1.3"
     err-code "^2.0.0"
@@ -5709,13 +5713,13 @@ ipfs@^0.44.0:
     hamt-sharding "^1.0.0"
     hapi-pino "^6.1.0"
     hashlru "^2.3.0"
-    interface-datastore "^0.8.3"
-    ipfs-bitswap "^0.27.2"
-    ipfs-block-service "^0.16.0"
+    interface-datastore "^1.0.2"
+    ipfs-bitswap "^1.0.0"
+    ipfs-block-service "^0.17.1"
     ipfs-core-utils "^0.2.3"
-    ipfs-http-client "^44.1.0"
+    ipfs-http-client "^44.1.1"
     ipfs-http-response "^0.5.0"
-    ipfs-repo "^2.0.1"
+    ipfs-repo "^3.0.0"
     ipfs-unixfs "^1.0.2"
     ipfs-unixfs-exporter "^2.0.1"
     ipfs-unixfs-importer "^2.0.1"
@@ -5735,7 +5739,7 @@ ipfs@^0.44.0:
     iso-url "^0.4.7"
     it-all "^1.0.1"
     it-concat "^1.0.0"
-    it-drain "^1.0.0"
+    it-drain "^1.0.1"
     it-glob "0.0.7"
     it-last "^1.0.1"
     it-map "^1.0.0"
@@ -6272,7 +6276,7 @@ it-concat@^1.0.0:
   dependencies:
     bl "^4.0.0"
 
-it-drain@^1.0.0, it-drain@^1.0.1:
+it-drain@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/it-drain/-/it-drain-1.0.1.tgz#ef5d3de24cae4b004fa4df20796f90f589ccb573"
 
@@ -6311,7 +6315,7 @@ it-length-prefixed@^3.0.0, it-length-prefixed@^3.0.1:
     buffer "^5.5.0"
     varint "^5.0.0"
 
-it-map@^1.0.0:
+it-map@^1.0.0, it-map@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/it-map/-/it-map-1.0.2.tgz#c390d972b5362cf0bef4f54b62f00cec2e2fd10e"
 
@@ -11229,7 +11233,7 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-varint-decoder@~0.4.0:
+varint-decoder@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/varint-decoder/-/varint-decoder-0.4.0.tgz#a196d26251949815e8c56a91550eb6c3517b15eb"
   dependencies:
