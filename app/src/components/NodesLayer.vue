@@ -1,57 +1,133 @@
 <template>
   <div ref="nodes" class="node">
     <div v-for="(value, index) in configPositions" v-bind:key="index">
-      <vue-draggable-resizable
-        class="innernode"
-        v-if="nodeid == value.node_id"
-        :w="value.width"
-        :h="value.height"
-        :x="value.x_pos"
-        :y="value.y_pos"
-        :z="value.z_index"
-        @activated="onActivated"
-        @dragging="onDrag"
-        @resizing="onResize"
-        @dragstop="onDragstop"
-        @resizestop="onResizestop"
-        :drag-cancel="'.drag-cancel'"
-        style="background-color: rgb(205, 234, 255)"
-      >
-        <form>
-          <div v-if="readmode == false">
-            <div v-for="value in myNodes" v-bind:key="value.node_id">
-              <!-- <div v-if="readmode == false"> -->
-              <textarea
-                v-if="nodeid == value.node_id"
-                @focus="editTrue(true)"
-                @blur="editTrue(false)"
-                autofocus
-                @input="editNode"
-                v-model="value.node_text"
-                :id="nodeid"
-                class="drag-cancel"
-                ref="nodetext"
-                placeholder="Idea goes here!"
-              ></textarea>
+      <div v-if="toolmode == 'move'">
+        <!-- make draggable false as we are panning around -->
+        <vue-draggable-resizable
+          class="innernode"
+          v-if="nodeid == value.node_id"
+          :w="value.width"
+          :h="value.height"
+          :x="value.x_pos"
+          :y="value.y_pos"
+          :z="value.z_index"
+          :draggable="false"
+          style="background-color: rgb(205, 234, 255);"
+        >
+          <form>
+            <div v-if="readmode == false">
+              <div v-for="value in myNodes" v-bind:key="value.node_id">
+                <!-- <div v-if="readmode == false"> -->
+                <textarea
+                  v-if="nodeid == value.node_id"
+                  @focus="editTrue(true)"
+                  @blur="editTrue(false)"
+                  autofocus
+                  @input="editNode"
+                  v-model="value.node_text"
+                  :id="nodeid"
+                  class="drag-cancel"
+                  ref="nodetext"
+                  placeholder="Idea goes here!"
+                ></textarea>
+              </div>
             </div>
-          </div>
-          <!-- FIXME: What is this doing below now ? Looks old -->
-          <div v-else>
-            <p :id="nodeid" :inner-html.prop="nodetext | marked">{{ nodeid }}</p>
-          </div>
+            <!-- FIXME: What is this doing below now ? Looks old -->
+            <div v-else>
+              <p :id="nodeid" :inner-html.prop="nodetext | marked">
+                {{ nodeid }}
+              </p>
+            </div>
 
-          <h3>Reactions</h3>
-          <div v-for="(emojis, index) in configEmoji" :key="index">
-            <p class="allemoji" v-if="nodeid == emojis.node_id">{{ emojis.emoji_text }}</p>
-          </div>
+            <h3>Reactions</h3>
 
-          <p class="info">*markdown supported</p>
-          <div class="btn-row">
-            <BaseButton buttonClass="danger" @click="deleteFlag()">Delete</BaseButton>
-            <BaseButton class="read" buttonClass="action" @click="readFlag()">{{ mode }}</BaseButton>
-          </div>
-        </form>
-      </vue-draggable-resizable>
+            <div v-for="(emojis, index) in configEmoji" :key="index">
+              <p class="allemoji" v-if="nodeid == emojis.node_id">
+                {{ emojis.emoji_text }}
+              </p>
+            </div>
+
+            <p class="info">*markdown supported</p>
+            <div class="btn-row">
+              <BaseButton buttonClass="danger" @click="deleteFlag()"
+                >Delete</BaseButton
+              >
+              <BaseButton
+                class="read"
+                buttonClass="action"
+                @click="readFlag()"
+                >{{ mode }}</BaseButton
+              >
+            </div>
+          </form>
+        </vue-draggable-resizable>
+      </div>
+
+      <div v-else>
+        <vue-draggable-resizable
+          class="innernode"
+          v-if="nodeid == value.node_id"
+          :w="value.width"
+          :h="value.height"
+          :x="value.x_pos"
+          :y="value.y_pos"
+          :z="value.z_index"
+          @activated="onActivated"
+          @dragging="onDrag"
+          @resizing="onResize"
+          @dragstop="onDragstop"
+          @resizestop="onResizestop"
+          :drag-cancel="'.drag-cancel'"
+          style="background-color: rgb(205, 234, 255);"
+        >
+          <form>
+            <div v-if="readmode == false">
+              <div v-for="value in myNodes" v-bind:key="value.node_id">
+                <!-- <div v-if="readmode == false"> -->
+                <textarea
+                  v-if="nodeid == value.node_id"
+                  @focus="editTrue(true)"
+                  @blur="editTrue(false)"
+                  autofocus
+                  @input="editNode"
+                  v-model="value.node_text"
+                  :id="nodeid"
+                  class="drag-cancel"
+                  ref="nodetext"
+                  placeholder="Idea goes here!"
+                ></textarea>
+              </div>
+            </div>
+            <!-- FIXME: What is this doing below now ? Looks old -->
+            <div v-else>
+              <p :id="nodeid" :inner-html.prop="nodetext | marked">
+                {{ nodeid }}
+              </p>
+            </div>
+
+            <h3>Reactions</h3>
+
+            <div v-for="(emojis, index) in configEmoji" :key="index">
+              <p class="allemoji" v-if="nodeid == emojis.node_id">
+                {{ emojis.emoji_text }}
+              </p>
+            </div>
+
+            <p class="info">*markdown supported</p>
+            <div class="btn-row">
+              <BaseButton buttonClass="danger" @click="deleteFlag()"
+                >Delete</BaseButton
+              >
+              <BaseButton
+                class="read"
+                buttonClass="action"
+                @click="readFlag()"
+                >{{ mode }}</BaseButton
+              >
+            </div>
+          </form>
+        </vue-draggable-resizable>
+      </div>
     </div>
   </div>
 </template>
@@ -68,19 +144,19 @@ export default {
     nodetext: String,
     nodewidth: Number,
     nodeheight: Number,
-    deleted: Boolean
+    deleted: Boolean,
   },
 
   data() {
     return {
       pickupz: 99,
       readmode: false,
-      mode: 'Read'
+      mode: 'Read',
     }
   },
 
   filters: {
-    marked: marked
+    marked: marked,
   },
 
   // FIXME: how do we know how to focus on the newest node ?
@@ -98,9 +174,10 @@ export default {
   // },
 
   computed: mapState({
-    myNodes: state => state.myNodes,
-    configPositions: state => state.configPositions,
-    configEmoji: state => state.configEmoji
+    myNodes: (state) => state.myNodes,
+    configPositions: (state) => state.configPositions,
+    configEmoji: (state) => state.configEmoji,
+    toolmode: (state) => state.ui.mode,
   }),
   methods: {
     onActivated() {
@@ -138,7 +215,7 @@ export default {
         y,
         width,
         height,
-        zindex
+        zindex,
       })
     },
     onDrag(x, y) {
@@ -164,7 +241,7 @@ export default {
         y,
         width,
         height,
-        zindex
+        zindex,
       })
     },
 
@@ -190,8 +267,8 @@ export default {
         this.readmode = true
         this.mode = 'Edit'
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -200,6 +277,7 @@ export default {
 .node {
   position: relative;
 }
+
 
 .info {
   font-size: 0.8em;

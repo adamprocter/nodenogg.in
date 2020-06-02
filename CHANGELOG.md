@@ -1,3 +1,13 @@
+# 0.1.11d
+
+_2 June 2020_
+This version has been move to alpha as I need to use the app more and thus drive some more development. The COVID-19 pandemic has slowed things down a lot and this version moves to introduce the new spatial mode. The new spatial mode is still missing some vital component to the main home version however for now keeping both old and new views should allow for a quicker capture of some of the missing components that need to be added to Sandbox.
+
+### Changed
+
+- New menu bar at the top
+- Sandbox view is a updated view of nodenogg.in and will replace home.
+
 # 0.1.11
 
 _10th April 2020_

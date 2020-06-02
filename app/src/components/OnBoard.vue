@@ -4,9 +4,7 @@
       nodenogg.in is a
       <span>work in progress</span> collaborative co-creation research and
       design thinking tool, read more details and links in the
-      <a
-        href="/about"
-      >about</a> section.
+      <a href="/about">about</a> section.
     </p>
 
     <form v-show="parta" onsubmit="return false;">
@@ -28,7 +26,9 @@
         autofocus
         v-on:keyup.enter="createMicrocosm(), setFocus()"
       />
-      <BaseButton buttonClass="onboard" @click="createMicrocosm(), setFocus()">+</BaseButton>
+      <BaseButton buttonClass="onboard" @click="createMicrocosm(), setFocus()"
+        >+</BaseButton
+      >
     </form>
 
     <form v-show="partb" onsubmit="return false;">
@@ -47,11 +47,18 @@
         ref="objectname"
         v-on:keyup.enter="setClient(), setFocusTwo()"
       />
-      <BaseButton buttonClass="onboard" @click="setClient(), setFocusTwo()">+</BaseButton>
+      <BaseButton buttonClass="onboard" @click="setClient(), setFocusTwo()"
+        >+</BaseButton
+      >
     </form>
 
     <form v-show="partc">
-      <input class="start" type="text" v-on:keyup.enter="letsGo()" ref="objectnametwo" />
+      <input
+        class="start"
+        type="text"
+        v-on:keyup.enter="letsGo()"
+        ref="objectnametwo"
+      />
       <h2>3</h2>
       <h3>start</h3>
       <BaseButton buttonClass="onboard" @click="letsGo()">+</BaseButton>
