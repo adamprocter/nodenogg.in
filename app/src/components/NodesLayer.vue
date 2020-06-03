@@ -15,9 +15,9 @@
           style="background-color: rgb(205, 234, 255);"
         >
           <form>
-            <div v-if="readmode == false">
-              <div v-for="value in myNodes" v-bind:key="value.node_id">
-                <!-- <div v-if="readmode == false"> -->
+            <!-- <div v-if="readmode == false"> -->
+            <div v-for="value in myNodes" v-bind:key="value.node_id">
+              <div v-if="value.readmode == false">
                 <textarea
                   v-if="nodeid == value.node_id"
                   @focus="editTrue(true)"
@@ -31,14 +31,11 @@
                   placeholder="Idea goes here!"
                 ></textarea>
               </div>
+              <!-- FIXME: What is this doing below now ? Looks old -->
+              <div v-else>
+                <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
+              </div>
             </div>
-            <!-- FIXME: What is this doing below now ? Looks old -->
-            <div v-else>
-              <p :id="nodeid" :inner-html.prop="nodetext | marked">
-                {{ nodeid }}
-              </p>
-            </div>
-
             <h3>Reactions</h3>
 
             <div v-for="(emojis, index) in configEmoji" :key="index">
@@ -81,9 +78,8 @@
           style="background-color: rgb(205, 234, 255);"
         >
           <form>
-            <div v-if="readmode == false">
-              <div v-for="value in myNodes" v-bind:key="value.node_id">
-                <!-- <div v-if="readmode == false"> -->
+            <div v-for="value in myNodes" v-bind:key="value.node_id">
+              <div v-if="value.readmode == false">
                 <textarea
                   v-if="nodeid == value.node_id"
                   @focus="editTrue(true)"
@@ -97,14 +93,15 @@
                   placeholder="Idea goes here!"
                 ></textarea>
               </div>
-            </div>
-            <!-- FIXME: What is this doing below now ? Looks old -->
-            <div v-else>
-              <p :id="nodeid" :inner-html.prop="nodetext | marked">
-                {{ nodeid }}
-              </p>
-            </div>
 
+              <!-- </div> -->
+              <!-- FIXME: What is this doing below now ? Looks old -->
+              <div v-else>
+                <p :id="nodeid" :inner-html.prop="nodetext | marked">
+                  <!-- {{ nodeid }} -->
+                </p>
+              </div>
+            </div>
             <h3>Reactions</h3>
 
             <div v-for="(emojis, index) in configEmoji" :key="index">
@@ -135,6 +132,7 @@
 <script>
 import { mapState } from 'vuex'
 import marked from 'marked'
+var readmode
 
 export default {
   name: 'NodesLayer',
@@ -145,12 +143,13 @@ export default {
     nodewidth: Number,
     nodeheight: Number,
     deleted: Boolean,
+    readmode: Boolean,
   },
 
   data() {
     return {
       pickupz: 99,
-      readmode: false,
+      // localreadmode: this.readmode,
       mode: 'Read',
     }
   },
@@ -259,12 +258,16 @@ export default {
       e = this.nodeid
       this.$store.dispatch('deleteFlag', { e })
     },
-    readFlag() {
-      if (this.readmode == true) {
-        this.readmode = false
+    readFlag(e) {
+      e = this.nodeid
+
+      if (readmode == true) {
+        readmode = false
+        this.$store.dispatch('readFlag', { e, readmode })
         this.mode = 'Read'
       } else {
-        this.readmode = true
+        readmode = true
+        this.$store.dispatch('readFlag', { e, readmode })
         this.mode = 'Edit'
       }
     },
@@ -277,7 +280,6 @@ export default {
 .node {
   position: relative;
 }
-
 
 .info {
   font-size: 0.8em;

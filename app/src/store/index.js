@@ -36,6 +36,8 @@ var remote =
   microcosm +
   '/'
 
+//var remotetwo = 'http://127.0.0.1:5984/'
+
 console.log(remote)
 const store = new Vuex.Store({
   state: {
@@ -183,6 +185,7 @@ const store = new Vuex.Store({
                   content_type: 'sheet',
                   // NOTE: first node is hidden due to no position
                   deleted: true,
+                  readmode: false,
                   attachment_name: '',
                 },
               ],
@@ -322,6 +325,7 @@ const store = new Vuex.Store({
             node_owner: state.myclient,
             content_type: 'sheet',
             deleted: false,
+            readmode: false,
             attachment_name: e,
           })
         }
@@ -410,6 +414,38 @@ const store = new Vuex.Store({
       for (i = 0; i < Object.keys(state.myNodes).length; i++) {
         if (e.e == state.myNodes[i].node_id) {
           state.myNodes[i].deleted = true
+        }
+      }
+      pouchdb
+        .get(state.myclient)
+        .then(function (doc) {
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.myclient,
+              _rev: doc._rev,
+              _attachments: doc._attachments,
+              nodes: state.myNodes,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.myclient).then(function (doc) {
+            state.myNodes = doc.nodes
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
+    READ_FLAG(state, e) {
+      var i
+      for (i = 0; i < Object.keys(state.myNodes).length; i++) {
+        if (e.e == state.myNodes[i].node_id) {
+          state.myNodes[i].readmode = e.readmode
         }
       }
       pouchdb
@@ -560,6 +596,10 @@ const store = new Vuex.Store({
     deleteFlag: ({ commit }, e) => {
       // var text = e.target.value
       commit('DELETE_FLAG', e)
+    },
+    readFlag: ({ commit }, e) => {
+      // var text = e.target.value
+      commit('READ_FLAG', e)
     },
     addEmoji: ({ commit }, { nodeid, emojitext }) => {
       commit('ADD_EMOJI', {

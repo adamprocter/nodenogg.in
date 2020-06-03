@@ -24,6 +24,7 @@
         v-bind:key="value.node_id"
         v-bind:nodeid="value.node_id"
         v-bind:nodetext="value.node_text"
+        v-bind:readmode="value.readmode"
       />
     </PanZoomContainer>
     <!-- <SelectionLayer
