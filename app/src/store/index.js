@@ -185,7 +185,6 @@ const store = new Vuex.Store({
                   content_type: 'sheet',
                   // NOTE: first node is hidden due to no position
                   deleted: true,
-                  readmode: false,
                   attachment_name: '',
                 },
               ],
@@ -325,7 +324,6 @@ const store = new Vuex.Store({
             node_owner: state.myclient,
             content_type: 'sheet',
             deleted: false,
-            readmode: false,
             attachment_name: e,
           })
         }
@@ -363,6 +361,7 @@ const store = new Vuex.Store({
           width: 200,
           height: 275,
           z_index: 1,
+          read_mode: false,
         })
         return pouchdb
           .put({
@@ -443,27 +442,29 @@ const store = new Vuex.Store({
 
     READ_FLAG(state, e) {
       var i
-      for (i = 0; i < Object.keys(state.myNodes).length; i++) {
-        if (e.e == state.myNodes[i].node_id) {
-          state.myNodes[i].readmode = e.readmode
+      console.log(e.e)
+      for (i = 0; i < Object.keys(state.configPositions).length; i++) {
+        if (e.e == state.configPositions[i].node_id) {
+          state.configPositions[i].read_mode = e.readmode
         }
       }
+
       pouchdb
-        .get(state.myclient)
+        .get(state.global_pos_name)
         .then(function (doc) {
+          //  console.log(doc)
           // put the store into pouchdb
           return pouchdb.bulkDocs([
             {
-              _id: state.myclient,
+              _id: state.global_pos_name,
               _rev: doc._rev,
-              _attachments: doc._attachments,
-              nodes: state.myNodes,
+              positions: state.configPositions,
             },
           ])
         })
         .then(function () {
-          return pouchdb.get(state.myclient).then(function (doc) {
-            state.myNodes = doc.nodes
+          return pouchdb.get(state.global_pos_name).then(function (doc) {
+            state.configPositions = doc.positions
           })
         })
         .catch(function (err) {
@@ -472,6 +473,7 @@ const store = new Vuex.Store({
           }
         })
     },
+
     GET_EMOJI(state) {
       console.log
       pouchdb
@@ -528,7 +530,12 @@ const store = new Vuex.Store({
         store.commit('GET_EMOJI')
         // turn on two-way, continuous, retriable sync
         pouchdb
-          .sync(remote, { live: true, retry: true, attachments: true })
+          .sync(remote, {
+            live: true,
+            since: 'now',
+            retry: true,
+            attachments: true,
+          })
           .on('change', function () {
             // pop info into function to find out more
             store.commit('GET_ALL_NODES')
@@ -550,7 +557,6 @@ const store = new Vuex.Store({
           })
           .on('complete', function () {
             // handle complete
-            //console.log('complete')
           })
           .on('error', function (err) {
             console.log(err)
@@ -567,7 +573,10 @@ const store = new Vuex.Store({
     movePos: ({ commit }, nodeid, xpos, ypos, width, height, zindex) => {
       commit('MOVE_POS', nodeid, xpos, ypos, width, height, zindex)
     },
-
+    readFlag: ({ commit }, e) => {
+      // var text = e.target.value
+      commit('READ_FLAG', e)
+    },
     addNode: ({ commit }, e) => {
       commit('ADD_NODE', e)
     },
@@ -597,10 +606,7 @@ const store = new Vuex.Store({
       // var text = e.target.value
       commit('DELETE_FLAG', e)
     },
-    readFlag: ({ commit }, e) => {
-      // var text = e.target.value
-      commit('READ_FLAG', e)
-    },
+
     addEmoji: ({ commit }, { nodeid, emojitext }) => {
       commit('ADD_EMOJI', {
         nodeid,

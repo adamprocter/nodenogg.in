@@ -1,23 +1,21 @@
 <template>
   <div ref="nodes" class="node">
-    <div v-for="(value, index) in configPositions" v-bind:key="index">
+    <div v-for="(posvalue, index) in configPositions" v-bind:key="index">
       <div v-if="toolmode == 'move'">
-        <!-- make draggable false as we are panning around -->
         <vue-draggable-resizable
           class="innernode"
-          v-if="nodeid == value.node_id"
-          :w="value.width"
-          :h="value.height"
-          :x="value.x_pos"
-          :y="value.y_pos"
-          :z="value.z_index"
+          v-if="nodeid == posvalue.node_id"
+          :w="posvalue.width"
+          :h="posvalue.height"
+          :x="posvalue.x_pos"
+          :y="posvalue.y_pos"
+          :z="posvalue.z_index"
           :draggable="false"
           style="background-color: rgb(205, 234, 255);"
         >
           <form>
-            <!-- <div v-if="readmode == false"> -->
-            <div v-for="value in myNodes" v-bind:key="value.node_id">
-              <div v-if="value.readmode == false">
+            <div v-if="posvalue.read_mode == false">
+              <div v-for="value in myNodes" v-bind:key="value.node_id">
                 <textarea
                   v-if="nodeid == value.node_id"
                   @focus="editTrue(true)"
@@ -31,11 +29,11 @@
                   placeholder="Idea goes here!"
                 ></textarea>
               </div>
-              <!-- FIXME: What is this doing below now ? Looks old -->
-              <div v-else>
-                <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
-              </div>
             </div>
+            <div v-if="posvalue.read_mode == true">
+              <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
+            </div>
+
             <h3>Reactions</h3>
 
             <div v-for="(emojis, index) in configEmoji" :key="index">
@@ -49,26 +47,38 @@
               <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
               >
-              <BaseButton
-                class="read"
-                buttonClass="action"
-                @click="readFlag()"
-                >{{ mode }}</BaseButton
-              >
+              <div v-if="posvalue.read_mode == true">
+                <BaseButton
+                  class="read"
+                  buttonClass="action"
+                  @click="readFlag()"
+                  >Edit
+                </BaseButton>
+              </div>
+              <div v-else>
+                <BaseButton
+                  class="read"
+                  buttonClass="action"
+                  @click="readFlag()"
+                  >Read</BaseButton
+                >
+              </div>
             </div>
           </form>
         </vue-draggable-resizable>
       </div>
 
+      <!-- Same code as above when in any other mode other than move so you can drag nodes-->
+
       <div v-else>
         <vue-draggable-resizable
           class="innernode"
-          v-if="nodeid == value.node_id"
-          :w="value.width"
-          :h="value.height"
-          :x="value.x_pos"
-          :y="value.y_pos"
-          :z="value.z_index"
+          v-if="nodeid == posvalue.node_id"
+          :w="posvalue.width"
+          :h="posvalue.height"
+          :x="posvalue.x_pos"
+          :y="posvalue.y_pos"
+          :z="posvalue.z_index"
           @activated="onActivated"
           @dragging="onDrag"
           @resizing="onResize"
@@ -78,8 +88,8 @@
           style="background-color: rgb(205, 234, 255);"
         >
           <form>
-            <div v-for="value in myNodes" v-bind:key="value.node_id">
-              <div v-if="value.readmode == false">
+            <div v-if="posvalue.read_mode == false">
+              <div v-for="value in myNodes" v-bind:key="value.node_id">
                 <textarea
                   v-if="nodeid == value.node_id"
                   @focus="editTrue(true)"
@@ -93,15 +103,11 @@
                   placeholder="Idea goes here!"
                 ></textarea>
               </div>
-
-              <!-- </div> -->
-              <!-- FIXME: What is this doing below now ? Looks old -->
-              <div v-else>
-                <p :id="nodeid" :inner-html.prop="nodetext | marked">
-                  <!-- {{ nodeid }} -->
-                </p>
-              </div>
             </div>
+            <div v-if="posvalue.read_mode == true">
+              <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
+            </div>
+
             <h3>Reactions</h3>
 
             <div v-for="(emojis, index) in configEmoji" :key="index">
@@ -115,12 +121,22 @@
               <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
               >
-              <BaseButton
-                class="read"
-                buttonClass="action"
-                @click="readFlag()"
-                >{{ mode }}</BaseButton
-              >
+              <div v-if="posvalue.read_mode == true">
+                <BaseButton
+                  class="read"
+                  buttonClass="action"
+                  @click="readFlag()"
+                  >Edit
+                </BaseButton>
+              </div>
+              <div v-else>
+                <BaseButton
+                  class="read"
+                  buttonClass="action"
+                  @click="readFlag()"
+                  >Read</BaseButton
+                >
+              </div>
             </div>
           </form>
         </vue-draggable-resizable>
@@ -143,14 +159,13 @@ export default {
     nodewidth: Number,
     nodeheight: Number,
     deleted: Boolean,
-    readmode: Boolean,
   },
 
   data() {
     return {
       pickupz: 99,
-      // localreadmode: this.readmode,
-      mode: 'Read',
+      localreadmode: false,
+      mode: '',
     }
   },
 
@@ -261,7 +276,14 @@ export default {
     readFlag(e) {
       e = this.nodeid
 
-      if (readmode == true) {
+      var i
+      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+        if (this.configPositions[i].node_id == this.nodeid) {
+          this.localreadmode = this.configPositions[i].read_mode
+        }
+      }
+
+      if (this.localreadmode == true) {
         readmode = false
         this.$store.dispatch('readFlag', { e, readmode })
         this.mode = 'Read'
