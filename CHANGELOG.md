@@ -1,3 +1,12 @@
+# 0.1.12
+
+_4th June 2020_
+
+### Added
+
+- Read status is now in store so preserved for your nodes
+- iOS Home screen icon
+
 # 0.1.11d
 
 _2 June 2020_

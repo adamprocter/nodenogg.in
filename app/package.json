@@ -1,6 +1,6 @@
 {
   "name": "nodenogg.in",
-  "version": "0.1.11d",
+  "version": "0.1.12",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
