@@ -36,6 +36,8 @@ var remote =
   microcosm +
   '/'
 
+//var remotetwo = 'http://127.0.0.1:5984/'
+
 console.log(remote)
 const store = new Vuex.Store({
   state: {
@@ -359,6 +361,7 @@ const store = new Vuex.Store({
           width: 200,
           height: 275,
           z_index: 1,
+          read_mode: false,
         })
         return pouchdb
           .put({
@@ -436,6 +439,41 @@ const store = new Vuex.Store({
           }
         })
     },
+
+    READ_FLAG(state, e) {
+      var i
+      console.log(e.e)
+      for (i = 0; i < Object.keys(state.configPositions).length; i++) {
+        if (e.e == state.configPositions[i].node_id) {
+          state.configPositions[i].read_mode = e.readmode
+        }
+      }
+
+      pouchdb
+        .get(state.global_pos_name)
+        .then(function (doc) {
+          //  console.log(doc)
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.global_pos_name,
+              _rev: doc._rev,
+              positions: state.configPositions,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.global_pos_name).then(function (doc) {
+            state.configPositions = doc.positions
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
     GET_EMOJI(state) {
       console.log
       pouchdb
@@ -492,7 +530,12 @@ const store = new Vuex.Store({
         store.commit('GET_EMOJI')
         // turn on two-way, continuous, retriable sync
         pouchdb
-          .sync(remote, { live: true, retry: true, attachments: true })
+          .sync(remote, {
+            live: true,
+            since: 'now',
+            retry: true,
+            attachments: true,
+          })
           .on('change', function () {
             // pop info into function to find out more
             store.commit('GET_ALL_NODES')
@@ -514,7 +557,6 @@ const store = new Vuex.Store({
           })
           .on('complete', function () {
             // handle complete
-            //console.log('complete')
           })
           .on('error', function (err) {
             console.log(err)
@@ -531,7 +573,10 @@ const store = new Vuex.Store({
     movePos: ({ commit }, nodeid, xpos, ypos, width, height, zindex) => {
       commit('MOVE_POS', nodeid, xpos, ypos, width, height, zindex)
     },
-
+    readFlag: ({ commit }, e) => {
+      // var text = e.target.value
+      commit('READ_FLAG', e)
+    },
     addNode: ({ commit }, e) => {
       commit('ADD_NODE', e)
     },
@@ -561,6 +606,7 @@ const store = new Vuex.Store({
       // var text = e.target.value
       commit('DELETE_FLAG', e)
     },
+
     addEmoji: ({ commit }, { nodeid, emojitext }) => {
       commit('ADD_EMOJI', {
         nodeid,
