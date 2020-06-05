@@ -1,4 +1,4 @@
-<template>
+  <template>
   <svg
     v-bind:viewBox="`0 0 ${width} ${height}`"
     :width="width"

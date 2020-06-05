@@ -3,7 +3,6 @@
     <ConnectionsLayer
       v-bind:width="width"
       v-bind:height="height"
-      v-bind:nodes="myNodes"
       v-bind:connections="connections"
     />
     <PanZoomContainer
@@ -24,7 +23,6 @@
         v-bind:key="value.node_id"
         v-bind:nodeid="value.node_id"
         v-bind:nodetext="value.node_text"
-     
       />
     </PanZoomContainer>
     <!-- <SelectionLayer

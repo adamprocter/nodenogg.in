@@ -242,6 +242,11 @@ const store = new Vuex.Store({
         line_width: e.linewidth,
       })
 
+      //   from db   |   in app
+
+      //  connect_id |   connectID
+      //  start_id   |   startID
+
       pouchdb
         .get(state.global_con_name)
         .then(function (doc) {
@@ -584,7 +589,7 @@ const store = new Vuex.Store({
       commit('EDIT_NODE', { nodeid, nodetext })
     },
 
-    startConnect: (
+    makeConnect: (
       { commit },
       { connectid, fromnode, tonode, path, color, linedash, linewidth }
     ) => {
@@ -598,7 +603,6 @@ const store = new Vuex.Store({
         linewidth,
       })
     },
-
     shortcutState: ({ commit }, e) => {
       commit('SHORTCUT_STATE', e)
     },
