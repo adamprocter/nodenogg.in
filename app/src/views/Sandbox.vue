@@ -34,7 +34,10 @@
       v-bind:width="elementWidth"
       v-bind:height="elementHeight"
     /> -->
-    <ModeToolbar />
+    <ModeToolbar
+      @offlineTriggered="offlineTriggered()"
+      @onlineTriggered="onlineTriggered()"
+    />
     <ViewToolbar />
   </div>
 </template>
@@ -117,8 +120,6 @@ export default {
     editTrue(e) {
       this.$store.dispatch('shortcutState', e)
     },
-
-    
 
     // This is here to support the shortcuts
     addNode() {
