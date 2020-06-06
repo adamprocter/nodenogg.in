@@ -63,3 +63,14 @@ export const upload = {
   cursor: 'copy',
   shortcut: false,
 }
+
+export const exit = {
+  name: 'exit',
+  view: {
+    pan: false,
+    zoom: false,
+  },
+  icon: 'exit',
+  cursor: 'initial',
+  shortcut: false,
+}

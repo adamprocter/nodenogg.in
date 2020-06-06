@@ -11,19 +11,22 @@
       v-bind:scale="scale"
       v-bind:translation="translation"
     >
-      <OtherNodeslayer
-        v-for="value in otherNodes"
-        v-bind:key="value.node_id"
-        v-bind:nodeid="value.node_id"
-        v-bind:nodetext="value.node_text"
-      />
-      <NodesLayer
-        @editTrue="(e) => editTrue(e)"
-        v-for="value in myNodes"
-        v-bind:key="value.node_id"
-        v-bind:nodeid="value.node_id"
-        v-bind:nodetext="value.node_text"
-      />
+      <div v-if="clientset">
+        <OtherNodeslayer
+          v-for="value in otherNodes"
+          v-bind:key="value.node_id"
+          v-bind:nodeid="value.node_id"
+          v-bind:nodetext="value.node_text"
+        />
+        <NodesLayer
+          @editTrue="(e) => editTrue(e)"
+          v-for="value in myNodes"
+          v-bind:key="value.node_id"
+          v-bind:nodeid="value.node_id"
+          v-bind:nodetext="value.node_text"
+        />
+      </div>
+      <OnBoard v-else @clientAdded="clientAdded()" />
     </PanZoomContainer>
     <!-- <SelectionLayer
       v-if="domContainerReady"
@@ -41,6 +44,7 @@ import PanZoomContainer from '@/experimental/PanZoomContainer'
 import ConnectionsLayer from '@/experimental/layers/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
+import OnBoard from '@/components/OnBoard.vue'
 import ModeToolbar from '@/experimental/ModeToolbar'
 import ViewToolbar from '@/experimental/ViewToolbar'
 // import SelectionLayer from '@/experimental/layers/SelectionLayer'
@@ -56,6 +60,9 @@ export default {
       elementHeight: undefined,
       width: 2000,
       height: 2000,
+      clientset: false,
+      listview: false,
+      offline: false,
     }
   },
   computed: {
@@ -103,13 +110,26 @@ export default {
       this.elementHeight = offsetHeight
     },
 
+    clientAdded() {
+      this.clientset = !this.clientset
+    },
+
     editTrue(e) {
       this.$store.dispatch('shortcutState', e)
     },
 
+    
+
     // This is here to support the shortcuts
     addNode() {
       this.$store.dispatch('addNode')
+    },
+
+    offlineTriggered() {
+      this.offline = true
+    },
+    onlineTriggered() {
+      this.offline = false
     },
   },
   components: {
@@ -120,6 +140,7 @@ export default {
     NodesLayer,
     OtherNodeslayer,
     ConnectionsLayer,
+    OnBoard,
   },
 }
 </script>
