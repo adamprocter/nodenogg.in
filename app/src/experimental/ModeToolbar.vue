@@ -15,7 +15,7 @@
 </template>
 
 <script>
-var serverUrl = 'https://nodenogg.in'
+var serverUrl = 'http://127.0.0.1:5984'
 import { mapState, mapGetters } from 'vuex'
 
 import * as allModes from '@/experimental/modes'
@@ -36,13 +36,15 @@ export default {
   methods: {
     setMode(mode) {
       this.$store.commit('ui/setMode', mode)
+      if (mode == 'exit') {
+        this.removeLocal()
+      }
+      if (mode == 'addNode') {
+        this.$store.dispatch('addNode')
+      }
     },
     isActive(mode) {
       return this.mode === mode.name
-
-      // if (mode.name == 'exit') {
-      //   console.log('exit')
-      // }
     },
 
     removeLocal: function () {

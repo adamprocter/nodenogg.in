@@ -73,13 +73,13 @@ var delaytwo = 100
 import Router from '@/router'
 
 export default {
-  data: function() {
+  data: function () {
     return {
       localmicrocosm: Router.currentRoute.params.microcosm,
       clientid: '',
       parta: true,
       partb: false,
-      partc: false
+      partc: false,
     }
   },
 
@@ -120,8 +120,8 @@ export default {
     },
     readyFocusTwo() {
       this.$refs.objectnametwo.focus()
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -166,9 +166,9 @@ input {
 @media only screen and (min-width: 640px) {
   /* Style adjustments for viewports that meet the condition */
 
-  .notlogged {
+  /* .notlogged {
     grid-column: 1 / 3;
     grid-row: 1;
-  }
+  } */
 }
 </style>
