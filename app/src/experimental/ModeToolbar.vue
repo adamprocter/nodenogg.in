@@ -37,8 +37,10 @@ export default {
     setMode(mode) {
       this.$store.commit('ui/setMode', mode)
       if (mode == 'exit') {
-        console.log('YOu')
         this.removeLocal()
+      }
+      if (mode == 'addNode') {
+        this.$store.dispatch('addNode')
       }
     },
     isActive(mode) {
