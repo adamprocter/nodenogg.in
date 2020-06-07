@@ -1,44 +1,70 @@
 <template>
-  <div ref="container" class="wrapper" v-bind:style="modeContainerStyle">
-    <ConnectionsLayer
-      v-bind:width="width"
-      v-bind:height="height"
-      v-bind:connections="connections"
-    />
-    <PanZoomContainer
-      v-bind:width="width"
-      v-bind:height="height"
-      v-bind:scale="scale"
-      v-bind:translation="translation"
-    >
-      <div v-if="clientset">
-        <OtherNodeslayer
-          v-for="value in otherNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-        />
-        <NodesLayer
-          @editTrue="(e) => editTrue(e)"
+  <div>
+    <div class="offline" v-if="clientset && offline">
+      <div ref="container" class="wrapper" v-bind:style="modeContainerStyle">
+        <h2>Offline</h2>
+        <p>
+          nodenogg.in appears to be offline, which means you cant see other data
+          at this stage, as it maybe out of date. Once you reconnect. Your data
+          will sync and the main views will reappear. This maybe down to you or
+          maybe us. If you think it's us let us know.
+        </p>
+        <OffLine
           v-for="value in myNodes"
           v-bind:key="value.node_id"
           v-bind:nodeid="value.node_id"
           v-bind:nodetext="value.node_text"
+          @editTrue="(e) => editTrue(e)"
         />
+        <ModeToolbar
+          @offlineTriggered="offlineTriggered()"
+          @onlineTriggered="onlineTriggered()"
+        />
+        <ViewToolbar />
+
+        <!-- <OnBoard v-else @clientAdded="clientAdded()" /> -->
       </div>
-      <OnBoard v-else @clientAdded="clientAdded()" />
-    </PanZoomContainer>
-    <!-- <SelectionLayer
-      v-if="domContainerReady"
-      v-bind:shape="interaction.shape"
-      v-bind:width="elementWidth"
-      v-bind:height="elementHeight"
-    /> -->
-    <ModeToolbar
-      @offlineTriggered="offlineTriggered()"
-      @onlineTriggered="onlineTriggered()"
-    />
-    <ViewToolbar />
+    </div>
+
+    <div class="online" v-else>
+      <div ref="container" class="wrapper" v-bind:style="modeContainerStyle">
+        <ConnectionsLayer
+          v-bind:width="width"
+          v-bind:height="height"
+          v-bind:connections="connections"
+        />
+        <PanZoomContainer
+          v-bind:width="width"
+          v-bind:height="height"
+          v-bind:scale="scale"
+          v-bind:translation="translation"
+        >
+          <div v-if="clientset">
+            <OtherNodeslayer
+              v-for="value in otherNodes"
+              v-bind:key="value.node_id"
+              v-bind:nodeid="value.node_id"
+              v-bind:nodetext="value.node_text"
+            />
+            <NodesLayer
+              @editTrue="(e) => editTrue(e)"
+              v-for="value in myNodes"
+              v-bind:key="value.node_id"
+              v-bind:nodeid="value.node_id"
+              v-bind:nodetext="value.node_text"
+            />
+          </div>
+
+          <OnBoard v-else @clientAdded="clientAdded()" />
+        </PanZoomContainer>
+
+        <ModeToolbar
+          @offlineTriggered="offlineTriggered()"
+          @onlineTriggered="onlineTriggered()"
+        />
+        <ViewToolbar />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,6 +72,7 @@
 import PanZoomContainer from '@/experimental/PanZoomContainer'
 import ConnectionsLayer from '@/experimental/layers/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
+import OffLine from '@/components/OffLine'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import OnBoard from '@/components/OnBoard.vue'
 import ModeToolbar from '@/experimental/ModeToolbar'
@@ -142,6 +169,7 @@ export default {
     OtherNodeslayer,
     ConnectionsLayer,
     OnBoard,
+    OffLine,
   },
 }
 </script>
