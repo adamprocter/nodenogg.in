@@ -6,7 +6,6 @@ import VueDraggableResizable from 'vue-draggable-resizable'
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 
 import uiStore from '@/experimental/uiStore'
-
 import Router from '@/router'
 
 Vue.use(Vuex)
@@ -77,6 +76,7 @@ const store = new Vuex.Store({
       pouchdb.close().then(function () {
         if (urlmicrocosm != undefined) {
           // myclient = urldevice
+        
           microcosm = urlmicrocosm
         } else {
           microcosm = doc
@@ -363,7 +363,7 @@ const store = new Vuex.Store({
           node_id: uniqueid,
           x_pos: 50,
           y_pos: 50,
-          width: 200,
+          width: 220,
           height: 275,
           z_index: 1,
           read_mode: false,

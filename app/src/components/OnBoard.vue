@@ -1,90 +1,96 @@
 <template>
-  <div class="notlogged">
-    <p>
-      nodenogg.in is a
-      <span>work in progress</span> collaborative co-creation research and
-      design thinking tool, read more details and links in the
-      <a href="/about">about</a> section.
-    </p>
+  <div ref="nodes" class="node">
+    <vue-draggable-resizable
+      class="innernode"
+      :w="300"
+      :h="335"
+      :x="560"
+      :y="50"
+      :z="0"
+      :draggable="true"
+      style="background-color: #6fcf97;"
+    >
+      <form>
+        <div>
+          <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
+          <input
+            type="text"
+            v-model.trim="clientid"
+            placeholder="device name"
+            autocorrect="off"
+            autocapitalize="none"
+            ref="objectname"
+            v-on:keyup.enter="setClient()"
+            @focus="editTrue(true)"
+            @blur="editTrue(false)"
+          />
+          <div class="btn-row">
+            <BaseButton buttonClass="special" @click="setClient()"
+              >Store</BaseButton
+            >
+          </div>
+        </div>
+      </form>
+    </vue-draggable-resizable>
 
-    <form v-show="parta" onsubmit="return false;">
-      <h2>1</h2>
-      <h3>microcosm</h3>
-      <p>
-        create or join a microcosm. a microcosm is a sharable digital space that
-        can be shared privately between a group of individuals. all content /
-        data you contribute is stored locally on your device and then shared
-        privately to others on the same microcosm. you can remove your
-        contributions at any time, they belong to you.
-      </p>
-      <input
-        type="text"
-        v-model.trim="localmicrocosm"
-        placeholder="microcosm name"
-        autocorrect="off"
-        autocapitalize="none"
-        autofocus
-        v-on:keyup.enter="createMicrocosm(), setFocus()"
-      />
-      <BaseButton buttonClass="onboard" @click="createMicrocosm(), setFocus()"
-        >+</BaseButton
-      >
-    </form>
-
-    <form v-show="partb" onsubmit="return false;">
-      <h2>2</h2>
-      <h3>object</h3>
-      <p>
-        give yourself an object name, this is what connects you to your content
-        / data. this object name is anonymous and stored privately.
-      </p>
-      <input
-        type="text"
-        v-model.trim="clientid"
-        placeholder="object name"
-        autocorrect="off"
-        autocapitalize="none"
-        ref="objectname"
-        v-on:keyup.enter="setClient(), setFocusTwo()"
-      />
-      <BaseButton buttonClass="onboard" @click="setClient(), setFocusTwo()"
-        >+</BaseButton
-      >
-    </form>
-
-    <form v-show="partc">
-      <input
-        class="start"
-        type="text"
-        v-on:keyup.enter="letsGo()"
-        ref="objectnametwo"
-      />
-      <h2>3</h2>
-      <h3>start</h3>
-      <BaseButton buttonClass="onboard" @click="letsGo()">+</BaseButton>
-    </form>
+    <vue-draggable-resizable
+      class="innernode"
+      :w="300"
+      :h="345"
+      :x="1100"
+      :y="50"
+      :z="0"
+      :draggable="true"
+      style="background-color: #6fcf97;"
+    >
+      <form>
+        <div>
+          <p id="nodeid" :inner-html.prop="nodetext2 | marked"></p>
+          <input
+            type="text"
+            v-model.trim="localmicrocosm"
+            placeholder="microcosm name"
+            autocorrect="off"
+            autocapitalize="none"
+            autofocus
+            v-on:keyup.enter="createMicrocosm()"
+            @focus="editTrue(true)"
+            @blur="editTrue(false)"
+          />
+          <div class="btn-row">
+            <BaseButton
+              buttonClass="special"
+              @click="createMicrocosm(), letsGo()"
+              >Create Microcosm</BaseButton
+            >
+          </div>
+        </div>
+      </form>
+    </vue-draggable-resizable>
   </div>
 </template>
 
 <script>
-var delay = 100
-var delaytwo = 100
-
 import Router from '@/router'
+import marked from 'marked'
 
 export default {
   data: function () {
     return {
       localmicrocosm: Router.currentRoute.params.microcosm,
       clientid: '',
-      parta: true,
-      partb: false,
-      partc: false,
+      nodetext:
+        '## What shall we call you ? 💥 \n First we need to connect this device to your ideas. This name is what allows you to create and edit your nodes and can be anything you like and this name is always anonymous.',
+      nodetext2:
+        '## Start those engines ! 🏎 \n Now you can create your own microcosm to store your ideas and ask people to join you, either just tell them the name of the microcosm or share the alpha.nodenogg.in URL and add the ending; </br><em><b>/microcosm/nameofyourmicrocosm</b></em>',
+      // parta: true,
+      // partb: false,
+      // partc: false,
     }
   },
 
   mounted() {
-    if (localStorage.myNNClient) {
+    if (localStorage.myNNClient && localStorage.mylastMicrocosm) {
       this.clientid = localStorage.myNNClient
       this.localmicrocosm = localStorage.mylastMicrocosm
       this.createMicrocosm()
@@ -92,34 +98,26 @@ export default {
       this.letsGo()
     }
   },
+  filters: {
+    marked: marked,
+  },
 
   methods: {
     createMicrocosm() {
-      this.partb = true
       this.$store.dispatch('createMicrocosm', this.localmicrocosm)
       localStorage.setItem('mylastMicrocosm', this.localmicrocosm)
     },
     setClient() {
-      ;(this.partc = true),
-        this.$store.dispatch('setClient', this.clientid),
+      this.$store.dispatch('setClient', this.clientid),
         localStorage.setItem('myNNClient', this.clientid)
+    },
+
+    editTrue(e) {
+      this.$emit('editTrue', e)
     },
 
     letsGo() {
       this.$emit('clientAdded')
-      // this.$emit('readyMode')
-    },
-    setFocus() {
-      setTimeout(this.readyFocus, delay)
-    },
-    setFocusTwo() {
-      setTimeout(this.readyFocusTwo, delaytwo)
-    },
-    readyFocus() {
-      this.$refs.objectname.focus()
-    },
-    readyFocusTwo() {
-      this.$refs.objectnametwo.focus()
     },
   },
 }
@@ -129,6 +127,9 @@ export default {
 .start {
   opacity: 0;
   filter: alpha(opacity=0);
+}
+.vdr {
+  padding: 0 0.5em;
 }
 
 h1,
@@ -148,27 +149,22 @@ h3 {
   margin-top: 0.5em;
 }
 
-form {
-  padding: 1em;
-  border-style: solid;
-  border-width: 0.5em;
-  border-color: #cab6ff;
-  margin-top: 1em;
+.btn-row {
+  margin-bottom: 5px;
+  padding: 0px 0px 15px 10px;
+  border-radius: 4px;
 }
 
 input {
-  border-style: solid;
-  border-width: 1px;
-  border-color: #cab6ff;
-  padding: 0.5em;
-}
-
-@media only screen and (min-width: 640px) {
-  /* Style adjustments for viewports that meet the condition */
-
-  /* .notlogged {
-    grid-column: 1 / 3;
-    grid-row: 1;
-  } */
+  font-size: 1em;
+  padding: 10px;
+  /* margin-left: 20px; */
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-style: dotted;
 }
 </style>
