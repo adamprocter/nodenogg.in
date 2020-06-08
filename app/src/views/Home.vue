@@ -54,8 +54,25 @@
               v-bind:nodetext="value.node_text"
             />
           </div>
-
-          <OnBoard v-else @clientAdded="clientAdded()" />
+          <div v-else>
+            <OnBoard
+              @clientAdded="clientAdded()"
+              @editTrue="(e) => editTrue(e)"
+            />
+            <OtherNodeslayer
+              v-for="value in otherNodes"
+              v-bind:key="value.node_id"
+              v-bind:nodeid="value.node_id"
+              v-bind:nodetext="value.node_text"
+            />
+            <NodesLayer
+              @editTrue="(e) => editTrue(e)"
+              v-for="value in myNodes"
+              v-bind:key="value.node_id"
+              v-bind:nodeid="value.node_id"
+              v-bind:nodetext="value.node_text"
+            />
+          </div>
         </PanZoomContainer>
 
         <ModeToolbar
@@ -176,9 +193,9 @@ export default {
 
 <style scoped>
 .wrapper {
-  height: calc(100vh - 120px);
+  height: calc(100vh - 40px);
   width: calc(100%-80px);
-  margin: 40px;
+  margin: 0px;
   position: relative;
 }
 </style>

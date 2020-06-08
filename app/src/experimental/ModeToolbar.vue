@@ -98,11 +98,13 @@ export default {
 <style scoped>
 nav {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+
+  bottom: 1em;
+  left: 1em;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 button {
   border: none;
@@ -110,6 +112,7 @@ button {
   height: 50px;
   padding: 0;
   margin: 0;
+  margin-top: 1em;
   background: white;
   border-radius: 25px;
   display: flex;
@@ -122,5 +125,10 @@ button {
 }
 button.active {
   background: rgb(30, 30, 30);
+}
+
+@media only screen and (max-width: 600px) {
+  nav {
+  }
 }
 </style>

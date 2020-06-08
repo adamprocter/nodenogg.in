@@ -18,7 +18,9 @@
           @resizestop="onResizestop"
           style="border: 1px solid black; background-color: rgb(205, 234, 255);"
         >
-          <p :id="nodeid" :inner-html.prop="nodetext | marked">{{ nodeid }}</p>
+          <p class="read" :id="nodeid" :inner-html.prop="nodetext | marked">
+            {{ nodeid }}
+          </p>
           <h3>Reactions</h3>
           <div v-for="(emojis, index) in configEmoji" :key="index">
             <p class="allemoji" v-if="nodeid == emojis.node_id">
@@ -86,9 +88,11 @@
                   </div>
                 </div>
               </emoji-picker>
-              <BaseButton buttonClass="action" @click="sentReact()"
-                >Send Reaction</BaseButton
-              >
+              <!-- <div class="btn-row">
+                <BaseButton buttonClass="action" @click="sentReact()"
+                  >Send Reaction</BaseButton
+                >
+              </div> -->
             </div>
           </div>
         </vue-draggable-resizable>
@@ -110,7 +114,9 @@
           @resizestop="onResizestop"
           style="border: 1px solid black; background-color: rgb(205, 234, 255);"
         >
-          <p :id="nodeid" :inner-html.prop="nodetext | marked">{{ nodeid }}</p>
+          <p class="read" :id="nodeid" :inner-html.prop="nodetext | marked">
+            {{ nodeid }}
+          </p>
           <h3>Reactions</h3>
           <div v-for="(emojis, index) in configEmoji" :key="index">
             <p class="allemoji" v-if="nodeid == emojis.node_id">
@@ -168,7 +174,7 @@
                           <span
                             v-for="(emoji, emojiName) in emojiGroup"
                             :key="emojiName"
-                            @click="insert(emoji)"
+                            @click="insert(emoji), sentReact()"
                             :title="emojiName"
                             >{{ emoji }}</span
                           >
@@ -178,9 +184,11 @@
                   </div>
                 </div>
               </emoji-picker>
-              <BaseButton buttonClass="action" @click="sentReact()"
-                >Send Reaction</BaseButton
-              >
+              <!-- <div class="btn-row">
+                <BaseButton buttonClass="action" @click="sentReact()"
+                  >Send Reaction</BaseButton
+                >
+              </div> -->
             </div>
           </div>
         </vue-draggable-resizable>
@@ -322,12 +330,35 @@ export default {
   position: absolute;
 }
 
+.vdr {
+  padding: 0 0.5em;
+}
+
+input {
+  display: none;
+}
+
+.allemoji {
+  font-size: 2em;
+}
+
+h3 {
+  margin-bottom: -30px;
+}
+
+.btn-row {
+  margin-bottom: 5px;
+  padding: 0px 0px 15px 10px;
+  border-radius: 4px;
+}
+
 .emoji-invoker {
   top: -0.5rem;
   right: 0.5rem;
   width: 1.5rem;
   height: 1.5rem;
-  margin-top: 1em;
+
+  margin: 0em 0em 1em 0em;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s;

@@ -12,8 +12,8 @@ export default {
     ...mapGetters({
       scalePercentage: 'ui/scalePercentage',
       isScaled: 'ui/isScaled',
-      isTranslated: 'ui/isTranslated'
-    })
+      isTranslated: 'ui/isTranslated',
+    }),
   },
   methods: {
     resetScale() {
@@ -21,8 +21,8 @@ export default {
     },
     resetTranslation() {
       this.$store.commit('ui/setTranslation', { x: 0, y: 0 })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -43,5 +43,11 @@ button {
   font-size: 14px;
   border: none;
   outline: none;
+}
+
+@media only screen and (max-width: 600px) {
+  button {
+    display: none;
+  }
 }
 </style>

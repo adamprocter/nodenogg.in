@@ -31,7 +31,11 @@
               </div>
             </div>
             <div v-if="posvalue.read_mode == true">
-              <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
+              <p
+                class="read"
+                :id="nodeid"
+                :inner-html.prop="nodetext | marked"
+              ></p>
             </div>
 
             <h3>Reactions</h3>
@@ -105,7 +109,11 @@
               </div>
             </div>
             <div v-if="posvalue.read_mode == true">
-              <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
+              <p
+                class="read"
+                :id="nodeid"
+                :inner-html.prop="nodetext | marked"
+              ></p>
             </div>
 
             <h3>Reactions</h3>
@@ -303,6 +311,10 @@ export default {
   position: relative;
 }
 
+.vdr {
+  padding: 0 0.5em;
+}
+
 .info {
   font-size: 0.8em;
 }
@@ -320,12 +332,17 @@ textarea {
 
 .btn-row {
   position: relative;
+
   margin-bottom: 5px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   padding: 0 15px;
   border-radius: 4px;
+}
+
+.allemoji {
+  font-size: 2em;
 }
 
 img {

@@ -11,9 +11,9 @@
 export default {
   props: {
     buttonClass: {
-      type: String
-    }
-  }
+      type: String,
+    },
+  },
 }
 </script>
 
@@ -28,6 +28,7 @@ button {
   box-shadow: 1px 1px 1px #000000;
   padding: 0.6em;
   margin-right: 1em;
+  margin-top: 1em;
 }
 
 button.onboard {
@@ -42,6 +43,10 @@ button.onboard {
   height: 1.5em;
   width: 1.5em;
   padding: 0px;
+}
+
+button.special {
+  background-color: #f2c94c;
 }
 
 button.danger {
