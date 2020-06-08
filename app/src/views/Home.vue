@@ -194,7 +194,7 @@ export default {
 <style scoped>
 .wrapper {
   height: calc(100vh - 40px);
-  width: calc(100%-80px);
+  width: calc(100%);
   margin: 0px;
   position: relative;
 }
