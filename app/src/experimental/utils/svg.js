@@ -25,7 +25,7 @@ export const generateBezierCurve = (from, to, tension) => {
 }
 
 export const makeBezier = (fromHandle, toHandle, tension) => {
-  console.log(fromHandle, toHandle)
+  // console.log(fromHandle, toHandle)
   // This is a simple way to adjust the link tension depending
   // on the distance the link covers
   const adjustedTension = mapRange(

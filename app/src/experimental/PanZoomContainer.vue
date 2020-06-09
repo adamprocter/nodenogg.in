@@ -98,7 +98,7 @@ export default {
         this.translation,
         this.scale
       )
-      console.log(relativePoint, boardPoint)
+      // console.log(relativePoint, boardPoint)
     },
     reset() {},
     onMouseDown(e) {
@@ -123,7 +123,7 @@ export default {
       if (!this.interaction.origin) {
         return
       }
-      console.log('touch')
+      // console.log('touch')
       e.preventDefault()
       const isPinchAction =
         e.touches.length == 2 && this.interaction.origin.points.length > 1
@@ -141,7 +141,7 @@ export default {
       e.preventDefault()
       e.stopPropagation()
 
-      //  console.log(e)
+      //  // console.log(e)
 
       this.handleWheel(e)
     },
@@ -156,7 +156,7 @@ export default {
         y: translation.y + dragY,
       }
 
-      //console.log(dragX, dragY)
+      //// console.log(dragX, dragY)
 
       this.$store.commit(
         'ui/setTranslation',

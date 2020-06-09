@@ -62,15 +62,15 @@ export default {
         this.isReachable(this.getServerUrl()).then(function (online) {
           if (online) {
             // handle online status
-            console.log('online')
+            // console.log('online')
             location.reload()
           } else {
-            console.log('no connectivity')
+            // console.log('no connectivity')
           }
         })
       } else {
         // handle offline status
-        console.log('offline')
+        // console.log('offline')
         ref.$emit('offlineTriggered')
       }
     },

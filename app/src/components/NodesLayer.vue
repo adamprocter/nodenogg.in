@@ -188,7 +188,7 @@ export default {
   // mounted() {
   //   setTimeout(this.setFocus, delay)
   //   input = this.$refs.nodetext
-  //   console.log(input)
+  //   // console.log(input)
   // },
   // method
   // setFocus() {
@@ -269,7 +269,7 @@ export default {
 
     editTrue(e) {
       this.$emit('editTrue', e)
-      //  console.log(e)
+      //  // console.log(e)
     },
 
     editNode(e) {

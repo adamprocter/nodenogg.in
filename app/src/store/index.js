@@ -37,7 +37,7 @@ var remote =
 
 //var remotetwo = 'http://127.0.0.1:5984/'
 
-console.log(remote)
+// console.log(remote)
 const store = new Vuex.Store({
   state: {
     shortcutstate: false,
@@ -76,7 +76,7 @@ const store = new Vuex.Store({
       pouchdb.close().then(function () {
         if (urlmicrocosm != undefined) {
           // myclient = urldevice
-        
+
           microcosm = urlmicrocosm
         } else {
           microcosm = doc
@@ -140,7 +140,7 @@ const store = new Vuex.Store({
           }
         }
       }
-      //console.log(state.otherNodes)
+      //// console.log(state.otherNodes)
     },
 
     SET_CLIENT(state, doc) {
@@ -287,7 +287,7 @@ const store = new Vuex.Store({
       pouchdb
         .get(state.global_pos_name)
         .then(function (doc) {
-          //  console.log(doc)
+          //  // console.log(doc)
           // put the store into pouchdb
           return pouchdb.bulkDocs([
             {
@@ -447,7 +447,7 @@ const store = new Vuex.Store({
 
     READ_FLAG(state, e) {
       var i
-      console.log(e.e)
+      // console.log(e.e)
       for (i = 0; i < Object.keys(state.configPositions).length; i++) {
         if (e.e == state.configPositions[i].node_id) {
           state.configPositions[i].read_mode = e.readmode
@@ -457,7 +457,7 @@ const store = new Vuex.Store({
       pouchdb
         .get(state.global_pos_name)
         .then(function (doc) {
-          //  console.log(doc)
+          //  // console.log(doc)
           // put the store into pouchdb
           return pouchdb.bulkDocs([
             {
@@ -480,7 +480,7 @@ const store = new Vuex.Store({
     },
 
     GET_EMOJI(state) {
-      console.log
+      // console.log
       pouchdb
         .get(state.global_emoji_name)
         .then(function (doc) {
@@ -522,7 +522,7 @@ const store = new Vuex.Store({
   actions: {
     getURLParam: () => {
       const urlparam = Router.currentRoute.params.microcosm
-      // console.log(urlparam)
+      // // console.log(urlparam)
       store.commit('GET_URL_MICROCOSM', urlparam)
     },
 
@@ -551,11 +551,11 @@ const store = new Vuex.Store({
           })
           .on('paused', function () {
             // replication paused (e.g. replication up to date, user went offline)
-            // console.log('replication paused')
+            // // console.log('replication paused')
           })
           .on('active', function () {
             // replicate resumed (e.g. new changes replicating, user went back online)
-            //console.log('back active')
+            //// console.log('back active')
           })
           .on('denied', function () {
             // a document failed to replicate (e.g. due to permissions)

@@ -43,7 +43,7 @@ export default {
     },
     editTrue(e) {
       this.$emit('editTrue', e)
-      //console.log(e)
+      //// console.log(e)
     },
 
     editNode(e) {

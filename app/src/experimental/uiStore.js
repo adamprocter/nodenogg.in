@@ -50,7 +50,7 @@ const store = {
     setMode(state, mode) {
       if (allModes[mode]) {
         state.mode = mode
-        console.log(mode)
+        // console.log(mode)
       } else {
         console.warn(`${mode} is not a valid mode`)
       }

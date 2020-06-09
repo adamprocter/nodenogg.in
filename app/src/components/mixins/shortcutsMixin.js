@@ -1,6 +1,6 @@
 export const shortcutsMixin = {
   created() {
-    //  console.log('hey mix')
+    //  // console.log('hey mix')
   },
   methods: {
     handleKeyPress(e) {
@@ -11,6 +11,6 @@ export const shortcutsMixin = {
           this.addNode()
         }
       }
-    }
-  }
+    },
+  },
 }

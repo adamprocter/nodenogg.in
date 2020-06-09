@@ -50,7 +50,7 @@ import ControlsLayer from '@/components/ControlsLayer.vue'
 import { mapState } from 'vuex'
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
 // import Router from '@/router'
-// console.log(Router.currentRoute.params.microcosm)
+// // console.log(Router.currentRoute.params.microcosm)
 
 export default {
   name: 'Oldhome',
@@ -63,7 +63,7 @@ export default {
     if (localStorage.myNNClient == null) {
       // visiting from URL get them to name client
       // localStorage.setItem('myNNClient', 'unknown client')
-      // console.log(localStorage.myNNClient)
+      // // console.log(localStorage.myNNClient)
     }
   },
   beforeDestroy() {
