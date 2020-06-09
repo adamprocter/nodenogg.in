@@ -30,6 +30,16 @@
   </div>
 
   <div v-else ref="container" class="outer">
+    <!-- <div
+      ref="innerContainer"
+      v-bind:class="{ inner: true, active: true }"
+      v-bind:style="{
+        width: `${width}px`,
+        height: `${height}px`,
+        transform: `translate(${translation.x}px, ${translation.y}px) scale(${scale})`,
+      }"
+    > -->
+
     <div
       ref="innerContainer"
       v-bind:class="{ inner: true, active: true }"
@@ -98,7 +108,7 @@ export default {
         this.translation,
         this.scale
       )
-      // console.log(relativePoint, boardPoint)
+      console.log(relativePoint, boardPoint)
     },
     reset() {},
     onMouseDown(e) {

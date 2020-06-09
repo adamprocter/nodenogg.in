@@ -126,9 +126,4 @@ button {
 button.active {
   background: rgb(30, 30, 30);
 }
-
-@media only screen and (max-width: 600px) {
-  nav {
-  }
-}
 </style>

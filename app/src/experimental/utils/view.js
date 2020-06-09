@@ -2,7 +2,7 @@ import {
   clamp,
   lerpPoint,
   scalePoint,
-  distanceBetween
+  distanceBetween,
 } from '@/experimental/utils/numbers'
 
 //////////////////////////////////////////////////////////////////////
@@ -27,14 +27,14 @@ export const getNormalisedInteraction = (target, event, translation, scale) => {
 
   return {
     relativePoint: { x, y },
-    boardPoint: containerToBoardPoint({ x, y }, translation, scale)
+    boardPoint: containerToBoardPoint({ x, y }, translation, scale),
   }
 }
 
 export const containerToBoardPoint = (containerPoint, translation, scale) => {
   return {
     x: parseInt((containerPoint.x + -translation.x) / scale, 10),
-    y: parseInt((containerPoint.y + -translation.y) / scale, 10)
+    y: parseInt((containerPoint.y + -translation.y) / scale, 10),
   }
 }
 
@@ -58,7 +58,7 @@ export const getTranslatedPositionFromContainer = (
 
   return {
     x: point.x - (rect.left + translation.x),
-    y: point.y - (rect.top + translation.y)
+    y: point.y - (rect.top + translation.y),
   }
 }
 
@@ -79,7 +79,7 @@ export const changeViewFromWheelEvent = (
   const focalPtDelta = scalePoint(mousePosition, scaleRatio)
   const newTranslation = {
     x: translation.x - focalPtDelta.x,
-    y: translation.y - focalPtDelta.y
+    y: translation.y - focalPtDelta.y,
   }
 
   return [newScale, newTranslation]
@@ -111,7 +111,7 @@ export const changeViewFromMultiTouch = (
   )
   const dragDelta = {
     x: newMidPoint.x - startMidpoint.x,
-    y: newMidPoint.y - startMidpoint.y
+    y: newMidPoint.y - startMidpoint.y,
   }
   const scaleRatio = newScale / startScale
   const focalPoint = getTranslatedPositionFromContainer(
@@ -127,7 +127,9 @@ export const changeViewFromMultiTouch = (
       focalPointDelta.x +
       dragDelta.x,
     y:
-      interaction.origin.pointer.translation.y - focalPointDelta.y + dragDelta.y
+      interaction.origin.pointer.translation.y -
+      focalPointDelta.y +
+      dragDelta.y,
   }
   return [newTranslation, newScale]
 }
@@ -139,9 +141,9 @@ export const changeViewFromMultiTouch = (
  * @returns {Point}
  *
  *  */
-export const touchPoint = touch => {
+export const touchPoint = (touch) => {
   return {
     x: touch.clientX,
-    y: touch.clientY
+    y: touch.clientY,
   }
 }

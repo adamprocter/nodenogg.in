@@ -55,10 +55,6 @@
             />
           </div>
           <div v-else>
-            <OnBoard
-              @clientAdded="clientAdded()"
-              @editTrue="(e) => editTrue(e)"
-            />
             <OtherNodeslayer
               v-for="value in otherNodes"
               v-bind:key="value.node_id"
@@ -71,6 +67,10 @@
               v-bind:key="value.node_id"
               v-bind:nodeid="value.node_id"
               v-bind:nodetext="value.node_text"
+            />
+            <OnBoard
+              @clientAdded="clientAdded()"
+              @editTrue="(e) => editTrue(e)"
             />
           </div>
         </PanZoomContainer>
