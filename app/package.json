@@ -12,7 +12,7 @@
     "core-js": "^3.6.5",
     "file-loader": "^6.0.0",
     "interactive-shape-recognition": "^1.0.1",
-    "ipfs": "^0.45.0",
+    "ipfs": "^0.46.0",
     "marked": "^1.1.0",
     "pouchdb": "^7.2.1",
     "pouchdb-find": "^7.2.1",
