@@ -3,13 +3,21 @@
     <h1>{{ status }}</h1>
     <h2>ID: {{ id }}</h2>
     <h2>Agent version: {{ agentVersion }}</h2>
+    <h3>Files : {{ fileContents }}</h3>
 
     <form>
       <input
+        class="fileInput"
         type="file"
-        name="import_file"
-        v-on:change="selectedFile($event)"
+        name="fileInput"
+        ref="fileInput"
+        @change="onFileSelected"
       />
+
+      <!-- <button @click="this.refs.selectedFile.click()">Choose File</button> -->
+      <button type="button" @click="saveIPFS">Upload</button>
+
+      <button type="button" @click="getIPFS">Get IPFS</button>
     </form>
   </div>
 </template>
@@ -17,10 +25,9 @@
 <script>
 import VueIpfs from 'ipfs'
 const ipfs = VueIpfs.create()
-
-// var ipfs = VueIpfs
-// TODO: WOULD BE TO USE add and data is what has come from Vue Form
-// ipfs.add(data, [options])
+var node
+var file
+const fileContents = []
 
 //  The below code should create an IPFS node to add files to
 export default {
@@ -30,22 +37,44 @@ export default {
       status: 'Connecting to IPFS...',
       id: '',
       agentVersion: '',
+      selectedFile: null,
+      fileContents: this.fileContents,
     }
   },
   mounted: function () {
-    console.log(VueIpfs)
+    // console.log(VueIpfs)
     this.getIpfsNodeInfo()
   },
   methods: {
-    selectedFile(event) {
-      this.file = event.target.files[0]
-      console.log(this.file)
-      //  ipfs.add(this.file)
+    onFileSelected(event) {
+      this.selectedFile = event.target.files[0]
     },
+
+    saveIPFS() {
+      file = node.files.write('/' + this.selectedFile.name, this.selectedFile, {
+        create: true,
+      })
+      return file
+    },
+
+    // getIPFS() {
+    //   const resultPart = node.files.ls('/')
+    //   fileContents.push(resultPart)
+    //   //  console.log(fileContents)
+    //   return fileContents
+    // },
+
+        getIPFS() {
+      const resultPart = node.files.read('/')
+      fileContents.push(resultPart)
+      //  console.log(fileContents)
+      return fileContents
+    },
+
     async getIpfsNodeInfo() {
       try {
         // Await for ipfs node instance.
-        const node = await ipfs
+        node = await ipfs
         //console.log(ipfs)
         // Call ipfs `id` method.
         // Returns the identity of the Peer.
@@ -63,4 +92,8 @@ export default {
 }
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.fileInput {
+  /* display: none; */
+}
+</style>
