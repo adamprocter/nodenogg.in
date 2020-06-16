@@ -15,7 +15,7 @@ export const routes = [
   },
   {
     path: '/list',
-    name: 'List',
+    name: 'List Test',
     component: List,
   },
   {

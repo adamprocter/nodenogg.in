@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1 class="mobile">Your Nodes in list mode</h1>
+    <h1 class="mobile">Your nodes - list mode</h1>
+    <h2>For testing</h2>
     <!-- <OffLine
       v-for="value in myNodes"
       v-bind:key="value.node_id"
