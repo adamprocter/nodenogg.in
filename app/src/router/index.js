@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import List from '../views/List.vue'
 import Oldhome from '../views/Oldhome'
 import Test from '../views/Test'
 
@@ -13,13 +14,18 @@ export const routes = [
     component: Home,
   },
   {
+    path: '/list',
+    name: 'List',
+    component: List,
+  },
+  {
     path: '/oldhome',
     name: 'Old Home',
     component: Oldhome,
   },
   {
     path: '/test',
-    name: 'Test',
+    name: 'IPFS Test',
     component: Test,
   },
   {

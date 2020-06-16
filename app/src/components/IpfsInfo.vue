@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>IPFS Test</h1>
+    <h3>This is very exprimental and should not be used</h3>
     <h1>{{ status }}</h1>
     <h2>ID: {{ id }}</h2>
     <h2>Agent version: {{ agentVersion }}</h2>
@@ -64,7 +66,7 @@ export default {
     //   return fileContents
     // },
 
-        getIPFS() {
+    getIPFS() {
       const resultPart = node.files.read('/')
       fileContents.push(resultPart)
       //  console.log(fileContents)

@@ -36,7 +36,7 @@
     <vue-draggable-resizable
       class="innernode"
       :w="300"
-      :h="345"
+      :h="375"
       :x="1100"
       :y="50"
       :z="0"
