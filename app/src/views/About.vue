@@ -86,11 +86,18 @@ import { mapState } from 'vuex'
 export default {
   name: 'About',
 
-  data: function() {
+  data: function () {
     return {}
   },
   computed: mapState({
-    myVersion: state => state.version
-  })
+    myVersion: (state) => state.version,
+  }),
 }
 </script>
+
+<style lang="css" scoped>
+.about {
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+</style>
