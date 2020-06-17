@@ -97,7 +97,7 @@ export default {
 
 <style scoped>
 nav {
-  position: absolute;
+  position: fixed;
 
   bottom: 1em;
   left: 1em;

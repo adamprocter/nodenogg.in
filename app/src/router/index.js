@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Oldhome from '../views/Oldhome'
+import List from '../views/List.vue'
+// import Oldhome from '../views/Oldhome'
+import Test from '../views/Test'
 
 Vue.use(VueRouter)
 
@@ -12,11 +14,6 @@ export const routes = [
     component: Home,
   },
   {
-    path: '/oldhome',
-    name: 'Old Home',
-    component: Oldhome,
-  },
-  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -25,6 +22,23 @@ export const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
+  {
+    path: '/list',
+    name: 'List Test',
+    component: List,
+  },
+
+  {
+    path: '/test',
+    name: 'IPFS Test',
+    component: Test,
+  },
+  // {
+  //   path: '/oldhome',
+  //   name: 'Old Home',
+  //   component: Oldhome,
+  // },
+
   // dynamic segement `:microcosm` is added to the path
   {
     path: '/microcosm/:microcosm',
