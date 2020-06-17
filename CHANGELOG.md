@@ -1,3 +1,22 @@
+# 0.1.15
+
+_17th June 2020_
+
+This version adds some testing components and these are not part of the future direct but allow testing of features that will be folded in when better understand in terms of tech or awaiting proper implementation.
+
+### Added
+
+- test view for IPFS
+- test view for list of your nodes (mobile)
+
+### Changed
+
+- more CSS edits
+
+### Removed
+
+- Hidden previous canvas view from build
+
 # 0.1.14
 
 _8th June 2020_

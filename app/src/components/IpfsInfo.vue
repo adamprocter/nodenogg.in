@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>IPFS Test</h1>
-    <h3>This is very exprimental and should not be used</h3>
+    <h1>IPFS View</h1>
+    <h3>Testing Only</h3>
     <h1>{{ status }}</h1>
     <h2>ID: {{ id }}</h2>
     <h2>Agent version: {{ agentVersion }}</h2>
@@ -84,7 +84,7 @@ export default {
         this.agentVersion = agentVersion
         this.id = id
         // Set successful status text.
-        this.status = 'Connected to IPFS =)'
+        this.status = 'Connected to IPFS 😊'
       } catch (err) {
         // Set error status text.
         this.status = `Error: ${err}`
@@ -97,5 +97,13 @@ export default {
 <style lang="css" scoped>
 .fileInput {
   /* display: none; */
+}
+
+h1 {
+  font-size: 1em;
+}
+
+h3 {
+  color: red;
 }
 </style>
