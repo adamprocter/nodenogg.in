@@ -99,5 +99,6 @@ export default {
 .about {
   margin-left: 1em;
   margin-bottom: 1em;
+  margin-right: 1em;
 }
 </style>

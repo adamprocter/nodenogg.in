@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ipfstest">
     <h1>IPFS View</h1>
     <h3>Testing Only</h3>
     <h1>{{ status }}</h1>
@@ -99,8 +99,18 @@ export default {
   /* display: none; */
 }
 
+.ipfstest {
+  margin-left: 1em;
+  margin-bottom: 1em;
+  margin-right: 1em;
+}
+
 h1 {
   font-size: 1em;
+}
+
+h2 {
+  overflow-wrap: break-word;
 }
 
 h3 {
