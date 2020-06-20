@@ -16,6 +16,7 @@
     "marked": "^1.1.0",
     "pouchdb": "^7.2.1",
     "pouchdb-find": "^7.2.1",
+    "pouchdb-replication-stream": "^1.2.9",
     "vue": "^2.6.11",
     "vue-context": "^5.2.0",
     "vue-draggable-resizable": "^2.2.0",

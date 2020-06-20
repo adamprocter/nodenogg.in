@@ -62,19 +62,20 @@ export default {
         this.isReachable(this.getServerUrl()).then(function (online) {
           if (online) {
             // handle online status
-            // console.log('online')
+            console.log('online')
             location.reload()
           } else {
-            // console.log('no connectivity')
+            console.log('no connectivity')
           }
         })
       } else {
         // handle offline status
-        // console.log('offline')
+        console.log('offline')
         ref.$emit('offlineTriggered')
       }
     },
     isReachable: function (url) {
+      // This should pick up a CORS error but it doesnt seem to //
       return fetch(url, { method: 'HEAD', mode: 'no-cors' })
         .then(function (resp) {
           return resp && (resp.ok || resp.type === 'opaque')
