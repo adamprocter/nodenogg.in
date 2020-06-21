@@ -1,33 +1,24 @@
 <template>
-  <div class="ipfstest">
-    <h1>IPFS View</h1>
-    <h3>Testing Only</h3>
-    <h1>{{ status }}</h1>
-    <!-- <h2>ID: {{ id }}</h2> -->
-    <!-- <h2>Agent version: {{ agentVersion }}</h2> -->
-    <!-- <h3>Files : {{ fileContents }}</h3> -->
-    <!-- <h3>Path: {{ path }}</h3> -->
-    <div v-if="path == 'ready'"></div>
-    <div v-else>
-      <img :src="'https://ipfs.io/ipfs/' + path" />
-    </div>
-    <!-- <img :src="'data:image/jpg;base64,' + output" /> -->
-
+  <div class="ipfsupload">
     <form>
       <input
+        id="file"
         class="fileInput"
         type="file"
         name="fileInput"
         ref="fileInput"
         @change="onFileSelected"
       />
-
-      <!-- <button @click="this.refs.selectedFile.click()">Choose File</button> -->
+      <!-- 
       <button type="button" @click="saveIPFS">Upload</button>
-      <button type="button" @click="getIPFS">Get IPFS</button>
-
-      <!-- <textarea>https://ipfs.io/ipfs/{{ path }} </textarea> -->
-      <textarea v-model="copytext"></textarea>
+      <button type="button" @click="getIPFS">Get IPFS</button> -->
+      <!-- {{ uploadready }} -->
+      <textarea id="ipfshash" v-model="copytext"></textarea>
+      <div class="btn-row">
+        <button v-on:click.prevent="copyDone()" id="copyme" hidden>
+          Copy
+        </button>
+      </div>
     </form>
   </div>
 </template>
@@ -39,11 +30,17 @@ var node
 var output
 var path = 'ready'
 var copytext = ''
+
 //const fileContents = []
 
 //  The below code should create an IPFS node to add files to
 export default {
   name: 'IpfsInfo',
+
+  props: {
+    uploadready: Boolean,
+    //  copyready: Boolean,
+  },
   data: function () {
     return {
       status: 'Connecting to IPFS...',
@@ -59,6 +56,16 @@ export default {
   mounted: function () {
     // console.log(VueIpfs)
     this.getIpfsNodeInfo()
+  },
+
+  watch: {
+    uploadready: function (newVal) {
+      // watch it
+      console.log(newVal)
+      if (newVal == true) {
+        document.getElementById('file').click()
+      }
+    },
   },
   methods: {
     async getIpfsNodeInfo() {
@@ -81,7 +88,7 @@ export default {
 
     onFileSelected(event) {
       this.selectedFile = event.target.files[0]
-      // this.saveIPFS()
+      this.saveIPFS()
     },
 
     async saveIPFS() {
@@ -90,7 +97,7 @@ export default {
         this.fileContents = result
         // console.log(this.fileContents.path)
         // node.swarm.peers().then((a) => console.log(a))
-        //   this.getIPFS()
+        this.getIPFS()
       }
     },
 
@@ -104,9 +111,21 @@ export default {
 
     copyClipBoard(e) {
       this.copytext = 'https://ipfs.io/ipfs/' + e
-      // copyText.select()
-      // document.execCommand('copy')
-      console.log(copytext)
+      this.copyready = true
+      setTimeout(this.copyClick, 5000)
+    },
+
+    copyClick() {
+      document.getElementById('copyme').click()
+    },
+
+    copyDone() {
+      var copyHash = document.getElementById('ipfshash')
+      copyHash.select()
+
+      copyHash.setSelectionRange(0, 99999) /*For mobile devices*/
+      document.execCommand('copy')
+      this.$emit('uploadAdded')
     },
   },
 }
@@ -114,28 +133,14 @@ export default {
 
 <style lang="css" scoped>
 .fileInput {
-  /* display: none; */
+  display: none;
 }
 
-.ipfstest {
-  margin-left: 1em;
-  margin-bottom: 1em;
-  margin-right: 1em;
-}
-
-img {
-  width: 50%;
-}
-
-h1 {
-  font-size: 1em;
-}
-
-h2 {
-  overflow-wrap: break-word;
-}
-
-h3 {
-  color: red;
+textarea {
+  position: absolute;
+  top: 0px;
+  height: 0px;
+  width: 0px;
+  padding: 0px;
 }
 </style>

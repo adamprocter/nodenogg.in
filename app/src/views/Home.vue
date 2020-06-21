@@ -78,8 +78,13 @@
         <ModeToolbar
           @offlineTriggered="offlineTriggered()"
           @onlineTriggered="onlineTriggered()"
+          @uploadAdded="uploadAdded()"
         />
         <ViewToolbar />
+        <UploadLayer
+          v-bind:uploadready="uploadready"
+          @uploadAdded="uploadAdded()"
+        />
       </div>
     </div>
   </div>
@@ -90,6 +95,7 @@ import PanZoomContainer from '@/experimental/PanZoomContainer'
 import ConnectionsLayer from '@/experimental/layers/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OffLine from '@/components/OffLine'
+import UploadLayer from '@/components/UploadLayer'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import OnBoard from '@/components/OnBoard.vue'
 import ModeToolbar from '@/experimental/ModeToolbar'
@@ -110,6 +116,7 @@ export default {
       clientset: false,
       listview: false,
       offline: false,
+      uploadready: false,
     }
   },
   computed: {
@@ -157,6 +164,12 @@ export default {
       this.elementHeight = offsetHeight
     },
 
+    uploadAdded() {
+      //
+      console.log('step one')
+      this.uploadready = !this.uploadready
+    },
+
     clientAdded() {
       this.clientset = !this.clientset
     },
@@ -187,6 +200,7 @@ export default {
     ConnectionsLayer,
     OnBoard,
     OffLine,
+    UploadLayer,
   },
 }
 </script>

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import List from '../views/List.vue'
 // import Oldhome from '../views/Oldhome'
-import Test from '../views/Test'
+//import Test from '../views/Test'
 
 Vue.use(VueRouter)
 
@@ -28,11 +28,11 @@ export const routes = [
     component: List,
   },
 
-  {
-    path: '/test',
-    name: 'IPFS Test',
-    component: Test,
-  },
+  // {
+  //   path: '/test',
+  //   name: 'IPFS Test',
+  //   component: Test,
+  // },
   // {
   //   path: '/oldhome',
   //   name: 'Old Home',

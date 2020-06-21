@@ -43,6 +43,7 @@ export default {
         this.$store.dispatch('addNode')
       }
       if (mode == 'upload') {
+        this.$emit('uploadAdded')
         //  onFileSelected(event) {
         // this.selectedFile = event.target.files[0]
         //  }
