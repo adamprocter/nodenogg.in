@@ -19,20 +19,20 @@ export default {
   props: {
     size: {
       type: Number,
-      default: 40
+      default: 40,
     },
     theme: {
       type: String,
-      default: 'light'
+      default: 'light',
     },
-    type: String
+    type: String,
   },
 
   computed: {
     style() {
       return {
         width: `${this.size}px`,
-        height: `${this.size}px`
+        height: `${this.size}px`,
       }
     },
     hasComponent() {
@@ -40,8 +40,8 @@ export default {
     },
     iconComponent() {
       return iconLibrary[this.type]
-    }
-  }
+    },
+  },
 }
 </script>
 
