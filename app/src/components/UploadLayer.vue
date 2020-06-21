@@ -112,7 +112,7 @@ export default {
     copyClipBoard(e) {
       this.copytext = 'https://ipfs.io/ipfs/' + e
       this.copyready = true
-      setTimeout(this.copyClick, 5000)
+      setTimeout(this.copyClick, 1000)
     },
 
     copyClick() {
