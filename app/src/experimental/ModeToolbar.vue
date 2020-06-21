@@ -42,7 +42,13 @@ export default {
       if (mode == 'addNode') {
         this.$store.dispatch('addNode')
       }
+      if (mode == 'upload') {
+        //  onFileSelected(event) {
+        // this.selectedFile = event.target.files[0]
+        //  }
+      }
     },
+
     isActive(mode) {
       return this.mode === mode.name
     },
