@@ -3,7 +3,7 @@
     <h1>IPFS View</h1>
     <h3>Testing Only</h3>
     <h1>{{ status }}</h1>
-    <!-- <h2>ID: {{ id }}</h2> -->
+    <h2>ID: {{ id }}</h2>
     <!-- <h2>Agent version: {{ agentVersion }}</h2> -->
     <!-- <h3>Files : {{ fileContents }}</h3> -->
     <!-- <h3>Path: {{ path }}</h3> -->
@@ -44,7 +44,7 @@ export default {
   data: function () {
     return {
       status: 'Connecting to IPFS...',
-      // id: '',
+      id: '',
       // agentVersion: '',
       selectedFile: null,
       fileContents: this.fileContents,
@@ -59,46 +59,36 @@ export default {
   methods: {
     onFileSelected(event) {
       this.selectedFile = event.target.files[0]
+      // this.saveIPFS()
+    },
+
+    copyClipBoard() {
+      /* Get the text field */
+      var copyText = 'https://ipfs.io/ipfs/' + this.path
+
+      /* Copy the text inside the text field */
+      document.execCommand('copy')
+      console.log(copyText)
+      /* Alert the copied text */
+      // alert('Copied the text: ' + copyText)
     },
 
     async saveIPFS() {
-      // file = node.files.write('/' + this.selectedFile.name, this.selectedFile, {
-      //   create: true,
-      // })
-      // return file
       for await (const result of node.add(this.selectedFile)) {
         //console.log(result.cid.string)
         this.fileContents = result
         // console.log(this.fileContents.path)
+        // node.swarm.peers().then((a) => console.log(a))
+        //   this.getIPFS()
       }
     },
 
-    // getIPFS() {
-    //   const resultPart = node.files.ls('/')
-    //   fileContents.push(resultPart)
-    //   //  console.log(fileContents)
-    //   return fileContents
-    // },
-
     async getIPFS() {
-      // const resultPart = node.files.read('/')
-      // fileContents.push(resultPart)
-      // //  console.log(fileContents)
-      // return fileContents
-
       for await (const newfile of node.get(this.fileContents.path)) {
-        console.log(newfile.path)
+        // console.log(newfile.path)
         this.path = newfile.path
+        this.copyClipBoard()
       }
-
-      // const chunks = []
-      // for await (const chunk of node.cat(file)) {
-      //   chunks.push(chunk)
-      // }
-      // output = Buffer.concat(chunks).toString('base64')
-      // //output = this.fileContents.path
-      // file = this.fileContents.path
-      // console.log(Buffer.concat(chunks).toString('base64'))
     },
 
     async getIpfsNodeInfo() {
