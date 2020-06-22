@@ -2,9 +2,11 @@
 
 _22nd June 2020_
 
+IPFS doesn't work in current release of Safari Version 13.1.1 (15609.2.9.1.2) - unhandled promise issue - Safari tech preview, Edge, Firefox all fine
+
 ### Added
 
-- IPFS file support, https://ipfs.io/ - use upload icon to save file IPFS and then download icon to save image markdown to then paste into any nodes. although all files are supported the download assumes an image for now.
+- IPFS file support, https://ipfs.io/ - use upload icon to save file IPFS and then download icon to save image markdown to then paste into any nodes. Although all files are supported the download assumes an image for now.
 
 ### Removed
 
