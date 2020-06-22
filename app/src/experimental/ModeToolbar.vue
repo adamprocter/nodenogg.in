@@ -15,7 +15,7 @@
 </template>
 
 <script>
-var serverUrl = 'http://127.0.0.1:5984'
+var serverUrl = 'http://nodenogg.in'
 import { mapState, mapGetters } from 'vuex'
 
 import * as allModes from '@/experimental/modes'
@@ -44,6 +44,12 @@ export default {
       }
       if (mode == 'upload') {
         this.$emit('uploadAdded')
+        //  onFileSelected(event) {
+        // this.selectedFile = event.target.files[0]
+        //  }
+      }
+      if (mode == 'copy') {
+        this.$emit('copyDone')
         //  onFileSelected(event) {
         // this.selectedFile = event.target.files[0]
         //  }

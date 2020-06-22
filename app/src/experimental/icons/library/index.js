@@ -10,6 +10,7 @@ import plus from './plus'
 import select from './select'
 import upload from './upload'
 import exit from './exit'
+import copy from './copy'
 
 export {
   addNode,
@@ -24,4 +25,5 @@ export {
   select,
   upload,
   exit,
+  copy,
 }

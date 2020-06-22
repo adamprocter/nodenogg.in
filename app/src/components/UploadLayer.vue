@@ -39,7 +39,7 @@ export default {
 
   props: {
     uploadready: Boolean,
-    //  copyready: Boolean,
+    copyready: Boolean,
   },
   data: function () {
     return {
@@ -61,9 +61,16 @@ export default {
   watch: {
     uploadready: function (newVal) {
       // watch it
-      console.log(newVal)
+      //console.log(newVal)
       if (newVal == true) {
         document.getElementById('file').click()
+      }
+    },
+    copyready: function (newVal2) {
+      // watch it
+      //console.log(newVal2)
+      if (newVal2 == true) {
+        document.getElementById('copyme').click()
       }
     },
   },
@@ -110,14 +117,14 @@ export default {
     },
 
     copyClipBoard(e) {
-      this.copytext = 'https://ipfs.io/ipfs/' + e
-      this.copyready = true
-      setTimeout(this.copyClick, 1000)
+      this.copytext = '![](https://ipfs.io/ipfs/' + e + ')'
+      //this.copyready = true
+      // setTimeout(this.copyClick, 1000)
     },
 
-    copyClick() {
-      document.getElementById('copyme').click()
-    },
+    // copyClick() {
+    //   document.getElementById('copyme').click()
+    // },
 
     copyDone() {
       var copyHash = document.getElementById('ipfshash')
@@ -126,6 +133,7 @@ export default {
       copyHash.setSelectionRange(0, 99999) /*For mobile devices*/
       document.execCommand('copy')
       this.$emit('uploadAdded')
+      this.$emit('copyDone')
     },
   },
 }

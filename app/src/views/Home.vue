@@ -79,11 +79,14 @@
           @offlineTriggered="offlineTriggered()"
           @onlineTriggered="onlineTriggered()"
           @uploadAdded="uploadAdded()"
+          @copyDone="copyDone()"
         />
         <ViewToolbar />
         <UploadLayer
           v-bind:uploadready="uploadready"
+          v-bind:copyready="copyready"
           @uploadAdded="uploadAdded()"
+          @copyDone="copyDone()"
         />
       </div>
     </div>
@@ -117,6 +120,7 @@ export default {
       listview: false,
       offline: false,
       uploadready: false,
+      copyready: false,
     }
   },
   computed: {
@@ -165,9 +169,11 @@ export default {
     },
 
     uploadAdded() {
-      //
-      console.log('step one')
       this.uploadready = !this.uploadready
+    },
+
+    copyDone() {
+      this.copyready = !this.copyready
     },
 
     clientAdded() {

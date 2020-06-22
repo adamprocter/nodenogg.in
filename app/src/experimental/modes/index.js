@@ -64,6 +64,17 @@ export const upload = {
   shortcut: false,
 }
 
+export const copy = {
+  name: 'copy',
+  view: {
+    pan: false,
+    zoom: false,
+  },
+  icon: 'copy',
+  cursor: 'copy',
+  shortcut: false,
+}
+
 export const exit = {
   name: 'exit',
   view: {
