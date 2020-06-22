@@ -1,3 +1,15 @@
+# 0.1.16
+
+_22nd June 2020_
+
+### Added
+
+- IPFS file support, https://ipfs.io/ - use upload icon to save file IPFS and then download icon to save image markdown to then paste into any nodes. although all files are supported the download assumes an image for now.
+
+### Removed
+
+- Hidden test IPFS view from build.
+
 # 0.1.15
 
 _17th June 2020_
@@ -6,16 +18,16 @@ This version adds some testing components and these are not part of the future d
 
 ### Added
 
-- test view for IPFS
-- test view for list of your nodes (mobile)
+- test view for IPFS.
+- test view for list of your nodes (mobile).
 
 ### Changed
 
-- more CSS edits
+- more CSS edits.
 
 ### Removed
 
-- Hidden previous canvas view from build
+- Hidden previous canvas view from build.
 
 # 0.1.14
 
