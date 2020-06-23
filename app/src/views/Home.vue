@@ -33,6 +33,7 @@
           v-bind:height="height"
           v-bind:connections="connections"
         />
+
         <PanZoomContainer
           v-bind:width="width"
           v-bind:height="height"
@@ -54,6 +55,7 @@
               v-bind:nodetext="value.node_text"
             />
           </div>
+
           <div v-else>
             <OtherNodeslayer
               v-for="value in otherNodes"
@@ -73,6 +75,7 @@
               @editTrue="(e) => editTrue(e)"
             />
           </div>
+          <ScribbleLayer></ScribbleLayer>
         </PanZoomContainer>
 
         <ModeToolbar
@@ -98,6 +101,7 @@ import PanZoomContainer from '@/experimental/PanZoomContainer'
 import ConnectionsLayer from '@/experimental/layers/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OffLine from '@/components/OffLine'
+import ScribbleLayer from '@/components/ScribbleLayer'
 import UploadLayer from '@/components/UploadLayer'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import OnBoard from '@/components/OnBoard.vue'
@@ -207,6 +211,7 @@ export default {
     OnBoard,
     OffLine,
     UploadLayer,
+    ScribbleLayer,
   },
 }
 </script>
