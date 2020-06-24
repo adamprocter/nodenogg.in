@@ -75,7 +75,7 @@
               @editTrue="(e) => editTrue(e)"
             />
           </div>
-          <ScribbleLayer></ScribbleLayer>
+          <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
         </PanZoomContainer>
 
         <ModeToolbar
@@ -83,6 +83,7 @@
           @onlineTriggered="onlineTriggered()"
           @uploadAdded="uploadAdded()"
           @copyDone="copyDone()"
+          @drawOn="drawOn()"
         />
         <ViewToolbar />
         <UploadLayer
@@ -125,6 +126,7 @@ export default {
       offline: false,
       uploadready: false,
       copyready: false,
+      drawready: false,
     }
   },
   computed: {
@@ -186,6 +188,11 @@ export default {
 
     editTrue(e) {
       this.$store.dispatch('shortcutState', e)
+    },
+
+    drawOn() {
+      this.drawready = !this.drawready
+      console.log(this.drawready)
     },
 
     // This is here to support the shortcuts
