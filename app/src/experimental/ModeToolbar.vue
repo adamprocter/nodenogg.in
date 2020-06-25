@@ -44,15 +44,17 @@ export default {
       }
       if (mode == 'upload') {
         this.$emit('uploadAdded')
-        //  onFileSelected(event) {
-        // this.selectedFile = event.target.files[0]
-        //  }
       }
       if (mode == 'copy') {
         this.$emit('copyDone')
-        //  onFileSelected(event) {
-        // this.selectedFile = event.target.files[0]
-        //  }
+      }
+      if (mode == 'draw') {
+        this.$emit('drawOn')
+        // console.log(mode)
+      }
+      if (mode != 'draw') {
+        this.$emit('drawOff')
+        //console.log(mode)
       }
     },
 

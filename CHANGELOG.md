@@ -1,3 +1,11 @@
+# 0.1.17
+
+_25th June 2020_
+
+### Added
+
+- Local _scribble_ mode, selecting the pencil mode on touch devices allows drawing, this is not saved and it local to you only (for now).
+
 # 0.1.16
 
 _22nd June 2020_

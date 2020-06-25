@@ -198,6 +198,8 @@ export default {
         constrainTranslation(newTranslation, this.translationBounds)
       )
     },
+
+    // FIXME: I dont think this is working
     handleMultiTouch(e) {
       const [newTranslation, newScale] = changeViewFromMultiTouchEvent(
         this.interaction.origin.points,

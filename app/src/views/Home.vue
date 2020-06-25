@@ -33,6 +33,7 @@
           v-bind:height="height"
           v-bind:connections="connections"
         />
+
         <PanZoomContainer
           v-bind:width="width"
           v-bind:height="height"
@@ -54,6 +55,7 @@
               v-bind:nodetext="value.node_text"
             />
           </div>
+
           <div v-else>
             <OtherNodeslayer
               v-for="value in otherNodes"
@@ -73,6 +75,7 @@
               @editTrue="(e) => editTrue(e)"
             />
           </div>
+          <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
         </PanZoomContainer>
 
         <ModeToolbar
@@ -80,6 +83,8 @@
           @onlineTriggered="onlineTriggered()"
           @uploadAdded="uploadAdded()"
           @copyDone="copyDone()"
+          @drawOn="drawOn()"
+          @drawOff="drawOff()"
         />
         <ViewToolbar />
         <UploadLayer
@@ -98,6 +103,7 @@ import PanZoomContainer from '@/experimental/PanZoomContainer'
 import ConnectionsLayer from '@/experimental/layers/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OffLine from '@/components/OffLine'
+import ScribbleLayer from '@/components/ScribbleLayer'
 import UploadLayer from '@/components/UploadLayer'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import OnBoard from '@/components/OnBoard.vue'
@@ -121,6 +127,7 @@ export default {
       offline: false,
       uploadready: false,
       copyready: false,
+      drawready: false,
     }
   },
   computed: {
@@ -184,6 +191,15 @@ export default {
       this.$store.dispatch('shortcutState', e)
     },
 
+    drawOn() {
+      this.drawready = !this.drawready
+      //console.log(this.drawready)
+    },
+
+    drawOff() {
+      this.drawready = false
+    },
+
     // This is here to support the shortcuts
     addNode() {
       this.$store.dispatch('addNode')
@@ -207,6 +223,7 @@ export default {
     OnBoard,
     OffLine,
     UploadLayer,
+    ScribbleLayer,
   },
 }
 </script>
