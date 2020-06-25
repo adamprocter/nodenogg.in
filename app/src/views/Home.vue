@@ -84,6 +84,7 @@
           @uploadAdded="uploadAdded()"
           @copyDone="copyDone()"
           @drawOn="drawOn()"
+          @drawOff="drawOff()"
         />
         <ViewToolbar />
         <UploadLayer
@@ -192,7 +193,11 @@ export default {
 
     drawOn() {
       this.drawready = !this.drawready
-      console.log(this.drawready)
+      //console.log(this.drawready)
+    },
+
+    drawOff() {
+      this.drawready = false
     },
 
     // This is here to support the shortcuts
