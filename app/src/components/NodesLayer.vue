@@ -156,6 +156,7 @@
 <script>
 import { mapState } from 'vuex'
 import marked from 'marked'
+import lodash from 'lodash'
 var readmode
 
 export default {
@@ -272,11 +273,16 @@ export default {
       //  // console.log(e)
     },
 
-    editNode(e) {
+    // _.debounce(function(e) {
+    //             this.input = e.target.value;
+    //           }, 300)
+
+    editNode: lodash.debounce(function (e) {
       var nodeid = e.target.id
       var nodetext = e.target.value
       this.$store.dispatch('editNode', { nodeid, nodetext })
-    },
+    }, 600),
+
     deleteFlag(e) {
       e = this.nodeid
       this.$store.dispatch('deleteFlag', { e })
@@ -308,7 +314,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .node {
-
   position: relative;
 }
 
