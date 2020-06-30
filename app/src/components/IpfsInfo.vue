@@ -81,17 +81,25 @@ export default {
 
     onFileSelected(event) {
       this.selectedFile = event.target.files[0]
+
       // this.saveIPFS()
     },
 
     async saveIPFS() {
+      //  try {
       for await (const result of node.add(this.selectedFile)) {
-        //console.log(result.cid.string)
         this.fileContents = result
-        // console.log(this.fileContents.path)
+        // console.log(this.fileContents)
         // node.swarm.peers().then((a) => console.log(a))
         //   this.getIPFS()
       }
+      // } catch (err) {
+      //         // Set error status text.
+      //         this.status = `Error: ${err}`
+      //       }
+      // expected output: ReferenceError: nonExistentFunction is not defined
+      // Note - error messages will vary depending on browser
+      // }
     },
 
     async getIPFS() {
