@@ -340,7 +340,7 @@ input {
 
 .allemoji {
   font-size: 2em;
-  float: left;
+  /* float: left; */
 }
 
 h3 {

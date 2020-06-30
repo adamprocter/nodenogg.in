@@ -46,8 +46,7 @@
               </p>
             </div>
 
-            <p class="info">*markdown supported</p>
-            <p class="info">*autosaves</p>
+            <p class="info">*markdown supported &amp; autosaves</p>
             <div class="btn-row">
               <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
@@ -125,8 +124,7 @@
               </p>
             </div>
 
-            <p class="info">*markdown supported</p>
-            <p class="info">*autosaves</p>
+            <p class="info">*markdown supported &amp; autosaves</p>
             <div class="btn-row">
               <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
@@ -355,7 +353,7 @@ textarea {
 
 .allemoji {
   font-size: 2em;
-  float: left;
+  /* float: left; */
 }
 
 img {
