@@ -117,14 +117,14 @@
           <p class="read" :id="nodeid" :inner-html.prop="nodetext | marked">
             {{ nodeid }}
           </p>
-          <h3>Reactions</h3>
+          <!-- <h3>Reactions</h3> -->
           <div v-for="(emojis, index) in configEmoji" :key="index">
             <p class="allemoji" v-if="nodeid == emojis.node_id">
               {{ emojis.emoji_text }}
             </p>
           </div>
           <div class="react" v-if="nodeid != undefined">
-            <h2>React</h2>
+            <!-- <h2>React</h2> -->
             <div class="eeee">
               <input :value="nodeid" name="id" readonly hidden />
               <input
@@ -340,6 +340,7 @@ input {
 
 .allemoji {
   font-size: 2em;
+  float: left;
 }
 
 h3 {
@@ -357,20 +358,26 @@ h3 {
   right: 0.5rem;
   width: 1.5rem;
   height: 1.5rem;
-
+  /* transform: scale(1.6); */
   margin: 0em 0em 1em 0em;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s;
 }
-.emoji-invoker:hover {
-  transform: scale(1.1);
+.emoji-invoker:hover > svg {
+  fill: #84949b;
+
+  /* transform: scale(1.5); */
 }
 .emoji-invoker > svg {
   fill: #b1c6d0;
+  margin-top: -15px;
+  margin-left: 0.2em;
+  transform: scale(1.5);
 }
 
 .emoji-picker {
+  transform: scale(1.2);
   z-index: 1;
   font-family: Montserrat;
   border: 1px solid #ccc;

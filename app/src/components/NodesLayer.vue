@@ -117,7 +117,7 @@
               ></p>
             </div>
 
-            <h3>Reactions</h3>
+            <!-- <h3>Reactions</h3> -->
 
             <div v-for="(emojis, index) in configEmoji" :key="index">
               <p class="allemoji" v-if="nodeid == emojis.node_id">
@@ -325,6 +325,7 @@ export default {
 
 .info {
   font-size: 0.8em;
+  display: inline;
 }
 
 textarea {
@@ -335,7 +336,10 @@ textarea {
   font-family: 'Inter var', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  outline: #cab6ff;
+  border: none;
+  outline: none;
+  background-color: rgb(187, 227, 255);
+  scrollbar-color: yellow rgb(187, 227, 255);
 }
 
 .btn-row {
@@ -351,6 +355,7 @@ textarea {
 
 .allemoji {
   font-size: 2em;
+  float: left;
 }
 
 img {
