@@ -9,9 +9,9 @@
         ref="fileInput"
         @change="onFileSelected"
       />
-      <h1>{{ status }}</h1>
+      <!-- <h1>{{ status }}</h1>
       <h2>ID: {{ id }}</h2>
-      <h2>Agent version: {{ agentVersion }}</h2>
+      <h2>Agent version: {{ agentVersion }}</h2> -->
       <!-- 
       <button type="button" @click="saveIPFS">Upload</button>
       <button type="button" @click="getIPFS">Get IPFS</button> -->
@@ -47,8 +47,8 @@ export default {
   data: function () {
     return {
       status: 'Connecting to IPFS...',
-      id: '',
-      agentVersion: '',
+      // id: '',
+      // agentVersion: '',
       selectedFile: null,
       fileContents: this.fileContents,
       output: output,
