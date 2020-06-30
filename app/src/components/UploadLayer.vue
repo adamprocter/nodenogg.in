@@ -9,6 +9,9 @@
         ref="fileInput"
         @change="onFileSelected"
       />
+      <h1>{{ status }}</h1>
+      <h2>ID: {{ id }}</h2>
+      <h2>Agent version: {{ agentVersion }}</h2>
       <!-- 
       <button type="button" @click="saveIPFS">Upload</button>
       <button type="button" @click="getIPFS">Get IPFS</button> -->
@@ -44,8 +47,8 @@ export default {
   data: function () {
     return {
       status: 'Connecting to IPFS...',
-      // id: '',
-      // agentVersion: '',
+      id: '',
+      agentVersion: '',
       selectedFile: null,
       fileContents: this.fileContents,
       output: output,
@@ -79,7 +82,7 @@ export default {
       try {
         // Await for ipfs node instance.
         node = await ipfs
-        //console.log(ipfs)
+        // console.log(node)
         // Call ipfs `id` method.
         // Returns the identity of the Peer.
         const { agentVersion, id } = await node.id()
@@ -99,20 +102,30 @@ export default {
     },
 
     async saveIPFS() {
-      for await (const result of node.add(this.selectedFile)) {
-        //console.log(result.cid.string)
-        this.fileContents = result
-        // console.log(this.fileContents.path)
-        // node.swarm.peers().then((a) => console.log(a))
-        this.getIPFS()
+      try {
+        for await (const result of node.add(this.selectedFile)) {
+          //console.log(result.cid.string)
+          this.fileContents = result
+          // console.log(this.fileContents.path)
+          // node.swarm.peers().then((a) => console.log(a))
+          this.getIPFS()
+        }
+      } catch (err) {
+        // Set error status text.
+        this.status = `Error: ${err}`
       }
     },
 
     async getIPFS() {
-      for await (const newfile of node.get(this.fileContents.path)) {
-        // console.log(newfile.path)
-        this.path = newfile.path
-        this.copyClipBoard(this.path)
+      try {
+        for await (const newfile of node.get(this.fileContents.path)) {
+          // console.log(newfile.path)
+          this.path = newfile.path
+          this.copyClipBoard(this.path)
+        }
+      } catch (err) {
+        // Set error status text.
+        this.status = `Error: ${err}`
       }
     },
 
