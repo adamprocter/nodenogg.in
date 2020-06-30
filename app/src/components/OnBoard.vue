@@ -13,21 +13,27 @@
       <form>
         <div>
           <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
-          <input
-            type="text"
-            v-model.trim="clientid"
-            placeholder="device name"
-            autocorrect="off"
-            autocapitalize="none"
-            ref="objectname"
-            v-on:keyup.enter="setClient()"
-            @focus="editTrue(true)"
-            @blur="editTrue(false)"
-          />
-          <div class="btn-row">
-            <BaseButton buttonClass="special" @click="setClient()"
-              >Store</BaseButton
-            >
+          <div v-if="name == false">
+            <input
+              type="text"
+              v-model.trim="clientid"
+              placeholder="name"
+              autocorrect="off"
+              autocapitalize="none"
+              ref="objectname"
+              v-on:keyup.enter="setClient()"
+              @focus="editTrue(true)"
+              @blur="editTrue(false)"
+            />
+
+            <div class="btn-row">
+              <BaseButton buttonClass="special" @click="setClient()"
+                >Store</BaseButton
+              >
+            </div>
+          </div>
+          <div v-else>
+            <h4>Saved</h4>
           </div>
         </div>
       </form>
@@ -46,23 +52,29 @@
       <form>
         <div>
           <p id="nodeid" :inner-html.prop="nodetext2 | marked"></p>
-          <input
-            type="text"
-            v-model.trim="localmicrocosm"
-            placeholder="microcosm name"
-            autocorrect="off"
-            autocapitalize="none"
-            autofocus
-            v-on:keyup.enter="createMicrocosm()"
-            @focus="editTrue(true)"
-            @blur="editTrue(false)"
-          />
-          <div class="btn-row">
-            <BaseButton
-              buttonClass="special"
-              @click="createMicrocosm(), letsGo()"
-              >Create Microcosm</BaseButton
-            >
+          <div v-if="microcosm == false">
+            <input
+              type="text"
+              v-model.trim="localmicrocosm"
+              placeholder="microcosm name"
+              autocorrect="off"
+              autocapitalize="none"
+              autofocus
+              v-on:keyup.enter="createMicrocosm()"
+              @focus="editTrue(true)"
+              @blur="editTrue(false)"
+            />
+
+            <div class="btn-row">
+              <BaseButton
+                buttonClass="special"
+                @click="createMicrocosm(), letsGo()"
+                >Create or Rejoin a Microcosm</BaseButton
+              >
+            </div>
+          </div>
+          <div v-else>
+            <h4>Loading...</h4>
           </div>
         </div>
       </form>
@@ -83,8 +95,8 @@ export default {
         '## 3. What shall we call you ? 💥 \n First we need to connect this device to your ideas. This name is what allows you to create and edit your nodes and can be anything you like and this name is always anonymous.',
       nodetext2:
         '## 5. Start those engines ! 🏎 \n Now you can create your own microcosm to store your ideas and ask people to join you, either just tell them the name of the microcosm or share the alpha.nodenogg.in URL and add the ending; </br><em><b>/microcosm/nameofyourmicrocosm</b></em>',
-      // parta: true,
-      // partb: false,
+      name: false,
+      microcosm: false,
       // partc: false,
     }
   },
@@ -106,10 +118,12 @@ export default {
     createMicrocosm() {
       this.$store.dispatch('createMicrocosm', this.localmicrocosm)
       localStorage.setItem('mylastMicrocosm', this.localmicrocosm)
+      this.microcosm = true
     },
     setClient() {
       this.$store.dispatch('setClient', this.clientid),
         localStorage.setItem('myNNClient', this.clientid)
+      this.name = true
     },
 
     editTrue(e) {

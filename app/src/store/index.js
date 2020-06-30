@@ -366,7 +366,7 @@ const store = new Vuex.Store({
           x_pos: 50,
           y_pos: 50,
           width: 220,
-          height: 275,
+          height: 295,
           z_index: 1,
           read_mode: false,
         })

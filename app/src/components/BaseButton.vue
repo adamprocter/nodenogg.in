@@ -19,7 +19,7 @@ export default {
 
 <style lang="css" scoped>
 button {
-  font-size: 1em;
+  font-size: 0.8em;
   touch-action: manipulation;
   color: black;
   border: none;
