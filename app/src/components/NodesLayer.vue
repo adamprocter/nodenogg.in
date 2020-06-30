@@ -26,7 +26,7 @@
                   :id="nodeid"
                   class="drag-cancel"
                   ref="nodetext"
-                  placeholder="Idea goes here!"
+                  placeholder="Idea goes here! (auto saved every keystroke)"
                 ></textarea>
               </div>
             </div>
@@ -47,6 +47,7 @@
             </div>
 
             <p class="info">*markdown supported</p>
+            <p class="info">*autosaves</p>
             <div class="btn-row">
               <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
@@ -56,7 +57,7 @@
                   class="read"
                   buttonClass="action"
                   @click="readFlag()"
-                  >Edit
+                  >Edit Mode
                 </BaseButton>
               </div>
               <div v-else>
@@ -64,7 +65,7 @@
                   class="read"
                   buttonClass="action"
                   @click="readFlag()"
-                  >Read</BaseButton
+                  >Read Mode</BaseButton
                 >
               </div>
             </div>
@@ -104,7 +105,7 @@
                   :id="nodeid"
                   class="drag-cancel"
                   ref="nodetext"
-                  placeholder="Idea goes here!"
+                  placeholder="Idea goes here! (auto saved every keystroke)"
                 ></textarea>
               </div>
             </div>
@@ -125,6 +126,7 @@
             </div>
 
             <p class="info">*markdown supported</p>
+            <p class="info">*autosaves</p>
             <div class="btn-row">
               <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
@@ -134,7 +136,7 @@
                   class="read"
                   buttonClass="action"
                   @click="readFlag()"
-                  >Edit
+                  >Edit Mode
                 </BaseButton>
               </div>
               <div v-else>
@@ -142,7 +144,7 @@
                   class="read"
                   buttonClass="action"
                   @click="readFlag()"
-                  >Read</BaseButton
+                  >Read Mode</BaseButton
                 >
               </div>
             </div>
