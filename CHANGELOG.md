@@ -1,3 +1,19 @@
+# 0.1.18
+
+_2nd July 2020_
+
+### Changes
+
+- Tweaked onboarding wording.
+- Edited some button text.
+- Edited CSS a little for text boxes.
+- Hide connection mode button for now.
+
+### Fixed
+
+- Offline mode reloads correctly when you are back online.
+- Move mode showed wrong styling.
+
 # 0.1.17
 
 _25th June 2020_

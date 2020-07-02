@@ -15,7 +15,7 @@
 </template>
 
 <script>
-var serverUrl = 'http://nodenogg.in'
+var serverUrl = 'https://nodenogg.in'
 import { mapState, mapGetters } from 'vuex'
 
 import * as allModes from '@/experimental/modes'

@@ -38,7 +38,7 @@
               ></p>
             </div>
 
-            <h3>Reactions</h3>
+            <!-- <h3>Reactions</h3> -->
 
             <div v-for="(emojis, index) in configEmoji" :key="index">
               <p class="allemoji" v-if="nodeid == emojis.node_id">
