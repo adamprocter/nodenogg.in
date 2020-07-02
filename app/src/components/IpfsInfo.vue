@@ -3,15 +3,15 @@
     <h1>IPFS View</h1>
     <h3>Testing Only</h3>
     <h1>{{ status }}</h1>
-    <!-- <h2>ID: {{ id }}</h2> -->
-    <!-- <h2>Agent version: {{ agentVersion }}</h2> -->
+    <h2>ID: {{ id }}</h2>
+    <h2>Agent version: {{ agentVersion }}</h2>
     <!-- <h3>Files : {{ fileContents }}</h3> -->
-    <!-- <h3>Path: {{ path }}</h3> -->
+    <!-- <h3>Path: {{ path }}</h3>
     <div v-if="path == 'ready'"></div>
     <div v-else>
       <img :src="'https://ipfs.io/ipfs/' + path" />
     </div>
-    <!-- <img :src="'data:image/jpg;base64,' + output" /> -->
+    <img :src="'data:image/jpg;base64,' + output" /> -->
 
     <form>
       <input
@@ -47,8 +47,8 @@ export default {
   data: function () {
     return {
       status: 'Connecting to IPFS...',
-      // id: '',
-      // agentVersion: '',
+      id: '',
+      agentVersion: '',
       selectedFile: null,
       fileContents: this.fileContents,
       output: output,
