@@ -10,14 +10,14 @@ import { clear } from '@/experimental/utils/canvas'
 export default {
   props: {
     width: {
-      type: Number
+      type: Number,
     },
     height: {
-      type: Number
+      type: Number,
     },
     shape: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   mounted() {
     this.canvas = this.$refs.canvas
@@ -28,7 +28,7 @@ export default {
     return {
       canvas: {},
       context: {},
-      color: palette.blue.dark
+      color: palette.blue.dark,
     }
   },
   // Watch the props for changes and, if necessary, redraw canvas
@@ -44,7 +44,7 @@ export default {
     },
     selected() {
       this.draw()
-    }
+    },
   },
   methods: {
     /**
@@ -69,8 +69,8 @@ export default {
 
         this.context.setTransform(1, 0, 0, 1, 0, 0)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 <style scoped>
