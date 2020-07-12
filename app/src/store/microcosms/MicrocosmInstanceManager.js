@@ -14,21 +14,28 @@ export class MicrocosmInstanceManager extends Emitter {
         .then(() => {
           log(`Using existing PouchDB instance @ ${microcosm_id}`)
           resolve(true)
-        }).catch(() => {
+        })
+        .catch(() => {
           log(`Creating new PouchDB instance @ ${microcosm_id}`)
-          this.microcosmInstances.set(microcosm_id, new MicrocosmInstance(microcosm_id, options))
+          this.microcosmInstances.set(
+            microcosm_id,
+            new MicrocosmInstance(microcosm_id, options)
+          )
           resolve(false)
         })
     })
-
   notify = (microcosm_id, event, detail) => {
-    log(microcosm_id, event, detail)
+    log(`[${microcosm_id}] -->`, event, detail)
   }
   get = (microcosm_id) =>
     new Promise((resolve, reject) => {
       const targetInstance = this.microcosmInstances.get(microcosm_id)
       if (targetInstance) {
-        resolve(targetInstance)
+        if (targetInstance.ready) {
+          resolve(targetInstance)
+        } else {
+          reject(`[${microcosm_id}] Instance not ready`)
+        }
       } else {
         reject(`Could not find instance @ ${microcosm_id}`)
       }
@@ -40,6 +47,7 @@ export class MicrocosmInstanceManager extends Emitter {
           instance.remove()
           this.microcosmInstances.remove(microcosm_id)
           resolve()
-        }).catch(reject)
+        })
+        .catch(reject)
     })
 }

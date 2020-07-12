@@ -10,6 +10,7 @@ export const get = (prop, fallback) => {
   if (value && JSON.parse(value)) {
     return JSON.parse(value)
   } else {
+    set(prop, fallback)
     return fallback
   }
 }

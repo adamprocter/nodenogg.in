@@ -1,14 +1,19 @@
 import set from 'set-value'
 import { STORE_PREFIX, MICROCOSM_ROUTES } from './constants'
 
-export const addToHistory = (history = {}, { microcosm_id, data }) => {
+export const updateHistory = (history = {}, { microcosm_id, data, edit }) => {
   const newHistory = Object.assign({}, history)
-  set(newHistory, microcosm_id,
+  const timestamp = new Date()
+  set(
+    newHistory,
+    microcosm_id,
     Object.assign({}, newHistory[microcosm_id] || {}, {
       microcosm_id,
       ...data,
-      lastViewed: new Date(),
-    }))
+      lastViewed: timestamp,
+      ...edit && { lastEdited: timestamp }
+    })
+  )
   return newHistory
 }
 
@@ -39,7 +44,8 @@ export const generateRemoteURL = ({
   domain,
   username,
   password,
-}) => {
+  microcosm_id
+}, defaultMicrocosmID) => {
   const credentials = username && password ? `${username}:${password}@` : ''
-  return `http${secure ? 's' : ''}://${credentials}${domain}`
+  return `http${secure ? 's' : ''}://${credentials}${domain}/${microcosm_id || defaultMicrocosmID}`
 }

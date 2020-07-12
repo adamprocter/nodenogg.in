@@ -1,6 +1,5 @@
 import PouchDB from 'pouchdb-browser'
 import PouchFind from 'pouchdb-find'
-import PouchLiveFind from 'pouchdb-live-find'
 import PouchAuthentication from 'pouchdb-authentication'
 import { isRemote } from 'pouchdb-utils'
 
@@ -8,16 +7,17 @@ import { microcosmManager } from './microcosms.store'
 import { generateRemoteURL } from './utils'
 
 PouchDB.plugin(PouchFind)
-PouchDB.plugin(PouchLiveFind)
 PouchDB.plugin(PouchAuthentication)
 
 export class MicrocosmInstance {
+  _localDBReady = false
   constructor(microcosm_id, options = {}) {
     this.microcosm_id = microcosm_id
 
     this.registerLocalDB()
     if (options.remote) {
       this.setRemote(options.remote)
+      // await this.registerRemoteDB(remote)
     }
   }
   get db() {
@@ -26,14 +26,17 @@ export class MicrocosmInstance {
   emit = (event, detail) => {
     microcosmManager.notify(this.microcosm_id, event, detail)
   }
+  get ready() {
+    return !!this.localDB && this._localDBReady
+  }
   createPouchInstance = async ({ db, options = {} }) => {
-    console.log('creating pouch instance @', db)
     return new PouchDB(db, options)
       .on('created', () => {
         this.emit(`db-created`, {
           microcosm: db,
           ok: true,
         })
+        this._localDBReady = true
       })
       .on('destroyed', () => {
         this.emit(`db-destroyed`, {
@@ -42,10 +45,10 @@ export class MicrocosmInstance {
         })
       })
   }
-  setRemote = (remote) => {
-    // console.log('setting remote', remote)
-    // this.registerRemoteDB(remote)
+  setRemote = async (remote) => {
     this.emit('setting remote', remote)
+    // await this.replicate()
+    // await this.sync()
   }
 
   registerLocalDB = async () => {
@@ -54,48 +57,11 @@ export class MicrocosmInstance {
     })
   }
   registerRemoteDB = async (remote) => {
-    const remoteURL = generateRemoteURL(remote)
+    const remoteURL = generateRemoteURL(remote, this.microcosm_id)
     this.remoteDB = await this.createPouchInstance({
-      db: `${remoteURL}/${this.microcosm_id}`,
+      db: remoteURL
     })
   }
-  // registerLiveFeed = async (selector, sort, skip, limit) => {
-  // registerLiveFeed = async () => {
-  //   this.localDB
-  //     .liveFind({
-  //       selector: {
-  //         type: 'node',
-  //       },
-  //       // sort: sort,
-  //       // skip: skip,
-  //       // limit: limit,
-  //       // aggregate: true,
-  //     })
-  //     .on('update', (update, aggregate) => {
-  //       console.log(update, aggregate)
-  //       this.emit('livefeed-update', {
-  //         microcosm: this.microcosm_id,
-  //         data: aggregate,
-  //       })
-  //     })
-  //     .on('ready', () => {
-  //       this.emit('livefeed-ready', {
-  //         microcosm: this.microcosm_id,
-  //       })
-  //     })
-  //     .on('cancelled', function () {
-  //       this.emit('livefeed-cancel', {
-  //         microcosm: this.microcosm_id,
-  //       })
-  //     })
-  //     .on('error', function (err) {
-  //       this.emit('livefeed-error', {
-  //         microcosm: this.microcosm_id,
-  //         error: err,
-  //       })
-  //     })
-  // }
-
   fetchSession = () => {
     return new Promise((resolve) => {
       this.localDB
@@ -267,14 +233,15 @@ export class MicrocosmInstance {
     }
     return this.fetchSession()
   }
+  update = (message) => {
+    this.emit('update', message)
+  }
   replicate = () =>
     new Promise((resolve, reject) => {
       if (!this.remoteDB) {
         reject(new Error(`Remote PouchDB instance has not been started`))
       }
-      this.localDB
-        .replicate.to(this.remoteDB)
-        .on('complete', resolve())
+      this.localDB.replicate.to(this.remoteDB).on('complete', resolve())
     })
   sync = (options = {}) =>
     new Promise((resolve, reject) => {

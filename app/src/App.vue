@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <navigation />
+    <Navigation />
+    <MicrocosmSettings />
     <router-view />
   </div>
 </template>
@@ -8,6 +9,7 @@
 <script>
 import { routes } from './router'
 import Navigation from './components/Navigation'
+import MicrocosmSettings from './components/MicrocosmSettings'
 export default {
   data: function () {
     return {
@@ -15,7 +17,8 @@ export default {
     }
   },
   components: {
-    navigation: Navigation,
+    Navigation,
+    MicrocosmSettings,
   },
 }
 </script>

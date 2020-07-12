@@ -1,10 +1,11 @@
 import { get } from '@ngard/tiny-get'
 
-import store from '..'
-import * as storage from '@/utils/storage'
-import { addToHistory, isMicrocosmRoute } from './utils'
+import store from '@/store'
+import { registerMicrocosmStore, unregisterMicrocosmStore } from './microcosm.store'
 import { MicrocosmInstanceManager } from './MicrocosmInstanceManager'
 
+import * as storage from '@/utils/storage'
+import { updateHistory, isMicrocosmRoute } from './utils'
 import { STORE_PREFIX, STORE_CHILD_PREFIX } from './constants'
 
 export const microcosmManager = new MicrocosmInstanceManager({
@@ -12,34 +13,17 @@ export const microcosmManager = new MicrocosmInstanceManager({
   child: STORE_CHILD_PREFIX,
 })
 
-export const microcosmStoreTemplate = (microcosm_id) => {
-  return {
-    state: {
-      microcosm_id,
-      nodes: [],
-    },
-    mutations: {
-      SET_NODES(state, nodes) {
-        state.nodes = nodes
-      },
-      CREATE_NODE(state, newNode) {
-        state.nodes = [...state.nodes, newNode]
-      },
-    },
-    namespaced: true,
-  }
-}
-
 const remote = {
   domain: 'localhost:5984',
   username: 'auto-admin',
   password: 'testing',
-  secure: false
+  secure: false,
 }
 
 export const microcosmsStore = {
   namespaced: true,
   state: {
+    ready: false,
     loading: true,
     routerParams: {},
     history: storage.get('microcosms/history', {}),
@@ -50,6 +34,9 @@ export const microcosmsStore = {
   getters: {
     getNodes: (state) => (microcosm_id) => {
       return get(state, [STORE_CHILD_PREFIX, microcosm_id, 'nodes'], [])
+    },
+    ready: (state) => {
+      return !!state.routerParams.microcosm_id
     },
     getNode: (state) => (microcosm_id, node_id) => {
       const activeMicrocosmNodes = get(
@@ -83,10 +70,19 @@ export const microcosmsStore = {
         activeMicrocosmNodes.find((node) => node.node_id === activeNode)
       )
     },
+    getMicrocosmHistoryFromRoute: (state) => {
+      const activeMicrocosm = get(state, 'routerParams.microcosm_id', null)
+      return activeMicrocosm && state.history[activeMicrocosm]
+    },
+    getMicrocosmBaseRoute: (state) => {
+      const activeMicrocosm = get(state, 'routerParams.microcosm_id')
+      const activeView = get(state, 'routerParams.view')
+      return (activeMicrocosm && activeView) && `/dev/${activeMicrocosm}/${activeView}`
+    },
   },
   mutations: {
-    ADD_TO_HISTORY: (state, microcosmHistoryEvent) => {
-      state.history = addToHistory(state.history, microcosmHistoryEvent)
+    UPDATE_HISTORY: (state, microcosmHistoryEvent) => {
+      state.history = updateHistory(state.history, microcosmHistoryEvent)
     },
     CLEAR_HISTORY: (state) => {
       state.history = []
@@ -100,23 +96,39 @@ export const microcosmsStore = {
   },
   actions: {
     addToHistory({ commit, state }, microcosmHistoryEvent) {
-      commit('ADD_TO_HISTORY', microcosmHistoryEvent)
+      commit('UPDATE_HISTORY', microcosmHistoryEvent)
+
+      // sync history with local storage
       storage.set('microcosms/history', state.history)
     },
     clearHistory({ commit }) {
       commit('CLEAR_HISTORY')
+
+      // sync history with local storage
       storage.set('microcosms/history', [])
     },
-    createNode({ commit }, { microcosm_id, newNode }) {
+    createNode: async ({ commit, dispatch }, { microcosm_id, newNode }) => {
       commit(`${microcosm_id}/CREATE_NODE`, newNode)
+      // add edit 
+      dispatch('addToHistory', { microcosm_id, edit: true })
     },
-    createNodeFromRoute({ commit, state }, newNode) {
-      const activeMicrocosm = get(state, 'routerParams.microcosm_id', null)
-      if (activeMicrocosm) {
-        commit(`${activeMicrocosm}/CREATE_NODE`, newNode)
+    createNodeFromRoute: async ({ commit, state, dispatch }, newNode) => {
+      try {
+        // check if the route contains a microcosm_id
+        const activeMicrocosm = get(state, 'routerParams.microcosm_id', null)
+        if (activeMicrocosm) {
+          commit(`${activeMicrocosm}/CREATE_NODE`, newNode)
+
+          const instance = await microcosmManager.get(activeMicrocosm)
+          instance.update(newNode)
+
+          dispatch('addToHistory', { microcosm_id: activeMicrocosm, edit: true })
+        }
+      } catch (e) {
+        console.log(e)
       }
     },
-    handleRouteChange: async ({ commit }, to) => {
+    handleRouteChange: async ({ commit, dispatch }, to) => {
       // check to see if we're going to a valid :microcosm_id route
       if (isMicrocosmRoute(to)) {
         const { microcosm_id, view } = to.params
@@ -124,21 +136,18 @@ export const microcosmsStore = {
         await microcosmManager
           .add(microcosm_id, { remote })
           .then((isExistingInstance) => {
-            // add this event to our microcosm history 
-            store.dispatch('microcosms/addToHistory', { microcosm_id, data: { view } })
+
+            // add this event to our microcosm history
+            dispatch('addToHistory', {
+              microcosm_id,
+              data: { view, remote },
+            })
 
             // if this is the first time we've connected to this instance
             // register a VueX store module to handle this microcosm
             if (!isExistingInstance) {
-              registerMicrocosmStore(microcosm_id)
+              registerMicrocosmStore(store, microcosm_id)
             }
-          })
-
-        await microcosmManager
-          .get(microcosm_id)
-          .then((instance) => {
-            store.dispatch('microcosms/addToHistory', { microcosm_id, data: { remote } })
-            instance.setRemote(remote)
           })
       }
       commit('UPDATE_ROUTER_PARAMS', to)
@@ -147,15 +156,26 @@ export const microcosmsStore = {
   },
 }
 
-const registerMicrocosmStore = (microcosm_id) => {
-  store.registerModule(
-    [STORE_PREFIX, STORE_CHILD_PREFIX, microcosm_id],
-    microcosmStoreTemplate(microcosm_id)
-  )
-}
+// microcosmManager
+//   .get(microcosm_id)
+//   .then(instance => {
+//     instance.update({ data: 'update' })
+//   })
+//   .catch(err => {
+//     console.log(err)
+//   })
 
-export const unregisterMicrocosmStore = async (microcosm_id) => {
-  await microcosmManager.unregisterMicrocosm(microcosm_id).then(() => {
-    store.unregisterModule([STORE_PREFIX, STORE_CHILD_PREFIX, microcosm_id])
-  })
+// try {
+//   const instance = await microcosmManager.get(microcosm_id)
+//   instance.update({ data: 'update' })
+// } catch (e) {
+//   console.log(e)
+// }
+
+
+export const unregisterMicrocosm = async (microcosm_id) => {
+  await microcosmManager
+    .unregisterMicrocosm(microcosm_id).then(() => {
+      unregisterMicrocosmStore(store, microcosm_id)
+    })
 }

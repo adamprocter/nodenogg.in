@@ -2,7 +2,7 @@
   <component
     v-if="!!view && views[view]"
     v-bind:is="view"
-    v-bind:baseViewRoute="baseViewRoute"
+    v-bind:baseViewRoute="getMicrocosmBaseRoute"
   />
   <div v-else>
     <p>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import board from './board/index.vue'
 import list from './list/index.vue'
 import webgl from './webgl/index.vue'
@@ -52,9 +53,9 @@ export default {
     },
   },
   computed: {
-    baseViewRoute() {
-      return `/dev/${this.microcosm_id}/${this.view}`
-    },
+    ...mapGetters({
+      getMicrocosmBaseRoute: 'microcosms/getMicrocosmBaseRoute'
+    })
   },
   data() {
     return {

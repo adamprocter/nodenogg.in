@@ -20,33 +20,6 @@
         >You haven't created any microcosms yet</template
       >
     </multiselect>
-    <!-- <button
-      v-if="!!activeMicrocosm"
-      button
-      v-on:click="open = !open"
-      class="microcosm-title"
-    >{{ activeMicrocosm ? activeMicrocosmId : 'Microcosms' }}</button>
-    <div class="microcosm-list" v-bind:class="{ open }">
-      <input
-        type="text"
-        v-bind:value="newMicrocosm"
-        v-on:input="handleInput"
-        v-on:keyup.enter="handleInputEnter"
-        placeholder="Search or add"
-      />
-      <div
-        v-on:click="open = false"
-        v-for="({ microcosm_id }, i) in microcosmList"
-        v-bind:key="`${microcosm_id}-${i}`"
-      >
-        <router-link
-          v-bind:class="{
-            active: activeMicrocosmId === microcosm_id,
-          }"
-          v-bind:to="`/dev/${microcosm_id}/${defaultView}`"
-        >{{ microcosm_id }}</router-link>
-      </div>
-    </div>-->
   </nav>
 </template>
 
@@ -62,7 +35,7 @@ export default {
     return {
       open: false,
       newMicrocosm: this.activeMicrocosm || null,
-      defaultView: 'webgl',
+      defaultView: 'board',
     }
   },
   computed: {
