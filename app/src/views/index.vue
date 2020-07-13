@@ -54,8 +54,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getMicrocosmBaseRoute: 'microcosms/getMicrocosmBaseRoute'
-    })
+      getMicrocosmBaseRoute: 'microcosms/getMicrocosmBaseRoute',
+    }),
   },
   data() {
     return {

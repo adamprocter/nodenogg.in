@@ -1,5 +1,5 @@
 import set from 'set-value'
-import { STORE_PREFIX, MICROCOSM_ROUTES } from './constants'
+import { MICROCOSM_ROUTES } from './constants'
 
 export const updateHistory = (history = {}, { microcosm_id, data, edit }) => {
   const newHistory = Object.assign({}, history)
@@ -11,7 +11,7 @@ export const updateHistory = (history = {}, { microcosm_id, data, edit }) => {
       microcosm_id,
       ...data,
       lastViewed: timestamp,
-      ...edit && { lastEdited: timestamp }
+      ...(edit && { lastEdited: timestamp }),
     })
   )
   return newHistory
@@ -19,11 +19,6 @@ export const updateHistory = (history = {}, { microcosm_id, data, edit }) => {
 
 export const isMicrocosmRoute = ({ name }) =>
   MICROCOSM_ROUTES.indexOf(name) > -1
-
-export const connectRouterToMicrocosmStore = (router, store) =>
-  router.afterEach((to) => {
-    store.dispatch(`${STORE_PREFIX}/handleRouteChange`, to)
-  })
 
 export const logger = (origin, color, ...message) => {
   console.log(`%c[${origin}]`, `color: ${color}`, ...message)
@@ -39,13 +34,12 @@ export const logger = (origin, color, ...message) => {
  * @param {Boolean} options.username - Admin username for CouchDB
  * @param {Boolean} options.password - Admin password for CouchDB
  */
-export const generateRemoteURL = ({
-  secure = false,
-  domain,
-  username,
-  password,
-  microcosm_id
-}, defaultMicrocosmID) => {
+export const generateRemoteURL = (
+  { secure = false, domain, username, password, microcosm_id },
+  defaultMicrocosmID
+) => {
   const credentials = username && password ? `${username}:${password}@` : ''
-  return `http${secure ? 's' : ''}://${credentials}${domain}/${microcosm_id || defaultMicrocosmID}`
+  return `http${secure ? 's' : ''}://${credentials}${domain}/${
+    microcosm_id || defaultMicrocosmID
+  }`
 }

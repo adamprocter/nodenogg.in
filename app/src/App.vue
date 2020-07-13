@@ -2,6 +2,7 @@
   <div id="app">
     <Navigation />
     <MicrocosmSettings />
+    <NetworkStatus />
     <router-view />
   </div>
 </template>
@@ -10,6 +11,7 @@
 import { routes } from './router'
 import Navigation from './components/Navigation'
 import MicrocosmSettings from './components/MicrocosmSettings'
+import NetworkStatus from './components/NetworkStatus'
 export default {
   data: function () {
     return {
@@ -19,6 +21,7 @@ export default {
   components: {
     Navigation,
     MicrocosmSettings,
+    NetworkStatus,
   },
 }
 </script>

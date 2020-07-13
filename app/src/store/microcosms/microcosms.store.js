@@ -1,7 +1,10 @@
 import { get } from '@ngard/tiny-get'
 
 import store from '@/store'
-import { registerMicrocosmStore, unregisterMicrocosmStore } from './microcosm.store'
+import {
+  registerMicrocosmStore,
+  unregisterMicrocosmStore,
+} from './microcosm.store'
 import { MicrocosmInstanceManager } from './MicrocosmInstanceManager'
 
 import * as storage from '@/utils/storage'
@@ -77,7 +80,9 @@ export const microcosmsStore = {
     getMicrocosmBaseRoute: (state) => {
       const activeMicrocosm = get(state, 'routerParams.microcosm_id')
       const activeView = get(state, 'routerParams.view')
-      return (activeMicrocosm && activeView) && `/dev/${activeMicrocosm}/${activeView}`
+      return (
+        activeMicrocosm && activeView && `/dev/${activeMicrocosm}/${activeView}`
+      )
     },
   },
   mutations: {
@@ -109,7 +114,7 @@ export const microcosmsStore = {
     },
     createNode: async ({ commit, dispatch }, { microcosm_id, newNode }) => {
       commit(`${microcosm_id}/CREATE_NODE`, newNode)
-      // add edit 
+      // add edit
       dispatch('addToHistory', { microcosm_id, edit: true })
     },
     createNodeFromRoute: async ({ commit, state, dispatch }, newNode) => {
@@ -122,7 +127,10 @@ export const microcosmsStore = {
           const instance = await microcosmManager.get(activeMicrocosm)
           instance.update(newNode)
 
-          dispatch('addToHistory', { microcosm_id: activeMicrocosm, edit: true })
+          dispatch('addToHistory', {
+            microcosm_id: activeMicrocosm,
+            edit: true,
+          })
         }
       } catch (e) {
         console.log(e)
@@ -136,7 +144,6 @@ export const microcosmsStore = {
         await microcosmManager
           .add(microcosm_id, { remote })
           .then((isExistingInstance) => {
-
             // add this event to our microcosm history
             dispatch('addToHistory', {
               microcosm_id,
@@ -172,10 +179,13 @@ export const microcosmsStore = {
 //   console.log(e)
 // }
 
-
 export const unregisterMicrocosm = async (microcosm_id) => {
-  await microcosmManager
-    .unregisterMicrocosm(microcosm_id).then(() => {
-      unregisterMicrocosmStore(store, microcosm_id)
-    })
+  await microcosmManager.unregisterMicrocosm(microcosm_id).then(() => {
+    unregisterMicrocosmStore(store, microcosm_id)
+  })
 }
+
+export const init = (router, store) =>
+  router.afterEach((to) => {
+    store.dispatch(`${STORE_PREFIX}/handleRouteChange`, to)
+  })

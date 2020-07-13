@@ -59,7 +59,7 @@ export class MicrocosmInstance {
   registerRemoteDB = async (remote) => {
     const remoteURL = generateRemoteURL(remote, this.microcosm_id)
     this.remoteDB = await this.createPouchInstance({
-      db: remoteURL
+      db: remoteURL,
     })
   }
   fetchSession = () => {

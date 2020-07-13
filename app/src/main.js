@@ -3,7 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import files from './assets/files/cute_monkey.jpg'
-import { connectRouterToMicrocosmStore } from './store/microcosms/utils'
+import { init as initMicrocosmStore } from './store/microcosms/microcosms.store'
+import { init as initNetworkStore } from './store/network.store'
 
 import BaseButton from './components/BaseButton.vue'
 import Icon from '@/experimental/icons/Icon'
@@ -13,7 +14,8 @@ Vue.component('Icon', Icon)
 
 Vue.config.productionTip = false
 
-connectRouterToMicrocosmStore(router, store)
+initMicrocosmStore(router, store)
+initNetworkStore(store)
 
 new Vue({
   router,
