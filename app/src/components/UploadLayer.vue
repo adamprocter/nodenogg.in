@@ -9,8 +9,8 @@
         ref="fileInput"
         @change="onFileSelected"
       />
-      <!-- <h1>{{ status }}</h1>
-      <h2>ID: {{ id }}</h2>
+      <h1>{{ status }}</h1>
+      <!-- <h2>ID: {{ id }}</h2>
       <h2>Agent version: {{ agentVersion }}</h2> -->
       <!-- 
       <button type="button" @click="saveIPFS">Upload</button>
@@ -38,7 +38,7 @@ var copytext = ''
 
 //  The below code should create an IPFS node to add files to
 export default {
-  name: 'IpfsInfo',
+  name: 'UploadLayer',
 
   props: {
     uploadready: Boolean,
@@ -48,7 +48,7 @@ export default {
     return {
       status: 'Connecting to IPFS...',
       // id: '',
-      // agentVersion: '',
+      //  agentVersion: '',
       selectedFile: null,
       fileContents: this.fileContents,
       output: output,
@@ -57,7 +57,7 @@ export default {
     }
   },
   mounted: function () {
-    // console.log(VueIpfs)
+    //console.log(VueIpfs)
     this.getIpfsNodeInfo()
   },
 
@@ -93,6 +93,7 @@ export default {
       } catch (err) {
         // Set error status text.
         this.status = `Error: ${err}`
+        console.log(err)
       }
     },
 

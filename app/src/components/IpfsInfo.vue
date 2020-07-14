@@ -58,7 +58,7 @@ export default {
   },
   mounted: function () {
     // console.log(VueIpfs)
-    this.getIpfsNodeInfo()
+    // this.getIpfsNodeInfo()
   },
   methods: {
     async getIpfsNodeInfo() {
