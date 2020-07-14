@@ -45,7 +45,7 @@ export const nodeToArea = (node, threshold = 0.0) => {
     x1: node.x * (1.0 - threshold),
     y1: node.y * (1.0 - threshold),
     x2: (node.x + node.width) * (1.0 + threshold),
-    y2: (node.y + node.height) * (1.0 + threshold)
+    y2: (node.y + node.height) * (1.0 + threshold),
   }
 }
 
@@ -56,12 +56,12 @@ export const nodeToArea = (node, threshold = 0.0) => {
  * @return {Node}
  *
  *  */
-export const areaToNode = area => {
+export const areaToNode = (area) => {
   return {
     x: area.x1,
     y: area.y1,
     width: Math.abs(area.x2 - area.x1),
-    height: Math.abs(area.y2 - area.y1)
+    height: Math.abs(area.y2 - area.y1),
   }
 }
 
@@ -104,13 +104,13 @@ export const generateLinkHandles = (from, to) => {
   return [
     {
       x: from.x + from.width,
-      y: from.y + from.height / 2
+      y: from.y + from.height / 2,
     },
     {
       // x: to.x + to.width / 2,
       x: to.x + 10,
-      y: to.y + to.height / 2
-    }
+      y: to.y + to.height / 2,
+    },
   ]
 }
 
@@ -125,7 +125,7 @@ export const generateLinkHandles = (from, to) => {
  *  */
 export const areaNodeIntersections = (targetNode, nodes, threshold = 0) => {
   return nodes
-    .filter(node =>
+    .filter((node) =>
       areaOverlaps(nodeToArea(targetNode), nodeToArea(node, threshold))
     )
     .map(({ id }) => id)
@@ -140,7 +140,9 @@ export const areaNodeIntersections = (targetNode, nodes, threshold = 0) => {
  *
  *  */
 export const pointNodeIntersections = (point, nodes) => {
-  return nodes.filter(node => pointWithinNode(point, node)).map(({ id }) => id)
+  return nodes
+    .filter((node) => pointWithinNode(point, node))
+    .map(({ id }) => id)
 }
 
 /**
@@ -163,7 +165,7 @@ export const pointWithinNode = (point, node) => {
  * @return {Area}
  *
  *  */
-export const generateAreaFromNodes = nodes => {
+export const generateAreaFromNodes = (nodes) => {
   const sum = {}
 
   for (let node of nodes) {
@@ -201,7 +203,7 @@ export const generateNode = (origin, target) => {
     x: minusX ? origin.x - width : origin.x,
     y: minusY ? origin.y - height : origin.y,
     width,
-    height
+    height,
   }
 }
 
@@ -225,15 +227,15 @@ export const transformNodeSelection = (nodes, transform) => {
     }
   }
 
-  return nodes.map(node => {
+  return nodes.map((node) => {
     const relativeTransform = {
       x: node.x - baseCoordinates.x,
-      y: node.y - baseCoordinates.y
+      y: node.y - baseCoordinates.y,
     }
 
     return Object.assign({}, node, {
       x: transform.x + relativeTransform.x,
-      y: transform.y + relativeTransform.y
+      y: transform.y + relativeTransform.y,
     })
   })
 }

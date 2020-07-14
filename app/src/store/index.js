@@ -10,8 +10,12 @@ import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import uiStore from '@/experimental/uiStore'
 import Router from '@/router'
 
+import { microcosmsStore } from './microcosms/microcosms.store'
+import { networkStore } from './network.store'
+
 Vue.use(Vuex)
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
+
 var myclient = 'firstvisit'
 
 if (localStorage.getItem('mylastMicrocosm') == null) {
@@ -622,8 +626,11 @@ const store = new Vuex.Store({
   },
   modules: {
     ui: uiStore,
+    network: networkStore,
+    microcosms: microcosmsStore,
   },
 })
 
 export default store
+
 store.dispatch('syncDB')

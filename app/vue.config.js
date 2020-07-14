@@ -10,12 +10,17 @@ module.exports = {
             {
               loader: 'file-loader',
               options: {
-                name: 'files/[name].[ext]'
-              }
-            }
-          ]
-        }
-      ]
-    }
-  }
+                name: 'files/[name].[ext]',
+              },
+            },
+          ],
+        },
+      ],
+    },
+    devServer: {
+      watchOptions: {
+        poll: true,
+      },
+    },
+  },
 }

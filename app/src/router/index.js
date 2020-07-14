@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import List from '../views/List.vue'
-// import Oldhome from '../views/Oldhome'
-//import Test from '../views/Test'
+import Home from '../routes/Home.vue'
+import List from '../routes/List.vue'
+// import Oldhome from '../routes/Oldhome'
+//import Test from '../routes/Test'
 
 Vue.use(VueRouter)
 
@@ -20,7 +20,7 @@ export const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/About.vue'),
+      import(/* webpackChunkName: "about" */ '../routes/About.vue'),
   },
   {
     path: '/list',
@@ -38,8 +38,28 @@ export const routes = [
   //   name: 'Old Home',
   //   component: Oldhome,
   // },
-
-  // dynamic segement `:microcosm` is added to the path
+  {
+    path: '/dev',
+    name: 'index',
+    component: () => import('@/routes/dev/index.vue'),
+  },
+  {
+    path: '/dev/:microcosm_id',
+    name: 'microcosm',
+    component: () => import('@/routes/dev/microcosm.vue'),
+    children: [
+      {
+        name: 'microcosm.view',
+        path: ':view',
+        children: [
+          {
+            name: 'microcosm.view.node',
+            path: ':node_id',
+          },
+        ],
+      },
+    ],
+  },
   {
     path: '/microcosm/:microcosm',
     component: Home,
@@ -49,10 +69,7 @@ export const routes = [
     // catches 404 errors
     path: '*',
     name: '404',
-    component: () =>
-      import(
-        /* webpackChunkName: "NotFoundComponent" */ '../views/NotFound.vue'
-      ),
+    component: () => import('../routes/NotFound.vue'),
   },
 ]
 

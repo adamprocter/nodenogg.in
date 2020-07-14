@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <navigation />
+    <Navigation />
+    <MicrocosmSettings />
+    <NetworkStatus />
     <router-view />
   </div>
 </template>
@@ -8,15 +10,19 @@
 <script>
 import { routes } from './router'
 import Navigation from './components/Navigation'
+import MicrocosmSettings from './components/MicrocosmSettings'
+import NetworkStatus from './components/NetworkStatus'
 export default {
-  data: function() {
+  data: function () {
     return {
-      routes: routes.filter(route => !!route.name)
+      routes: routes.filter((route) => !!route.name),
     }
   },
   components: {
-    navigation: Navigation
-  }
+    Navigation,
+    MicrocosmSettings,
+    NetworkStatus,
+  },
 }
 </script>
 <style>
