@@ -1,3 +1,15 @@
+# 0.1.19
+
+_13th July 2020_
+
+### Changes
+
+- List view has be renamed mobile view and works better on smaller devices. Allow for quick capture of ideas whislt using a smaller screen (not perfect but better than before)
+
+### Fixed
+
+- IPFS Media is working (updated code for 0.49.0)
+
 # 0.1.18
 
 _2nd July 2020_

@@ -9,12 +9,12 @@
         ref="fileInput"
         @change="onFileSelected"
       />
-      <!-- <h1>{{ status }}</h1>
+      <h1>{{ status }}</h1>
       <h2>ID: {{ id }}</h2>
-      <h2>Agent version: {{ agentVersion }}</h2> -->
-      <!-- 
+      <h2>Agent version: {{ agentVersion }}</h2>
+
       <button type="button" @click="saveIPFS">Upload</button>
-      <button type="button" @click="getIPFS">Get IPFS</button> -->
+      <button type="button" @click="getIPFS">Get IPFS</button>
       <!-- {{ uploadready }} -->
       <textarea id="ipfshash" v-model="copytext"></textarea>
       <div class="btn-row">
@@ -103,13 +103,8 @@ export default {
 
     async saveIPFS() {
       try {
-        for await (const result of node.add(this.selectedFile)) {
-          //console.log(result.cid.string)
-          this.fileContents = result
-          // console.log(this.fileContents.path)
-          // node.swarm.peers().then((a) => console.log(a))
-          this.getIPFS()
-        }
+        this.fileContents = await node.add(this.selectedFile)
+        this.getIPFS()
       } catch (err) {
         // Set error status text.
         this.status = `Error: ${err}`
@@ -153,7 +148,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.fileInput {
+/* .fileInput {
   display: none;
 }
 
@@ -163,5 +158,5 @@ textarea {
   height: 0px;
   width: 0px;
   padding: 0px;
-}
+} */
 </style>
