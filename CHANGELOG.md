@@ -1,3 +1,15 @@
+# 0.1.20
+
+_14th July 2020_
+
+### Changed
+
+- Updated z-index on initial creation to easier to see you have created a few
+
+### Fixed
+
+- hid IPFS debug information
+
 # 0.1.19
 
 _13th July 2020_
