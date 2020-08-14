@@ -28,7 +28,7 @@
             </p>
           </div>
           <div class="react" v-if="nodeid != undefined">
-            <h2>React</h2>
+            <!-- <h2>React</h2> -->
             <div class="eeee">
               <input :value="nodeid" name="id" readonly hidden />
               <input
@@ -219,7 +219,7 @@ export default {
     return {
       input: '',
       search: '',
-      pickupz: 99,
+      pickupz: 1,
     }
   },
 

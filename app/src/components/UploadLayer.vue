@@ -9,12 +9,12 @@
         ref="fileInput"
         @change="onFileSelected"
       />
-      <h1>{{ status }}</h1>
+      <!-- <h1>{{ status }}</h1>
       <h2>ID: {{ id }}</h2>
-      <h2>Agent version: {{ agentVersion }}</h2>
+      <h2>Agent version: {{ agentVersion }}</h2> -->
 
-      <button type="button" @click="saveIPFS">Upload</button>
-      <button type="button" @click="getIPFS">Get IPFS</button>
+      <!-- <button type="button" @click="saveIPFS">Upload</button>
+      <button type="button" @click="getIPFS">Get IPFS</button> -->
       <!-- {{ uploadready }} -->
       <textarea id="ipfshash" v-model="copytext"></textarea>
       <div class="btn-row">
@@ -85,11 +85,11 @@ export default {
         // console.log(node)
         // Call ipfs `id` method.
         // Returns the identity of the Peer.
-        const { agentVersion, id } = await node.id()
-        this.agentVersion = agentVersion
-        this.id = id
+        //  const { agentVersion, id } = await node.id()
+        //  this.agentVersion = agentVersion
+        //   this.id = id
         // Set successful status text.
-        this.status = 'Connected to IPFS 😊'
+        //  this.status = 'Connected to IPFS 😊'
       } catch (err) {
         // Set error status text.
         this.status = `Error: ${err}`
@@ -148,7 +148,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-/* .fileInput {
+.fileInput {
   display: none;
 }
 
@@ -158,5 +158,5 @@ textarea {
   height: 0px;
   width: 0px;
   padding: 0px;
-} */
+}
 </style>

@@ -6,7 +6,7 @@
       :h="335"
       :x="560"
       :y="50"
-      :z="0"
+      :z="1"
       :draggable="true"
       style="background-color: #6fcf97;"
     >
@@ -45,12 +45,12 @@
       :h="375"
       :x="1100"
       :y="50"
-      :z="0"
+      :z="1"
       :draggable="true"
       style="background-color: #6fcf97;"
     >
       <form>
-        <div>
+        <div class="content">
           <p id="nodeid" :inner-html.prop="nodetext2 | marked"></p>
           <div v-if="microcosm == false">
             <input
@@ -144,6 +144,11 @@ export default {
 }
 .vdr {
   padding: 0 0.5em;
+}
+
+.content {
+  overflow: hidden;
+  max-height: 100%;
 }
 
 h1,
