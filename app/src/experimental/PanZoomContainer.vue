@@ -57,7 +57,7 @@
 import { mapState } from 'vuex'
 import { constrainTranslation } from '@/experimental/utils/numbers'
 import {
-  getNormalisedInteraction,
+ // getNormalisedInteraction,
   changeViewFromWheelEvent,
   changeViewFromMultiTouchEvent,
 } from '@/experimental/utils/view'
@@ -102,13 +102,13 @@ export default {
         this.shouldPreventTouchEndDefault = false
       }
 
-      const { relativePoint, boardPoint } = getNormalisedInteraction(
-        this.$refs.container,
-        e,
-        this.translation,
-        this.scale
-      )
-      console.log(relativePoint, boardPoint)
+      // const { relativePoint, boardPoint } = getNormalisedInteraction(
+      //   this.$refs.container,
+      //   e,
+      //   this.translation,
+      //   this.scale
+      // )
+      // console.log(relativePoint, boardPoint)
     },
     reset() {},
     onMouseDown(e) {

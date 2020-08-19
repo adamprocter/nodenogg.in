@@ -2,7 +2,7 @@
   <div>
     <!-- FIXME: Maybe need to use $attrs at somepoint -->
     <button v-on="$listeners" class="button" :class="buttonClass" type="button">
-      <slot>DEFAULT</slot>
+      <slot></slot>
     </button>
   </div>
 </template>
@@ -61,4 +61,27 @@ button.action {
 button:active {
   background-color: #cab6ff;
 }
+
+button.new-link {
+  position: absolute;
+  top: calc(50%);
+  right: -30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  background: rgb(253, 180, 243);
+  outline: none;
+}
+
+/* button.link-node {
+  position: absolute;
+  right: -6px;
+  top: calc(50% - 6px);
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  z-index: 2;
+} */
 </style>

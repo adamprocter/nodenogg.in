@@ -94,18 +94,23 @@
           <form>
             <div v-if="posvalue.read_mode == false">
               <div v-for="value in myNodes" v-bind:key="value.node_id">
-                <textarea
-                  v-if="nodeid == value.node_id"
-                  @focus="editTrue(true)"
-                  @blur="editTrue(false)"
-                  autofocus
-                  @input="editNode"
-                  v-model="value.node_text"
-                  :id="nodeid"
-                  class="drag-cancel"
-                  ref="nodetext"
-                  placeholder="Idea goes here! (auto saved every keystroke)"
-                ></textarea>
+                <div v-if="nodeid == value.node_id">
+                  <textarea
+                    @focus="editTrue(true)"
+                    @blur="editTrue(false)"
+                    autofocus
+                    @input="editNode"
+                    v-model="value.node_text"
+                    :id="nodeid"
+                    class="drag-cancel"
+                    ref="nodetext"
+                    placeholder="Idea goes here! (auto saved every keystroke)"
+                  ></textarea>
+                  <BaseButton
+                    buttonClass="new-link"
+                    @click="onClickNewLink(value.node_id)"
+                  ></BaseButton>
+                </div>
               </div>
             </div>
             <div v-if="posvalue.read_mode == true">
@@ -114,6 +119,22 @@
                 :id="nodeid"
                 :inner-html.prop="nodetext | marked"
               ></p>
+
+              <button class="new-link" @click="onClickNewLink(value.node_id)" />
+              <!-- <button class="link-node" /> -->
+
+              <!-- <button
+                class="new-link"
+                v-on:mousedown="() => onClickNewLink(node.id)"
+              />
+              <button
+                class="link-node"
+                v-for="link of node.links"
+                v-bind:key="link.id"
+                v-bind:style="{
+                  backgroundColor: getPalette(link.color, 'dark'),
+                }"
+              /> -->
             </div>
 
             <!-- <h3>Reactions</h3> -->
@@ -306,6 +327,12 @@ export default {
         this.$store.dispatch('readFlag', { e, readmode })
         this.mode = 'Edit'
       }
+    },
+
+    onClickNewLink(e) {
+      // e = this.nodeid
+      console.log(e)
+      //this.newLink = { from: id };
     },
   },
 }

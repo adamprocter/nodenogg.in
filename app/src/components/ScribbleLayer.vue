@@ -56,7 +56,7 @@ export default {
       // console.log(this.painting)
       if (this.painting == true) {
         evt.preventDefault()
-        console.log('touchstart.')
+        //  console.log('touchstart.')
         var el = document.getElementById('canvas')
         var ctx = el.getContext('2d')
         var touches = evt.changedTouches
