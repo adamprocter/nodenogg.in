@@ -31,16 +31,16 @@ export const move = {
   shortcut: false,
 }
 
-// export const connect = {
-//   name: 'connect',
-//   view: {
-//     pan: false,
-//     zoom: false,
-//   },
-//   icon: 'connection',
-//   cursor: 'crosshair',
-//   shortcut: false,
-// }
+export const connect = {
+  name: 'connect',
+  view: {
+    pan: false,
+    zoom: false,
+  },
+  icon: 'connection',
+  cursor: 'crosshair',
+  shortcut: false,
+}
 
 export const draw = {
   name: 'draw',

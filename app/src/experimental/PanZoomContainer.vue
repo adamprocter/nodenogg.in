@@ -133,7 +133,7 @@ export default {
       if (!this.interaction.origin) {
         return
       }
-      // console.log('touch')
+      //console.log(e.touches.length)
       e.preventDefault()
       const isPinchAction =
         e.touches.length == 2 && this.interaction.origin.points.length > 1

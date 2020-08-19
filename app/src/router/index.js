@@ -14,6 +14,11 @@ export const routes = [
     component: Home,
   },
   {
+    path: '/mobile',
+    name: 'Mobile',
+    component: List,
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -21,11 +26,6 @@ export const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../routes/About.vue'),
-  },
-  {
-    path: '/list',
-    name: 'List Test',
-    component: List,
   },
 
   // {

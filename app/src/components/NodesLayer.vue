@@ -172,7 +172,7 @@ export default {
 
   data() {
     return {
-      pickupz: 99,
+      pickupz: 1,
       localreadmode: false,
       mode: '',
     }
@@ -359,7 +359,7 @@ textarea {
 img {
   width: 100%;
 }
-/* .draggable {
+/* .dragging {
   transform: scale(0.7);
 } */
 </style>

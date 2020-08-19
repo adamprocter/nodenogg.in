@@ -29,6 +29,10 @@
 
     <h3>Considerations</h3>
     <ul>
+      <li>
+        &nbsp;You may need to create a new microcosm to take advantage of new
+        enhancements
+      </li>
       <li>&nbsp;Data is not yet encrypted.</li>
       <li>&nbsp;There is no Export yet.</li>
 
@@ -36,7 +40,8 @@
         Please
         <strong>UNDERSTAND</strong> all data as not backed up, data structures
         and data will ocasssionaly be deleted or changed remotely which may
-        effect and break your local data.
+        effect and break your local data. Please make a seperate copy (copy and
+        paste into a local file)
       </li>
     </ul>
     <h2>Design-led ethical Edutech</h2>

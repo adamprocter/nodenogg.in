@@ -113,33 +113,39 @@ export default {
 
 <style scoped>
 nav {
-  position: fixed;
+  display: none;
+}
 
-  bottom: 1em;
-  left: 1em;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-}
-button {
-  border: none;
-  width: 50px;
-  height: 50px;
-  padding: 0;
-  margin: 0;
-  margin-top: 1em;
-  background: white;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  outline: none;
-  box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.1);
-  margin-right: 10px;
-}
-button.active {
-  background: rgb(30, 30, 30);
+@media (min-width: 450px) {
+  nav {
+    position: fixed;
+
+    bottom: 1em;
+    left: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  button {
+    border: none;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    margin-top: 1em;
+    background: white;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    outline: none;
+    box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.1);
+    margin-right: 10px;
+  }
+  button.active {
+    background: rgb(30, 30, 30);
+  }
 }
 </style>

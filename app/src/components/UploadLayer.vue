@@ -12,8 +12,8 @@
       <!-- <h1>{{ status }}</h1>
       <h2>ID: {{ id }}</h2>
       <h2>Agent version: {{ agentVersion }}</h2> -->
-      <!-- 
-      <button type="button" @click="saveIPFS">Upload</button>
+
+      <!-- <button type="button" @click="saveIPFS">Upload</button>
       <button type="button" @click="getIPFS">Get IPFS</button> -->
       <!-- {{ uploadready }} -->
       <textarea id="ipfshash" v-model="copytext"></textarea>
@@ -85,11 +85,11 @@ export default {
         // console.log(node)
         // Call ipfs `id` method.
         // Returns the identity of the Peer.
-        const { agentVersion, id } = await node.id()
-        this.agentVersion = agentVersion
-        this.id = id
+        //  const { agentVersion, id } = await node.id()
+        //  this.agentVersion = agentVersion
+        //   this.id = id
         // Set successful status text.
-        this.status = 'Connected to IPFS 😊'
+        //  this.status = 'Connected to IPFS 😊'
       } catch (err) {
         // Set error status text.
         this.status = `Error: ${err}`
@@ -103,13 +103,8 @@ export default {
 
     async saveIPFS() {
       try {
-        for await (const result of node.add(this.selectedFile)) {
-          //console.log(result.cid.string)
-          this.fileContents = result
-          // console.log(this.fileContents.path)
-          // node.swarm.peers().then((a) => console.log(a))
-          this.getIPFS()
-        }
+        this.fileContents = await node.add(this.selectedFile)
+        this.getIPFS()
       } catch (err) {
         // Set error status text.
         this.status = `Error: ${err}`

@@ -17,6 +17,8 @@ Vue.use(Vuex)
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
 
 var myclient = 'firstvisit'
+var localxpos = 50
+var localypos = 50
 
 if (localStorage.getItem('mylastMicrocosm') == null) {
   var microcosm = 'firstvisit'
@@ -365,13 +367,36 @@ const store = new Vuex.Store({
           })
       })
       pouchdb.get(state.global_pos_name).then(function (doc) {
+        //console.log(doc.positions[doc.positions.length - 1].z_index)
+        var i
+        localxpos = 50
+        localypos = 50
+        for (i = 0; i < Object.keys(doc.positions).length; i++) {
+          if (doc.positions[i].x_pos == 50) {
+            localxpos = 70
+            localypos = 70
+          }
+          if (doc.positions[i].x_pos == 70) {
+            localxpos = 90
+            localypos = 90
+          }
+          if (doc.positions[i].x_pos == 90) {
+            localxpos = 110
+            localypos = 110
+          }
+          if (doc.positions[i].x_pos == 110) {
+            localxpos = 50
+            localypos = 50
+          }
+        }
+
         doc.positions.push({
           node_id: uniqueid,
-          x_pos: 50,
-          y_pos: 50,
+          x_pos: localxpos,
+          y_pos: localypos,
           width: 220,
           height: 295,
-          z_index: 1,
+          z_index: 10,
           read_mode: false,
         })
         return pouchdb
