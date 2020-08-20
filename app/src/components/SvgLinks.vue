@@ -6,7 +6,7 @@
   >
     <template v-for="group in groups">
       <path
-        v-on:click="(e) => onClick(curve, e)"
+        @click="(e) => onClick(curve, e)"
         v-for="curve in group.links"
         v-bind:key="curve.id"
         v-bind:d="curve.path"
@@ -46,6 +46,7 @@ import { groupBy } from '@/experimental/utils/helpers'
 const groupByFrom = groupBy('from')
 
 export default {
+  props: {},
   data() {
     return {
       getPalette,
@@ -88,6 +89,7 @@ export default {
       return r
     },
     onClick(link, e) {
+      console.log(link)
       this.onClickLink([link.id])
     },
     findNode(id) {

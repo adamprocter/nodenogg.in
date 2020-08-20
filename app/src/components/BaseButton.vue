@@ -61,7 +61,7 @@ button.action {
 button:active {
   background-color: #cab6ff;
 }
-
+/* FIXME: old code  */
 button.new-link {
   position: absolute;
   top: calc(50%);
@@ -74,14 +74,4 @@ button.new-link {
   background: rgb(253, 180, 243);
   outline: none;
 }
-
-/* button.link-node {
-  position: absolute;
-  right: -6px;
-  top: calc(50% - 6px);
-  width: 12px;
-  height: 12px;
-  border-radius: 6px;
-  z-index: 2;
-} */
 </style>

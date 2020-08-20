@@ -24,30 +24,30 @@ export default {
   },
 
   methods: {
-    // startPainting(e) {
-    //   this.painting = this.drawready
-    //   if (this.painting == true) {
-    //     // console.log(this.painting)
-    //     this.draw(e)
-    //   }
-    // },
-    // finishedPainting() {
-    //   this.painting = false
-    //   //  console.log(this.painting)
-    //   this.ctx.beginPath()
-    // },
-    // draw(e) {
-    //   if (!this.painting) return
+    startPainting(e) {
+      this.painting = this.drawready
+      if (this.painting == true) {
+        // console.log(this.painting)
+        this.draw(e)
+      }
+    },
+    finishedPainting() {
+      this.painting = false
+      //  console.log(this.painting)
+      this.ctx.beginPath()
+    },
+    draw(e) {
+      if (!this.painting) return
 
-    //   this.ctx.lineWidth = 6
-    //   this.ctx.lineCap = 'round'
+      this.ctx.lineWidth = 6
+      this.ctx.lineCap = 'round'
 
-    //   this.ctx.lineTo(e.clientX, e.clientY)
-    //   this.ctx.stroke()
+      this.ctx.lineTo(e.clientX, e.clientY)
+      this.ctx.stroke()
 
-    //   this.ctx.beginPath()
-    //   this.ctx.moveTo(e.clientX, e.clientY)
-    // },
+      this.ctx.beginPath()
+      this.ctx.moveTo(e.clientX, e.clientY)
+    },
 
     // touch methods
 

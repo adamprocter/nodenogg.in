@@ -106,10 +106,6 @@
                     ref="nodetext"
                     placeholder="Idea goes here! (auto saved every keystroke)"
                   ></textarea>
-                  <BaseButton
-                    buttonClass="new-link"
-                    @click="onClickNewLink(value.node_id)"
-                  ></BaseButton>
                 </div>
               </div>
             </div>
@@ -120,7 +116,6 @@
                 :inner-html.prop="nodetext | marked"
               ></p>
 
-              <button class="new-link" @click="onClickNewLink(value.node_id)" />
               <!-- <button class="link-node" /> -->
 
               <!-- <button
