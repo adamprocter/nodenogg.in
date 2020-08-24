@@ -7,45 +7,66 @@
 <script>
 import { mapState } from 'vuex'
 import * as PIXI from 'pixi.js'
+
 export default {
   name: 'ConnectionsLayer',
   computed: mapState({
     toolmode: (state) => state.ui.mode,
   }),
-  methods: {},
+  // data() {
+  //   // return {
+  //   //   // app: new PIXI.Application({
+  //   //   //   width: window.innerWidth,
+  //   //   //   height: window.innerHeight,
+  //   //   //   antialias: true,
+  //   //   //   transparent: true,
+  //   //   //   view: canvas,
+  //   //   // }),
+  //   // }
+  // },
+  methods: {
+    drawPixi() {
+      var canvas = document.getElementById('pixi')
+
+      const app = new PIXI.Application({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        antialias: true,
+        transparent: true,
+        view: canvas,
+      })
+
+      let graphics = new PIXI.Graphics()
+      ///graphics.x = app.renderer.width / 2
+      //graphics.y = app.renderer.width / 2
+      //document.body.appendChild(app.view)
+
+      // graphics.lineStyle(0)
+      // graphics.beginFill(0xde3249, 1)
+      // graphics.drawCircle(100, 250, 50)
+      // graphics.endFill()
+
+      // graphics.lineStyle(0)
+      // graphics.beginFill(0xde3249, 1)
+      // graphics.drawCircle(300, 250, 50)
+      // graphics.endFill()
+
+      graphics.lineStyle(8, 0x000000)
+      //start
+      graphics.moveTo(300, 250)
+      //end
+      graphics.lineTo(500, 250)
+
+      // graphics.lineStyle(2, 0xffffff, 1)
+      // graphics.moveTo(0, 0)
+      app.stage.addChild(graphics)
+    },
+  },
+
+  mounted() {
+    this.drawPixi()
+  },
 }
-
-var canvas = document.getElementById('pixi')
-
-const app = new PIXI.Application({
-  width: window.innerWidth,
-  height: window.innerHeight,
-  antialias: true,
-  transparent: true,
-  view: canvas,
-})
-
-let graphics = new PIXI.Graphics()
-graphics.x = app.renderer.width / 2
-graphics.y = app.renderer.width / 2
-app.stage.addChild(graphics)
-
-graphics.lineStyle(0)
-graphics.beginFill(0xde3249, 1)
-graphics.drawCircle(100, 250, 50)
-graphics.endFill()
-
-graphics.lineStyle(0)
-graphics.beginFill(0xde3249, 1)
-graphics.drawCircle(300, 250, 50)
-graphics.endFill()
-
-graphics.lineStyle(2, 0xffffff, 1)
-graphics.moveTo(100, 250)
-graphics.lineTo(300, 250)
-
-graphics.lineStyle(2, 0xffffff, 1)
-graphics.moveTo(0, 0)
 
 // Opt-in to interactivity
 // graphics.interactive = true

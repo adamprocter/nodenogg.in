@@ -48,6 +48,7 @@
               v-bind:nodeid="value.node_id"
               v-bind:nodetext="value.node_text"
             />
+            <ConnectionsLayer />
           </div>
 
           <div v-else>
@@ -70,10 +71,6 @@
             />
           </div>
           <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
-          <ConnectionsLayer
-            v-bind:width="width"
-            v-bind:height="height"
-          ></ConnectionsLayer>
         </PanZoomContainer>
 
         <ModeToolbar

@@ -32,7 +32,7 @@ var copytext = ''
 
 //  The below code should create an IPFS node to add files to
 export default {
-  name: 'IpfsInfo',
+  name: 'UploadLayer',
 
   props: {
     uploadready: Boolean,
