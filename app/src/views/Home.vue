@@ -69,6 +69,7 @@
               @clientAdded="clientAdded()"
               @editTrue="(e) => editTrue(e)"
             />
+            <ConnectionsLayer />
           </div>
           <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
         </PanZoomContainer>

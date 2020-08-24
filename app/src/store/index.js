@@ -169,25 +169,24 @@ const store = new Vuex.Store({
         })
         .catch(function (err) {
           if (err.status == 404) {
-            var uniqueid =
-              Math.random().toString(36).substring(2, 15) +
-              Math.random().toString(36).substring(2, 15)
+            // var uniqueid =
+            //   Math.random().toString(36).substring(2, 15) +
+            //   Math.random().toString(36).substring(2, 15)
             return pouchdb.put({
               _id: state.myclient,
               _attachments: {},
               nodes: [
-                {
-                  // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
-                  // this shouldnt need to be here though
-
-                  node_id: uniqueid,
-                  node_text: 'Ignore this node ' + state.myclient,
-                  node_owner: state.myclient,
-                  content_type: 'sheet',
-                  // NOTE: first node is hidden due to no position
-                  deleted: true,
-                  attachment_name: '',
-                },
+                // {
+                //   // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
+                //   // this shouldnt need to be here though
+                //   node_id: uniqueid,
+                //   node_text: 'Ignore this node ' + state.myclient,
+                //   node_owner: state.myclient,
+                //   content_type: 'sheet',
+                //   // NOTE: the first node is hidden due to a position not being created
+                //   deleted: true,
+                //   attachment_name: '',
+                // },
               ],
             })
           }
@@ -237,14 +236,13 @@ const store = new Vuex.Store({
         connect_id: connectid,
         start_id: e.fromnode,
         end_id: e.tonode,
-        path: e.path,
-        color: e.color,
-        line_dash: e.linedash,
-        line_width: e.linewidth,
+        x_pos_start: e.xposstart,
+        y_pos_start: e.yposstart,
+        x_pos_end: e.xposend,
+        y_pos_end: e.yposend,
       })
 
       //   from db   |   in app
-
       //  connect_id |   connectID
       //  start_id   |   startID
 
@@ -513,6 +511,7 @@ const store = new Vuex.Store({
         .catch(function (err) {
           console.log(err)
           if (err.status == 404) {
+            console.log('ok')
             return pouchdb.put({
               _id: state.global_emoji_name,
               emojis: [],

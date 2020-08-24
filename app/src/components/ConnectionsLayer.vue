@@ -67,7 +67,7 @@ export default {
     this.drawPixi()
   },
 }
-
+// TODO: This is a sample of drawing lines with mouse with PIXI
 // Opt-in to interactivity
 // graphics.interactive = true
 
