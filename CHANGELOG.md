@@ -1,3 +1,15 @@
+# 0.1.21
+
+_26th August 2020_
+
+### Changed
+
+- Minor tweaks to order for of onboarding
+
+### Added
+
+- version 1 of connections you can now connect nodes, drawn using PixiJS
+
 # 0.1.20
 
 _14th July 2020_
