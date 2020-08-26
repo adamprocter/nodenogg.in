@@ -242,10 +242,6 @@ const store = new Vuex.Store({
         y_pos_end: e.yposend,
       })
 
-      //   from db   |   in app
-      //  connect_id |   connectID
-      //  start_id   |   startID
-
       pouchdb
         .get(state.global_con_name)
         .then(function (doc) {
@@ -271,7 +267,78 @@ const store = new Vuex.Store({
         })
     },
 
+    UPDATE_CONNECT(state, e) {
+      // console.log(e)
+      var i
+      for (i = 0; i < Object.keys(state.configConnections).length; i++) {
+        if (e.localnodeid == state.configConnections[i].start_id) {
+          state.configConnections[i].x_pos_start = e.x
+          state.configConnections[i].y_pos_start = e.y
+        }
+      }
+
+      pouchdb
+        .get(state.global_con_name)
+        .then(function (doc) {
+          //console.log(doc)
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.global_con_name,
+              _rev: doc._rev,
+              connections: state.configConnections,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.global_con_name).then(function (doc) {
+            state.configConnections = doc.connections
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
+    UPDATE_CONNECT_TWO(state, e) {
+      // console.log(e)
+      var i
+      for (i = 0; i < Object.keys(state.configConnections).length; i++) {
+        if (e.localnodeid == state.configConnections[i].end_id) {
+          state.configConnections[i].x_pos_end = e.x
+          state.configConnections[i].y_pos_end = e.y
+        }
+      }
+
+      pouchdb
+        .get(state.global_con_name)
+        .then(function (doc) {
+          //console.log(doc)
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.global_con_name,
+              _rev: doc._rev,
+              connections: state.configConnections,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.global_con_name).then(function (doc) {
+            state.configConnections = doc.connections
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
     MOVE_POS(state, e) {
+      //console.log(e)
       var i
       for (i = 0; i < Object.keys(state.configPositions).length; i++) {
         if (e.localnodeid == state.configPositions[i].node_id) {
@@ -601,6 +668,13 @@ const store = new Vuex.Store({
     movePos: ({ commit }, nodeid, xpos, ypos, width, height, zindex) => {
       commit('MOVE_POS', nodeid, xpos, ypos, width, height, zindex)
     },
+
+    updateConnect: ({ commit }, fromnode, xposstart, yposstart) => {
+      commit('UPDATE_CONNECT', fromnode, xposstart, yposstart)
+    },
+    updateConnectTwo: ({ commit }, tonode, xposend, yposend) => {
+      commit('UPDATE_CONNECT_TWO', tonode, xposend, yposend)
+    },
     readFlag: ({ commit }, e) => {
       // var text = e.target.value
       commit('READ_FLAG', e)
@@ -614,16 +688,15 @@ const store = new Vuex.Store({
 
     makeConnect: (
       { commit },
-      { connectid, fromnode, tonode, path, color, linedash, linewidth }
+      { fromnode, tonode, xposstart, yposstart, yposend, xposend }
     ) => {
       commit('MAKE_CONNECT', {
-        connectid,
         fromnode,
         tonode,
-        path,
-        color,
-        linedash,
-        linewidth,
+        xposstart,
+        yposstart,
+        yposend,
+        xposend,
       })
     },
     shortcutState: ({ commit }, e) => {

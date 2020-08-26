@@ -4,8 +4,8 @@
       class="innernode"
       :w="300"
       :h="335"
-      :x="560"
-      :y="50"
+      :x="5"
+      :y="15"
       :z="1"
       :draggable="true"
       style="background-color: #6fcf97;"
@@ -41,10 +41,10 @@
 
     <vue-draggable-resizable
       class="innernode"
-      :w="300"
+      :w="310"
       :h="375"
-      :x="1100"
-      :y="50"
+      :x="1050"
+      :y="15"
       :z="1"
       :draggable="true"
       style="background-color: #6fcf97;"
@@ -92,9 +92,9 @@ export default {
       localmicrocosm: Router.currentRoute.params.microcosm,
       clientid: '',
       nodetext:
-        '## 3. What shall we call you ? 💥 \n First we need to connect this device to your ideas. This name is what allows you to create and edit your nodes and can be anything you like and this name is always anonymous.',
+        '## What shall we call you ? 👩‍🚀 \n First we need to connect this device to your ideas. This name is what allows you to create and edit your nodes and can be anything you like and this name is always anonymous.',
       nodetext2:
-        '## 5. Start those engines ! 🏎 \n Now you can create your own microcosm to store your ideas and ask people to join you, either just tell them the name of the microcosm or share the alpha.nodenogg.in URL and add the ending; </br><em><b>/microcosm/nameofyourmicrocosm</b></em>',
+        '## Join/Start a microcosm ! 🚀 \n Now you can create your own microcosm to store your ideas and ask people to join you, either just tell them the name of the microcosm or share the alpha.nodenogg.in URL and add the ending; </br><em><b>/microcosm/nameofyourmicrocosm</b></em>',
       name: false,
       microcosm: false,
       // partc: false,
