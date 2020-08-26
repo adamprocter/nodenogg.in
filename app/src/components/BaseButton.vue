@@ -71,7 +71,7 @@ button.new-link {
   border-radius: 10px;
   border: 2px solid rgba(0, 0, 0, 0.1);
   z-index: 100;
-  background: rgb(253, 180, 243);
+  background-color: #cab6ff;
   outline: none;
 }
 </style>

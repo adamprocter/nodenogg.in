@@ -11,6 +11,7 @@
           :y="posvalue.y_pos"
           :z="posvalue.z_index"
           :draggable="false"
+          :resizable="false"
           style="background-color: rgb(205, 234, 255);"
         >
           <form>
@@ -51,6 +52,83 @@
               <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
               >
+              <div v-if="posvalue.read_mode == true">
+                <BaseButton
+                  class="read"
+                  buttonClass="action"
+                  @click="readFlag()"
+                  >Edit Mode
+                </BaseButton>
+              </div>
+              <div v-else>
+                <BaseButton
+                  class="read"
+                  buttonClass="action"
+                  @click="readFlag()"
+                  >Read Mode</BaseButton
+                >
+              </div>
+            </div>
+          </form>
+        </vue-draggable-resizable>
+      </div>
+
+      <div v-else-if="toolmode == 'connect'">
+        <vue-draggable-resizable
+          class="innernode"
+          v-if="nodeid == posvalue.node_id"
+          :w="posvalue.width"
+          :h="posvalue.height"
+          :x="posvalue.x_pos"
+          :y="posvalue.y_pos"
+          :z="posvalue.z_index"
+          :draggable="false"
+          :resizable="false"
+          style="background-color: rgb(205, 234, 255);"
+        >
+          <form>
+            <div v-if="posvalue.read_mode == false">
+              <div v-for="value in myNodes" v-bind:key="value.node_id">
+                <textarea
+                  v-if="nodeid == value.node_id"
+                  @focus="editTrue(true)"
+                  @blur="editTrue(false)"
+                  autofocus
+                  @input="editNode"
+                  v-model="value.node_text"
+                  :id="nodeid"
+                  class="drag-cancel"
+                  ref="nodetext"
+                  placeholder="Idea goes here! (auto saved every keystroke)"
+                ></textarea>
+              </div>
+            </div>
+            <div v-if="posvalue.read_mode == true">
+              <p
+                class="read"
+                :id="nodeid"
+                :inner-html.prop="nodetext | marked"
+              ></p>
+            </div>
+
+            <!-- <h3>Reactions</h3> -->
+
+            <div v-for="(emojis, index) in configEmoji" :key="index">
+              <p class="allemoji" v-if="nodeid == emojis.node_id">
+                {{ emojis.emoji_text }}
+              </p>
+            </div>
+
+            <p class="info">*markdown supported &amp; autosaves</p>
+            <div class="btn-row">
+              <BaseButton buttonClass="danger" @click="deleteFlag()"
+                >Delete</BaseButton
+              >
+              <BaseButton
+                buttonClass="new-link"
+                @click="onClickNewLink(nodeid, posvalue.x_pos, posvalue.y_pos)"
+              ></BaseButton>
+
               <div v-if="posvalue.read_mode == true">
                 <BaseButton
                   class="read"
@@ -115,21 +193,6 @@
                 :id="nodeid"
                 :inner-html.prop="nodetext | marked"
               ></p>
-
-              <!-- <button class="link-node" /> -->
-
-              <!-- <button
-                class="new-link"
-                v-on:mousedown="() => onClickNewLink(node.id)"
-              />
-              <button
-                class="link-node"
-                v-for="link of node.links"
-                v-bind:key="link.id"
-                v-bind:style="{
-                  backgroundColor: getPalette(link.color, 'dark'),
-                }"
-              /> -->
             </div>
 
             <!-- <h3>Reactions</h3> -->
@@ -174,6 +237,13 @@ import { mapState } from 'vuex'
 import marked from 'marked'
 import lodash from 'lodash'
 var readmode
+var count = 0
+var fromnode
+var tonode
+var xposstart
+var yposstart
+var xposend
+var yposend
 
 export default {
   name: 'NodesLayer',
@@ -215,13 +285,13 @@ export default {
   computed: mapState({
     myNodes: (state) => state.myNodes,
     configPositions: (state) => state.configPositions,
+    configConnections: (state) => state.configConnections,
     configEmoji: (state) => state.configEmoji,
     toolmode: (state) => state.ui.mode,
   }),
   methods: {
     onActivated() {
       var i
-
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
@@ -267,6 +337,7 @@ export default {
       width = this.width
       height = this.height
       var i
+      // FIXME: What is this for loop doing ??
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.localx = this.configPositions[i].x_pos
@@ -282,6 +353,29 @@ export default {
         height,
         zindex,
       })
+
+      var j
+      for (j = 0; j < Object.keys(this.configConnections).length; j++) {
+        // FIXME: What is this for loop doing ??
+        if (this.configConnections[j].start_id == this.nodeid) {
+          // this.localxstart = this.configConnections[j].x_pos_start
+          //  this.localystart = this.configConnections[j].y_pos_start
+          this.$store.dispatch('updateConnect', {
+            localnodeid,
+            x,
+            y,
+          })
+        }
+        if (this.configConnections[j].end_id == this.nodeid) {
+          // this.localxstart = this.configConnections[j].x_pos_start
+          //  this.localystart = this.configConnections[j].y_pos_start
+          this.$store.dispatch('updateConnectTwo', {
+            localnodeid,
+            x,
+            y,
+          })
+        }
+      }
     },
 
     editTrue(e) {
@@ -324,10 +418,28 @@ export default {
       }
     },
 
-    onClickNewLink(e) {
-      // e = this.nodeid
-      console.log(e)
-      //this.newLink = { from: id };
+    onClickNewLink(id, xpos, ypos) {
+      if (count == 0) {
+        fromnode = id
+        xposstart = xpos
+        yposstart = ypos
+        count = 1
+      } else if (count == 1) {
+        tonode = id
+        xposend = xpos
+        yposend = ypos
+        count = 0
+        this.$store.dispatch('makeConnect', {
+          fromnode,
+          tonode,
+          xposstart,
+          yposstart,
+          xposend,
+          yposend,
+        })
+      }
+
+      // this.$store.dispatch('deleteFlag', { e })
     },
   },
 }
