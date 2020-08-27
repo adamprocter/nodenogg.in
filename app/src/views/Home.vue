@@ -137,6 +137,7 @@ export default {
       myNodes: (state) => state.myNodes,
       otherNodes: (state) => state.otherNodes,
       shortcutstate: (state) => state.shortcutstate,
+      toolmode: (state) => state.ui.mode,
       connections: (state) => state.configConnections,
     }),
     ...mapGetters({
@@ -199,6 +200,9 @@ export default {
     // This is here to support the shortcuts
     addNode() {
       this.$store.dispatch('addNode')
+    },
+    selectMode(mode) {
+      this.$store.commit('ui/setMode', mode)
     },
 
     offlineTriggered() {

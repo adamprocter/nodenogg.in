@@ -49,9 +49,9 @@
 
             <p class="info">*markdown supported &amp; autosaves</p>
             <div class="btn-row">
-              <BaseButton buttonClass="danger" @click="deleteFlag()"
+              <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
-              >
+              > -->
               <div v-if="value.read_mode == true">
                 <BaseButton
                   class="read"
@@ -122,7 +122,7 @@
             <p class="info">*markdown supported &amp; autosaves</p>
             <div class="btn-row">
               <BaseButton buttonClass="danger" @click="deleteFlag()"
-                >Delete</BaseButton
+                >Hide</BaseButton
               >
               <BaseButton
                 buttonClass="new-link"
@@ -206,7 +206,7 @@
             <p class="info">*markdown supported &amp; autosaves</p>
             <div class="btn-row">
               <BaseButton buttonClass="danger" @click="deleteFlag()"
-                >Delete</BaseButton
+                >Hide</BaseButton
               >
               <div v-if="value.read_mode == true">
                 <BaseButton
