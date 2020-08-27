@@ -237,7 +237,6 @@ import { mapState } from 'vuex'
 import marked from 'marked'
 import lodash from 'lodash'
 var readmode
-var count = 0
 var fromnode
 var tonode
 var xposstart
@@ -288,6 +287,7 @@ export default {
     configConnections: (state) => state.configConnections,
     configEmoji: (state) => state.configEmoji,
     toolmode: (state) => state.ui.mode,
+    connectionstate: (state) => state.connectionstate,
   }),
   methods: {
     onActivated() {
@@ -356,10 +356,7 @@ export default {
 
       var j
       for (j = 0; j < Object.keys(this.configConnections).length; j++) {
-        // FIXME: What is this for loop doing ??
         if (this.configConnections[j].start_id == this.nodeid) {
-          // this.localxstart = this.configConnections[j].x_pos_start
-          //  this.localystart = this.configConnections[j].y_pos_start
           this.$store.dispatch('updateConnect', {
             localnodeid,
             x,
@@ -367,8 +364,6 @@ export default {
           })
         }
         if (this.configConnections[j].end_id == this.nodeid) {
-          // this.localxstart = this.configConnections[j].x_pos_start
-          //  this.localystart = this.configConnections[j].y_pos_start
           this.$store.dispatch('updateConnectTwo', {
             localnodeid,
             x,
@@ -419,16 +414,18 @@ export default {
     },
 
     onClickNewLink(id, xpos, ypos) {
-      if (count == 0) {
+      if (this.connectionstate == false) {
         fromnode = id
         xposstart = xpos
         yposstart = ypos
-        count = 1
-      } else if (count == 1) {
+        //count = 1
+        this.$store.dispatch('connectionState', true)
+      } else if (this.connectionstate == true) {
         tonode = id
         xposend = xpos
         yposend = ypos
-        count = 0
+        // count = 0
+        this.$store.dispatch('connectionState', false)
         this.$store.dispatch('makeConnect', {
           fromnode,
           tonode,
@@ -438,8 +435,6 @@ export default {
           yposend,
         })
       }
-
-      // this.$store.dispatch('deleteFlag', { e })
     },
   },
 }
