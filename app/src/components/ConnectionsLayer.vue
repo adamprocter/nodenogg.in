@@ -1,6 +1,6 @@
 <template>
   <div class="connections">
-    <canvas id="pixi"></canvas>
+    <canvas ref="pixi" id="pixi"></canvas>
   </div>
 </template>
 
@@ -27,20 +27,12 @@ export default {
   methods: {
     drawPixi() {
       var i
-      var canvas = document.getElementById('pixi')
-      const app = new PIXI.Application({
-        width: window.innerWidth,
-        height: window.innerHeight,
-        antialias: true,
-        transparent: true,
-        view: canvas,
-      })
+      this.canvas = this.$refs.pixi
+      const stage = this.PIXIApp.stage
       let graphics = new PIXI.Graphics()
       graphics.lineStyle(8, 0xcab6ff)
 
       for (i = 0; i < Object.keys(this.configConnections).length; i++) {
-        //console.log('tock')
-        //console.log(this.configConnections[i].x_pos_start)
         //start
         graphics.moveTo(
           this.configConnections[i].x_pos_start,
@@ -52,10 +44,21 @@ export default {
           this.configConnections[i].y_pos_end
         )
       }
-      app.stage.addChild(graphics)
+      for (var j = stage.children.length - 1; j >= 0; j--) {
+        stage.removeChild(stage.children[j])
+      }
+      stage.addChild(graphics)
     },
   },
   mounted() {
+    const canvas = this.$refs.pixi
+    this.PIXIApp = new PIXI.Application({
+      width: window.innerWidth,
+      height: window.innerHeight,
+      antialias: true,
+      transparent: true,
+      view: canvas,
+    })
     this.drawPixi()
   },
 }

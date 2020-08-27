@@ -1,21 +1,21 @@
 <template>
   <div ref="nodes" class="node">
-    <div v-for="(posvalue, index) in configPositions" v-bind:key="index">
+    <div v-for="(value, index) in configPositions" v-bind:key="index">
       <div v-if="toolmode == 'move'">
         <vue-draggable-resizable
           class="innernode"
-          v-if="nodeid == posvalue.node_id"
-          :w="posvalue.width"
-          :h="posvalue.height"
-          :x="posvalue.x_pos"
-          :y="posvalue.y_pos"
-          :z="posvalue.z_index"
+          v-if="nodeid == value.node_id"
+          :w="value.width"
+          :h="value.height"
+          :x="value.x_pos"
+          :y="value.y_pos"
+          :z="value.z_index"
           :draggable="false"
           :resizable="false"
           style="background-color: rgb(205, 234, 255);"
         >
           <form>
-            <div v-if="posvalue.read_mode == false">
+            <div v-if="value.read_mode == false">
               <div v-for="value in myNodes" v-bind:key="value.node_id">
                 <textarea
                   v-if="nodeid == value.node_id"
@@ -31,7 +31,7 @@
                 ></textarea>
               </div>
             </div>
-            <div v-if="posvalue.read_mode == true">
+            <div v-if="value.read_mode == true">
               <p
                 class="read"
                 :id="nodeid"
@@ -52,7 +52,7 @@
               <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
               >
-              <div v-if="posvalue.read_mode == true">
+              <div v-if="value.read_mode == true">
                 <BaseButton
                   class="read"
                   buttonClass="action"
@@ -76,18 +76,18 @@
       <div v-else-if="toolmode == 'connect'">
         <vue-draggable-resizable
           class="innernode"
-          v-if="nodeid == posvalue.node_id"
-          :w="posvalue.width"
-          :h="posvalue.height"
-          :x="posvalue.x_pos"
-          :y="posvalue.y_pos"
-          :z="posvalue.z_index"
+          v-if="nodeid == value.node_id"
+          :w="value.width"
+          :h="value.height"
+          :x="value.x_pos"
+          :y="value.y_pos"
+          :z="value.z_index"
           :draggable="false"
           :resizable="false"
           style="background-color: rgb(205, 234, 255);"
         >
           <form>
-            <div v-if="posvalue.read_mode == false">
+            <div v-if="value.read_mode == false">
               <div v-for="value in myNodes" v-bind:key="value.node_id">
                 <textarea
                   v-if="nodeid == value.node_id"
@@ -103,7 +103,7 @@
                 ></textarea>
               </div>
             </div>
-            <div v-if="posvalue.read_mode == true">
+            <div v-if="value.read_mode == true">
               <p
                 class="read"
                 :id="nodeid"
@@ -126,10 +126,10 @@
               >
               <BaseButton
                 buttonClass="new-link"
-                @click="onClickNewLink(nodeid, posvalue.x_pos, posvalue.y_pos)"
+                @click="onClickNewLink(nodeid, value.x_pos, value.y_pos)"
               ></BaseButton>
 
-              <div v-if="posvalue.read_mode == true">
+              <div v-if="value.read_mode == true">
                 <BaseButton
                   class="read"
                   buttonClass="action"
@@ -155,12 +155,12 @@
       <div v-else>
         <vue-draggable-resizable
           class="innernode"
-          v-if="nodeid == posvalue.node_id"
-          :w="posvalue.width"
-          :h="posvalue.height"
-          :x="posvalue.x_pos"
-          :y="posvalue.y_pos"
-          :z="posvalue.z_index"
+          v-if="nodeid == value.node_id"
+          :w="value.width"
+          :h="value.height"
+          :x="value.x_pos"
+          :y="value.y_pos"
+          :z="value.z_index"
           @activated="onActivated"
           @dragging="onDrag"
           @resizing="onResize"
@@ -170,7 +170,7 @@
           style="background-color: rgb(205, 234, 255);"
         >
           <form>
-            <div v-if="posvalue.read_mode == false">
+            <div v-if="value.read_mode == false">
               <div v-for="value in myNodes" v-bind:key="value.node_id">
                 <div v-if="nodeid == value.node_id">
                   <textarea
@@ -187,7 +187,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="posvalue.read_mode == true">
+            <div v-if="value.read_mode == true">
               <p
                 class="read"
                 :id="nodeid"
@@ -208,7 +208,7 @@
               <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
               >
-              <div v-if="posvalue.read_mode == true">
+              <div v-if="value.read_mode == true">
                 <BaseButton
                   class="read"
                   buttonClass="action"
