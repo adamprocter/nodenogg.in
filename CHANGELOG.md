@@ -1,9 +1,23 @@
+# 0.1.22
+
+_29th August 2020_
+
+### Added
+
+- Keyboard Shortcuts now available the main modes to speed up workflow
+- Tips node added to each microcosm to explain shortcuts
+
+### Fixed
+
+- You can no longer drag around another designers node while in move mode/ connect mode
+
 # 0.1.21
 
 _26th August 2020_
 
 ### Changed
 
+- Delete node button now labelled Hide to more accurately convey its action (undo / see all your hidden nodes view coming)
 - Minor tweaks to order for of onboarding
 
 ### Added
