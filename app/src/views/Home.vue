@@ -48,6 +48,7 @@
               v-bind:nodeid="value.node_id"
               v-bind:nodetext="value.node_text"
             />
+            <TipsLayer />
             <ConnectionsLayer />
           </div>
 
@@ -103,6 +104,7 @@ import ScribbleLayer from '@/components/ScribbleLayer'
 import UploadLayer from '@/components/UploadLayer'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import OnBoard from '@/components/OnBoard.vue'
+import TipsLayer from '@/components/TipsLayer.vue'
 import ModeToolbar from '@/experimental/ModeToolbar'
 import ViewToolbar from '@/experimental/ViewToolbar'
 // import SelectionLayer from '@/experimental/layers/SelectionLayer'
@@ -224,6 +226,7 @@ export default {
     OffLine,
     UploadLayer,
     ScribbleLayer,
+    TipsLayer,
   },
 }
 </script>

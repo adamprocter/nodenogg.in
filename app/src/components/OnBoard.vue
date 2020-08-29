@@ -8,6 +8,7 @@
       :y="15"
       :z="1"
       :draggable="true"
+      :resizable="false"
       style="background-color: #6fcf97;"
     >
       <form>
@@ -47,6 +48,7 @@
       :y="15"
       :z="1"
       :draggable="true"
+      :resizable="false"
       style="background-color: #6fcf97;"
     >
       <form>

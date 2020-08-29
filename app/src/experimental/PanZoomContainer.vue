@@ -25,6 +25,7 @@
       <!-- {{ JSON.stringify(interaction) }} -->
       <!-- view paramaters not being utilised ? -->
       <!-- {{ mode }} -->
+    
       <slot />
     </div>
   </div>
@@ -57,7 +58,7 @@
 import { mapState } from 'vuex'
 import { constrainTranslation } from '@/experimental/utils/numbers'
 import {
- // getNormalisedInteraction,
+  // getNormalisedInteraction,
   changeViewFromWheelEvent,
   changeViewFromMultiTouchEvent,
 } from '@/experimental/utils/view'

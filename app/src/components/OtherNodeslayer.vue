@@ -26,6 +26,7 @@
           <div v-for="(emojis, index) in configEmoji" :key="index">
             <p class="allemoji" v-if="nodeid == emojis.node_id">
               {{ emojis.emoji_text }}
+              MOVE MODE
             </p>
           </div>
           <div class="react" v-if="nodeid != undefined">
@@ -99,7 +100,7 @@
         </vue-draggable-resizable>
       </div>
 
-      <div v-if="toolmode == 'connect'">
+      <div v-else-if="toolmode == 'connect'">
         <!-- make draggable false as we are panning around -->
         <vue-draggable-resizable
           v-if="nodeid == value.node_id"
