@@ -13,6 +13,11 @@ export default {
   name: 'ConnectionsLayer',
   computed: mapState({
     configConnections: (state) => state.configConnections,
+    configPositions: (state) => state.configPositions,
+    myNodes: (state) => state.myNodes,
+    otherNodes: (state) => state.otherNodes,
+    toolmode: (state) => state.ui.mode,
+    connectionstate: (state) => state.connectionstate,
   }),
 
   watch: {
@@ -20,79 +25,62 @@ export default {
       deep: true,
 
       handler() {
-        this.drawPixi()
+        this.connectionsDraw()
+        this.buttonsDraw()
       },
     },
   },
 
   methods: {
-    drawPixi() {
+    buttonsDraw() {
       var i
+      var j
       this.canvas = this.$refs.pixi
       const stage = this.PIXIApp.stage
-      let graphics = new PIXI.Graphics()
-      //let line = new PIXI.Graphics()
+      let buttons = new PIXI.Graphics()
 
-      graphics.lineStyle(8, 0xcab6ff)
-
-      // FIXME: removes connections probably need to be own function
-      // for (i = 0; i < Object.keys(this.configConnections).length; i++) {
-      //   // static circle - needs to be same place as buttons
-      //   graphics.lineStyle(0)
-      //   graphics.beginFill(0xde3249, 1)
-      //   graphics.drawCircle(100, 250, 50)
-      //   graphics.endFill()
-      //   stage.addChild(graphics)
-      // }
-
-      for (i = 0; i < Object.keys(this.configConnections).length; i++) {
-        //start
-        graphics.moveTo(
-          this.configConnections[i].x_pos_start,
-          this.configConnections[i].y_pos_start
-        )
-        //end
-        graphics.lineTo(
-          this.configConnections[i].x_pos_end,
-          this.configConnections[i].y_pos_end
-        )
+      for (i = 0; i < Object.keys(this.myNodes).length; i++) {
+        for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+          if (this.configPositions[j].node_id == this.myNodes[i].node_id) {
+            buttons.lineStyle(0)
+            buttons.beginFill(0xcab6ff, 1)
+            // x, y, radius
+            buttons.drawCircle(
+              this.configPositions[j].x_pos + this.configPositions[j].width,
+              this.configPositions[j].y_pos +
+                this.configPositions[j].height / 2,
+              15
+            )
+            buttons.endFill()
+          }
+        }
       }
-      for (var j = stage.children.length - 1; j >= 0; j--) {
-        stage.removeChild(stage.children[j])
+      for (i = 0; i < Object.keys(this.otherNodes).length; i++) {
+        for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+          if (this.configPositions[j].node_id == this.otherNodes[i].node_id) {
+            buttons.lineStyle(0)
+            buttons.beginFill(0xcab6ff, 1)
+            // x, y, radius
+            buttons.drawCircle(
+              this.configPositions[j].x_pos + this.configPositions[j].width,
+              this.configPositions[j].y_pos +
+                this.configPositions[j].height / 2,
+              15
+            )
+            buttons.endFill()
+          }
+        }
       }
-
-      stage.addChild(graphics)
-    },
-
-    //FIXME : this is a sketch of the final code for connection buttons
-    // Eventually can move this all from nodes layers as well (which make sense)
-    connectingDraw() {
-      var i
-      this.canvas = this.$refs.pixi
-      const stage = this.PIXIApp.stage
-      let circle = new PIXI.Graphics()
       let line = new PIXI.Graphics()
-
-      circle.lineStyle(8, 0xcab6ff)
-
-      for (i = 0; i < Object.keys(this.configConnections).length; i++) {
-        // static circle - needs to be same place as buttons
-        circle.lineStyle(0)
-        circle.beginFill(0xde3249, 1)
-        circle.drawCircle(100, 250, 50)
-        circle.endFill()
-        stage.addChild(circle)
-      }
-
       // connection on move
       var initialMoveTo
       // Opt-in to interactivity
-      circle.interactive = true
+      buttons.interactive = true
 
       // Shows hand cursor
-      circle.buttonMode = true
+      buttons.buttonMode = true
 
-      circle
+      buttons
         .on('pointerdown', onDragStart)
         .on('pointerup', onDragEnd)
         .on('pointerupoutside', onDragEnd)
@@ -131,6 +119,39 @@ export default {
           lines[0].lineTo(mouseX, mouseY)
         }
       }
+      stage.addChild(buttons)
+    },
+    connectionsDraw() {
+      var i
+
+      this.canvas = this.$refs.pixi
+      const stage = this.PIXIApp.stage
+      let graphics = new PIXI.Graphics()
+      //let line = new PIXI.Graphics()
+
+      graphics.lineStyle(8, 0xcab6ff)
+      // move the lines to start and end pos based on if to_node == node_id
+      // or from_id == node_id
+      // this will put them in the same place as buttons
+
+      for (i = 0; i < Object.keys(this.configConnections).length; i++) {
+        //start
+        graphics.moveTo(
+          this.configConnections[i].x_pos_start,
+          this.configConnections[i].y_pos_start
+        )
+
+        //end
+        graphics.lineTo(
+          this.configConnections[i].x_pos_end,
+          this.configConnections[i].y_pos_end
+        )
+      }
+      for (var l = stage.children.length - 1; l >= 0; l--) {
+        stage.removeChild(stage.children[l])
+      }
+
+      stage.addChild(graphics)
     },
   },
   mounted() {
@@ -142,8 +163,10 @@ export default {
       transparent: true,
       view: canvas,
     })
-    this.drawPixi()
-    this.connectingDraw()
+    this.connectionsDraw()
+    this.buttonsDraw()
+    // FIXME: code OLD
+    //  this.connectingDraw()
   },
 }
 </script>
