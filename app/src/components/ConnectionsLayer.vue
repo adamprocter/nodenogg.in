@@ -8,9 +8,16 @@
 import { mapState } from 'vuex'
 import * as PIXI from 'pixi.js'
 //var initialMoveTo
+let buttons = new PIXI.Graphics()
 
 export default {
   name: 'ConnectionsLayer',
+
+  data() {
+    return {
+      localtoolstate: this.toolmode,
+    }
+  },
   computed: mapState({
     configConnections: (state) => state.configConnections,
     configPositions: (state) => state.configPositions,
@@ -26,18 +33,31 @@ export default {
 
       handler() {
         this.connectionsDraw()
-        this.buttonsDraw()
       },
     },
   },
 
   methods: {
+    toolState() {
+      //console.log(this.toolmode)
+      if (this.localtoolstate == 'connect') {
+        console.log('tools')
+        //this.buttonsDraw()
+      } else {
+        //  this.clearButtons()
+      }
+      // <div v-if="toolmode == 'move'">
+    },
+    clearButtons() {
+      const stage = this.PIXIApp.stage
+      stage.removeChild(buttons)
+    },
     buttonsDraw() {
+      // stage.removeChild(buttons)
       var i
       var j
       this.canvas = this.$refs.pixi
       const stage = this.PIXIApp.stage
-      let buttons = new PIXI.Graphics()
 
       for (i = 0; i < Object.keys(this.myNodes).length; i++) {
         for (j = 0; j < Object.keys(this.configPositions).length; j++) {
@@ -119,6 +139,7 @@ export default {
           lines[0].lineTo(mouseX, mouseY)
         }
       }
+
       stage.addChild(buttons)
     },
     connectionsDraw() {
@@ -164,7 +185,8 @@ export default {
       view: canvas,
     })
     this.connectionsDraw()
-    this.buttonsDraw()
+    this.toolState()
+
     // FIXME: code OLD
     //  this.connectingDraw()
   },
