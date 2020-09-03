@@ -8,14 +8,13 @@
 import { mapState } from 'vuex'
 import * as PIXI from 'pixi.js'
 //var initialMoveTo
-let buttons = new PIXI.Graphics()
 
 export default {
   name: 'ConnectionsLayer',
 
   data() {
     return {
-      localtoolstate: this.toolmode,
+      //  localtoolstate: this.toolmode,
     }
   },
   computed: mapState({
@@ -35,29 +34,28 @@ export default {
         this.connectionsDraw()
       },
     },
+    toolmode: {
+      handler() {
+        this.toolState()
+      },
+    },
   },
 
   methods: {
     toolState() {
-      //console.log(this.toolmode)
-      if (this.localtoolstate == 'connect') {
-        console.log('tools')
-        //this.buttonsDraw()
+      if (this.toolmode == 'connect') {
+        this.buttonsDraw()
       } else {
-        //  this.clearButtons()
+        this.connectionsDraw()
       }
-      // <div v-if="toolmode == 'move'">
     },
-    clearButtons() {
-      const stage = this.PIXIApp.stage
-      stage.removeChild(buttons)
-    },
+
     buttonsDraw() {
-      // stage.removeChild(buttons)
       var i
       var j
       this.canvas = this.$refs.pixi
       const stage = this.PIXIApp.stage
+      let buttons = new PIXI.Graphics()
 
       for (i = 0; i < Object.keys(this.myNodes).length; i++) {
         for (j = 0; j < Object.keys(this.configPositions).length; j++) {
@@ -92,11 +90,10 @@ export default {
         }
       }
       let line = new PIXI.Graphics()
-      // connection on move
+
       var initialMoveTo
       // Opt-in to interactivity
       buttons.interactive = true
-
       // Shows hand cursor
       buttons.buttonMode = true
 
@@ -109,6 +106,7 @@ export default {
       let lines = []
 
       function onDragStart(event) {
+        console.log(event)
         this.dragging = true
 
         let mouseX = event.data.global.x
@@ -142,6 +140,7 @@ export default {
 
       stage.addChild(buttons)
     },
+
     connectionsDraw() {
       var i
 
@@ -185,10 +184,7 @@ export default {
       view: canvas,
     })
     this.connectionsDraw()
-    this.toolState()
-
-    // FIXME: code OLD
-    //  this.connectingDraw()
+    this.buttonsDraw()
   },
 }
 </script>

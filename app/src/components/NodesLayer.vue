@@ -12,7 +12,7 @@
           :z="value.z_index"
           :draggable="false"
           :resizable="false"
-          style="background-color: rgb(205, 234, 255);"
+          style="background-color: rgb(205, 234, 255)"
         >
           <form>
             <div v-if="value.read_mode == false">
@@ -84,7 +84,7 @@
           :z="value.z_index"
           :draggable="false"
           :resizable="false"
-          style="background-color: rgb(205, 234, 255);"
+          style="background-color: rgb(205, 234, 255)"
         >
           <form>
             <div v-if="value.read_mode == false">
@@ -126,7 +126,8 @@
               >
               <BaseButton
                 buttonClass="new-link"
-                @click="onClickNewLink(nodeid, value.x_pos, value.y_pos)"
+                @mousedown="onClickNewLink(nodeid, value.x_pos, value.y_pos)"
+                @mouseup="onClickNewLink(nodeid, value.x_pos, value.y_pos)"
               ></BaseButton>
 
               <div v-if="value.read_mode == true">
@@ -167,7 +168,7 @@
           @dragstop="onDragstop"
           @resizestop="onResizestop"
           :drag-cancel="'.drag-cancel'"
-          style="background-color: rgb(205, 234, 255);"
+          style="background-color: rgb(205, 234, 255)"
         >
           <form>
             <div v-if="value.read_mode == false">

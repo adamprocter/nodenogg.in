@@ -1,26 +1,30 @@
 <template>
   <div ref="nodes" class="node">
-    <vue-draggable-resizable
-      class="innernode"
-      :w="250"
-      :h="225"
-      :x="205"
-      :y="15"
-      :z="1"
-      :draggable="true"
-      :resizable="false"
-      style="background-color: #6fcf97;"
-    >
-      <div>
-        <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
+    <div v-show="tipsplease">
+      <vue-draggable-resizable
+        class="innernode"
+        :w="250"
+        :h="225"
+        :x="205"
+        :y="15"
+        :z="1"
+        :draggable="true"
+        :resizable="false"
+        style="background-color: #6fcf97"
+      >
+        <div>
+          <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
 
-        <div class="btn-row">
-          <BaseButton buttonClass="danger" @click="deleteFlag()"
-            >Hide</BaseButton
-          >
+          <div class="btn-row">
+            <BaseButton buttonClass="danger" @click="hideTips()"
+              >Hide</BaseButton
+            >
+          </div>
         </div>
-      </div>
-    </vue-draggable-resizable>
+      </vue-draggable-resizable>
+    </div>
+
+    <div v-show="!tipsplease"></div>
   </div>
 </template>
 
@@ -32,6 +36,7 @@ export default {
     return {
       nodetext:
         '## Shortcuts 🐢 -> 🐰 \n **n** to create new nodes. </br> **c** create connections </br> **a** or **s** select mode. </br> **m** move mode',
+      tipsplease: true,
     }
   },
 
@@ -40,7 +45,11 @@ export default {
     marked: marked,
   },
 
-  methods: {},
+  methods: {
+    hideTips() {
+      this.tipsplease = false
+    },
+  },
 }
 </script>
 
