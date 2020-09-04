@@ -90,10 +90,12 @@ export default {
       this.canvas = this.$refs.pixi
       const stage = this.PIXIApp.stage
       let buttons = new PIXI.Graphics()
+      // let texts = new PIXI.Text()
 
       for (i = 0; i < Object.keys(this.myNodes).length; i++) {
         for (j = 0; j < Object.keys(this.configPositions).length; j++) {
           if (this.configPositions[j].node_id == this.myNodes[i].node_id) {
+            buttons.name = this.myNodes[i].node_id
             buttons.lineStyle(0)
             buttons.beginFill(0xcab6ff, 1)
             // x, y, radius
@@ -105,13 +107,24 @@ export default {
             )
             buttons.endFill()
             // names it the last one only?
-            buttons.name = this.myNodes[i].node_id
           }
         }
       }
+
+      // for (i = 0; i < Object.keys(this.myNodes).length; i++) {
+      //   for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+      //     if (this.myNodes[i].node_id == this.configPositions[j].node_id) {
+      //       texts.text = this.myNodes[i].node_id
+      //       texts.x = this.configPositions[j].x_pos
+      //       texts.y = this.configPositions[j].y_pos
+      //     }
+      //   }
+      // }
+
       for (i = 0; i < Object.keys(this.otherNodes).length; i++) {
         for (j = 0; j < Object.keys(this.configPositions).length; j++) {
           if (this.configPositions[j].node_id == this.otherNodes[i].node_id) {
+            buttons.name = this.otherNodes[i].node_id
             buttons.lineStyle(0)
             buttons.beginFill(0xcab6ff, 1)
             // x, y, radius
@@ -122,8 +135,6 @@ export default {
               15
             )
             buttons.endFill()
-            // names it the last one only
-            buttons.name = this.otherNodes[i].node_id
           }
         }
       }
@@ -183,6 +194,8 @@ export default {
       }
 
       stage.addChild(buttons)
+
+      // stage.addChild(texts)
     },
 
     connectionsDraw() {
@@ -227,8 +240,8 @@ export default {
       transparent: true,
       view: canvas,
     })
+
     this.connectionsDraw()
-    this.buttonsDraw()
   },
 }
 </script>
