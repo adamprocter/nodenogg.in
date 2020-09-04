@@ -50,9 +50,43 @@ export default {
       }
     },
 
+    makeConnection() {
+      // var i
+      // var j
+      // for (i = 0; i < Object.keys(this.myNodes).length; i++) {
+      //   for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+      //     if (this.configPositions[j].node_id == this.myNodes[i].node_id) {
+      //       console.log(this.myNodes[i].node_id)
+      //     }
+      //   }
+      // }
+      // if (this.connectionstate == false) {
+      //   fromnode = id
+      //   xposstart = xpos
+      //   yposstart = ypos
+      //   //count = 1
+      //   this.$store.dispatch('connectionState', true)
+      // } else if (this.connectionstate == true) {
+      //   tonode = id
+      //   xposend = xpos
+      //   yposend = ypos
+      //   // count = 0
+      //   this.$store.dispatch('connectionState', false)
+      //   this.$store.dispatch('makeConnect', {
+      //     fromnode,
+      //     tonode,
+      //     xposstart,
+      //     yposstart,
+      //     xposend,
+      //     yposend,
+      //   })
+      // }
+    },
     buttonsDraw() {
       var i
       var j
+
+      var ref = this
       this.canvas = this.$refs.pixi
       const stage = this.PIXIApp.stage
       let buttons = new PIXI.Graphics()
@@ -70,6 +104,8 @@ export default {
               15
             )
             buttons.endFill()
+            // names it the last one only?
+            buttons.name = this.myNodes[i].node_id
           }
         }
       }
@@ -86,6 +122,8 @@ export default {
               15
             )
             buttons.endFill()
+            // names it the last one only
+            buttons.name = this.otherNodes[i].node_id
           }
         }
       }
@@ -99,16 +137,21 @@ export default {
 
       buttons
         .on('pointerdown', onDragStart)
+        .on('pointerdown', start)
         .on('pointerup', onDragEnd)
         .on('pointerupoutside', onDragEnd)
         .on('pointermove', onDragMove)
 
       let lines = []
 
-      function onDragStart(event) {
-        console.log(event)
-        this.dragging = true
+      function start() {
+        ref.makeConnection()
+      }
 
+      function onDragStart(event) {
+        this.dragging = true
+        // returns on the last one in the loop
+        console.log(this.name)
         let mouseX = event.data.global.x
         let mouseY = event.data.global.y
 
@@ -123,6 +166,7 @@ export default {
       }
 
       function onDragEnd() {
+        // console.log(this.name)
         this.dragging = false
         stage.removeChild(line)
       }

@@ -61,6 +61,7 @@ button.action {
 button:active {
   background-color: #cab6ff;
 }
+
 /* FIXME: old code  */
 button.new-link {
   position: absolute;
