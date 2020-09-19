@@ -12,7 +12,9 @@
           :z="value.z_index"
           :draggable="false"
           :resizable="false"
-          style="background-color: rgb(205, 234, 255);"
+          style="background-color: rgb(205, 234, 255)"
+          :min-width="200"
+          :min-height="221"
         >
           <form>
             <div v-if="value.read_mode == false">
@@ -73,83 +75,6 @@
         </vue-draggable-resizable>
       </div>
 
-      <div v-else-if="toolmode == 'connect'">
-        <vue-draggable-resizable
-          class="innernode"
-          v-if="nodeid == value.node_id"
-          :w="value.width"
-          :h="value.height"
-          :x="value.x_pos"
-          :y="value.y_pos"
-          :z="value.z_index"
-          :draggable="false"
-          :resizable="false"
-          style="background-color: rgb(205, 234, 255);"
-        >
-          <form>
-            <div v-if="value.read_mode == false">
-              <div v-for="value in myNodes" v-bind:key="value.node_id">
-                <textarea
-                  v-if="nodeid == value.node_id"
-                  @focus="editTrue(true)"
-                  @blur="editTrue(false)"
-                  autofocus
-                  @input="editNode"
-                  v-model="value.node_text"
-                  :id="nodeid"
-                  class="drag-cancel"
-                  ref="nodetext"
-                  placeholder="Idea goes here! (auto saved every keystroke)"
-                ></textarea>
-              </div>
-            </div>
-            <div v-if="value.read_mode == true">
-              <p
-                class="read"
-                :id="nodeid"
-                :inner-html.prop="nodetext | marked"
-              ></p>
-            </div>
-
-            <!-- <h3>Reactions</h3> -->
-
-            <div v-for="(emojis, index) in configEmoji" :key="index">
-              <p class="allemoji" v-if="nodeid == emojis.node_id">
-                {{ emojis.emoji_text }}
-              </p>
-            </div>
-
-            <p class="info">*markdown supported &amp; autosaves</p>
-            <div class="btn-row">
-              <BaseButton buttonClass="danger" @click="deleteFlag()"
-                >Hide</BaseButton
-              >
-              <BaseButton
-                buttonClass="new-link"
-                @click="onClickNewLink(nodeid, value.x_pos, value.y_pos)"
-              ></BaseButton>
-
-              <div v-if="value.read_mode == true">
-                <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Edit Mode
-                </BaseButton>
-              </div>
-              <div v-else>
-                <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Read Mode</BaseButton
-                >
-              </div>
-            </div>
-          </form>
-        </vue-draggable-resizable>
-      </div>
-
       <!-- Same code as above when in any other mode other than move so you can drag nodes-->
 
       <div v-else>
@@ -167,7 +92,9 @@
           @dragstop="onDragstop"
           @resizestop="onResizestop"
           :drag-cancel="'.drag-cancel'"
-          style="background-color: rgb(205, 234, 255);"
+          style="background-color: rgb(205, 234, 255)"
+          :min-width="200"
+          :min-height="221"
         >
           <form>
             <div v-if="value.read_mode == false">
@@ -237,12 +164,6 @@ import { mapState } from 'vuex'
 import marked from 'marked'
 import lodash from 'lodash'
 var readmode
-var fromnode
-var tonode
-var xposstart
-var yposstart
-var xposend
-var yposend
 
 export default {
   name: 'NodesLayer',
@@ -287,7 +208,6 @@ export default {
     configConnections: (state) => state.configConnections,
     configEmoji: (state) => state.configEmoji,
     toolmode: (state) => state.ui.mode,
-    connectionstate: (state) => state.connectionstate,
   }),
   methods: {
     onActivated() {
@@ -410,30 +330,6 @@ export default {
         readmode = true
         this.$store.dispatch('readFlag', { e, readmode })
         this.mode = 'Edit'
-      }
-    },
-
-    onClickNewLink(id, xpos, ypos) {
-      if (this.connectionstate == false) {
-        fromnode = id
-        xposstart = xpos
-        yposstart = ypos
-        //count = 1
-        this.$store.dispatch('connectionState', true)
-      } else if (this.connectionstate == true) {
-        tonode = id
-        xposend = xpos
-        yposend = ypos
-        // count = 0
-        this.$store.dispatch('connectionState', false)
-        this.$store.dispatch('makeConnect', {
-          fromnode,
-          tonode,
-          xposstart,
-          yposstart,
-          xposend,
-          yposend,
-        })
       }
     },
   },
