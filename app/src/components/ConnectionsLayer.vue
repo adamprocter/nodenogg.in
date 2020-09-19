@@ -54,7 +54,7 @@ export default {
       if (this.toolmode == 'connect') {
         this.buttonsDraw()
       } else {
-        //    this.connectionsDraw()
+        this.connectionsDraw()
       }
     },
 
@@ -127,7 +127,7 @@ export default {
           .on('pointerdown', start)
           .on('pointerup', onDragEnd)
           .on('pointerup', finish)
-          .on('pointerupoutside', onDragEnd)
+          .on('pointerupoutside', onDragEndOutside)
           .on('pointermove', onDragMove)
       }
 
@@ -162,9 +162,9 @@ export default {
         buttonMapOther[i]
           .on('pointerdown', onDragStart)
           .on('pointerdown', start)
-          .on('pointerup', onDragEnd)
           .on('pointerup', finish)
-          .on('pointerupoutside', onDragEnd)
+          .on('pointerup', onDragEnd)
+          .on('pointerupoutside', onDragEndOutside)
           .on('pointermove', onDragMove)
       }
 
@@ -175,11 +175,13 @@ export default {
       let lines = []
 
       function start(event) {
+        // console.log('start')
         this.id = this.name
         ref.makeConnection(this.id, event.data.global.x, event.data.global.y)
       }
 
       function finish(event) {
+        // console.log('finish')
         this.id = this.name
         ref.makeConnection(this.id, event.data.global.x, event.data.global.y)
       }
@@ -202,7 +204,14 @@ export default {
       }
 
       function onDragEnd() {
-        console.log('end')
+        //console.log('end')
+        this.dragging = false
+        stage.removeChild(line)
+      }
+
+      function onDragEndOutside() {
+        // console.log('Outside')
+        endState = false
         this.dragging = false
         stage.removeChild(line)
       }
@@ -250,6 +259,9 @@ export default {
       }
 
       stage.addChild(graphics)
+      if (this.toolmode == 'connect') {
+        this.buttonsDraw()
+      }
     },
   },
   mounted() {
