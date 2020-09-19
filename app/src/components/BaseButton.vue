@@ -72,8 +72,8 @@ button.new-link {
   border-radius: 10px;
   border: 2px solid rgba(0, 0, 0, 0.1);
   z-index: 100;
-  background-color: Transparent;
-  /* background-color: #cab6ff; */
+  /* background-color: Transparent; */
+  background-color: #cab6ff;
   outline: none;
 }
 </style>

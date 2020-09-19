@@ -85,31 +85,147 @@ export default {
     buttonsDraw() {
       var i
       var j
-
+      //var n = 1
       var ref = this
+      var buttonMap = {}
+
       this.canvas = this.$refs.pixi
       const stage = this.PIXIApp.stage
-      let buttons = new PIXI.Graphics()
-      // let texts = new PIXI.Text()
+
+      //  buttonMap['login'] = new PIXI.Graphics();
 
       for (i = 0; i < Object.keys(this.myNodes).length; i++) {
+        buttonMap[i] = new PIXI.Graphics()
+        // console.log(buttonMap[i])
         for (j = 0; j < Object.keys(this.configPositions).length; j++) {
           if (this.configPositions[j].node_id == this.myNodes[i].node_id) {
-            buttons.name = this.myNodes[i].node_id
-            buttons.lineStyle(0)
-            buttons.beginFill(0xcab6ff, 1)
+            buttonMap[i].name = this.myNodes[i].node_id
+            // console.log(button_one.name)
+            buttonMap[i].lineStyle(0)
+            buttonMap[i].beginFill(0xcab6ff, 1)
             // x, y, radius
-            buttons.drawCircle(
+
+            buttonMap[i].drawCircle(
               this.configPositions[j].x_pos + this.configPositions[j].width,
               this.configPositions[j].y_pos +
                 this.configPositions[j].height / 2,
               15
             )
-            buttons.endFill()
+            buttonMap[i].endFill()
             // names it the last one only?
           }
+          stage.addChild(buttonMap[i])
+
+          // Opt-in to interactivity
+          buttonMap[i].interactive = true
+          // Shows hand cursor
+          buttonMap[i].buttonMode = true
+
+          buttonMap[i]
+            .on('pointerdown', onDragStart)
+            .on('pointerdown', start)
+            .on('pointerup', onDragEnd)
+            .on('pointerupoutside', onDragEnd)
+            .on('pointermove', onDragMove)
         }
       }
+
+      // const array = [...Array(Object.keys(this.myNodes).length)].map(
+      //   (k, kk) => {
+      //     const button = new PIXI.Graphics()
+      //     button.lineStyle(0)
+      //     button.beginFill(0xcab6ff, 1)
+      //     const txt = new PIXI.Text('name:' + kk)
+      //     button.name = String(kk)
+      //     // for (i = 0; i < Object.keys(this.myNodes).length; i++) {
+      //     //   for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+      //     //     if (this.configPositions[j].node_id == this.myNodes[i].node_id) {
+      //     //       button.name = String(this.myNodes[i].node_id)
+      //     //     }
+      //     //   }
+      //     // }
+      //     for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+      //       button.drawCircle(
+      //         this.configPositions[j].x_pos + this.configPositions[j].width,
+      //         this.configPositions[j].y_pos +
+      //           this.configPositions[j].height / 2,
+      //         15
+      //       )
+      //       // for (i = 0; i < Object.keys(this.myNodes).length; i++) {
+      //       //   if (this.configPositions[j].node_id == this.myNodes[i].node_id) {
+      //       //     // button.name = String(this.myNodes[i].node_id)
+      //       //   }
+      //       // }
+      //     }
+      //     //  button.position.set(50 * kk)
+      //     button.addChild(txt)
+      //     button.endFill()
+      //     return button
+
+      //for (i = 0; i < Object.keys(this.myNodes).length; i++) {
+      //   for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+      //     if (this.configPositions[j].node_id == this.myNodes[i].node_id) {
+      //       // x, y, radius
+      //       const txt = new PIXI.Text('name:' + kk)
+      //       button.drawCircle(
+      //         this.configPositions[j].x_pos + this.configPositions[j].width,
+      //         this.configPositions[j].y_pos +
+      //           this.configPositions[j].height / 2,
+      //         15
+      //       )
+      //       button.endFill()
+      //       button.addChild(txt)
+      //       return button
+      //     }
+      //   }
+      // }
+      // }
+      //    }
+      //   )
+
+      //   console.log(array)
+      //   stage.addChild(...array) // we add all instances of graphics from the array in a container.
+
+      // const array = [...Array(10)].map((i, ii) => {
+      //   const button = new PIXI.Graphics()
+      //   // const txt = new PIXI.Text('name:' + ii) // just a visual debug help for you
+      //   // yes this is a good way to identify your pixi ref with a node name from DOM
+      //   // btw i prefer use Classes and extends (by context)
+      //   button.name = String(ii)
+
+      //   button.beginFill(0xde3249).drawRect(0, 0, 100, 100).endFill()
+      //   button.position.set(50 * ii)
+      //   button.blendMode = 1
+      //   // button.addChild(txt)
+      //   return button
+      // })
+      // console.log(array)
+      // stage.addChild(...array) // we add all instances of grafics from the array in a container.
+      // var buttons = []
+      // let container = new PIXI.Container()
+
+      // for (i = 0; i < Object.keys(this.myNodes).length; i++) {
+      //   buttons = new PIXI.Graphics()
+      //   // console.log(buttons)
+      //   for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+      //     if (this.configPositions[j].node_id == this.myNodes[i].node_id) {
+      //       buttons.name = this.myNodes[i].node_id
+      //       // console.log(button_one.name)
+      //       buttons.lineStyle(0)
+      //       buttons.beginFill(0xcab6ff, 1)
+      //       // x, y, radius
+
+      //       buttons.drawCircle(
+      //         this.configPositions[j].x_pos + this.configPositions[j].width,
+      //         this.configPositions[j].y_pos +
+      //           this.configPositions[j].height / 2,
+      //         15
+      //       )
+      //       buttons.endFill()
+      //       // names it the last one only?
+      //     }
+      //   }
+      // }
 
       // for (i = 0; i < Object.keys(this.myNodes).length; i++) {
       //   for (j = 0; j < Object.keys(this.configPositions).length; j++) {
@@ -121,37 +237,28 @@ export default {
       //   }
       // }
 
-      for (i = 0; i < Object.keys(this.otherNodes).length; i++) {
-        for (j = 0; j < Object.keys(this.configPositions).length; j++) {
-          if (this.configPositions[j].node_id == this.otherNodes[i].node_id) {
-            buttons.name = this.otherNodes[i].node_id
-            buttons.lineStyle(0)
-            buttons.beginFill(0xcab6ff, 1)
-            // x, y, radius
-            buttons.drawCircle(
-              this.configPositions[j].x_pos + this.configPositions[j].width,
-              this.configPositions[j].y_pos +
-                this.configPositions[j].height / 2,
-              15
-            )
-            buttons.endFill()
-          }
-        }
-      }
+      // for (i = 0; i < Object.keys(this.otherNodes).length; i++) {
+      //   for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+      //     if (this.configPositions[j].node_id == this.otherNodes[i].node_id) {
+      //       buttons.name = this.otherNodes[i].node_id
+
+      //       buttons.lineStyle(0)
+
+      //       buttons.beginFill(0xcab6ff, 1)
+      //       // x, y, radius
+      //       buttons.drawCircle(
+      //         this.configPositions[j].x_pos + this.configPositions[j].width,
+      //         this.configPositions[j].y_pos +
+      //           this.configPositions[j].height / 2,
+      //         15
+      //       )
+      //       buttons.endFill()
+      //     }
+      //   }
+      // }
       let line = new PIXI.Graphics()
 
       var initialMoveTo
-      // Opt-in to interactivity
-      buttons.interactive = true
-      // Shows hand cursor
-      buttons.buttonMode = true
-
-      buttons
-        .on('pointerdown', onDragStart)
-        .on('pointerdown', start)
-        .on('pointerup', onDragEnd)
-        .on('pointerupoutside', onDragEnd)
-        .on('pointermove', onDragMove)
 
       let lines = []
 
@@ -160,9 +267,10 @@ export default {
       }
 
       function onDragStart(event) {
+        console.log(this.name)
         this.dragging = true
         // returns on the last one in the loop
-        console.log(this.name)
+        // console.log(button_one.name)
         let mouseX = event.data.global.x
         let mouseY = event.data.global.y
 
@@ -177,7 +285,7 @@ export default {
       }
 
       function onDragEnd() {
-        // console.log(this.name)
+        console.log(this.name)
         this.dragging = false
         stage.removeChild(line)
       }
@@ -192,10 +300,6 @@ export default {
           lines[0].lineTo(mouseX, mouseY)
         }
       }
-
-      stage.addChild(buttons)
-
-      // stage.addChild(texts)
     },
 
     connectionsDraw() {
