@@ -1,3 +1,12 @@
+# 0.1.23
+
+_19th September 2020_
+
+### Changed
+
+- Connections now draw a little more dynamically and all code in ConnectionsLayer Component
+- Fixed Onboard text field focus and enter keyboard shortcut on Onboarding now works
+
 # 0.1.22
 
 _29th August 2020_
