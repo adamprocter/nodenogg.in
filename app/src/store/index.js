@@ -42,7 +42,7 @@ var remote =
 const store = new Vuex.Store({
   state: {
     shortcutstate: false,
-    connectionstate: false,
+    //  connectionstate: false,
     version: process.env.VUE_APP_VERSION,
     localnodeid: '',
     global_pos_name: 'positions',
@@ -382,9 +382,9 @@ const store = new Vuex.Store({
       state.shortcutstate = e
     },
 
-    CONNECTION_STATE(state, e) {
-      state.connectionstate = e
-    },
+    // CONNECTION_STATE(state, e) {
+    //   state.connectionstate = e
+    // },
 
     ADD_NODE(state, e) {
       var uniqueid =
@@ -708,9 +708,9 @@ const store = new Vuex.Store({
       commit('SHORTCUT_STATE', e)
     },
 
-    connectionState: ({ commit }, e) => {
-      commit('CONNECTION_STATE', e)
-    },
+    // connectionState: ({ commit }, e) => {
+    //   commit('CONNECTION_STATE', e)
+    // },
     deleteFlag: ({ commit }, e) => {
       // var text = e.target.value
       commit('DELETE_FLAG', e)

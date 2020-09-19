@@ -22,6 +22,7 @@
             autocapitalize="none"
             ref="objectname"
             v-on:keyup.enter="setClient()"
+            autofocus
             @focus="editTrue(true)"
             @blur="editTrue(false)"
           />
@@ -58,7 +59,6 @@
             placeholder="microcosm name"
             autocorrect="off"
             autocapitalize="none"
-            autofocus
             @focus="editTrue(true)"
             @blur="editTrue(false)"
             v-on:keyup.enter="createMicrocosm(), letsGo()"
