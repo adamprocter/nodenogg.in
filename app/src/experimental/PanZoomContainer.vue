@@ -25,7 +25,7 @@
       <!-- {{ JSON.stringify(interaction) }} -->
       <!-- view paramaters not being utilised ? -->
       <!-- {{ mode }} -->
-    
+
       <slot />
     </div>
   </div>

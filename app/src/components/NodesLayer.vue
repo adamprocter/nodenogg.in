@@ -12,9 +12,9 @@
           :z="value.z_index"
           :draggable="false"
           :resizable="false"
-          style="background-color: rgb(205, 234, 255)"
+          style="border: 2px dashed black; background-color: rgb(155, 194, 216)"
           :min-width="200"
-          :min-height="221"
+          :min-height="370"
         >
           <form>
             <div v-if="value.read_mode == false">
@@ -43,12 +43,17 @@
 
             <!-- <h3>Reactions</h3> -->
 
-            <div v-for="(emojis, index) in configEmoji" :key="index">
-              <p class="allemoji" v-if="nodeid == emojis.node_id">
-                {{ emojis.emoji_text }}
-              </p>
+            <div class="allemoji">
+              <div
+                class="eachemoji"
+                v-for="(emojis, index) in configEmoji"
+                :key="index"
+              >
+                <p v-if="nodeid == emojis.node_id">
+                  {{ emojis.emoji_text }}
+                </p>
+              </div>
             </div>
-
             <p class="info">*markdown supported &amp; autosaves</p>
             <div class="btn-row">
               <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
@@ -92,9 +97,9 @@
           @dragstop="onDragstop"
           @resizestop="onResizestop"
           :drag-cancel="'.drag-cancel'"
-          style="background-color: rgb(205, 234, 255)"
+          style="border: 2px dashed black; background-color: rgb(155, 194, 216)"
           :min-width="200"
-          :min-height="221"
+          :min-height="370"
         >
           <form>
             <div v-if="value.read_mode == false">
@@ -123,13 +128,17 @@
             </div>
 
             <!-- <h3>Reactions</h3> -->
-
-            <div v-for="(emojis, index) in configEmoji" :key="index">
-              <p class="allemoji" v-if="nodeid == emojis.node_id">
-                {{ emojis.emoji_text }}
-              </p>
+            <div class="allemoji">
+              <div
+                class="eachemoji"
+                v-for="(emojis, index) in configEmoji"
+                :key="index"
+              >
+                <p v-if="nodeid == emojis.node_id">
+                  {{ emojis.emoji_text }}
+                </p>
+              </div>
             </div>
-
             <p class="info">*markdown supported &amp; autosaves</p>
             <div class="btn-row">
               <BaseButton buttonClass="danger" @click="deleteFlag()"
@@ -353,12 +362,13 @@ export default {
 
 textarea {
   width: 100%;
-  height: 125px;
+  height: 175px;
   resize: none;
   box-sizing: border-box;
   font-family: 'Inter var', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin-top: 1em;
   border: none;
   outline: none;
   background-color: rgb(187, 227, 255);
@@ -367,7 +377,6 @@ textarea {
 
 .btn-row {
   position: relative;
-
   margin-bottom: 5px;
   display: flex;
   justify-content: center;
@@ -378,7 +387,14 @@ textarea {
 
 .allemoji {
   font-size: 2em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(0, auto));
+
   /* float: left; */
+}
+
+.eachemoji p {
+  margin: 0em;
 }
 
 img {
