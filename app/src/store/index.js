@@ -457,8 +457,8 @@ const store = new Vuex.Store({
           node_id: uniqueid,
           x_pos: localxpos,
           y_pos: localypos,
-          width: 220,
-          height: 295,
+          width: 200,
+          height: 370,
           z_index: 10,
           read_mode: false,
         })

@@ -101,7 +101,7 @@ export default {
           if (this.configPositions[j].node_id == this.myNodes[i].node_id) {
             buttonMap[i].name = this.myNodes[i].node_id
             // console.log(button_one.name)
-            buttonMap[i].lineStyle(0)
+            buttonMap[i].lineStyle(1)
             buttonMap[i].beginFill(0xcab6ff, 1)
             // x, y, radius
 
@@ -138,7 +138,7 @@ export default {
           if (this.configPositions[j].node_id == this.otherNodes[i].node_id) {
             buttonMapOther[i].name = this.otherNodes[i].node_id
             // console.log(button_one.name)
-            buttonMapOther[i].lineStyle(0)
+            buttonMapOther[i].lineStyle(1)
             buttonMapOther[i].beginFill(0xcab6ff, 1)
             // x, y, radius
 
@@ -230,7 +230,7 @@ export default {
 
     connectionsDraw() {
       var i
-
+      //  var j
       this.canvas = this.$refs.pixi
       const stage = this.PIXIApp.stage
       let graphics = new PIXI.Graphics()
@@ -239,10 +239,18 @@ export default {
       graphics.lineStyle(8, 0xcab6ff)
       // move the lines to start and end pos based on if to_node == node_id
       // or from_id == node_id
+      //start_id == node_id
       // this will put them in the same place as buttons
 
+      //     for (i = 0; i < Object.keys(this.otherNodes).length; i++) {
+
+      // for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+      //   if (this.configConnections[j].start_id == this.otherNodes[i].node_id) {
+
+      // for (j = 0; j < Object.keys(this.otherNodes).length; j++) {
       for (i = 0; i < Object.keys(this.configConnections).length; i++) {
         //start
+
         graphics.moveTo(
           this.configConnections[i].x_pos_start,
           this.configConnections[i].y_pos_start
@@ -254,6 +262,7 @@ export default {
           this.configConnections[i].y_pos_end
         )
       }
+      //  }
       for (var l = stage.children.length - 1; l >= 0; l--) {
         stage.removeChild(stage.children[l])
       }

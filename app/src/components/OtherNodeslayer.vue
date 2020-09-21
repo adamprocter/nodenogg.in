@@ -17,16 +17,21 @@
           :resizable="false"
           @dragstop="onDragstop"
           @resizestop="onResizestop"
-          style="border: 1px solid black; background-color: rgb(205, 234, 255)"
+          style="border: 2px solid black; background-color: rgb(205, 234, 255)"
+          :min-width="200"
+          :min-height="370"
         >
           <p class="read" :id="nodeid" :inner-html.prop="nodetext | marked">
             {{ nodeid }}
           </p>
           <!-- <h3>Reactions</h3> -->
-          <div v-for="(emojis, index) in configEmoji" :key="index">
-            <p class="allemoji" v-if="nodeid == emojis.node_id">
+          <div
+            class="allemoji"
+            v-for="(emojis, index) in configEmoji"
+            :key="index"
+          >
+            <p class="eachemoji" v-if="nodeid == emojis.node_id">
               {{ emojis.emoji_text }}
-              MOVE MODE
             </p>
           </div>
           <div class="react" v-if="nodeid != undefined">
@@ -114,16 +119,24 @@
           @resizing="onResize"
           @dragstop="onDragstop"
           @resizestop="onResizestop"
-          style="border: 1px solid black; background-color: rgb(205, 234, 255)"
+          style="border: 2px solid black; background-color: rgb(205, 234, 255)"
+          :min-width="200"
+          :min-height="370"
         >
           <p class="read" :id="nodeid" :inner-html.prop="nodetext | marked">
             {{ nodeid }}
           </p>
           <!-- <h3>Reactions</h3> -->
-          <div v-for="(emojis, index) in configEmoji" :key="index">
-            <p class="allemoji" v-if="nodeid == emojis.node_id">
-              {{ emojis.emoji_text }}
-            </p>
+          <div class="allemoji">
+            <div
+              class="eachemoji"
+              v-for="(emojis, index) in configEmoji"
+              :key="index"
+            >
+              <p v-if="nodeid == emojis.node_id">
+                {{ emojis.emoji_text }}
+              </p>
+            </div>
           </div>
           <div class="react" v-if="nodeid != undefined">
             <!-- <h2>React</h2> -->
@@ -361,7 +374,14 @@ input {
 
 .allemoji {
   font-size: 2em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(0, auto));
+
   /* float: left; */
+}
+
+.eachemoji p {
+  margin: 0em;
 }
 
 h3 {
@@ -380,10 +400,10 @@ h3 {
   width: 1.5rem;
   height: 1.5rem;
   /* transform: scale(1.6); */
-  margin: 0em 0em 1em 0em;
-  border-radius: 50%;
+  /* margin: 0em 0em 1em 0em; */
+  /* border-radius: 50%; */
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.8s;
 }
 .emoji-invoker:hover > svg {
   fill: #84949b;
@@ -392,7 +412,7 @@ h3 {
 }
 .emoji-invoker > svg {
   fill: #b1c6d0;
-  margin-top: -15px;
+  margin-top: 10px;
   margin-left: 0.2em;
   transform: scale(1.5);
 }
@@ -410,6 +430,7 @@ h3 {
   border-radius: 0.5rem;
   background: #fff;
   box-shadow: 1px 1px 8px #c7dbe6;
+  margin-top: 3em;
 }
 .emoji-picker__search {
   display: flex;
@@ -422,6 +443,7 @@ h3 {
   outline: none;
 }
 .emoji-picker h5 {
+  margin-top: 0;
   margin-bottom: 0;
   color: #b1b1b1;
   text-transform: uppercase;
