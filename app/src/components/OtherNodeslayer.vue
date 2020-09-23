@@ -19,7 +19,7 @@
           @resizestop="onResizestop"
           style="border: 2px solid black; background-color: rgb(205, 234, 255)"
           :min-width="200"
-          :min-height="370"
+          :min-height="220"
         >
           <p class="read" :id="nodeid" :inner-html.prop="nodetext | marked">
             {{ nodeid }}
@@ -121,7 +121,7 @@
           @resizestop="onResizestop"
           style="border: 2px solid black; background-color: rgb(205, 234, 255)"
           :min-width="200"
-          :min-height="370"
+          :min-height="220"
         >
           <p class="read" :id="nodeid" :inner-html.prop="nodetext | marked">
             {{ nodeid }}

@@ -4,7 +4,7 @@
       <div v-if="toolmode == 'move'">
         <vue-draggable-resizable
           class="innernode"
-          v-if="nodeid == value.node_id"
+          v-if="nodeid == value.node_id && deleted == false"
           :w="value.width"
           :h="value.height"
           :x="value.x_pos"
@@ -14,7 +14,7 @@
           :resizable="false"
           style="border: 2px dashed black; background-color: rgb(155, 194, 216)"
           :min-width="200"
-          :min-height="370"
+          :min-height="220"
         >
           <form>
             <div v-if="value.read_mode == false">
@@ -85,7 +85,7 @@
       <div v-else>
         <vue-draggable-resizable
           class="innernode"
-          v-if="nodeid == value.node_id"
+          v-if="nodeid == value.node_id && deleted == false"
           :w="value.width"
           :h="value.height"
           :x="value.x_pos"
@@ -99,7 +99,7 @@
           :drag-cancel="'.drag-cancel'"
           style="border: 2px dashed black; background-color: rgb(155, 194, 216)"
           :min-width="200"
-          :min-height="370"
+          :min-height="220"
         >
           <form>
             <div v-if="value.read_mode == false">
@@ -142,7 +142,7 @@
             <p class="info">*markdown supported &amp; autosaves</p>
             <div class="btn-row">
               <BaseButton buttonClass="danger" @click="deleteFlag()"
-                >Hide</BaseButton
+                >Discard</BaseButton
               >
               <div v-if="value.read_mode == true">
                 <BaseButton

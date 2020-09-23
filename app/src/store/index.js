@@ -162,9 +162,10 @@ const store = new Vuex.Store({
         .then(function (doc) {
           var i
           for (i = 0; i < Object.keys(doc.nodes).length; i++) {
-            if (doc.nodes[i].deleted == true) {
-              doc.nodes.splice(i, 1)
-            }
+            // PREVIOUS: approach to removing nodes that are flagged as deleted before
+            // if (doc.nodes[i].deleted == true) {
+            //   //  doc.nodes.splice(i, 1)
+            // }
             state.myNodes = doc.nodes
           }
         })
@@ -539,6 +540,39 @@ const store = new Vuex.Store({
         })
     },
 
+    RESTORE_NODE(state, e) {
+      console.log(e)
+      var i
+      for (i = 0; i < Object.keys(state.myNodes).length; i++) {
+        if (e.e == state.myNodes[i].node_id) {
+          state.myNodes[i].deleted = false
+        }
+      }
+      pouchdb
+        .get(state.myclient)
+        .then(function (doc) {
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.myclient,
+              _rev: doc._rev,
+              _attachments: doc._attachments,
+              nodes: state.myNodes,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.myclient).then(function (doc) {
+            state.myNodes = doc.nodes
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
     READ_FLAG(state, e) {
       var i
       // console.log(e.e)
@@ -625,6 +659,7 @@ const store = new Vuex.Store({
       pouchdb.replicate.from(remote).on('complete', function () {
         store.commit('GET_ALL_NODES')
         store.commit('GET_MY_NODES')
+
         store.commit('GET_POSITIONS')
         store.commit('GET_CONNECTIONS')
         store.commit('GET_EMOJI')
@@ -640,6 +675,7 @@ const store = new Vuex.Store({
             // pop info into function to find out more
             store.commit('GET_ALL_NODES')
             store.commit('GET_MY_NODES')
+
             store.commit('GET_POSITIONS')
             store.commit('GET_CONNECTIONS')
             store.commit('GET_EMOJI')
@@ -680,6 +716,7 @@ const store = new Vuex.Store({
     updateConnectTwo: ({ commit }, tonode, xposend, yposend) => {
       commit('UPDATE_CONNECT_TWO', tonode, xposend, yposend)
     },
+
     readFlag: ({ commit }, e) => {
       // var text = e.target.value
       commit('READ_FLAG', e)
@@ -714,6 +751,11 @@ const store = new Vuex.Store({
     deleteFlag: ({ commit }, e) => {
       // var text = e.target.value
       commit('DELETE_FLAG', e)
+    },
+
+    restoreNode: ({ commit }, e) => {
+      // var text = e.target.value
+      commit('RESTORE_NODE', e)
     },
 
     addEmoji: ({ commit }, { nodeid, emojitext }) => {

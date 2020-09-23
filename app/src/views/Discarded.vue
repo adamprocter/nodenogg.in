@@ -1,38 +1,21 @@
 <template>
-  <div id="listwrapper">
-    <!-- <div v-for="(posvalue, index) in configPositions" v-bind:key="index"> -->
-    <h1 class="mobile">Your nodes - list mode</h1>
-    <!-- <OffLine
-      v-for="value in myNodes"
-      v-bind:key="value.node_id"
-      v-bind:nodeid="value.node_id"
-      v-bind:nodetext="value.node_text"
-      @editTrue="(e) => editTrue(e)"
-    /> -->
-    <div v-if="clientset">
-      <div class="btn-row">
-        <BaseButton class="new" buttonClass="action" @click="addNode()"
-          >Create Node</BaseButton
-        >
-      </div>
+  <div id="discardwrapper">
+    <h1 class="restore">Your discarded nodes</h1>
 
+    <div v-if="clientset">
       <form>
-        <!-- <div v-if="posvalue.read_mode == false"> -->
-        <div
-          v-for="value in myNodes.slice().reverse()"
-          v-bind:key="value.node_id"
-        >
-          <div v-if="value.deleted == false">
-            <textarea
-              @focus="editTrue(true)"
-              @blur="editTrue(false)"
-              autofocus
-              @input="editNode"
-              v-model="value.node_text"
-              :id="nodeid"
-              ref="nodetext"
-              placeholder="Idea goes here!"
-            ></textarea>
+        <div v-for="value in myNodes" v-bind:key="value.node_id">
+          <div v-if="value.deleted == true">
+            {{ value.node_text }}
+
+            <div class="btn-row">
+              <BaseButton
+                class="new"
+                buttonClass="action"
+                @click="restoreNode(value.node_id)"
+                >Restore</BaseButton
+              >
+            </div>
           </div>
         </div>
       </form>
@@ -96,8 +79,6 @@
         </div>
       </form>
     </div>
-
-    <ModeToolbar />
   </div>
   <!-- </div> -->
 </template>
@@ -106,13 +87,13 @@
 // import OffLine from '@/components/OffLine'
 // import OnBoard from '@/components/OnBoard.vue'
 import Router from '@/router'
-import ModeToolbar from '@/experimental/ModeToolbar'
+
 import { mapState } from 'vuex'
 import marked from 'marked'
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
 
 export default {
-  name: 'List',
+  name: 'Discarded',
   mixins: [shortcutsMixin],
   data: function () {
     return {
@@ -167,7 +148,7 @@ export default {
   components: {
     // OnBoard,
     // OffLine,
-    ModeToolbar,
+    //ModeToolbar,
   },
 
   filters: {
@@ -194,8 +175,8 @@ export default {
       this.$emit('clientAdded')
     },
 
-    addNode() {
-      this.$store.dispatch('addNode')
+    restoreNode(e) {
+      this.$store.dispatch('restoreNode', { e })
     },
 
     editTrue(e) {
@@ -212,21 +193,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-h2 {
-  color: red;
-}
-.mobile {
-  font-size: 1em;
-}
-
-#listwrapper {
-  margin-left: 1em;
-  margin-bottom: 1em;
-}
-.new {
-  margin-bottom: 1em;
-}
-
 textarea {
   width: 95%;
   height: 100px;
