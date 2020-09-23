@@ -63,13 +63,14 @@ export default {
         fromnode = id
         xposstart = xpos
         yposstart = ypos
-        endState = true
+
         //count = 1
         // this.$store.dispatch('connectionState', true)
       } else if (endState == true) {
         tonode = id
         xposend = xpos
         yposend = ypos
+
         // count = 0
         //  this.$store.dispatch('connectionState', false)
         // console.log(fromnode, tonode, xposstart, yposstart, xposend, yposend)
@@ -81,6 +82,7 @@ export default {
           xposend,
           yposend,
         })
+        endState = false
       }
     },
     buttonsDraw() {
@@ -93,12 +95,16 @@ export default {
 
       this.canvas = this.$refs.pixi
       const stage = this.PIXIApp.stage
+      //const allButtons = new PIXI.Container()
 
       for (i = 0; i < Object.keys(this.myNodes).length; i++) {
         buttonMap[i] = new PIXI.Graphics()
         // console.log(buttonMap[i])
         for (j = 0; j < Object.keys(this.configPositions).length; j++) {
-          if (this.configPositions[j].node_id == this.myNodes[i].node_id) {
+          if (
+            this.configPositions[j].node_id == this.myNodes[i].node_id &&
+            this.myNodes[i].node_id == false
+          ) {
             buttonMap[i].name = this.myNodes[i].node_id
             // console.log(button_one.name)
             buttonMap[i].lineStyle(1)
@@ -114,8 +120,9 @@ export default {
             buttonMap[i].endFill()
             // names it the last one only?
           }
+          //  allButtons.addChild(buttonMap[i])
+          //  stage.addChild(allButtons)
           stage.addChild(buttonMap[i])
-
           // Opt-in to interactivity
           buttonMap[i].interactive = true
           // Shows hand cursor
@@ -135,7 +142,10 @@ export default {
         buttonMapOther[i] = new PIXI.Graphics()
         // console.log(buttonMap[i])
         for (j = 0; j < Object.keys(this.configPositions).length; j++) {
-          if (this.configPositions[j].node_id == this.otherNodes[i].node_id) {
+          if (
+            this.configPositions[j].node_id == this.otherNodes[i].node_id &&
+            this.myNodes[i].node_id == false
+          ) {
             buttonMapOther[i].name = this.otherNodes[i].node_id
             // console.log(button_one.name)
             buttonMapOther[i].lineStyle(1)
@@ -169,21 +179,23 @@ export default {
       }
 
       let line = new PIXI.Graphics()
-
       var initialMoveTo
-
       let lines = []
 
       function start(event) {
-        // console.log('start')
+        // console.log(this.getChildByName)
         this.id = this.name
         ref.makeConnection(this.id, event.data.global.x, event.data.global.y)
       }
 
       function finish(event) {
-        // console.log('finish')
         this.id = this.name
-        ref.makeConnection(this.id, event.data.global.x, event.data.global.y)
+        if (this.id != fromnode) {
+          endState = true
+          ref.makeConnection(this.id, event.data.global.x, event.data.global.y)
+        } else {
+          endState = false
+        }
       }
 
       function onDragStart(event) {
@@ -204,16 +216,28 @@ export default {
       }
 
       function onDragEnd() {
-        //console.log('end')
+        //endState = true
         this.dragging = false
         stage.removeChild(line)
       }
 
       function onDragEndOutside() {
-        // console.log('Outside')
-        endState = false
-        this.dragging = false
         stage.removeChild(line)
+        // console.log('outside')
+        // console.log(this.name)
+        // console.log(fromnode)
+        // if (this.name != fromnode) {
+        //   console.log('diff')
+        //   endState = true
+        //   this.dragging = false
+        //   stage.removeChild(line)
+        //   this.finish()
+        // }
+        // } else {
+        //   endState = false
+        //   this.dragging = false
+        //   stage.removeChild(line)
+        // }
       }
 
       function onDragMove(event) {

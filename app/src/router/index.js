@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import List from '../views/List.vue'
+import Discarded from '../views/Discarded.vue'
 // import Oldhome from '../views/Oldhome'
 //import Test from '../views/Test'
 
@@ -17,6 +18,11 @@ export const routes = [
     path: '/mobile',
     name: 'Mobile',
     component: List,
+  },
+  {
+    path: '/discarded',
+    name: 'Discarded',
+    component: Discarded,
   },
   {
     path: '/about',
