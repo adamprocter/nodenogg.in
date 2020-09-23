@@ -143,7 +143,6 @@ export default {
         // console.log(buttonMap[i])
         for (j = 0; j < Object.keys(this.configPositions).length; j++) {
           if (this.configPositions[j].node_id == this.otherNodes[i].node_id) {
-            console.log(this.otherNodes[i].deleted)
             buttonMapOther[i].name = this.otherNodes[i].node_id
             // console.log(button_one.name)
             buttonMapOther[i].lineStyle(1)
