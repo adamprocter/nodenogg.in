@@ -131,15 +131,16 @@ const store = new Vuex.Store({
             j < Object.keys(state.allNodes[i].doc.nodes).length;
             j++
           ) {
-            if (state.allNodes[i].doc.nodes[j].deleted != true) {
-              const newNode = {
-                node_id: state.allNodes[i].doc.nodes[j].node_id,
-                node_text: state.allNodes[i].doc.nodes[j].node_text,
-              }
-
-              state.otherNodes.push(newNode)
+            //  if (state.allNodes[i].doc.nodes[j].deleted != true) {
+            const newNode = {
+              node_id: state.allNodes[i].doc.nodes[j].node_id,
+              node_text: state.allNodes[i].doc.nodes[j].node_text,
+              deleted: state.allNodes[i].doc.nodes[j].deleted,
             }
+
+            state.otherNodes.push(newNode)
           }
+          // }
         }
       }
       //// console.log(state.otherNodes)

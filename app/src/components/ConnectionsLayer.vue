@@ -103,7 +103,7 @@ export default {
         for (j = 0; j < Object.keys(this.configPositions).length; j++) {
           if (
             this.configPositions[j].node_id == this.myNodes[i].node_id &&
-            this.myNodes[i].node_id == false
+            this.myNodes[i].deleted == false
           ) {
             buttonMap[i].name = this.myNodes[i].node_id
             // console.log(button_one.name)
@@ -142,10 +142,8 @@ export default {
         buttonMapOther[i] = new PIXI.Graphics()
         // console.log(buttonMap[i])
         for (j = 0; j < Object.keys(this.configPositions).length; j++) {
-          if (
-            this.configPositions[j].node_id == this.otherNodes[i].node_id &&
-            this.myNodes[i].node_id == false
-          ) {
+          if (this.configPositions[j].node_id == this.otherNodes[i].node_id) {
+            console.log(this.otherNodes[i].deleted)
             buttonMapOther[i].name = this.otherNodes[i].node_id
             // console.log(button_one.name)
             buttonMapOther[i].lineStyle(1)
