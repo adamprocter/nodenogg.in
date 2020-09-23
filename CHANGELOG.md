@@ -1,3 +1,19 @@
+# 0.1.24
+
+_23rd September 2020_
+
+### Changed
+
+- Node button changed wording from Hide to Discard
+
+### Added
+
+- Brand new view for discarded nodes, you can now see your own discarded nodes and restore them (very unstyled at the moment)
+
+### Fixed
+
+- Fixed Connections bug that didn't respect start and end state and so would make odd connections
+
 # 0.1.23
 
 _19th September 2020_
