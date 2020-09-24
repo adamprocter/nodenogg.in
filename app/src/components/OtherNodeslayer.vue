@@ -25,15 +25,7 @@
             {{ nodeid }}
           </p>
           <!-- <h3>Reactions</h3> -->
-          <div
-            class="allemoji"
-            v-for="(emojis, index) in configEmoji"
-            :key="index"
-          >
-            <p class="eachemoji" v-if="nodeid == emojis.node_id">
-              {{ emojis.emoji_text }}
-            </p>
-          </div>
+
           <div class="react" v-if="nodeid != undefined">
             <!-- <h2>React</h2> -->
             <div class="eeee">
@@ -44,7 +36,17 @@
                 v-model="input"
                 readonly
               />
-
+              <div class="allemoji">
+                <div
+                  class="eachemoji"
+                  v-for="(emojis, index) in configEmoji"
+                  :key="index"
+                >
+                  <p v-if="nodeid == emojis.node_id">
+                    {{ emojis.emoji_text }}
+                  </p>
+                </div>
+              </div>
               <emoji-picker @emoji="append" :search="search">
                 <div
                   class="emoji-invoker"
@@ -106,7 +108,6 @@
       </div>
 
       <div v-else>
-        <!-- make draggable false as we are panning around -->
         <vue-draggable-resizable
           v-if="nodeid == value.node_id"
           :w="value.width"
@@ -376,7 +377,7 @@ input {
   font-size: 2em;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(0, auto));
-
+  /* max-width: 100px; */
   /* float: left; */
 }
 
