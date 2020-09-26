@@ -76,7 +76,7 @@
           </div>
           <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
         </PanZoomContainer>
-
+        <ToolBar />
         <ModeToolbar
           @offlineTriggered="offlineTriggered()"
           @onlineTriggered="onlineTriggered()"
@@ -102,6 +102,7 @@ import PanZoomContainer from '@/experimental/PanZoomContainer'
 import ConnectionsLayer from '@/components/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OffLine from '@/components/OffLine'
+import ToolBar from '@/components/ToolBar'
 import ScribbleLayer from '@/components/ScribbleLayer'
 import UploadLayer from '@/components/UploadLayer'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
@@ -225,6 +226,7 @@ export default {
     OtherNodeslayer,
     ConnectionsLayer,
     OnBoard,
+    ToolBar,
     OffLine,
     UploadLayer,
     ScribbleLayer,
