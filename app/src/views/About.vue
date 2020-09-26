@@ -22,7 +22,7 @@
     <h3>
       version {{ myVersion }} - See full
       <a
-        href="https://gitlab.adamprocter.co.uk/nn/nodenoggin/-/blob/master/CHANGELOG.md"
+        href="https://gitlab.adamprocter.co.uk/nn/nodenoggin/-/blob/main/CHANGELOG.md"
         >Changelog</a
       >
     </h3>
