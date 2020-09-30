@@ -311,10 +311,40 @@ export default {
     //             this.input = e.target.value;
     //           }, 300)
 
+    // editNode(e) {
+    //   const el = e.target
+    //   const cursorPos = el.selectionStart
+    //   console.log(cursorPos)
+    //   var nodeid = e.target.id
+    //   var nodetext = e.target.value
+    //   this.$store.dispatch('editNode', { nodeid, nodetext })
+
+    //   this.$nextTick(() => {
+    //     e.target.selectionStart = e.target.selectionEnd = cursorPos
+    //   })
+
+    // this.$nextTick(() => {
+    //   el.setSelectionRange(cursorPos, cursorPos)
+    // })
+    //},
+
+    // editNode: lodash.debounce(function (e) {
+    //   var nodeid = e.target.id
+    //   var nodetext = e.target.value
+    //   this.$store.dispatch('editNode', { nodeid, nodetext })
+    // }, 600),
+
     editNode: lodash.debounce(function (e) {
+      const el = e.target
+      const cursorPos = el.selectionStart
+
       var nodeid = e.target.id
       var nodetext = e.target.value
       this.$store.dispatch('editNode', { nodeid, nodetext })
+
+      this.$nextTick(() => {
+        el.setSelectionRange(cursorPos, cursorPos)
+      })
     }, 600),
 
     deleteFlag(e) {

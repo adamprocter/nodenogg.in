@@ -43,7 +43,7 @@
       class="innernode"
       :w="310"
       :h="375"
-      :x="1050"
+      :x="850"
       :y="15"
       :z="1"
       :draggable="true"
