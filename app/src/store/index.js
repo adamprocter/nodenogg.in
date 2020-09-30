@@ -107,6 +107,7 @@ const store = new Vuex.Store({
           state.microcosm = microcosm
           state.allNodes = doc.rows
           store.commit('SET_OTHER_NODES')
+          store.commit('GET_MY_NODES')
         })
         .catch(function (err) {
           console.log(err)
@@ -659,8 +660,7 @@ const store = new Vuex.Store({
     syncDB: () => {
       pouchdb.replicate.from(remote).on('complete', function () {
         store.commit('GET_ALL_NODES')
-        store.commit('GET_MY_NODES')
-
+        //  store.commit('GET_MY_NODES')
         store.commit('GET_POSITIONS')
         store.commit('GET_CONNECTIONS')
         store.commit('GET_EMOJI')
@@ -675,7 +675,7 @@ const store = new Vuex.Store({
           .on('change', function () {
             // pop info into function to find out more
             store.commit('GET_ALL_NODES')
-            store.commit('GET_MY_NODES')
+            //   store.commit('GET_MY_NODES')
 
             store.commit('GET_POSITIONS')
             store.commit('GET_CONNECTIONS')
