@@ -28,54 +28,54 @@
 
     <div class="online" v-else>
       <div ref="container" class="wrapper" v-bind:style="modeContainerStyle">
-        <PanZoomContainer
-          v-bind:width="width"
-          v-bind:height="height"
-          v-bind:scale="scale"
-          v-bind:translation="translation"
-        >
-          <div v-if="clientset">
-            <OtherNodeslayer
-              v-for="value in otherNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-            />
-            <NodesLayer
-              @editTrue="(e) => editTrue(e)"
-              v-for="value in myNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
-            <TipsLayer />
-            <ConnectionsLayer />
-          </div>
+        <!-- <PanZoomContainer 
+        v-bind:width="width" v-bind:height="height" v-bind:scale="scale"
+        v-bind:translation="translation" >-->
+        <div v-if="clientset">
+          <OtherNodeslayer
+            v-for="value in otherNodes"
+            v-bind:key="value.node_id"
+            v-bind:nodeid="value.node_id"
+            v-bind:nodetext="value.node_text"
+          />
+          <NodesLayer
+            @editTrue="(e) => editTrue(e)"
+            v-for="value in myNodes"
+            v-bind:key="value.node_id"
+            v-bind:nodeid="value.node_id"
+            v-bind:nodetext="value.node_text"
+            v-bind:deleted="value.deleted"
+          />
+          <TipsLayer />
+          <ConnectionsLayer />
+        </div>
 
-          <div v-else>
-            <OtherNodeslayer
-              v-for="value in otherNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-            />
-            <NodesLayer
-              @editTrue="(e) => editTrue(e)"
-              v-for="value in myNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
-            <OnBoard
-              @clientAdded="clientAdded()"
-              @editTrue="(e) => editTrue(e)"
-            />
-            <ConnectionsLayer />
-          </div>
-          <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
-        </PanZoomContainer>
+        <div v-else>
+          <OtherNodeslayer
+            v-for="value in otherNodes"
+            v-bind:key="value.node_id"
+            v-bind:nodeid="value.node_id"
+            v-bind:nodetext="value.node_text"
+          />
+          <NodesLayer
+            @editTrue="(e) => editTrue(e)"
+            v-for="value in myNodes"
+            v-bind:key="value.node_id"
+            v-bind:nodeid="value.node_id"
+            v-bind:nodetext="value.node_text"
+            v-bind:deleted="value.deleted"
+          />
+          <OnBoard
+            @clientAdded="clientAdded()"
+            @editTrue="(e) => editTrue(e)"
+          />
+          <ConnectionsLayer />
+          <PanzoomLayer />
+        </div>
+
+        <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
+        <!-- </PanZoomContainer> -->
+
         <!-- <ToolBar /> -->
         <ModeToolbar
           @offlineTriggered="offlineTriggered()"
@@ -98,8 +98,9 @@
 </template>
 
 <script>
-import PanZoomContainer from '@/experimental/PanZoomContainer'
+//import PanZoomContainer from '@/experimental/PanZoomContainer'
 import ConnectionsLayer from '@/components/ConnectionsLayer'
+import PanzoomLayer from '@/components/PanzoomLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OffLine from '@/components/OffLine'
 // import ToolBar from '@/components/ToolBar'
@@ -220,7 +221,8 @@ export default {
   components: {
     ModeToolbar,
     ViewToolbar,
-    PanZoomContainer,
+    // PanZoomContainer,
+    PanzoomLayer,
     // SelectionLayer,
     NodesLayer,
     OtherNodeslayer,
