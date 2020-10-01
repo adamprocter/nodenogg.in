@@ -1,169 +1,77 @@
 <template>
   <div ref="nodes" class="node">
     <div v-for="(value, index) in configPositions" v-bind:key="index">
-      <div v-if="toolmode == 'move'">
-        <vue-draggable-resizable
-          class="innernode"
-          v-if="nodeid == value.node_id && deleted == false"
-          :w="value.width"
-          :h="value.height"
-          :x="value.x_pos"
-          :y="value.y_pos"
-          :z="value.z_index"
-          :draggable="false"
-          :resizable="false"
-          style="border: 2px dashed black; background-color: rgb(155, 194, 216)"
-          :min-width="200"
-          :min-height="220"
-        >
-          <form>
-            <div v-if="value.read_mode == false">
-              <div v-for="value in myNodes" v-bind:key="value.node_id">
-                <textarea
-                  v-if="nodeid == value.node_id"
-                  @focus="editTrue(true)"
-                  @blur="editTrue(false)"
-                  autofocus
-                  @input="editNode"
-                  v-model="value.node_text"
-                  :id="nodeid"
-                  class="drag-cancel"
-                  ref="nodetext"
-                  placeholder="Idea goes here! (auto saved every keystroke)"
-                ></textarea>
-              </div>
-            </div>
-            <div v-if="value.read_mode == true">
-              <p
-                class="read"
+      <vue-draggable-resizable
+        class="innernode"
+        v-if="nodeid == value.node_id && deleted == false"
+        :w="value.width"
+        :h="value.height"
+        :x="value.x_pos"
+        :y="value.y_pos"
+        :z="value.z_index"
+        :draggable="true"
+        :resizable="true"
+        style="border: 2px dashed black; background-color: rgb(155, 194, 216)"
+        :min-width="200"
+        :min-height="220"
+      >
+        <form>
+          <div v-if="value.read_mode == false">
+            <div v-for="value in myNodes" v-bind:key="value.node_id">
+              <textarea
+                v-if="nodeid == value.node_id"
+                @focus="editTrue(true)"
+                @blur="editTrue(false)"
+                autofocus
+                @input="editNode"
+                v-model="value.node_text"
                 :id="nodeid"
-                :inner-html.prop="nodetext | marked"
-              ></p>
+                class="drag-cancel"
+                ref="nodetext"
+                placeholder="Idea goes here! (auto saved every keystroke)"
+              ></textarea>
             </div>
+          </div>
+          <div v-if="value.read_mode == true">
+            <p
+              class="read"
+              :id="nodeid"
+              :inner-html.prop="nodetext | marked"
+            ></p>
+          </div>
 
-            <!-- <h3>Reactions</h3> -->
+          <!-- <h3>Reactions</h3> -->
 
-            <div class="allemoji">
-              <div
-                class="eachemoji"
-                v-for="(emojis, index) in configEmoji"
-                :key="index"
-              >
-                <p v-if="nodeid == emojis.node_id">
-                  {{ emojis.emoji_text }}
-                </p>
-              </div>
+          <div class="allemoji">
+            <div
+              class="eachemoji"
+              v-for="(emojis, index) in configEmoji"
+              :key="index"
+            >
+              <p v-if="nodeid == emojis.node_id">
+                {{ emojis.emoji_text }}
+              </p>
             </div>
-            <p class="info">*markdown supported &amp; autosaves</p>
-            <div class="btn-row">
-              <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
+          </div>
+          <p class="info">*markdown supported &amp; autosaves</p>
+          <div class="btn-row">
+            <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
               > -->
-              <div v-if="value.read_mode == true">
-                <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Edit Mode
-                </BaseButton>
-              </div>
-              <div v-else>
-                <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Read Mode</BaseButton
-                >
-              </div>
-            </div>
-          </form>
-        </vue-draggable-resizable>
-      </div>
 
-      <!-- Same code as above when in any other mode other than move so you can drag nodes-->
-
-      <div v-else>
-        <vue-draggable-resizable
-          class="innernode"
-          v-if="nodeid == value.node_id && deleted == false"
-          :w="value.width"
-          :h="value.height"
-          :x="value.x_pos"
-          :y="value.y_pos"
-          :z="value.z_index"
-          @activated="onActivated"
-          @dragging="onDrag"
-          @resizing="onResize"
-          @dragstop="onDragstop"
-          @resizestop="onResizestop"
-          :drag-cancel="'.drag-cancel'"
-          style="border: 2px dashed black; background-color: rgb(155, 194, 216)"
-          :min-width="200"
-          :min-height="220"
-        >
-          <form>
-            <div v-if="value.read_mode == false">
-              <div v-for="value in myNodes" v-bind:key="value.node_id">
-                <div v-if="nodeid == value.node_id">
-                  <textarea
-                    @focus="editTrue(true)"
-                    @blur="editTrue(false)"
-                    autofocus
-                    @input="editNode"
-                    v-model="value.node_text"
-                    :id="nodeid"
-                    class="drag-cancel"
-                    ref="nodetext"
-                    placeholder="Idea goes here! (auto saved every keystroke)"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
             <div v-if="value.read_mode == true">
-              <p
-                class="read"
-                :id="nodeid"
-                :inner-html.prop="nodetext | marked"
-              ></p>
+              <BaseButton class="read" buttonClass="action" @click="readFlag()"
+                >Edit Mode
+              </BaseButton>
             </div>
-
-            <!-- <h3>Reactions</h3> -->
-            <div class="allemoji">
-              <div
-                class="eachemoji"
-                v-for="(emojis, index) in configEmoji"
-                :key="index"
+            <div v-else>
+              <BaseButton class="read" buttonClass="action" @click="readFlag()"
+                >Read Mode</BaseButton
               >
-                <p v-if="nodeid == emojis.node_id">
-                  {{ emojis.emoji_text }}
-                </p>
-              </div>
             </div>
-            <p class="info">*markdown supported &amp; autosaves</p>
-            <div class="btn-row">
-              <BaseButton buttonClass="danger" @click="deleteFlag()"
-                >Discard</BaseButton
-              >
-              <div v-if="value.read_mode == true">
-                <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Edit Mode
-                </BaseButton>
-              </div>
-              <div v-else>
-                <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Read Mode</BaseButton
-                >
-              </div>
-            </div>
-          </form>
-        </vue-draggable-resizable>
-      </div>
+          </div>
+        </form>
+      </vue-draggable-resizable>
     </div>
   </div>
 </template>
@@ -171,7 +79,7 @@
 <script>
 import { mapState } from 'vuex'
 import marked from 'marked'
-import lodash from 'lodash'
+//import lodash from 'lodash'
 var readmode
 
 export default {
