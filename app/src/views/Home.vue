@@ -28,6 +28,7 @@
 
     <div class="online" v-else>
       <div ref="container" class="wrapper" v-bind:style="modeContainerStyle">
+        <!-- <PanzoomLayer> -->
         <PanZoomContainer
           v-bind:width="width"
           v-bind:height="height"
@@ -75,6 +76,7 @@
             <ConnectionsLayer />
           </div>
           <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
+          <!-- </PanzoomLayer> -->
         </PanZoomContainer>
         <!-- <ToolBar /> -->
         <ModeToolbar
@@ -102,6 +104,7 @@ import PanZoomContainer from '@/experimental/PanZoomContainer'
 import ConnectionsLayer from '@/components/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OffLine from '@/components/OffLine'
+// import PanzoomLayer from '@/components/PanzoomLayer'
 // import ToolBar from '@/components/ToolBar'
 import ScribbleLayer from '@/components/ScribbleLayer'
 import UploadLayer from '@/components/UploadLayer'
@@ -220,6 +223,7 @@ export default {
   components: {
     ModeToolbar,
     ViewToolbar,
+    //PanzoomLayer,
     PanZoomContainer,
     // SelectionLayer,
     NodesLayer,
