@@ -28,7 +28,6 @@
               @blur="editTrue(false)"
               autofocus
               @input="editNode"
-              v-model="value.node_text"
               :id="nodeid"
               ref="nodetext"
               placeholder="Idea goes here!"

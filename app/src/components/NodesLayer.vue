@@ -25,7 +25,6 @@
                   @blur="editTrue(false)"
                   autofocus
                   @input="editNode"
-                  v-model="value.node_text"
                   :id="nodeid"
                   class="drag-cancel"
                   ref="nodetext"
@@ -110,7 +109,6 @@
                     @blur="editTrue(false)"
                     autofocus
                     @input="editNode"
-                    v-model="value.node_text"
                     :id="nodeid"
                     class="drag-cancel"
                     ref="nodetext"
@@ -171,7 +169,7 @@
 <script>
 import { mapState } from 'vuex'
 import marked from 'marked'
-import lodash from 'lodash'
+//import lodash from 'lodash'
 var readmode
 
 export default {
