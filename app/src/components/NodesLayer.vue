@@ -334,18 +334,24 @@ export default {
     //   this.$store.dispatch('editNode', { nodeid, nodetext })
     // }, 600),
 
-    editNode: lodash.debounce(function (e) {
-      const el = e.target
-      const cursorPos = el.selectionStart
+    // editNode: lodash.debounce(function (e) {
+    //   const el = e.target
+    //   const cursorPos = el.selectionStart
 
+    //   var nodeid = e.target.id
+    //   var nodetext = e.target.value
+    //   this.$store.dispatch('editNode', { nodeid, nodetext })
+
+    //   this.$nextTick(() => {
+    //     el.setSelectionRange(cursorPos, cursorPos)
+    //   })
+    // }, 600),
+
+    editNode(e) {
       var nodeid = e.target.id
       var nodetext = e.target.value
       this.$store.dispatch('editNode', { nodeid, nodetext })
-
-      this.$nextTick(() => {
-        el.setSelectionRange(cursorPos, cursorPos)
-      })
-    }, 600),
+    },
 
     deleteFlag(e) {
       e = this.nodeid
