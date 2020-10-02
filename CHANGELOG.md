@@ -1,3 +1,11 @@
+# 0.1.25
+
+_2nd October 2020_
+
+### Fixed
+
+- Major sync bug when multiplayer is now fixed!
+
 # 0.1.24
 
 _23rd September 2020_

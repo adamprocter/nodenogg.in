@@ -18,11 +18,12 @@
         >
           <form>
             <div v-if="value.read_mode == false">
-              <div v-for="value in myNodes" v-bind:key="value.node_id">
+              <div v-for="value in $options.myArray" v-bind:key="value.node_id">
                 <textarea
                   v-if="nodeid == value.node_id"
                   @focus="editTrue(true)"
                   @blur="editTrue(false)"
+                  v-model="value.node_text"
                   autofocus
                   @input="editNode"
                   :id="nodeid"
@@ -102,18 +103,20 @@
         >
           <form>
             <div v-if="value.read_mode == false">
-              <div v-for="value in myNodes" v-bind:key="value.node_id">
+              <div v-for="value in $options.myArray" v-bind:key="value.node_id">
                 <div v-if="nodeid == value.node_id">
                   <textarea
                     @focus="editTrue(true)"
                     @blur="editTrue(false)"
                     autofocus
+                    v-model="value.node_text"
                     @input="editNode"
                     :id="nodeid"
                     class="drag-cancel"
                     ref="nodetext"
                     placeholder="Idea goes here! (auto saved every keystroke)"
-                  ></textarea>
+                  >
+                  </textarea>
                 </div>
               </div>
             </div>
@@ -188,6 +191,7 @@ export default {
       pickupz: 1,
       localreadmode: false,
       mode: '',
+      // firstload: true,
     }
   },
 
@@ -216,6 +220,12 @@ export default {
     configEmoji: (state) => state.configEmoji,
     toolmode: (state) => state.ui.mode,
   }),
+  myArray: null,
+  created() {
+    //access the custom option using $options
+    this.$options.myArray = this.myNodes
+  },
+
   methods: {
     onActivated() {
       var i
@@ -302,6 +312,7 @@ export default {
 
     editTrue(e) {
       this.$emit('editTrue', e)
+      // this.firstload = false
       //  // console.log(e)
     },
 

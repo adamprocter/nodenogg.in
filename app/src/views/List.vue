@@ -27,6 +27,7 @@
               @focus="editTrue(true)"
               @blur="editTrue(false)"
               autofocus
+              v-model="value.node_text"
               @input="editNode"
               :id="nodeid"
               ref="nodetext"
@@ -109,6 +110,7 @@ import ModeToolbar from '@/experimental/ModeToolbar'
 import { mapState } from 'vuex'
 import marked from 'marked'
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
+import lodash from 'lodash'
 
 export default {
   name: 'List',
@@ -201,11 +203,11 @@ export default {
       this.$store.dispatch('shortcutState', e)
     },
 
-    editNode(e) {
+    editNode: lodash.debounce(function (e) {
       var nodeid = e.target.id
       var nodetext = e.target.value
       this.$store.dispatch('editNode', { nodeid, nodetext })
-    },
+    }, 2000),
   },
 }
 </script>
