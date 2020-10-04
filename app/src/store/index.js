@@ -478,6 +478,7 @@ const store = new Vuex.Store({
     },
 
     EDIT_NODE(state, e) {
+      //   console.log(e)
       var i
       for (i = 0; i < Object.keys(state.myNodes).length; i++) {
         if (e.nodeid == state.myNodes[i].node_id) {

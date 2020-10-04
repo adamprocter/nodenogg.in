@@ -1,43 +1,23 @@
 <template>
   <div id="listwrapper">
-    <!-- <div v-for="(posvalue, index) in configPositions" v-bind:key="index"> -->
-    <h1 class="mobile">Your nodes - list mode</h1>
-    <!-- <OffLine
-      v-for="value in myNodes"
-      v-bind:key="value.node_id"
-      v-bind:nodeid="value.node_id"
-      v-bind:nodetext="value.node_text"
-      @editTrue="(e) => editTrue(e)"
-    /> -->
     <div v-if="clientset">
+      <h1 class="mobile">Your nodes - list mode</h1>
+
+      <ListLayer
+        @editTrue="(e) => editTrue(e)"
+        v-for="value in myNodes"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
+        v-bind:deleted="value.deleted"
+      />
       <div class="btn-row">
         <BaseButton class="new" buttonClass="action" @click="addNode()"
           >Create Node</BaseButton
         >
       </div>
-
-      <form>
-        <!-- <div v-if="posvalue.read_mode == false"> -->
-        <div
-          v-for="value in myNodes.slice().reverse()"
-          v-bind:key="value.node_id"
-        >
-          <div v-if="value.deleted == false">
-            <textarea
-              @focus="editTrue(true)"
-              @blur="editTrue(false)"
-              autofocus
-              v-model="value.node_text"
-              @input="editNode"
-              :id="nodeid"
-              ref="nodetext"
-              placeholder="Idea goes here!"
-            ></textarea>
-          </div>
-        </div>
-      </form>
     </div>
-    <!-- // onboarding for list view -->
+
     <div v-else>
       <form>
         <div>
@@ -96,24 +76,21 @@
         </div>
       </form>
     </div>
-
-    <ModeToolbar />
+    <!-- <ModeToolbar /> -->
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
-// import OffLine from '@/components/OffLine'
-// import OnBoard from '@/components/OnBoard.vue'
 import Router from '@/router'
-import ModeToolbar from '@/experimental/ModeToolbar'
+//import ModeToolbar from '@/experimental/ModeToolbar'
+import ListLayer from '@/components/ListLayer'
 import { mapState } from 'vuex'
 import marked from 'marked'
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
-import lodash from 'lodash'
 
 export default {
   name: 'List',
+
   mixins: [shortcutsMixin],
   data: function () {
     return {
@@ -136,11 +113,15 @@ export default {
     deleted: Boolean,
   },
 
-  computed: mapState({
-    myNodes: (state) => state.myNodes,
-    configPositions: (state) => state.configPositions,
-    shortcutstate: (state) => state.shortcutstate,
-  }),
+  computed: {
+    ...mapState({
+      myNodes: (state) => state.myNodes,
+      otherNodes: (state) => state.otherNodes,
+      shortcutstate: (state) => state.shortcutstate,
+      toolmode: (state) => state.ui.mode,
+      connections: (state) => state.configConnections,
+    }),
+  },
 
   created() {
     if (typeof window !== 'undefined') {
@@ -165,19 +146,24 @@ export default {
     }
   },
 
-  components: {
-    // OnBoard,
-    // OffLine,
-    ModeToolbar,
-  },
-
-  filters: {
-    marked: marked,
-  },
   methods: {
     clientAdded() {
       this.clientset = !this.clientset
     },
+
+    addNode() {
+      this.$store.dispatch('addNode')
+    },
+
+    editTrue(e) {
+      this.$store.dispatch('shortcutState', e)
+    },
+
+    // editNode(e) {
+    //   var nodeid = e.target.id
+    //   var nodetext = e.target.value
+    //   this.$store.dispatch('editNode', { nodeid, nodetext })
+    // },
 
     createMicrocosm() {
       this.$store.dispatch('createMicrocosm', this.localmicrocosm)
@@ -194,44 +180,26 @@ export default {
       this.clientset = !this.clientset
       this.$emit('clientAdded')
     },
-
-    addNode() {
-      this.$store.dispatch('addNode')
-    },
-
-    editTrue(e) {
-      this.$store.dispatch('shortcutState', e)
-    },
-
-    editNode: lodash.debounce(function (e) {
-      var nodeid = e.target.id
-      var nodetext = e.target.value
-      this.$store.dispatch('editNode', { nodeid, nodetext })
-    }, 2000),
+  },
+  components: {
+    ListLayer,
+    // ModeToolbar,
+  },
+  filters: {
+    marked: marked,
   },
 }
 </script>
 
 <style lang="css" scoped>
-h2 {
-  color: red;
-}
-.mobile {
-  font-size: 1em;
-}
-
 #listwrapper {
   margin-left: 1em;
   margin-bottom: 1em;
 }
-.new {
-  margin-bottom: 1em;
+.mobile {
+  font-size: 1em;
 }
-
-textarea {
-  width: 95%;
-  height: 100px;
-  margin-left: 1em;
+.new {
   margin-bottom: 1em;
 }
 </style>
