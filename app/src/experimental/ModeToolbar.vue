@@ -11,6 +11,9 @@
         v-bind:theme="isActive(mode) ? 'light' : 'dark'"
       />
     </button>
+
+    {{ clientid }} /
+    {{ microcosm }}
   </nav>
 </template>
 
@@ -24,6 +27,8 @@ export default {
   mounted() {
     window.addEventListener('online', this.handleConnection)
     window.addEventListener('offline', this.handleConnection)
+    this.clientid = localStorage.myNNClient
+    this.microcosm = localStorage.mylastMicrocosm
   },
   computed: {
     ...mapState({
@@ -33,6 +38,7 @@ export default {
       activeMode: 'ui/activeMode',
     }),
   },
+
   methods: {
     setMode(mode) {
       this.$store.commit('ui/setMode', mode)
@@ -105,6 +111,8 @@ export default {
   },
   data() {
     return {
+      clientid: String,
+      microcosm: String,
       allModes,
     }
   },

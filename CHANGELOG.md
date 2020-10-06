@@ -1,3 +1,17 @@
+# 0.1.26
+
+_6th October 2020_
+
+### Changed
+
+- Renamed Mobile to List
+- Refactored the way the list and discarded view work
+- Added some basic style to list and discarded views
+
+### Added
+
+- the toolbar now shows (in basic form) to you only your device name and the microcosm you are currently viewing
+
 # 0.1.25
 
 _2nd October 2020_
