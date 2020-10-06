@@ -15,8 +15,8 @@ export const routes = [
     component: Home,
   },
   {
-    path: '/mobile',
-    name: 'Mobile',
+    path: '/list',
+    name: 'List',
     component: List,
   },
   {

@@ -1,17 +1,86 @@
 <template>
   <div ref="nodes" class="node">
-    <vue-draggable-resizable
-      class="innernode"
-      :w="300"
-      :h="335"
-      :x="5"
-      :y="15"
-      :z="1"
-      :draggable="true"
-      :resizable="false"
-      style="background-color: #6fcf97"
-    >
-      <div>
+    <div v-if="this.currentroute.name == 'Home'">
+      <vue-draggable-resizable
+        class="innernode"
+        :w="300"
+        :h="335"
+        :x="5"
+        :y="15"
+        :z="1"
+        :draggable="true"
+        :resizable="false"
+        style="background-color: #6fcf97"
+      >
+        <div>
+          <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
+          <div v-if="name == false">
+            <input
+              type="text"
+              v-model.trim="clientid"
+              placeholder="name"
+              autocorrect="off"
+              autocapitalize="none"
+              ref="objectname"
+              v-on:keyup.enter="setClient()"
+              autofocus
+              @focus="editTrue(true)"
+              @blur="editTrue(false)"
+            />
+
+            <div class="btn-row">
+              <BaseButton buttonClass="special" @click="setClient()"
+                >Store</BaseButton
+              >
+            </div>
+          </div>
+          <div v-else>
+            <h4>Saved</h4>
+          </div>
+        </div>
+      </vue-draggable-resizable>
+
+      <vue-draggable-resizable
+        class="innernode"
+        :w="310"
+        :h="375"
+        :x="600"
+        :y="15"
+        :z="1"
+        :draggable="true"
+        :resizable="false"
+        style="background-color: #6fcf97"
+      >
+        <div class="content">
+          <p id="nodeid" :inner-html.prop="nodetext2 | marked"></p>
+          <div v-if="microcosm == false">
+            <input
+              type="text"
+              v-model.trim="localmicrocosm"
+              placeholder="microcosm name"
+              autocorrect="off"
+              autocapitalize="none"
+              @focus="editTrue(true)"
+              @blur="editTrue(false)"
+              v-on:keyup.enter="createMicrocosm(), letsGo()"
+            />
+
+            <div class="btn-row">
+              <BaseButton
+                buttonClass="special"
+                @click="createMicrocosm(), letsGo()"
+                >Create or Rejoin a Microcosm</BaseButton
+              >
+            </div>
+          </div>
+          <div v-else>
+            <h4>Loading...</h4>
+          </div>
+        </div>
+      </vue-draggable-resizable>
+    </div>
+    <div v-else>
+      <div class="nodes">
         <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
         <div v-if="name == false">
           <input
@@ -37,20 +106,8 @@
           <h4>Saved</h4>
         </div>
       </div>
-    </vue-draggable-resizable>
 
-    <vue-draggable-resizable
-      class="innernode"
-      :w="310"
-      :h="375"
-      :x="850"
-      :y="15"
-      :z="1"
-      :draggable="true"
-      :resizable="false"
-      style="background-color: #6fcf97"
-    >
-      <div class="content">
+      <div class="nodes">
         <p id="nodeid" :inner-html.prop="nodetext2 | marked"></p>
         <div v-if="microcosm == false">
           <input
@@ -76,7 +133,7 @@
           <h4>Loading...</h4>
         </div>
       </div>
-    </vue-draggable-resizable>
+    </div>
   </div>
 </template>
 
@@ -87,6 +144,7 @@ import marked from 'marked'
 export default {
   data: function () {
     return {
+      currentroute: Router.currentRoute,
       localmicrocosm: Router.currentRoute.params.microcosm,
       clientid: '',
       nodetext:
@@ -183,5 +241,14 @@ input {
   -webkit-box-shadow: none;
   box-shadow: none;
   border-style: dotted;
+}
+
+.nodes {
+  margin: 1em;
+  padding: 0 1em 0 1em;
+  width: 95%;
+  border: 2px dashed black;
+  background-color: #6fcf97;
+  margin-top: 1em;
 }
 </style>

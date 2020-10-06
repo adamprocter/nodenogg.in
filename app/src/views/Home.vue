@@ -41,6 +41,7 @@
               v-bind:key="value.node_id"
               v-bind:nodeid="value.node_id"
               v-bind:nodetext="value.node_text"
+              v-bind:deleted="value.deleted"
             />
             <NodesLayer
               @editTrue="(e) => editTrue(e)"
@@ -60,6 +61,7 @@
               v-bind:key="value.node_id"
               v-bind:nodeid="value.node_id"
               v-bind:nodetext="value.node_text"
+              v-bind:deleted="value.deleted"
             />
             <NodesLayer
               @editTrue="(e) => editTrue(e)"

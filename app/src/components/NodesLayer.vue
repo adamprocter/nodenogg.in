@@ -59,7 +59,7 @@
               <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Delete</BaseButton
               > -->
-              <div v-if="value.read_mode == true">
+              <!-- <div v-if="value.read_mode == true">
                 <BaseButton
                   class="read"
                   buttonClass="action"
@@ -74,7 +74,7 @@
                   @click="readFlag()"
                   >Read Mode</BaseButton
                 >
-              </div>
+              </div> -->
             </div>
           </form>
         </vue-draggable-resizable>
