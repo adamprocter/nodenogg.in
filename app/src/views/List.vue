@@ -72,16 +72,7 @@ export default {
     }
   },
 
-  mounted() {
-    // if (localStorage.myNNClient && localStorage.mylastMicrocosm) {
-    //   this.clientid = localStorage.myNNClient
-    //   this.localmicrocosm = localStorage.mylastMicrocosm
-    //   this.createMicrocosm()
-    //   this.setClient()
-    //   this.letsGo()
-    //   this.clientset = 'true'
-    // }
-  },
+  mounted() {},
 
   methods: {
     clientAdded() {

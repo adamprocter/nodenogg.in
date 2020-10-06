@@ -14,8 +14,8 @@
                 v-model="value.node_text"
                 @input="editNode"
                 :id="value.node_id"
-                ref="nodetext"
                 placeholder="Idea goes here!"
+                ref="newnode"
               ></textarea>
             </div>
           </div>

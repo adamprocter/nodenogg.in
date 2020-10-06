@@ -16,6 +16,7 @@
           <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
           <div v-if="name == false">
             <input
+              id="clientid"
               type="text"
               v-model.trim="clientid"
               placeholder="name"
@@ -55,6 +56,8 @@
           <p id="nodeid" :inner-html.prop="nodetext2 | marked"></p>
           <div v-if="microcosm == false">
             <input
+              id="microcosm"
+              ref="microcosm"
               type="text"
               v-model.trim="localmicrocosm"
               placeholder="microcosm name"
@@ -85,11 +88,11 @@
         <div v-if="name == false">
           <input
             type="text"
+            id="clientid"
             v-model.trim="clientid"
             placeholder="name"
             autocorrect="off"
             autocapitalize="none"
-            ref="objectname"
             v-on:keyup.enter="setClient()"
             autofocus
             @focus="editTrue(true)"
@@ -111,10 +114,12 @@
         <p id="nodeid" :inner-html.prop="nodetext2 | marked"></p>
         <div v-if="microcosm == false">
           <input
+            id="microcosm"
             type="text"
             v-model.trim="localmicrocosm"
             placeholder="microcosm name"
             autocorrect="off"
+            ref="microcosm"
             autocapitalize="none"
             @focus="editTrue(true)"
             @blur="editTrue(false)"
@@ -153,7 +158,6 @@ export default {
         '## Join/Start a microcosm ! 🚀 \n Now you can create your own microcosm to store your ideas and ask people to join you, either just tell them the name of the microcosm or share the alpha.nodenogg.in URL and add the ending; </br><em><b>/microcosm/nameofyourmicrocosm</b></em>',
       name: false,
       microcosm: false,
-      // partc: false,
     }
   },
 
@@ -180,6 +184,7 @@ export default {
       this.$store.dispatch('setClient', this.clientid),
         localStorage.setItem('myNNClient', this.clientid)
       this.name = true
+      this.focusInput()
     },
 
     editTrue(e) {
@@ -188,6 +193,10 @@ export default {
 
     letsGo() {
       this.$emit('clientAdded')
+    },
+
+    focusInput() {
+      this.$refs.microcosm.focus()
     },
   },
 }
