@@ -134,7 +134,7 @@ export default {
       uploadready: false,
       copyready: false,
       drawready: false,
-      shortcutstate: false,
+      // shortcutstate: false,
     }
   },
   computed: {
