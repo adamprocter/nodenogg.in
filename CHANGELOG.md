@@ -1,3 +1,17 @@
+# 0.1.27
+
+_9th October 2020_
+
+### Added
+
+- Basic card view of all nodes
+- Leave link in Navigation
+
+### Changed
+
+- List view now you can enter basic read mode
+- List view you can now discard your nodes
+
 # 0.1.26
 
 _6th October 2020_
@@ -10,7 +24,7 @@ _6th October 2020_
 
 ### Added
 
-- the toolbar now shows (in basic form) to you only your device name and the microcosm you are currently viewing
+- The toolbar now shows (in basic form) to you only your device name and the microcosm you are currently viewing
 
 # 0.1.25
 

@@ -2,20 +2,29 @@
   <div>
     <div v-if="clientset">
       <div id="listwrapper">
-        <h1 class="mobile">Your nodes - list mode</h1>
-
-        <ListLayer
-          @editTrue="(e) => editTrue(e)"
-          v-for="value in myNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          v-bind:deleted="value.deleted"
-        />
+        <h1 class="mobile">nodes - card view</h1>
         <div class="btn-row">
           <BaseButton class="new" buttonClass="action" @click="addNode()"
             >Create Node</BaseButton
           >
+        </div>
+        <div class="grid">
+          <CardsLayer
+            @editTrue="(e) => editTrue(e)"
+            v-for="value in myNodes"
+            v-bind:key="value.node_id"
+            v-bind:nodeid="value.node_id"
+            v-bind:nodetext="value.node_text"
+            v-bind:deleted="value.deleted"
+          />
+
+          <OtherCardslayer
+            v-for="value in otherNodes"
+            v-bind:key="value.node_id"
+            v-bind:nodeid="value.node_id"
+            v-bind:nodetext="value.node_text"
+            v-bind:deleted="value.deleted"
+          />
         </div>
       </div>
     </div>
@@ -27,7 +36,8 @@
 
 <script>
 import Router from '@/router'
-import ListLayer from '@/components/ListLayer'
+import CardsLayer from '@/components/CardsLayer'
+import OtherCardslayer from '@/components/OtherCardslayer'
 import OnBoard from '@/components/OnBoard'
 import { mapState } from 'vuex'
 import marked from 'marked'
@@ -57,8 +67,7 @@ export default {
   computed: {
     ...mapState({
       myNodes: (state) => state.myNodes,
-      shortcutstate: (state) => state.shortcutstate,
-      toolmode: (state) => state.ui.mode,
+      otherNodes: (state) => state.otherNodes,
     }),
   },
 
@@ -90,7 +99,8 @@ export default {
     },
   },
   components: {
-    ListLayer,
+    CardsLayer,
+    OtherCardslayer,
     OnBoard,
   },
   filters: {
@@ -100,6 +110,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 #listwrapper {
   margin-left: 1em;
   margin-bottom: 1em;

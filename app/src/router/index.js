@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Cards from '../views/Cards.vue'
 import List from '../views/List.vue'
 import Discarded from '../views/Discarded.vue'
+import Leave from '../views/Leave.vue'
 // import Oldhome from '../views/Oldhome'
 //import Test from '../views/Test'
 
@@ -15,8 +17,13 @@ export const routes = [
     component: Home,
   },
   {
+    path: '/cards',
+    name: 'Cards',
+    component: Cards,
+  },
+  {
     path: '/list',
-    name: 'List',
+    name: 'My List',
     component: List,
   },
   {
@@ -32,6 +39,12 @@ export const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/About.vue'),
+  },
+
+  {
+    path: '/leave',
+    name: 'Leave',
+    component: Leave,
   },
 
   // {

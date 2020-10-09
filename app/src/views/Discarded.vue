@@ -58,6 +58,9 @@ export default {
     clientAdded() {
       this.clientset = !this.clientset
     },
+    editTrue(e) {
+      this.$store.dispatch('shortcutState', e)
+    },
   },
 }
 </script>

@@ -3,8 +3,8 @@
     <div v-for="(value, index) in configPositions" v-bind:key="index">
       <div class="nodes" v-if="nodeid == value.node_id && deleted == false">
         <form>
+          <!-- <div v-if="posvalue.read_mode == false"> -->
           <div v-if="value.read_mode == false">
-            <!-- <div v-if="posvalue.read_mode == false"> -->
             <div v-for="value in $options.myArray" v-bind:key="value.node_id">
               <div v-if="value.deleted == false">
                 <textarea
@@ -12,11 +12,11 @@
                   @focus="editTrue(true)"
                   @blur="editTrue(false)"
                   autofocus
-                  ref="newnode"
                   v-model="value.node_text"
                   @input="editNode"
                   :id="value.node_id"
                   placeholder="Idea goes here!"
+                  ref="newnode"
                 ></textarea>
               </div>
             </div>
@@ -28,6 +28,7 @@
               :inner-html.prop="nodetext | marked"
             ></p>
           </div>
+
           <div class="allemoji">
             <div
               class="eachemoji"
@@ -65,8 +66,9 @@
 import { mapState } from 'vuex'
 import marked from 'marked'
 var readmode
+
 export default {
-  name: 'ListLayer',
+  name: 'CardsLayer',
 
   data: function () {
     return {}
@@ -78,15 +80,15 @@ export default {
     deleted: Boolean,
   },
 
-  filters: {
-    marked: marked,
-  },
-
   computed: mapState({
     myNodes: (state) => state.myNodes,
     configPositions: (state) => state.configPositions,
     configEmoji: (state) => state.configEmoji,
   }),
+
+  filters: {
+    marked: marked,
+  },
 
   myArray: null,
   created() {
@@ -99,11 +101,6 @@ export default {
       var nodetext = e.target.value
       this.$store.dispatch('editNode', { nodeid, nodetext })
     },
-
-    editTrue(e) {
-      this.$emit('editTrue', e)
-    },
-
     deleteFlag(e) {
       e = this.nodeid
       this.$store.dispatch('deleteFlag', { e })
@@ -128,8 +125,9 @@ export default {
         this.mode = 'Edit'
       }
     },
-    focusInput() {
-      this.$refs.newnode.focus()
+
+    editTrue(e) {
+      this.$emit('editTrue', e)
     },
   },
 }
@@ -141,10 +139,18 @@ h2 {
 }
 
 .nodes {
-  width: 95%;
+  /* width: 95%; */
+  width: 285px;
+  height: 355px;
   border: 2px dashed black;
   background-color: rgb(155, 194, 216);
   margin-top: 1em;
+  margin-right: 1em;
+}
+.read {
+  /* min-width: 100px; */
+  min-height: 175px;
+  padding: 0 1em 0 1em;
 }
 
 textarea {
@@ -161,6 +167,7 @@ textarea {
   background-color: rgb(187, 227, 255);
   scrollbar-color: yellow rgb(187, 227, 255);
 }
+
 .btn-row {
   position: relative;
   margin-bottom: 5px;
