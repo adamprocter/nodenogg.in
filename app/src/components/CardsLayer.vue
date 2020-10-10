@@ -55,7 +55,7 @@
 import { mapState } from 'vuex'
 //var readmode
 export default {
-  name: 'ListLayer',
+  name: 'CardsLayer',
 
   data: function () {
     return {

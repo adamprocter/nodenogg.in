@@ -1,3 +1,43 @@
+# 0.1.28
+
+_10th October 2020_
+
+### Fixed
+
+- Changes and additions in 0.1.26 and 0.1.27 poor implementation of changed so have refactored to work correctly on mobile.
+
+### Removed
+
+- Toolbar showing current microcosm, poor implementation.
+
+# 0.1.27
+
+_9th October 2020_
+
+### Added
+
+- Basic card view of all nodes
+- Leave link in Navigation
+
+### Changed
+
+- List view now you can enter basic read mode
+- List view you can now discard your nodes
+
+# 0.1.26
+
+_6th October 2020_
+
+### Changed
+
+- Renamed Mobile to List
+- Refactored the way the list and discarded view work
+- Added some basic style to list and discarded views
+
+### Added
+
+- The toolbar now shows (in basic form) to you only your device name and the microcosm you are currently viewing
+
 # 0.1.25
 
 _2nd October 2020_

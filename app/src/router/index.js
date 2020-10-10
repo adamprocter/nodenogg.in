@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Cards from '../views/Cards.vue'
 import List from '../views/List.vue'
 import Discarded from '../views/Discarded.vue'
 import Leave from '../views/Leave.vue'
@@ -14,6 +15,11 @@ export const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/cards',
+    name: 'Cards',
+    component: Cards,
   },
   {
     path: '/list',

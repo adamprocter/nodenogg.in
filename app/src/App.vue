@@ -9,14 +9,14 @@
 import { routes } from './router'
 import Navigation from './components/Navigation'
 export default {
-  data: function() {
+  data: function () {
     return {
-      routes: routes.filter(route => !!route.name)
+      routes: routes.filter((route) => !!route.name),
     }
   },
   components: {
-    navigation: Navigation
-  }
+    navigation: Navigation,
+  },
 }
 </script>
 <style>
