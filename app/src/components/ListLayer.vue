@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <div v-for="(value, index) in configPositions" v-bind:key="index">
-      <div class="nodes" v-if="nodeid == value.node_id && deleted == false">
-        <form>
-          <div v-if="value.read_mode == false">
-            <div v-for="value in $options.myArray" v-bind:key="value.node_id">
-              <div v-if="value.deleted == false">
-                <textarea
-                  v-if="nodeid == value.node_id"
-                  @focus="editTrue(true)"
-                  @blur="editTrue(false)"
-                  autofocus
-                  ref="newnode"
-                  v-model="value.node_text"
-                  @input="editNode"
-                  :id="value.node_id"
-                  placeholder="Idea goes here!"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-          <div v-if="value.read_mode == true">
+  <div class="nodes">
+    <form>
+      <!-- <div v-if="value.read_mode == false"> -->
+      <div v-for="value in $options.myArray" v-bind:key="value.node_id">
+        <div v-if="value.deleted == false">
+          <textarea
+            v-if="nodeid == value.node_id"
+            @focus="editTrue(true)"
+            @blur="editTrue(false)"
+            autofocus
+            ref="newnode"
+            v-model="value.node_text"
+            @input="editNode"
+            :id="value.node_id"
+            placeholder="Idea goes here!"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- <div v-if="value.read_mode == true">
             <p
               class="read"
               :id="nodeid"
@@ -53,10 +51,8 @@
                 >Read Mode</BaseButton
               >
             </div>
-          </div>
-        </form>
-      </div>
-    </div>
+          </div> -->
+    </form>
   </div>
 </template>
 
