@@ -1,35 +1,66 @@
 <template>
-  <div class="nodes">
-    <form>
-      <div v-if="readmode == false">
+  <div>
+    <div v-if="deleted == false">
+      <form class="nodes">
         <div v-for="value in $options.myArray" v-bind:key="value.node_id">
-          <div v-if="value.deleted == false">
-            <textarea
-              v-if="nodeid == value.node_id"
-              @focus="editTrue(true)"
-              @blur="editTrue(false)"
-              autofocus
-              v-model="value.node_text"
-              @input="editNode"
-              :id="value.node_id"
-              ref="nodetext"
-              placeholder="Idea goes here!"
-            ></textarea>
+          <textarea
+            v-if="nodeid == value.node_id"
+            @focus="editTrue(true)"
+            @blur="editTrue(false)"
+            autofocus
+            v-model="value.node_text"
+            @input="editNode"
+            :id="value.node_id"
+            ref="nodetext"
+            placeholder="Idea goes here!"
+          ></textarea>
+        </div>
+
+        <!-- <div v-if="localreadmode == true && deleted == false">
+          <p class="read" :id="nodeid" :inner-html.prop="nodetext | marked"></p>
+        </div> -->
+        <div class="allemoji">
+          <div
+            class="eachemoji"
+            v-for="(emojis, index) in configEmoji"
+            :key="index"
+          >
+            <p v-if="nodeid == emojis.node_id">
+              {{ emojis.emoji_text }}
+            </p>
           </div>
         </div>
-      </div>
-    </form>
+        <p class="info">*markdown supported &amp; autosaves</p>
+        <div class="btn-row">
+          <BaseButton buttonClass="danger" @click="deleteFlag()"
+            >Discard</BaseButton
+          >
+          <!-- <div v-if="localreadmode == true && deleted == false">
+            <BaseButton class="read" buttonClass="action" @click="readFlag()"
+              >Edit Mode
+            </BaseButton>
+          </div>
+          <div v-else>
+            <BaseButton class="read" buttonClass="action" @click="readFlag()"
+              >Read Mode</BaseButton
+            >
+          </div> -->
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-var readmode
+//var readmode
 export default {
   name: 'ListLayer',
 
   data: function () {
-    return {}
+    return {
+      // localreadmode: false,
+    }
   },
 
   props: {
@@ -41,7 +72,7 @@ export default {
   computed: mapState({
     myNodes: (state) => state.myNodes,
     configPositions: (state) => state.configPositions,
-    //  shortcutstate: (state) => state.shortcutstate,
+    configEmoji: (state) => state.configEmoji,
   }),
 
   myArray: null,
@@ -60,26 +91,31 @@ export default {
       this.$emit('editTrue', e)
     },
 
-    readFlag(e) {
+    deleteFlag(e) {
       e = this.nodeid
-
-      var i
-      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        if (this.configPositions[i].node_id == this.nodeid) {
-          this.localreadmode = this.configPositions[i].read_mode
-        }
-      }
-
-      if (this.localreadmode == true) {
-        readmode = false
-        this.$store.dispatch('readFlag', { e, readmode })
-        this.mode = 'Read'
-      } else {
-        readmode = true
-        this.$store.dispatch('readFlag', { e, readmode })
-        this.mode = 'Edit'
-      }
+      this.$store.dispatch('deleteFlag', { e })
     },
+
+    // readFlag(e) {
+    //   e = this.nodeid
+
+    //   var i
+    //   for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+    //     if (this.configPositions[i].node_id == this.nodeid) {
+    //       this.localreadmode = this.configPositions[i].read_mode
+    //     }
+    //   }
+
+    //   if (this.localreadmode == true) {
+    //     readmode = false
+    //     this.$store.dispatch('readFlag', { e, readmode })
+    //     this.mode = 'Read'
+    //   } else {
+    //     readmode = true
+    //     this.$store.dispatch('readFlag', { e, readmode })
+    //     this.mode = 'Edit'
+    //   }
+    // },
   },
 }
 </script>
@@ -110,5 +146,26 @@ textarea {
   outline: none;
   background-color: rgb(187, 227, 255);
   scrollbar-color: yellow rgb(187, 227, 255);
+}
+.btn-row {
+  position: relative;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 15px;
+  border-radius: 4px;
+}
+
+.allemoji {
+  font-size: 2em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(0, auto));
+
+  /* float: left; */
+}
+
+.eachemoji p {
+  margin: 0em;
 }
 </style>

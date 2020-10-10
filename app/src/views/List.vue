@@ -56,7 +56,7 @@ export default {
   computed: {
     ...mapState({
       myNodes: (state) => state.myNodes,
-      otherNodes: (state) => state.otherNodes,
+      // otherNodes: (state) => state.otherNodes,
       shortcutstate: (state) => state.shortcutstate,
       toolmode: (state) => state.ui.mode,
     }),

@@ -54,10 +54,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.start {
-  opacity: 0;
-  filter: alpha(opacity=0);
-}
 .vdr {
   padding: 0 0.5em;
 }

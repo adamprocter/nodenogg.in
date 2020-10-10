@@ -9,16 +9,13 @@
     "lint:fix": "vue-cli-service lint --fix"
   },
   "dependencies": {
-    "@panzoom/panzoom": "^4.3.2",
     "core-js": "^3.6.5",
     "file-loader": "^6.1.0",
     "ipfs": "^0.50.0",
-    "lodash": "^4.17.20",
     "marked": "^1.1.1",
     "pixi.js": "^5.3.3",
     "pouchdb": "^7.2.2",
     "vue": "^2.6.12",
-    "vue-context": "^6.0.0",
     "vue-draggable-resizable": "^2.2.0",
     "vue-emoji-picker": "^1.0.1",
     "vue-router": "^3.4.3",

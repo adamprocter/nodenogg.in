@@ -44,7 +44,7 @@
         class="innernode"
         :w="310"
         :h="375"
-        :x="850"
+        :x="600"
         :y="15"
         :z="1"
         :draggable="true"
@@ -202,10 +202,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.start {
-  opacity: 0;
-  filter: alpha(opacity=0);
-}
 .vdr {
   padding: 0 0.5em;
 }

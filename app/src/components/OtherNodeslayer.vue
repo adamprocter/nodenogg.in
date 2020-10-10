@@ -4,7 +4,7 @@
       <div v-if="toolmode == 'move'">
         <!-- make draggable false as we are panning around -->
         <vue-draggable-resizable
-          v-if="nodeid == value.node_id"
+          v-if="nodeid == value.node_id && deleted == false"
           :w="value.width"
           :h="value.height"
           :x="value.x_pos"
@@ -109,7 +109,7 @@
 
       <div v-else>
         <vue-draggable-resizable
-          v-if="nodeid == value.node_id"
+          v-if="nodeid == value.node_id && deleted == false"
           :w="value.width"
           :h="value.height"
           :x="value.x_pos"
@@ -229,6 +229,7 @@ export default {
     nodetext: String,
     nodewidth: Number,
     nodeheight: Number,
+    deleted: Boolean,
   },
 
   data() {
