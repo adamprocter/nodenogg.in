@@ -4,7 +4,6 @@
       <div class="nodes" v-if="nodeid == value.node_id && deleted == false">
         <form>
           <div v-if="value.read_mode == false">
-            <!-- <div v-if="posvalue.read_mode == false"> -->
             <div v-for="value in $options.myArray" v-bind:key="value.node_id">
               <div v-if="value.deleted == false">
                 <textarea

@@ -3,7 +3,6 @@
     <div v-if="clientset">
       <div id="listwrapper">
         <h1 class="mobile">Your nodes - list mode</h1>
-
         <ListLayer
           @editTrue="(e) => editTrue(e)"
           v-for="value in myNodes"
