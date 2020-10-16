@@ -70,7 +70,7 @@ export default {
   },
 
   filters: {
-    marked: marked,
+    // marked: marked,
   },
 
   computed: mapState({
