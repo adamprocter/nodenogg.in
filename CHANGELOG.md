@@ -1,3 +1,15 @@
+# 0.1.28
+
+_10th October 2020_
+
+### Fixed
+
+- Changes and additions in 0.1.26 and 0.1.27 poor implementation of changed so have refactored to work correctly on mobile.
+
+### Removed
+
+- Toolbar showing current microcosm, poor implementation.
+
 # 0.1.27
 
 _9th October 2020_

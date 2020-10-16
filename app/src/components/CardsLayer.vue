@@ -1,77 +1,66 @@
 <template>
   <div>
-    <div v-for="(value, index) in configPositions" v-bind:key="index">
-      <div class="nodes" v-if="nodeid == value.node_id && deleted == false">
-        <form>
-          <!-- <div v-if="posvalue.read_mode == false"> -->
-          <div v-if="value.read_mode == false">
-            <div v-for="value in $options.myArray" v-bind:key="value.node_id">
-              <div v-if="value.deleted == false">
-                <textarea
-                  v-if="nodeid == value.node_id"
-                  @focus="editTrue(true)"
-                  @blur="editTrue(false)"
-                  autofocus
-                  v-model="value.node_text"
-                  @input="editNode"
-                  :id="value.node_id"
-                  placeholder="Idea goes here!"
-                  ref="newnode"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-          <div v-if="value.read_mode == true">
-            <p
-              class="read"
-              :id="nodeid"
-              :inner-html.prop="nodetext | marked"
-            ></p>
-          </div>
+    <div v-if="deleted == false">
+      <form class="nodes">
+        <div v-for="value in $options.myArray" v-bind:key="value.node_id">
+          <textarea
+            v-if="nodeid == value.node_id"
+            @focus="editTrue(true)"
+            @blur="editTrue(false)"
+            autofocus
+            v-model="value.node_text"
+            @input="editNode"
+            :id="value.node_id"
+            ref="nodetext"
+            placeholder="Idea goes here!"
+          ></textarea>
+        </div>
 
-          <div class="allemoji">
-            <div
-              class="eachemoji"
-              v-for="(emojis, index) in configEmoji"
-              :key="index"
-            >
-              <p v-if="nodeid == emojis.node_id">
-                {{ emojis.emoji_text }}
-              </p>
-            </div>
+        <!-- <div v-if="localreadmode == true && deleted == false">
+          <p class="read" :id="nodeid" :inner-html.prop="nodetext | marked"></p>
+        </div> -->
+        <div class="allemoji">
+          <div
+            class="eachemoji"
+            v-for="(emojis, index) in configEmoji"
+            :key="index"
+          >
+            <p v-if="nodeid == emojis.node_id">
+              {{ emojis.emoji_text }}
+            </p>
           </div>
-          <p class="info">*markdown supported &amp; autosaves</p>
-          <div class="btn-row">
-            <BaseButton buttonClass="danger" @click="deleteFlag()"
-              >Discard</BaseButton
-            >
-            <div v-if="value.read_mode == true">
-              <BaseButton class="read" buttonClass="action" @click="readFlag()"
-                >Edit Mode
-              </BaseButton>
-            </div>
-            <div v-else>
-              <BaseButton class="read" buttonClass="action" @click="readFlag()"
-                >Read Mode</BaseButton
-              >
-            </div>
+        </div>
+        <p class="info">*markdown supported &amp; autosaves</p>
+        <div class="btn-row">
+          <BaseButton buttonClass="danger" @click="deleteFlag()"
+            >Discard</BaseButton
+          >
+          <!-- <div v-if="localreadmode == true && deleted == false">
+            <BaseButton class="read" buttonClass="action" @click="readFlag()"
+              >Edit Mode
+            </BaseButton>
           </div>
-        </form>
-      </div>
+          <div v-else>
+            <BaseButton class="read" buttonClass="action" @click="readFlag()"
+              >Read Mode</BaseButton
+            >
+          </div> -->
+        </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import marked from 'marked'
-var readmode
-
+//var readmode
 export default {
   name: 'CardsLayer',
 
   data: function () {
-    return {}
+    return {
+      // localreadmode: false,
+    }
   },
 
   props: {
@@ -86,13 +75,10 @@ export default {
     configEmoji: (state) => state.configEmoji,
   }),
 
-  filters: {
-    marked: marked,
-  },
-
   myArray: null,
   created() {
     this.$options.myArray = this.myNodes
+    this.readFlag
   },
 
   methods: {
@@ -101,34 +87,36 @@ export default {
       var nodetext = e.target.value
       this.$store.dispatch('editNode', { nodeid, nodetext })
     },
-    deleteFlag(e) {
-      e = this.nodeid
-      this.$store.dispatch('deleteFlag', { e })
-    },
-    readFlag(e) {
-      e = this.nodeid
-
-      var i
-      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        if (this.configPositions[i].node_id == this.nodeid) {
-          this.localreadmode = this.configPositions[i].read_mode
-        }
-      }
-
-      if (this.localreadmode == true) {
-        readmode = false
-        this.$store.dispatch('readFlag', { e, readmode })
-        this.mode = 'Read'
-      } else {
-        readmode = true
-        this.$store.dispatch('readFlag', { e, readmode })
-        this.mode = 'Edit'
-      }
-    },
 
     editTrue(e) {
       this.$emit('editTrue', e)
     },
+
+    deleteFlag(e) {
+      e = this.nodeid
+      this.$store.dispatch('deleteFlag', { e })
+    },
+
+    // readFlag(e) {
+    //   e = this.nodeid
+
+    //   var i
+    //   for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+    //     if (this.configPositions[i].node_id == this.nodeid) {
+    //       this.localreadmode = this.configPositions[i].read_mode
+    //     }
+    //   }
+
+    //   if (this.localreadmode == true) {
+    //     readmode = false
+    //     this.$store.dispatch('readFlag', { e, readmode })
+    //     this.mode = 'Read'
+    //   } else {
+    //     readmode = true
+    //     this.$store.dispatch('readFlag', { e, readmode })
+    //     this.mode = 'Edit'
+    //   }
+    // },
   },
 }
 </script>
@@ -139,18 +127,11 @@ h2 {
 }
 
 .nodes {
-  /* width: 95%; */
-  width: 285px;
-  height: 355px;
+  width: 95%;
   border: 2px dashed black;
   background-color: rgb(155, 194, 216);
   margin-top: 1em;
-  margin-right: 1em;
-}
-.read {
-  /* min-width: 100px; */
-  min-height: 175px;
-  padding: 0 1em 0 1em;
+  margin-left: 1em;
 }
 
 textarea {
@@ -167,7 +148,6 @@ textarea {
   background-color: rgb(187, 227, 255);
   scrollbar-color: yellow rgb(187, 227, 255);
 }
-
 .btn-row {
   position: relative;
   margin-bottom: 5px;
@@ -188,9 +168,5 @@ textarea {
 
 .eachemoji p {
   margin: 0em;
-}
-
-img {
-  width: 100%;
 }
 </style>

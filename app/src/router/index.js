@@ -32,6 +32,11 @@ export const routes = [
     component: Discarded,
   },
   {
+    path: '/leave',
+    name: 'Leave',
+    component: Leave,
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting

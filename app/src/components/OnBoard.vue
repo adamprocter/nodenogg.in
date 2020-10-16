@@ -16,7 +16,6 @@
           <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
           <div v-if="name == false">
             <input
-              id="clientid"
               type="text"
               v-model.trim="clientid"
               placeholder="name"
@@ -56,14 +55,13 @@
           <p id="nodeid" :inner-html.prop="nodetext2 | marked"></p>
           <div v-if="microcosm == false">
             <input
-              id="microcosm"
-              ref="microcosm"
               type="text"
               v-model.trim="localmicrocosm"
               placeholder="microcosm name"
               autocorrect="off"
               autocapitalize="none"
               @focus="editTrue(true)"
+              ref="microcosm"
               @blur="editTrue(false)"
               v-on:keyup.enter="createMicrocosm(), letsGo()"
             />
@@ -203,10 +201,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.start {
-  opacity: 0;
-  filter: alpha(opacity=0);
-}
 .vdr {
   padding: 0 0.5em;
 }
@@ -253,11 +247,10 @@ input {
 }
 
 .nodes {
-  margin: 1em;
   padding: 0 1em 0 1em;
   width: 95%;
-  border: 2px dashed black;
+  border: 1px dashed black;
   background-color: #6fcf97;
-  margin-top: 1em;
+  margin: 0.9em 0 0 0.3em;
 }
 </style>

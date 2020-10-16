@@ -19,17 +19,35 @@
       </div>
     </div>
     <div v-else>
+      <OtherNodeslayer
+        v-for="value in otherNodes"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
+        v-bind:deleted="value.deleted"
+      />
+      <NodesLayer
+        @editTrue="(e) => editTrue(e)"
+        v-for="value in myNodes"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
+        v-bind:deleted="value.deleted"
+      />
       <OnBoard @clientAdded="clientAdded()" @editTrue="(e) => editTrue(e)" />
     </div>
   </div>
 </template>
 
 <script>
-import Router from '@/router'
+//import Router from '@/router'
 import ListLayer from '@/components/ListLayer'
 import OnBoard from '@/components/OnBoard'
+import NodesLayer from '@/components/NodesLayer'
+import OtherNodeslayer from '@/components/OtherNodeslayer'
+
 import { mapState } from 'vuex'
-import marked from 'marked'
+
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
 
 export default {
@@ -38,12 +56,7 @@ export default {
   mixins: [shortcutsMixin],
   data: function () {
     return {
-      localmicrocosm: Router.currentRoute.params.microcosm,
-      clientid: '',
       clientset: false,
-      offline: false,
-      name: false,
-      microcosm: false,
     }
   },
 
@@ -73,8 +86,6 @@ export default {
     }
   },
 
-  mounted() {},
-
   methods: {
     clientAdded() {
       this.clientset = !this.clientset
@@ -91,19 +102,15 @@ export default {
   components: {
     ListLayer,
     OnBoard,
-  },
-  filters: {
-    marked: marked,
+    OtherNodeslayer,
+    NodesLayer,
   },
 }
 </script>
 
 <style lang="css" scoped>
-#listwrapper {
-  margin-left: 1em;
-  margin-bottom: 1em;
-}
 .mobile {
+  margin-left: 1em;
   font-size: 1em;
 }
 .new {

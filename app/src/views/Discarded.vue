@@ -1,41 +1,54 @@
 <template>
-  <div>
+  <div id="listwrapper">
     <div v-if="clientset">
-      <div id="discardwrapper">
-        <h1 class="mobile">Your discarded nodes - list mode</h1>
+      <h1 class="mobile">dicarded nodes - list view</h1>
 
-        <DiscardLayer
-          v-for="value in myNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          v-bind:deleted="value.deleted"
-        />
-      </div>
+      <DiscardLayer
+        v-for="value in myNodes"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
+        v-bind:deleted="value.deleted"
+      />
     </div>
+
     <div v-else>
+      <OtherNodeslayer
+        v-for="value in otherNodes"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
+        v-bind:deleted="value.deleted"
+      />
+      <NodesLayer
+        @editTrue="(e) => editTrue(e)"
+        v-for="value in myNodes"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
+        v-bind:deleted="value.deleted"
+      />
       <OnBoard @clientAdded="clientAdded()" @editTrue="(e) => editTrue(e)" />
     </div>
   </div>
 </template>
 
 <script>
-import Router from '@/router'
 import DiscardLayer from '@/components/DiscardLayer'
 import OnBoard from '@/components/OnBoard'
+import NodesLayer from '@/components/NodesLayer'
+import OtherNodeslayer from '@/components/OtherNodeslayer'
 import { mapState } from 'vuex'
+
+import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
 
 export default {
   name: 'Discarded',
 
+  mixins: [shortcutsMixin],
   data: function () {
     return {
-      localmicrocosm: Router.currentRoute.params.microcosm,
-      clientid: '',
       clientset: false,
-      offline: false,
-      name: false,
-      microcosm: false,
     }
   },
 
@@ -45,29 +58,51 @@ export default {
     deleted: Boolean,
   },
 
-  computed: mapState({
-    myNodes: (state) => state.myNodes,
-  }),
+  computed: {
+    ...mapState({
+      myNodes: (state) => state.myNodes,
+      otherNodes: (state) => state.otherNodes,
+      shortcutstate: (state) => state.shortcutstate,
+      toolmode: (state) => state.ui.mode,
+    }),
+  },
 
-  components: {
-    DiscardLayer,
-    OnBoard,
+  created() {
+    if (typeof window !== 'undefined') {
+      document.addEventListener('keydown', this.handleKeyPress)
+    }
+  },
+
+  beforeDestroy() {
+    if (typeof window !== 'undefined') {
+      document.removeEventListener('keydown', this.handleKeyPress)
+    }
   },
 
   methods: {
     clientAdded() {
       this.clientset = !this.clientset
     },
+
     editTrue(e) {
       this.$store.dispatch('shortcutState', e)
     },
+  },
+  components: {
+    DiscardLayer,
+    OnBoard,
+    NodesLayer,
+    OtherNodeslayer,
   },
 }
 </script>
 
 <style lang="css" scoped>
-#discardwrapper {
+.mobile {
   margin-left: 1em;
+  font-size: 1em;
+}
+.new {
   margin-bottom: 1em;
 }
 .mobile {
