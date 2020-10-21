@@ -46,12 +46,6 @@ export const routes = [
       import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
 
-  {
-    path: '/leave',
-    name: 'Leave',
-    component: Leave,
-  },
-
   // {
   //   path: '/test',
   //   name: 'IPFS Test',

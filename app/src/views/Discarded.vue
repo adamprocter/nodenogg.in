@@ -13,6 +13,7 @@
     </div>
 
     <div v-else>
+      <!-- <div v-if="this.currentroute.name == 'Home'"> -->
       <OtherNodeslayer
         v-for="value in otherNodes"
         v-bind:key="value.node_id"
@@ -20,6 +21,7 @@
         v-bind:nodetext="value.node_text"
         v-bind:deleted="value.deleted"
       />
+      <!-- </div> -->
       <NodesLayer
         @editTrue="(e) => editTrue(e)"
         v-for="value in myNodes"
@@ -28,12 +30,14 @@
         v-bind:nodetext="value.node_text"
         v-bind:deleted="value.deleted"
       />
+
       <OnBoard @clientAdded="clientAdded()" @editTrue="(e) => editTrue(e)" />
     </div>
   </div>
 </template>
 
 <script>
+import Router from '@/router'
 import DiscardLayer from '@/components/DiscardLayer'
 import OnBoard from '@/components/OnBoard'
 import NodesLayer from '@/components/NodesLayer'
@@ -48,6 +52,7 @@ export default {
   mixins: [shortcutsMixin],
   data: function () {
     return {
+      currentroute: Router.currentRoute,
       clientset: false,
     }
   },

@@ -1,3 +1,11 @@
+# 0.1.29
+
+_16th October 2020_
+
+### Changed
+
+- name is now stored unless cleared meaning you can switch microcosms faster on any device
+
 # 0.1.28
 
 _10th October 2020_

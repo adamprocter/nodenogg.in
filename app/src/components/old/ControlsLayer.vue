@@ -61,7 +61,7 @@ export default {
       // or export state.notes to JSON file
     },
     removeLocal: function () {
-      localStorage.removeItem('myNNClient')
+      //localStorage.removeItem('myNNClient')
       localStorage.removeItem('mylastMicrocosm')
       // Hardcoded as when I set a URL had parameters the reload fails
       //location.assign('https://alpha.nodenogg.in/')
