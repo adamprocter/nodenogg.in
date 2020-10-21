@@ -137,6 +137,11 @@ export default {
       // shortcutstate: false,
     }
   },
+
+  // beforeRouteLeave(to, from, next) {
+  //   this.$store.commit('GET_ALL_NODES')
+  //   next()
+  // },
   computed: {
     domContainerReady() {
       return !!this.elementWidth && !!this.elementHeight

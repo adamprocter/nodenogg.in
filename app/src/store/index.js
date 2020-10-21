@@ -78,8 +78,8 @@ const store = new Vuex.Store({
       pouchdb.close().then(function () {
         if (urlmicrocosm != undefined) {
           // myclient = urldevice
-
           microcosm = urlmicrocosm
+          localStorage.setItem('mylastMicrocosm', microcosm)
         } else {
           microcosm = doc
         }
