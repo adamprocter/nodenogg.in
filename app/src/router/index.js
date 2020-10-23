@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import List from '../views/List.vue'
 import Home from '../views/Home.vue'
 import Cards from '../views/Cards.vue'
-import List from '../views/List.vue'
 import Discarded from '../views/Discarded.vue'
 import Leave from '../views/Leave.vue'
 import About from '../views/About.vue'
@@ -68,6 +68,5 @@ const router = new VueRouter({
   //base: process.env.VUE_APP_HTTP,
   routes,
 })
-
 
 export default router

@@ -30,24 +30,6 @@
     </div>
 
     <div v-else>
-      <div v-if="this.currentroute.name == 'Home'">
-        <OtherNodeslayer
-          v-for="value in otherNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          v-bind:deleted="value.deleted"
-        />
-        <!-- </div> -->
-        <NodesLayer
-          @editTrue="(e) => editTrue(e)"
-          v-for="value in myNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          v-bind:deleted="value.deleted"
-        />
-      </div>
       <OnBoard @clientAdded="clientAdded()" @editTrue="(e) => editTrue(e)" />
     </div>
   </div>
@@ -58,8 +40,6 @@ import Router from '@/router'
 import CardsLayer from '@/components/CardsLayer'
 import OtherCardslayer from '@/components/OtherCardslayer'
 import OnBoard from '@/components/OnBoard'
-import NodesLayer from '@/components/NodesLayer'
-import OtherNodeslayer from '@/components/OtherNodeslayer'
 
 import { mapState } from 'vuex'
 
@@ -121,8 +101,6 @@ export default {
     OtherCardslayer,
 
     OnBoard,
-    OtherNodeslayer,
-    NodesLayer,
   },
 }
 </script>

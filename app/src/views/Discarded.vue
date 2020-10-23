@@ -13,24 +13,6 @@
     </div>
 
     <div v-else>
-      <div v-if="this.currentroute.name == 'Home'">
-        <OtherNodeslayer
-          v-for="value in otherNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          v-bind:deleted="value.deleted"
-        />
-        <!-- </div> -->
-        <NodesLayer
-          @editTrue="(e) => editTrue(e)"
-          v-for="value in myNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          v-bind:deleted="value.deleted"
-        />
-      </div>
       <OnBoard @clientAdded="clientAdded()" @editTrue="(e) => editTrue(e)" />
     </div>
   </div>
@@ -40,8 +22,7 @@
 import Router from '@/router'
 import DiscardLayer from '@/components/DiscardLayer'
 import OnBoard from '@/components/OnBoard'
-import NodesLayer from '@/components/NodesLayer'
-import OtherNodeslayer from '@/components/OtherNodeslayer'
+
 import { mapState } from 'vuex'
 
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
@@ -66,7 +47,7 @@ export default {
   computed: {
     ...mapState({
       myNodes: (state) => state.myNodes,
-      otherNodes: (state) => state.otherNodes,
+
       shortcutstate: (state) => state.shortcutstate,
       toolmode: (state) => state.ui.mode,
     }),
@@ -96,8 +77,6 @@ export default {
   components: {
     DiscardLayer,
     OnBoard,
-    NodesLayer,
-    OtherNodeslayer,
   },
 }
 </script>

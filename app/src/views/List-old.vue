@@ -11,11 +11,11 @@
           v-bind:nodetext="value.node_text"
           v-bind:deleted="value.deleted"
         />
-        <div class="btn-row">
+        <!-- <div class="btn-row">
           <BaseButton class="new" buttonClass="action" @click="addNode()"
             >Create Node</BaseButton
           >
-        </div>
+        </div> -->
       </div>
     </div>
     <div v-else>
@@ -26,17 +26,16 @@
 
 <script>
 import ListLayer from '@/components/ListLayer'
-
 import OnBoard from '@/components/OnBoard'
 
 import { mapState } from 'vuex'
 
-import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
+//import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
 
 export default {
   name: 'List',
 
-  mixins: [shortcutsMixin],
+  //mixins: [shortcutsMixin],
   data: function () {
     return {
       clientset: false,
@@ -58,21 +57,17 @@ export default {
     }),
   },
 
-  created() {
-    if (typeof window !== 'undefined') {
-      document.addEventListener('keydown', this.handleKeyPress)
-    }
-  },
+  // created() {
+  //   if (typeof window !== 'undefined') {
+  //     document.addEventListener('keydown', this.handleKeyPress)
+  //   }
+  // },
 
-  mounted() {
-    console.log(this.clientset)
-  },
-
-  beforeDestroy() {
-    if (typeof window !== 'undefined') {
-      document.removeEventListener('keydown', this.handleKeyPress)
-    }
-  },
+  // beforeDestroy() {
+  //   if (typeof window !== 'undefined') {
+  //     document.removeEventListener('keydown', this.handleKeyPress)
+  //   }
+  // },
 
   methods: {
     clientAdded() {

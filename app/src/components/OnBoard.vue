@@ -1,6 +1,6 @@
 <template>
   <div ref="nodes" class="node">
-    <div v-if="this.currentroute.name == 'Home'">
+    <div v-if="this.currentroute.name == 'Organise'">
       <vue-draggable-resizable
         class="innernode"
         :w="300"
@@ -78,24 +78,25 @@
                 >Create or Rejoin a Microcosm</BaseButton
               >
             </div>
-          </div>
-          <div v-else>
+            <!-- </div> -->
+            <!-- <div v-else> -->
             <h4>Loading...</h4>
           </div>
         </div>
       </vue-draggable-resizable>
     </div>
     <div v-else>
-      <div class="nodes">
+      <div>
+        <vue-draggable-resizable> </vue-draggable-resizable>
         <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
         <div v-if="name == false">
           <input
             type="text"
-            id="clientid"
             v-model.trim="clientid"
             placeholder="name"
             autocorrect="off"
             autocapitalize="none"
+            ref="objectname"
             v-on:keyup.enter="setClient()"
             autofocus
             @focus="editTrue(true)"
@@ -118,18 +119,17 @@
         </div>
       </div>
 
-      <div class="nodes">
+      <div class="content">
         <p id="nodeid" :inner-html.prop="nodetext2 | marked"></p>
         <div v-if="microcosm == false">
           <input
-            id="microcosm"
             type="text"
             v-model.trim="localmicrocosm"
             placeholder="microcosm name"
             autocorrect="off"
-            ref="microcosm"
             autocapitalize="none"
             @focus="editTrue(true)"
+            ref="microcosm"
             @blur="editTrue(false)"
             v-on:keyup.enter="createMicrocosm(), letsGo()"
           />
@@ -141,8 +141,8 @@
               >Create or Rejoin a Microcosm</BaseButton
             >
           </div>
-        </div>
-        <div v-else>
+          <!-- </div> -->
+          <!-- <div v-else> -->
           <h4>Loading...</h4>
         </div>
       </div>

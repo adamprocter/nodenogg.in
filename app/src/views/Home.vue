@@ -129,7 +129,7 @@ export default {
       width: 2000,
       height: 2000,
       clientset: false,
-      listview: false,
+      // listview: false,
       offline: false,
       uploadready: false,
       copyready: false,
@@ -164,6 +164,7 @@ export default {
   mounted() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
+    console.log(this.clientset)
   },
 
   created() {
