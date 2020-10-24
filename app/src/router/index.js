@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import List from '../views/List.vue'
 import Home from '../views/Home.vue'
 import Cards from '../views/Cards.vue'
-import List from '../views/List.vue'
 import Discarded from '../views/Discarded.vue'
 import Leave from '../views/Leave.vue'
+import About from '../views/About.vue'
+import NotFound from '../views/NotFound.vue'
+//import store from '../store'
 // import Oldhome from '../views/Oldhome'
 //import Test from '../views/Test'
 
@@ -13,19 +16,21 @@ Vue.use(VueRouter)
 export const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'Collect',
+    component: List,
+  },
+  {
+    path: '/organise',
+    name: 'Organise',
     component: Home,
   },
+
   {
     path: '/cards',
     name: 'Cards',
     component: Cards,
   },
-  {
-    path: '/list',
-    name: 'My List',
-    component: List,
-  },
+
   {
     path: '/discarded',
     name: 'Discarded',
@@ -39,44 +44,20 @@ export const routes = [
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  },
-
-  {
-    path: '/leave',
-    name: 'Leave',
-    component: Leave,
-  },
-
-  // {
-  //   path: '/test',
-  //   name: 'IPFS Test',
-  //   component: Test,
-  // },
-  // {
-  //   path: '/oldhome',
-  //   name: 'Old Home',
-  //   component: Oldhome,
-  // },
-
-  // dynamic segement `:microcosm` is added to the path
-  {
-    path: '/microcosm/:microcosm',
-    component: Home,
+    component: About,
   },
 
   {
     // catches 404 errors
     path: '*',
     name: '404',
-    component: () =>
-      import(
-        /* webpackChunkName: "NotFoundComponent" */ '../views/NotFound.vue'
-      ),
+    component: NotFound,
+  },
+
+  // dynamic segement `:microcosm` is added to the path
+  {
+    path: '/microcosm/:microcosm',
+    component: List,
   },
 ]
 

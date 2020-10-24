@@ -1,3 +1,24 @@
+# 0.1.30
+
+_23rd October 2020_
+
+### Changed
+
+- Deployed a work around for switching between pre-made microcosms.
+
+### Known Issues
+
+- If you are in a microcosm and use URL scheme to create a new microcosm the data will not refresh until you create a new node or switch routes.
+- iOS router
+
+# 0.1.29
+
+_16th October 2020_
+
+### Changed
+
+- name is now stored unless cleared meaning you can switch microcosms faster on any device.
+
 # 0.1.28
 
 _10th October 2020_

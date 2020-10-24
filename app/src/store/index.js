@@ -78,8 +78,8 @@ const store = new Vuex.Store({
       pouchdb.close().then(function () {
         if (urlmicrocosm != undefined) {
           // myclient = urldevice
-
           microcosm = urlmicrocosm
+          localStorage.setItem('mylastMicrocosm', microcosm)
         } else {
           microcosm = doc
         }
@@ -173,6 +173,7 @@ const store = new Vuex.Store({
         })
         .catch(function (err) {
           if (err.status == 404) {
+            var startup = '777'
             // var uniqueid =
             //   Math.random().toString(36).substring(2, 15) +
             //   Math.random().toString(36).substring(2, 15)
@@ -180,17 +181,17 @@ const store = new Vuex.Store({
               _id: state.myclient,
               _attachments: {},
               nodes: [
-                // {
-                //   // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
-                //   // this shouldnt need to be here though
-                //   node_id: uniqueid,
-                //   node_text: 'Ignore this node ' + state.myclient,
-                //   node_owner: state.myclient,
-                //   content_type: 'sheet',
-                //   // NOTE: the first node is hidden due to a position not being created
-                //   deleted: true,
-                //   attachment_name: '',
-                // },
+                {
+                  // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
+                  // this shouldnt need to be here though
+                  node_id: startup,
+                  node_text:
+                    '## Welcome \n This node was automatically by the system as a workaround for an iOS and URL routing bug, just ignore for now please \n ## 🤦🏻‍♂️',
+                  node_owner: state.myclient,
+                  content_type: 'sheet',
+                  // NOTE: the first node is also hidden due to a position not being created
+                  deleted: true,
+                },
               ],
             })
           }

@@ -82,6 +82,7 @@
     </div>
     <div v-else>
       <div class="nodes">
+        <vue-draggable-resizable class="hide"></vue-draggable-resizable>
         <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
         <div v-if="name == false">
           <input
@@ -201,6 +202,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.hide {
+  display: none;
+}
 .vdr {
   padding: 0 0.5em;
 }

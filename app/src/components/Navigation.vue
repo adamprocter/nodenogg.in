@@ -10,11 +10,11 @@
 import { routes } from '../router'
 
 export default {
-  data: function() {
+  data: function () {
     return {
-      routes: routes.filter(route => !!route.name)
+      routes: routes.filter((route) => !!route.name),
     }
-  }
+  },
 }
 </script>
 
