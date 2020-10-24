@@ -1,6 +1,6 @@
 <template>
   <div ref="nodes" class="node">
-    <div v-if="this.currentroute.name == 'Organise'">
+    <div v-if="this.currentroute.name == 'Home'">
       <vue-draggable-resizable
         class="innernode"
         :w="300"
@@ -35,12 +35,7 @@
             </div>
           </div>
           <div v-else>
-            <h4>Stored as : {{ clientid }}</h4>
-            <div class="btn-row">
-              <BaseButton buttonClass="special" @click="clearClient()"
-                >Clear</BaseButton
-              >
-            </div>
+            <h4>Saved</h4>
           </div>
         </div>
       </vue-draggable-resizable>
@@ -78,25 +73,25 @@
                 >Create or Rejoin a Microcosm</BaseButton
               >
             </div>
-            <!-- </div> -->
-            <!-- <div v-else> -->
+          </div>
+          <div v-else>
             <h4>Loading...</h4>
           </div>
         </div>
       </vue-draggable-resizable>
     </div>
     <div v-else>
-      <div>
-        <vue-draggable-resizable> </vue-draggable-resizable>
+      <div class="nodes">
+        <vue-draggable-resizable class="hide"></vue-draggable-resizable>
         <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
         <div v-if="name == false">
           <input
             type="text"
+            id="clientid"
             v-model.trim="clientid"
             placeholder="name"
             autocorrect="off"
             autocapitalize="none"
-            ref="objectname"
             v-on:keyup.enter="setClient()"
             autofocus
             @focus="editTrue(true)"
@@ -110,26 +105,22 @@
           </div>
         </div>
         <div v-else>
-          <h4>Stored as : {{ clientid }}</h4>
-          <div class="btn-row">
-            <BaseButton buttonClass="special" @click="clearClient()"
-              >Clear</BaseButton
-            >
-          </div>
+          <h4>Saved</h4>
         </div>
       </div>
 
-      <div class="content">
+      <div class="nodes">
         <p id="nodeid" :inner-html.prop="nodetext2 | marked"></p>
         <div v-if="microcosm == false">
           <input
+            id="microcosm"
             type="text"
             v-model.trim="localmicrocosm"
             placeholder="microcosm name"
             autocorrect="off"
+            ref="microcosm"
             autocapitalize="none"
             @focus="editTrue(true)"
-            ref="microcosm"
             @blur="editTrue(false)"
             v-on:keyup.enter="createMicrocosm(), letsGo()"
           />
@@ -141,8 +132,8 @@
               >Create or Rejoin a Microcosm</BaseButton
             >
           </div>
-          <!-- </div> -->
-          <!-- <div v-else> -->
+        </div>
+        <div v-else>
           <h4>Loading...</h4>
         </div>
       </div>
@@ -170,10 +161,6 @@ export default {
   },
 
   mounted() {
-    if (localStorage.myNNClient) {
-      this.clientid = localStorage.myNNClient
-      this.setClient()
-    }
     if (localStorage.myNNClient && localStorage.mylastMicrocosm) {
       this.clientid = localStorage.myNNClient
       this.localmicrocosm = localStorage.mylastMicrocosm
@@ -182,7 +169,6 @@ export default {
       this.letsGo()
     }
   },
-
   filters: {
     marked: marked,
   },
@@ -198,12 +184,6 @@ export default {
         localStorage.setItem('myNNClient', this.clientid)
       this.name = true
       this.focusInput()
-    },
-
-    clearClient() {
-      this.clientid = ''
-      this.name = false
-      localStorage.removeItem('myNNClient')
     },
 
     editTrue(e) {
@@ -222,6 +202,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.hide {
+  display: none;
+}
 .vdr {
   padding: 0 0.5em;
 }
