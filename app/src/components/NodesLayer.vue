@@ -364,7 +364,11 @@ export default {
 
     deleteFlag(e) {
       e = this.nodeid
-      this.$store.dispatch('deleteFlag', { e })
+      if (confirm('Confirm discard?')) {
+        this.$store.dispatch('deleteFlag', { e })
+      } else {
+        // nothing happens
+      }
     },
     readFlag(e) {
       e = this.nodeid
