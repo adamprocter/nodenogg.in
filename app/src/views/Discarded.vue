@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import Router from '@/router'
 import DiscardLayer from '@/components/DiscardLayer'
 import OnBoard from '@/components/OnBoard'
 
@@ -33,7 +32,6 @@ export default {
   mixins: [shortcutsMixin],
   data: function () {
     return {
-      currentroute: Router.currentRoute,
       clientset: false,
     }
   },
