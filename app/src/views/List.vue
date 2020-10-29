@@ -108,7 +108,6 @@ export default {
 
     editTrue(e) {
       this.$store.dispatch('shortcutState', e)
-      console.log(this.shortcutstate)
     },
   },
   components: {

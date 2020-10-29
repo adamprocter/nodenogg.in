@@ -168,6 +168,7 @@ const store = new Vuex.Store({
             // if (doc.nodes[i].deleted == true) {
             //   //  doc.nodes.splice(i, 1)
             // }
+
             state.myNodes = doc.nodes
           }
         })

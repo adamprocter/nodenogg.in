@@ -413,6 +413,7 @@ textarea {
   width: 100%;
   height: 175px;
   resize: none;
+  font-size: 18px;
   box-sizing: border-box;
   font-family: 'Inter var', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;

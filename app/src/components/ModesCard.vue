@@ -67,6 +67,8 @@ export default {
     hideTips() {
       this.tipsplease = false
     },
+
+    
   },
 }
 </script>
