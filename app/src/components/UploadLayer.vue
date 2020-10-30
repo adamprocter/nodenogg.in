@@ -12,9 +12,7 @@
 
       <textarea id="ipfshash" v-model="copytext"></textarea>
       <div class="btn-row">
-        <button v-on:click.prevent="copyDone()" id="copyme" hidden>
-          Copy
-        </button>
+        <button v-on:click.prevent="copyDone()" id="copyme" hidden>Copy</button>
       </div>
     </form>
   </div>
@@ -51,7 +49,6 @@ export default {
     }
   },
   mounted: function () {
-    // console.log(VueIpfs)
     this.getIpfsNodeInfo()
   },
 
@@ -76,6 +73,7 @@ export default {
       try {
         // Await for ipfs node instance.
         node = await ipfs
+
         // console.log(node)
         // Call ipfs `id` method.
         // Returns the identity of the Peer.
@@ -87,6 +85,7 @@ export default {
       } catch (err) {
         // Set error status text.
         this.status = `Error: ${err}`
+        console.log(this.status)
       }
     },
 
@@ -102,6 +101,7 @@ export default {
       } catch (err) {
         // Set error status text.
         this.status = `Error: ${err}`
+        console.log(this.status)
       }
     },
 
@@ -115,6 +115,7 @@ export default {
       } catch (err) {
         // Set error status text.
         this.status = `Error: ${err}`
+        console.log(this.status)
       }
     },
 

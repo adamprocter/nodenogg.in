@@ -23,6 +23,7 @@
               autocapitalize="none"
               ref="objectname"
               v-on:keyup.enter="setClient()"
+              v-on:keydown.tab="setClient()"
               autofocus
               @focus="editTrue(true)"
               @blur="editTrue(false)"
@@ -93,6 +94,7 @@
             autocorrect="off"
             autocapitalize="none"
             v-on:keyup.enter="setClient()"
+            v-on:keydown.tab="setClient()"
             autofocus
             @focus="editTrue(true)"
             @blur="editTrue(false)"

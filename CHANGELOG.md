@@ -1,3 +1,20 @@
+# 0.1.31
+
+_30th October 2020_
+
+### Added
+
+- Collect mode welcome/ explainer node
+- You are now warned before you discard a node
+
+### Changed
+
+- Fixing up CSS a little for consistency
+
+### Fixed
+
+- Duplicate key issue for welcome node
+
 # 0.1.30
 
 _23rd October 2020_

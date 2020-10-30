@@ -37,7 +37,20 @@
               <line class="c" y2="41" transform="translate(1426.5 863.5)" />
             </g>
           </svg>
+
+          <!-- <BaseButton class="new" buttonClass="action" @click="uploadAdded()"
+            >Upload</BaseButton
+          >
+          <BaseButton class="new" buttonClass="action" @click="copyDone()"
+            >Download</BaseButton
+          > -->
         </div>
+        <!-- <UploadLayer
+          v-bind:uploadready="uploadready"
+          v-bind:copyready="copyready"
+          @uploadAdded="uploadAdded()"
+          @copyDone="copyDone()"
+        /> -->
       </div>
     </div>
     <div v-else>
@@ -49,7 +62,7 @@
 <script>
 import ListLayer from '@/components/ListLayer'
 import ModesCard from '@/components/ModesCard'
-
+// import UploadLayer from '@/components/UploadLayer'
 import OnBoard from '@/components/OnBoard'
 
 import { mapState } from 'vuex'
@@ -63,6 +76,8 @@ export default {
   data: function () {
     return {
       clientset: false,
+      uploadready: false,
+      copyready: false,
     }
   },
 
@@ -109,11 +124,20 @@ export default {
     editTrue(e) {
       this.$store.dispatch('shortcutState', e)
     },
+
+    uploadAdded() {
+      this.uploadready = !this.uploadready
+    },
+
+    copyDone() {
+      this.copyready = !this.copyready
+    },
   },
   components: {
     ModesCard,
     ListLayer,
     OnBoard,
+    // UploadLayer,
   },
 }
 </script>

@@ -15,6 +15,10 @@
     </p>
     <ul>
       <li>
+        Awesome Magpie, Spider and Cheetah art work by Bryan Mathers -
+        <a href="https://visualthinkery.com/">Visual Thinkery</a>
+      </li>
+      <li>
         Co-create and contribute ideas, with text, links and attachments with
         other people in realtime.
       </li>

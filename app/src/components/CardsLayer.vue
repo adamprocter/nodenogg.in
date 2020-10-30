@@ -44,11 +44,17 @@ import { mapState } from 'vuex'
 export default {
   name: 'CardsLayer',
 
-  data: function () {
-    return {
-      // localreadmode: false,
-    }
-  },
+  // data: function () {
+  //   return {}
+  // },
+
+  // watch: {
+  //   currentFocus(val) {
+  //     if (val) {
+  //       val.$el.focus()
+  //     }
+  //   },
+  // },
 
   props: {
     nodeid: String,
@@ -87,9 +93,9 @@ export default {
         // nothing happens
       }
     },
-    setFocus() {
-      console.log('called')
-    },
+    // setFocus() {
+    //   this.$refs.nodetext.focus()
+    // },
   },
 }
 </script>

@@ -22,7 +22,7 @@
         />
       </div>
 
-      <div class="btn-row">
+      <div class="btn-row" @click="addNode()">
         <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
             >Create Node</BaseButton
           > -->
@@ -32,8 +32,6 @@
           width="80"
           viewBox="0 0 143 106"
           class="icon"
-          @click="addNode()"
-          ref="adding"
         >
           <g transform="translate(-1345 -843)">
             <g class="a" transform="translate(1345 865)">
@@ -110,7 +108,6 @@ export default {
 
     addNode() {
       this.$store.dispatch('addNode')
-      this.$refs.adding.setFocus
     },
 
     editTrue(e) {
