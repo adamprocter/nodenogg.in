@@ -1,6 +1,6 @@
 <template>
   <div ref="nodes" class="node">
-    <div v-if="this.currentroute.name == 'Home'">
+    <div v-if="this.currentroute.name == 'Organise'">
       <vue-draggable-resizable
         class="innernode"
         :w="300"

@@ -36,21 +36,22 @@
               <line class="c" x2="41" transform="translate(1406.5 884.5)" />
               <line class="c" y2="41" transform="translate(1426.5 863.5)" />
             </g>
+            
           </svg>
 
-          <!-- <BaseButton class="new" buttonClass="action" @click="uploadAdded()"
+          <BaseButton class="new" buttonClass="action" @click="uploadAdded()"
             >Upload</BaseButton
           >
           <BaseButton class="new" buttonClass="action" @click="copyDone()"
-            >Download</BaseButton
-          > -->
+            >Get Upload</BaseButton
+          >
         </div>
-        <!-- <UploadLayer
+        <UploadLayer
           v-bind:uploadready="uploadready"
           v-bind:copyready="copyready"
           @uploadAdded="uploadAdded()"
           @copyDone="copyDone()"
-        /> -->
+        />
       </div>
     </div>
     <div v-else>
@@ -62,7 +63,7 @@
 <script>
 import ListLayer from '@/components/ListLayer'
 import ModesCard from '@/components/ModesCard'
-// import UploadLayer from '@/components/UploadLayer'
+import UploadLayer from '@/components/UploadLayer'
 import OnBoard from '@/components/OnBoard'
 
 import { mapState } from 'vuex'
@@ -137,7 +138,7 @@ export default {
     ModesCard,
     ListLayer,
     OnBoard,
-    // UploadLayer,
+    UploadLayer,
   },
 }
 </script>
@@ -157,6 +158,7 @@ export default {
   font-size: 1em;
 }
 .new {
+  margin-left: 1em;
   margin-bottom: 1em;
 }
 

@@ -6,6 +6,7 @@ _30th October 2020_
 
 - Collect mode welcome/ explainer node
 - You are now warned before you discard a node
+- Basic upload and get upload to Collect mode
 
 ### Changed
 
