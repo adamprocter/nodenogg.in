@@ -15,6 +15,12 @@ _30th October 2020_
 ### Fixed
 
 - Duplicate key issue for welcome node
+- iOS router based blank screen issue
+
+### Known Issues
+
+- Shortcuts don't start working until you have touched in and out of a textarea
+- If you are in a microcosm and use URL scheme to create a new microcosm the data will not refresh until you create a new node or switch routes.
 
 # 0.1.30
 
