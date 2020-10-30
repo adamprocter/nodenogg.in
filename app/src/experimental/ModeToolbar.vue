@@ -68,7 +68,6 @@ export default {
     },
 
     removeLocal: function () {
-      //localStorage.removeItem('myNNClient')
       localStorage.removeItem('mylastMicrocosm')
 
       location.assign(

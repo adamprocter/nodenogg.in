@@ -36,7 +36,12 @@
             </div>
           </div>
           <div v-else>
-            <h4>Saved</h4>
+            <h4>Saved as : {{ clientid }}</h4>
+            <div class="btn-row">
+              <BaseButton buttonClass="special" @click="clearClient()"
+                >Clear</BaseButton
+              >
+            </div>
           </div>
         </div>
       </vue-draggable-resizable>
@@ -107,7 +112,12 @@
           </div>
         </div>
         <div v-else>
-          <h4>Saved</h4>
+          <h4>Saved as : {{ clientid }}</h4>
+          <div class="btn-row">
+            <BaseButton buttonClass="special" @click="clearClient()"
+              >Clear</BaseButton
+            >
+          </div>
         </div>
       </div>
 
@@ -163,6 +173,11 @@ export default {
   },
 
   mounted() {
+    if (localStorage.myNNClient) {
+      this.clientid = localStorage.myNNClient
+      this.setClient()
+    }
+
     if (localStorage.myNNClient && localStorage.mylastMicrocosm) {
       this.clientid = localStorage.myNNClient
       this.localmicrocosm = localStorage.mylastMicrocosm
@@ -186,6 +201,11 @@ export default {
         localStorage.setItem('myNNClient', this.clientid)
       this.name = true
       this.focusInput()
+    },
+    clearClient() {
+      this.clientid = ''
+      this.name = false
+      localStorage.removeItem('myNNClient')
     },
 
     editTrue(e) {
