@@ -16,9 +16,6 @@
           ></textarea>
         </div>
 
-        <!-- <div v-if="localreadmode == true && deleted == false">
-          <p class="read" :id="nodeid" :inner-html.prop="nodetext | marked"></p>
-        </div> -->
         <div class="allemoji">
           <div
             class="eachemoji"
@@ -35,16 +32,6 @@
           <BaseButton buttonClass="danger" @click="deleteFlag()"
             >Discard</BaseButton
           >
-          <!-- <div v-if="localreadmode == true && deleted == false">
-            <BaseButton class="read" buttonClass="action" @click="readFlag()"
-              >Edit Mode
-            </BaseButton>
-          </div>
-          <div v-else>
-            <BaseButton class="read" buttonClass="action" @click="readFlag()"
-              >Read Mode</BaseButton
-            >
-          </div> -->
         </div>
       </form>
     </div>
@@ -100,27 +87,9 @@ export default {
         // nothing happens
       }
     },
-
-    // readFlag(e) {
-    //   e = this.nodeid
-
-    //   var i
-    //   for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-    //     if (this.configPositions[i].node_id == this.nodeid) {
-    //       this.localreadmode = this.configPositions[i].read_mode
-    //     }
-    //   }
-
-    //   if (this.localreadmode == true) {
-    //     readmode = false
-    //     this.$store.dispatch('readFlag', { e, readmode })
-    //     this.mode = 'Read'
-    //   } else {
-    //     readmode = true
-    //     this.$store.dispatch('readFlag', { e, readmode })
-    //     this.mode = 'Edit'
-    //   }
-    // },
+    setFocus() {
+      console.log('called')
+    },
   },
 }
 </script>
@@ -142,6 +111,7 @@ textarea {
   width: 90%;
   height: 175px;
   resize: none;
+  font-size: 18px;
   box-sizing: border-box;
   font-family: 'Inter var', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;

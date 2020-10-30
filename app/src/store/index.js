@@ -174,10 +174,10 @@ const store = new Vuex.Store({
         })
         .catch(function (err) {
           if (err.status == 404) {
-            var startup = '777'
-            // var uniqueid =
-            //   Math.random().toString(36).substring(2, 15) +
-            //   Math.random().toString(36).substring(2, 15)
+            var startup =
+              Math.random().toString(36).substring(2, 15) +
+              Math.random().toString(36).substring(2, 15)
+
             return pouchdb.put({
               _id: state.myclient,
               _attachments: {},

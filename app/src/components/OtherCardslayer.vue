@@ -54,8 +54,8 @@ h2 {
 
 .nodes {
   width: 300px;
-  border: 2px dashed black;
-  background-color: rgb(155, 194, 216);
+  border: 2px solid black;
+  background-color: rgb(205, 234, 255);
   margin-top: 1em;
   margin-left: 1em;
 }

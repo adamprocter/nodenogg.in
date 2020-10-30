@@ -17,10 +17,11 @@
                 placeholder="Idea goes here!(auto saved every keystroke)"
               ></textarea>
             </div>
+            <p class="info">*markdown supported &amp; autosaves</p>
           </div>
           <div v-if="value.read_mode && deleted == false">
             <p
-              class="read"
+              class="readmode"
               :id="nodeid"
               :inner-html.prop="nodetext | marked"
             ></p>
@@ -37,7 +38,7 @@
               </p>
             </div>
           </div>
-          <p class="info">*markdown supported &amp; autosaves</p>
+
           <div class="btn-row">
             <BaseButton buttonClass="danger" @click="deleteFlag()"
               >Discard</BaseButton
@@ -147,6 +148,11 @@ h2 {
   width: 95%;
   border: 2px dashed black;
   background-color: rgb(155, 194, 216);
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+.readmode {
   margin-top: 1em;
   margin-left: 1em;
 }
