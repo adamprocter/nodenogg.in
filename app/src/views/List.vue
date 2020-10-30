@@ -2,7 +2,8 @@
   <div>
     <div v-if="clientset">
       <div id="listwrapper">
-        <h1 class="mobile">Your nodes - collect</h1>
+        <!-- <h1 class="mobile">Your nodes - collect</h1> -->
+        <ModesCard />
         <ListLayer
           @editTrue="(e) => editTrue(e)"
           v-for="value in myNodes"
@@ -12,9 +13,30 @@
           v-bind:deleted="value.deleted"
         />
         <div class="btn-row">
-          <BaseButton class="new" buttonClass="action" @click="addNode()"
+          <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
             >Create Node</BaseButton
+          > -->
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="80"
+            viewBox="0 0 143 106"
+            class="icon"
+            @click="addNode()"
           >
+            <g transform="translate(-1345 -843)">
+              <g class="a" transform="translate(1345 865)">
+                <rect class="d" width="127" height="84" />
+                <rect class="e" x="0.5" y="0.5" width="126" height="83" />
+              </g>
+              <g class="b" transform="translate(1361 843)">
+                <rect class="d" width="127" height="84" />
+                <rect class="e" x="3.5" y="3.5" width="120" height="77" />
+              </g>
+              <line class="c" x2="41" transform="translate(1406.5 884.5)" />
+              <line class="c" y2="41" transform="translate(1426.5 863.5)" />
+            </g>
+          </svg>
         </div>
       </div>
     </div>
@@ -26,6 +48,7 @@
 
 <script>
 import ListLayer from '@/components/ListLayer'
+import ModesCard from '@/components/ModesCard'
 
 import OnBoard from '@/components/OnBoard'
 
@@ -53,7 +76,7 @@ export default {
     ...mapState({
       myNodes: (state) => state.myNodes,
       //otherNodes: (state) => state.otherNodes,
-      // shortcutstate: (state) => state.shortcutstate,
+      shortcutstate: (state) => state.shortcutstate,
       // toolmode: (state) => state.ui.mode,
     }),
   },
@@ -65,7 +88,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.clientset)
+    // this.shortcutstate = false
   },
 
   beforeDestroy() {
@@ -88,6 +111,7 @@ export default {
     },
   },
   components: {
+    ModesCard,
     ListLayer,
     OnBoard,
   },
@@ -95,11 +119,50 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.welcome {
+  width: 95%;
+  margin-top: 1em;
+  margin-left: 1em;
+  background-color: white;
+  border: 2px solid black;
+  padding: 1em;
+}
+
 .mobile {
   margin-left: 1em;
   font-size: 1em;
 }
 .new {
   margin-bottom: 1em;
+}
+
+.example {
+  width: 30px;
+}
+
+.icon {
+  margin-left: 1em;
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.a {
+  fill: #333;
+  stroke: #707070;
+}
+.b {
+  fill: #fff;
+}
+.b,
+.c {
+  stroke: #333;
+  stroke-width: 7px;
+}
+.c,
+.e {
+  fill: none;
+}
+.d {
+  stroke: none;
 }
 </style>

@@ -164,7 +164,6 @@ export default {
   mounted() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
-    console.log(this.clientset)
   },
 
   created() {
