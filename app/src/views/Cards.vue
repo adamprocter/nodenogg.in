@@ -101,6 +101,11 @@ export default {
     }
   },
 
+  mounted() {
+    var e = false
+    this.$store.dispatch('shortcutState', e)
+  },
+
   methods: {
     clientAdded() {
       this.clientset = !this.clientset

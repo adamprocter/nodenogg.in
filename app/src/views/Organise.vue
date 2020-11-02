@@ -162,8 +162,10 @@ export default {
     }),
   },
   mounted() {
+    var e = false
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
+    this.$store.dispatch('shortcutState', e)
   },
 
   created() {

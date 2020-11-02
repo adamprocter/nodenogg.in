@@ -31,9 +31,12 @@
         (shortcut <strong>n</strong>)
       </p>
       <p>
-        Don't forget you can use <a href="#">markdown</a> to quickly format your
-        text and add images from websources, you can even use html and embed
-        codes.
+        Don't forget you can use
+        <a href="https://guides.github.com/features/mastering-markdown/"
+          >markdown</a
+        >
+        to quickly format your text and add images from websources, you can even
+        use html and embed codes.
       </p>
       <p>
         To see what everyone else has collected in your team and to start
@@ -50,6 +53,7 @@
 
 <script>
 import marked from 'marked'
+import { mapState } from 'vuex'
 
 export default {
   data: function () {
@@ -58,17 +62,22 @@ export default {
     }
   },
 
-  mounted() {},
+  mounted() {
+    // this.tipsplease = this.hidetipsstate
+  },
   filters: {
     marked: marked,
   },
 
+  computed: mapState({
+    hidetipsstate: (state) => state.hidetipsstate,
+  }),
+
   methods: {
     hideTips() {
       this.tipsplease = false
+      //  this.hidetipsstate = false
     },
-
-    
   },
 }
 </script>

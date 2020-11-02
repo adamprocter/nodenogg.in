@@ -36,7 +36,6 @@
               <line class="c" x2="41" transform="translate(1406.5 884.5)" />
               <line class="c" y2="41" transform="translate(1426.5 863.5)" />
             </g>
-            
           </svg>
 
           <BaseButton class="new" buttonClass="action" @click="uploadAdded()"
@@ -104,7 +103,8 @@ export default {
   },
 
   mounted() {
-    // this.shortcutstate = false
+    var e = false
+    this.$store.dispatch('shortcutState', e)
   },
 
   beforeDestroy() {

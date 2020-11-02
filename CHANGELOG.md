@@ -1,3 +1,21 @@
+# 0.1.32
+
+_30th October 2020_
+
+### Added
+
+- Read Mode in Cards view for your nodes now
+
+### Fixed
+
+- Put back in place the quick switching so your device name is not wiped unless you say so, regression that I missed !
+- missing markdown guide link in collect view explainer card
+- fixed so shortcuts now work all the time
+
+### Known Issue
+
+- If you are in a microcosm and use URL scheme to create a new microcosm the data will not refresh until you create a new node or switch routes.
+
 # 0.1.31
 
 _30th October 2020_
@@ -17,11 +35,6 @@ _30th October 2020_
 - Duplicate key issue for welcome node
 - iOS router based blank screen issue
 
-### Known Issues
-
-- Shortcuts don't start working until you have touched in and out of a textarea
-- If you are in a microcosm and use URL scheme to create a new microcosm the data will not refresh until you create a new node or switch routes.
-
 # 0.1.30
 
 _23rd October 2020_
@@ -29,11 +42,6 @@ _23rd October 2020_
 ### Changed
 
 - Deployed a work around for switching between pre-made microcosms.
-
-### Known Issues
-
-- If you are in a microcosm and use URL scheme to create a new microcosm the data will not refresh until you create a new node or switch routes.
-- iOS router
 
 # 0.1.29
 

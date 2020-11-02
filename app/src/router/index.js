@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import List from '../views/List.vue'
-import Home from '../views/Home.vue'
+import Organise from '../views/Organise.vue'
 import Cards from '../views/Cards.vue'
 import Discarded from '../views/Discarded.vue'
 import Leave from '../views/Leave.vue'
@@ -22,7 +22,7 @@ export const routes = [
   {
     path: '/organise',
     name: 'Organise',
-    component: Home,
+    component: Organise,
   },
 
   {

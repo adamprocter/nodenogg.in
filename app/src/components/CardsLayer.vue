@@ -1,65 +1,85 @@
 <template>
   <div>
-    <div v-if="deleted == false">
-      <form class="nodes">
-        <div v-for="value in $options.myArray" v-bind:key="value.node_id">
-          <textarea
-            v-if="nodeid == value.node_id"
-            @focus="editTrue(true)"
-            @blur="editTrue(false)"
-            autofocus
-            v-model="value.node_text"
-            @input="editNode"
-            :id="value.node_id"
-            ref="nodetext"
-            placeholder="Idea goes here!"
-          ></textarea>
-        </div>
-
-        <div class="allemoji">
-          <div
-            class="eachemoji"
-            v-for="(emojis, index) in configEmoji"
-            :key="index"
-          >
-            <p v-if="nodeid == emojis.node_id">
-              {{ emojis.emoji_text }}
-            </p>
+    <div v-for="(value, index) in configPositions" v-bind:key="index">
+      <div v-if="nodeid == value.node_id && deleted == false">
+        <form class="nodes">
+          <div v-if="value.read_mode == false">
+            <div v-for="value in $options.myArray" v-bind:key="value.node_id">
+              <textarea
+                v-if="nodeid == value.node_id"
+                @focus="editTrue(true)"
+                @blur="editTrue(false)"
+                autofocus
+                v-model="value.node_text"
+                @input="editNode"
+                :id="nodeid"
+                ref="nodetext"
+                placeholder="Idea goes here!"
+              ></textarea>
+            </div>
           </div>
-        </div>
-        <p class="info">*markdown supported &amp; autosaves</p>
-        <div class="btn-row">
-          <BaseButton buttonClass="danger" @click="deleteFlag()"
-            >Discard</BaseButton
-          >
-        </div>
-      </form>
+          <div v-if="value.read_mode && deleted == false">
+            <p
+              class="readmode"
+              :id="nodeid"
+              :inner-html.prop="nodetext | marked"
+            ></p>
+          </div>
+          <div class="allemoji">
+            <div
+              class="eachemoji"
+              v-for="(emojis, index) in configEmoji"
+              :key="index"
+            >
+              <p v-if="nodeid == emojis.node_id">
+                {{ emojis.emoji_text }}
+              </p>
+            </div>
+          </div>
+          <p class="info">*markdown supported &amp; autosaves</p>
+          <div class="btn-row">
+            <BaseButton buttonClass="danger" @click="deleteFlag()"
+              >Discard</BaseButton
+            >
+            <div v-if="value.read_mode == true && deleted == false">
+              <BaseButton class="read" buttonClass="action" @click="readFlag()"
+                >Edit Mode
+              </BaseButton>
+            </div>
+            <div v-else>
+              <BaseButton class="read" buttonClass="action" @click="readFlag()"
+                >Read Mode</BaseButton
+              >
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-//var readmode
+import marked from 'marked'
+var readmode
+
 export default {
   name: 'CardsLayer',
 
-  // data: function () {
-  //   return {}
-  // },
-
-  // watch: {
-  //   currentFocus(val) {
-  //     if (val) {
-  //       val.$el.focus()
-  //     }
-  //   },
-  // },
+  data: function () {
+    return {
+      localreadmode: false,
+    }
+  },
 
   props: {
     nodeid: String,
     nodetext: String,
     deleted: Boolean,
+  },
+
+  filters: {
+    marked: marked,
   },
 
   computed: mapState({
@@ -93,6 +113,26 @@ export default {
         // nothing happens
       }
     },
+    readFlag(e) {
+      e = this.nodeid
+
+      var i
+      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+        if (this.configPositions[i].node_id == this.nodeid) {
+          this.localreadmode = this.configPositions[i].read_mode
+        }
+      }
+
+      if (this.localreadmode == true) {
+        readmode = false
+        this.$store.dispatch('readFlag', { e, readmode })
+        this.mode = 'Read'
+      } else {
+        readmode = true
+        this.$store.dispatch('readFlag', { e, readmode })
+        this.mode = 'Edit'
+      }
+    },
     // setFocus() {
     //   this.$refs.nodetext.focus()
     // },
@@ -109,6 +149,11 @@ h2 {
   width: 95%;
   border: 2px dashed black;
   background-color: rgb(155, 194, 216);
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+.readmode {
   margin-top: 1em;
   margin-left: 1em;
 }

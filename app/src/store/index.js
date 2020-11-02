@@ -42,6 +42,7 @@ var remote =
 const store = new Vuex.Store({
   state: {
     shortcutstate: false,
+    hidetipsstate: true,
     //  connectionstate: false,
     version: process.env.VUE_APP_VERSION,
     localnodeid: '',
