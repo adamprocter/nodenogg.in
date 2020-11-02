@@ -17,6 +17,7 @@
                 placeholder="Idea goes here!"
               ></textarea>
             </div>
+            <p class="info">*markdown supported &amp; autosaves</p>
           </div>
           <div v-if="value.read_mode && deleted == false">
             <p
@@ -36,7 +37,7 @@
               </p>
             </div>
           </div>
-          <p class="info">*markdown supported &amp; autosaves</p>
+
           <div class="btn-row">
             <BaseButton buttonClass="danger" @click="deleteFlag()"
               >Discard</BaseButton
