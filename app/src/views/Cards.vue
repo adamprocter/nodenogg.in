@@ -22,7 +22,7 @@
         />
       </div>
 
-      <div class="btn-row" @click="addNode()">
+      <div class="btn-row">
         <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
             >Create Node</BaseButton
           > -->
@@ -32,6 +32,7 @@
           width="80"
           viewBox="0 0 143 106"
           class="icon"
+          @click="addNode()"
         >
           <g transform="translate(-1345 -843)">
             <g class="a" transform="translate(1345 865)">
@@ -46,7 +47,20 @@
             <line class="c" y2="41" transform="translate(1426.5 863.5)" />
           </g>
         </svg>
+
+        <UploadLayer
+          v-bind:uploadready="uploadready"
+          v-bind:copyready="copyready"
+          @uploadAdded="uploadAdded()"
+          @copyDone="copyDone()"
+        />
       </div>
+      <BaseButton class="new" buttonClass="action" @click="uploadAdded()"
+        >Upload</BaseButton
+      >
+      <BaseButton class="new" buttonClass="action" @click="copyDone()"
+        >Get Upload</BaseButton
+      >
     </div>
 
     <div v-else>
@@ -59,7 +73,7 @@
 import CardsLayer from '@/components/CardsLayer'
 import OtherCardslayer from '@/components/OtherCardslayer'
 import OnBoard from '@/components/OnBoard'
-
+import UploadLayer from '@/components/UploadLayer'
 import { mapState } from 'vuex'
 
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
@@ -71,6 +85,8 @@ export default {
   data: function () {
     return {
       clientset: false,
+      uploadready: false,
+      copyready: false,
     }
   },
 
@@ -118,11 +134,19 @@ export default {
     editTrue(e) {
       this.$store.dispatch('shortcutState', e)
     },
+
+    uploadAdded() {
+      this.uploadready = !this.uploadready
+    },
+
+    copyDone() {
+      this.copyready = !this.copyready
+    },
   },
   components: {
     CardsLayer,
     OtherCardslayer,
-
+    UploadLayer,
     OnBoard,
   },
 }
@@ -132,7 +156,6 @@ export default {
 .grid {
   display: flex;
   flex-wrap: wrap;
-
 }
 
 .mobile {
