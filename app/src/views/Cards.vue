@@ -132,6 +132,7 @@ export default {
 .grid {
   display: flex;
   flex-wrap: wrap;
+
 }
 
 .mobile {

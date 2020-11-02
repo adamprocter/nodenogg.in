@@ -147,7 +147,7 @@ h2 {
 }
 
 .nodes {
-  width: 95%;
+  max-width: 300px;
   border: 2px dashed black;
   background-color: rgb(155, 194, 216);
   margin-top: 1em;
