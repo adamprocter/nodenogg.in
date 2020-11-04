@@ -141,7 +141,7 @@ export default {
   border: 2px dashed black;
   background-color: rgb(155, 194, 216);
   margin-top: 1em;
-  margin-left: 1em;
+  margin-left: 0.5em;
 }
 
 .readmode {

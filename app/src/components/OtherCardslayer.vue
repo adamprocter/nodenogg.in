@@ -48,17 +48,14 @@ export default {
 </script>
 
 <style lang="css" scoped>
-h2 {
-  color: red;
-}
-
 .nodes {
-  min-width: 320px;
-  max-width: 450px;
+  min-width: 343px;
+  max-width: 343px;
   border: 2px solid black;
   background-color: rgb(205, 234, 255);
   margin-top: 1em;
-  margin-left: 1em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
 p {

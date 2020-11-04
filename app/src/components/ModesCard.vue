@@ -92,7 +92,7 @@ img {
   /* max-width: 450px; */
   width: 95%;
   margin-top: 1em;
-  margin-left: 1em;
+  margin-left: 0.5em;
   background-color: white;
   border: 2px solid black;
   padding: 1em;

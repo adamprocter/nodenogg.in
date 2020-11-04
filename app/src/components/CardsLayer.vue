@@ -1,8 +1,8 @@
 <template>
   <div>
     <div v-for="(value, index) in configPositions" v-bind:key="index">
-      <div v-if="nodeid == value.node_id && deleted == false">
-        <form class="nodes">
+      <div class="nodes" v-if="nodeid == value.node_id && deleted == false">
+        <form>
           <div v-if="value.read_mode == false">
             <div v-for="value in $options.myArray" v-bind:key="value.node_id">
               <textarea
@@ -139,12 +139,13 @@ export default {
 
 <style lang="css" scoped>
 .nodes {
-  min-width: 320px;
-  max-width: 450px;
+  min-width: 343px;
+  max-width: 343px;
   border: 2px dashed black;
   background-color: rgb(155, 194, 216);
   margin-top: 1em;
-  margin-left: 1em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
 .readmode {
