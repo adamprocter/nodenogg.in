@@ -14,17 +14,13 @@
                 @input="editNode"
                 :id="nodeid"
                 ref="nodetext"
-                placeholder="Idea goes here!"
+                placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
               ></textarea>
             </div>
             <p class="info">*markdown supported &amp; autosaves</p>
           </div>
-          <div v-if="value.read_mode && deleted == false">
-            <p
-              class="readmode"
-              :id="nodeid"
-              :inner-html.prop="nodetext | marked"
-            ></p>
+          <div class="readmode" v-if="value.read_mode && deleted == false">
+            <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
           </div>
           <div class="allemoji">
             <div
@@ -142,12 +138,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
-h2 {
-  color: red;
-}
-
 .nodes {
-  max-width: 300px;
+  min-width: 320px;
+  max-width: 450px;
   border: 2px dashed black;
   background-color: rgb(155, 194, 216);
   margin-top: 1em;
@@ -157,10 +150,11 @@ h2 {
 .readmode {
   margin-top: 1em;
   margin-left: 1em;
+  padding-right: 1em;
 }
 
 textarea {
-  width: 90%;
+  width: 100%;
   height: 175px;
   resize: none;
   font-size: 18px;
@@ -168,7 +162,7 @@ textarea {
   font-family: 'Inter var', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 1em;
+
   border: none;
   outline: none;
   background-color: rgb(187, 227, 255);
@@ -194,5 +188,11 @@ textarea {
 
 .eachemoji p {
   margin: 0em;
+}
+
+@media only screen and (max-width: 600px) {
+  .readmode >>> a {
+    font-size: 2em;
+  }
 }
 </style>

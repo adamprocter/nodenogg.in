@@ -53,7 +53,8 @@ h2 {
 }
 
 .nodes {
-  width: 300px;
+  min-width: 320px;
+  max-width: 450px;
   border: 2px solid black;
   background-color: rgb(205, 234, 255);
   margin-top: 1em;

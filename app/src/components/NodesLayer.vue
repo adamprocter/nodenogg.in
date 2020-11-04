@@ -29,7 +29,7 @@
                   :id="nodeid"
                   class="drag-cancel"
                   ref="nodetext"
-                  placeholder="Idea goes here! (auto saved every keystroke)"
+                  placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
                 ></textarea>
               </div>
               <p class="info">*markdown supported &amp; autosaves</p>
@@ -115,7 +115,7 @@
                     :id="nodeid"
                     class="drag-cancel"
                     ref="nodetext"
-                    placeholder="Idea goes here! (auto saved every keystroke)"
+                    placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
                   >
                   </textarea>
                 </div>
@@ -419,7 +419,7 @@ textarea {
   font-family: 'Inter var', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin-top: 1em;
+  margin-top: 0.5em;
   border: none;
   outline: none;
   background-color: rgb(187, 227, 255);
@@ -451,7 +451,13 @@ textarea {
 img {
   width: 100%;
 }
+
+li {
+  font-size: 6em;
+}
 /* .dragging {
   transform: scale(0.7);
 } */
+
+
 </style>

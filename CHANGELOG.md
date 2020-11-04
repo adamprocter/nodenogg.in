@@ -1,3 +1,13 @@
+# 0.1.33
+
+_4th November 2020_
+
+### Changed
+
+- made width of nodes wider in card view
+- made typing wider in all modes
+- links (a tag elements) are now much bigger on small screens (under 600px) to add with tapping
+
 # 0.1.32
 
 _30th October 2020_
