@@ -178,15 +178,18 @@ export default {
 }
 .b {
   fill: #fff;
+  stroke: #333;
 }
 .b,
 .c {
-  stroke: #333;
   stroke-width: 7px;
 }
 .c,
 .e {
   fill: none;
+}
+.c {
+  stroke: #2d9cdb;
 }
 .d {
   stroke: none;

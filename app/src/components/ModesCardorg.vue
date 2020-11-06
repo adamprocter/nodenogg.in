@@ -3,14 +3,14 @@
     <draggable
       class="innernode"
       :w="450"
-      :h="590"
+      :h="690"
       :x="50"
       :y="15"
       :z="1"
       :scale="scale"
       :draggable="true"
-      :resizable="true"
-      style="background-color: #6fcf97"
+      :resizable="false"
+      style="background-color: #6fcf97; border: 2px solid black"
     >
       <div class="nodes welcome">
         <img src="https://alpha.nodenogg.in/files/organise.png" />
@@ -20,7 +20,8 @@
           together in your team.
         </p>
         <p>
-          You can move nodes together in real time using the arrow icon
+          You can move nodes together in real time by pressing or tapping the
+          arrow icon
 
           <svg
             class="example"
@@ -59,7 +60,7 @@
           (shortcut <strong>a</strong>)
         </p>
         <p>
-          You can also use the connection icon
+          You can also press or tap the connections icon
 
           <svg
             class="example"
@@ -96,21 +97,77 @@
               </g>
             </g>
           </svg>
-          to draw connections between nodes, you can create as many as you want
-          as can each team member (shortcut <strong>c</strong>)
+          to create connections between any nodes (shortcut <strong>c</strong>),
+          you can create as many as you want per node as can each team member.
         </p>
         <p>
-          You can still use
-          <a href="https://guides.github.com/features/mastering-markdown/"
-            >markdown</a
+          You can still use add &amp; edit your (<strong
+            ><a href="https://guides.github.com/features/mastering-markdown/"
+              >markdown</a
+            ></strong
           >
-          to quickly format your text and add images from websources, you can
-          even use html and embed codes.
+          formatted) nodes here. Tap or press the add node icon tap or press the
+          add a new node icon to start
+          <svg
+            class="example"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50"
+            viewBox="0 0 143 106"
+          >
+            <g transform="translate(-1345 -843)">
+              <g class="aa" transform="translate(1345 865)">
+                <rect class="dd" width="127" height="84" />
+                <rect class="ee" x="0.5" y="0.5" width="126" height="83" />
+              </g>
+              <g class="bb" transform="translate(1361 843)">
+                <rect class="dd" width="127" height="84" />
+                <rect class="ee" x="3.5" y="3.5" width="120" height="77" />
+              </g>
+              <line class="cc" x2="41" transform="translate(1406.5 884.5)" />
+              <line class="cc" y2="41" transform="translate(1426.5 863.5)" />
+            </g>
+          </svg>
         </p>
-        <SvgButton />
-        <div class="btn-row">
-          <BaseButton buttonClass="danger" @click="hideTips()">Hide</BaseButton>
-        </div>
+
+        <p>
+          And dont forget to hide any nodes just tap or press the hide icon
+          <svg
+            class="example"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50"
+            viewBox="0 0 158 158"
+          >
+            <g transform="translate(-1591.6 -842.601)">
+              <path
+                d="M55,9.465c30.376,0,71.063,15.16,71.063,45.535S85.376,101.028,55,101.028-15.718,85.376-15.718,55,24.624,9.465,55,9.465Z"
+                transform="translate(1610 875)"
+              />
+              <g class="z" transform="translate(1616 865)">
+                <path
+                  class="x"
+                  d="M 55.00000381469727 97.52814483642578 C 47.5827751159668 97.52814483642578 39.61429595947266 96.55204010009766 31.95606803894043 94.70535278320312 C 23.91633796691895 92.76667022705078 16.30660820007324 89.87577056884766 9.949525833129883 86.34516906738281 C 3.042046308517456 82.50887298583984 -2.367432832717896 77.99252319335938 -6.128662109375 72.92156219482422 C -10.16918277740479 67.47402191162109 -12.21789073944092 61.44435501098633 -12.21789073944092 55 C -12.21789073944092 39.30952072143555 -0.1744952797889709 29.4342098236084 9.928650856018066 23.91279411315918 C 13.16560935974121 22.1437931060791 16.71875381469727 20.5400218963623 20.4893798828125 19.14606475830078 C 24.12692070007324 17.80127334594727 27.97865104675293 16.64689826965332 31.93756675720215 15.71498107910156 C 39.58069229125977 13.91579341888428 47.55554580688477 12.96479320526123 55.00000381469727 12.96479320526123 C 62.44902420043945 12.96479320526123 70.44358825683594 13.91604328155518 78.11937713623047 15.71568870544434 C 86.21414947509766 17.61356353759766 93.86746215820312 20.4495849609375 100.2518997192383 23.91716766357422 C 110.4301071166992 29.44523048400879 122.5629806518555 39.32521057128906 122.5629806518555 55 C 122.5629806518555 61.43754196166992 120.4986724853516 67.46379089355469 116.4273986816406 72.911376953125 C 112.6376113891602 77.98233795166016 107.1883773803711 82.50062561035156 100.2310638427734 86.34071350097656 C 93.83364868164062 89.87177276611328 86.18119049072266 92.76396179199219 78.10095977783203 94.70460510253906 C 70.40991973876953 96.55177307128906 62.42173385620117 97.52814483642578 55.00000381469727 97.52814483642578 Z"
+                />
+                <path
+                  class="w"
+                  d="M 54.99999618530273 16.46478271484375 C 28.28687286376953 16.46478271484375 -8.717903137207031 29.85636138916016 -8.717903137207031 55.0000114440918 C -8.717903137207031 80.46525573730469 28.28687286376953 94.02813720703125 54.99999618530273 94.02813720703125 C 81.85781860351562 94.02813720703125 119.0629959106445 80.46525573730469 119.0629959106445 55.0000114440918 C 119.0629959106445 29.85636138916016 81.85781860351562 16.46478271484375 54.99999618530273 16.46478271484375 M 54.99999618530273 9.46478271484375 C 85.37564849853516 9.46478271484375 126.0629959106445 24.62433624267578 126.0629959106445 55.0000114440918 C 126.0629959106445 85.37565612792969 85.37564849853516 101.0281372070312 54.99999618530273 101.0281372070312 C 24.62434387207031 101.0281372070312 -15.71790313720703 85.37565612792969 -15.71790313720703 55.0000114440918 C -15.71790313720703 24.62433624267578 24.62434387207031 9.46478271484375 54.99999618530273 9.46478271484375 Z"
+                />
+              </g>
+              <circle
+                cx="21.5"
+                cy="21.5"
+                r="21.5"
+                transform="translate(1650 898)"
+              />
+              <line
+                class="y"
+                x1="138"
+                y2="138"
+                transform="translate(1601.5 852.5)"
+              />
+            </g>
+          </svg>
+        </p>
+        <SvgButton @click="hideTips()" />
       </div>
     </draggable>
     <div v-show="!tipsplease"></div>
@@ -175,6 +232,29 @@ img {
   padding: 0.5em;
   cursor: pointer;
 }
+/* add new node */
+.aa {
+  fill: #333;
+  stroke: #707070;
+}
+.bb {
+  fill: #fff;
+  stroke: #333;
+}
+.bb,
+.cc {
+  stroke-width: 7px;
+}
+.cc,
+.ee {
+  fill: none;
+}
+.cc {
+  stroke: #2d9cdb;
+}
+.dd {
+  stroke: none;
+}
 
 /* connections */
 .h,
@@ -223,6 +303,20 @@ img {
 }
 .d,
 .e {
+  stroke: none;
+}
+
+.z {
+  fill: #fff;
+}
+.y {
+  fill: none;
+  stroke: #2d9cdb;
+  stroke-linecap: round;
+  stroke-width: 14px;
+}
+.x,
+.w {
   stroke: none;
 }
 .btn-row {

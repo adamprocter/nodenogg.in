@@ -11,16 +11,12 @@
         :scale="scale"
         :draggable="true"
         :resizable="false"
-        style="background-color: #6fcf97"
+        style="background-color: #6fcf97; border: 2px solid black"
       >
         <div>
           <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
 
-          <div class="btn-row">
-            <BaseButton buttonClass="danger" @click="hideTips()"
-              >Hide</BaseButton
-            >
-          </div>
+          <SvgButton @click="hideTips()" />
         </div>
       </draggable>
     </div>
@@ -32,12 +28,13 @@
 <script>
 import marked from 'marked'
 import draggable from '@/experimental/Draggable'
+import SvgButton from '@/components/SvgButton'
 import { mapState } from 'vuex'
 export default {
   data: function () {
     return {
       nodetext:
-        '## Shortcuts 🐢 -> 🐰 \n **n** to create new nodes. </br> **c** create connections </br> **a** or **s** select mode. </br> **m** move mode',
+        '## Shortcuts 🐢 -> 🐰 \n **n** to create new nodes. </br> **c** create connections </br> **a** or **s** select &amp; move nodes. </br> **m** pan and zoom canvas',
       tipsplease: true,
     }
   },
@@ -55,6 +52,7 @@ export default {
   },
   components: {
     draggable,
+    SvgButton,
   },
 }
 </script>

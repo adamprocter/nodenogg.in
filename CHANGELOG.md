@@ -1,3 +1,17 @@
+# 0.1.34
+
+_6th November 2020_
+
+### Changed
+
+- Added organise mode tips node
+- Edits to text to help onboarding
+- updates icons to new style
+
+### Fixed
+
+- when zoomed out you can now move nodes correctly
+
 # 0.1.33
 
 _4th November 2020_
@@ -21,10 +35,6 @@ _30th October 2020_
 - Put back in place the quick switching so your device name is not wiped unless you say so, regression that I missed !
 - missing markdown guide link in collect view explainer card
 - fixed so shortcuts now work all the time
-
-### Known Issue
-
-- If you are in a microcosm and use URL scheme to create a new microcosm the data will not refresh until you create a new node or switch routes.
 
 # 0.1.31
 
