@@ -7,6 +7,7 @@
       :x="50"
       :y="15"
       :z="1"
+      :scale="scale"
       :draggable="true"
       :resizable="true"
       style="background-color: #6fcf97"
@@ -138,6 +139,7 @@ export default {
 
   computed: mapState({
     hidetipsstate: (state) => state.hidetipsstate,
+    scale: (state) => state.ui.scale,
   }),
 
   methods: {
