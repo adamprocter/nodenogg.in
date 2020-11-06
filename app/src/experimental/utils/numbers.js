@@ -35,7 +35,7 @@ export const lerp = (from, to, extent) => from * (1 - extent) + to * extent
 export const lerpPoint = (from, to, extent) => {
   return {
     x: lerp(from.x, to.x, extent),
-    y: lerp(from.y, to.y, extent)
+    y: lerp(from.y, to.y, extent),
   }
 }
 
@@ -92,7 +92,7 @@ export const scaleCoordinate = (coordinate, scaleRatio) => {
 export const scalePoint = ({ x, y }, scale) => {
   return {
     x: scaleCoordinate(x, scale),
-    y: scaleCoordinate(y, scale)
+    y: scaleCoordinate(y, scale),
   }
 }
 
@@ -108,6 +108,6 @@ export const constrainTranslation = (targetTranslation, translationBounds) => {
   yMax = yMax != undefined ? yMax : Infinity
   return {
     x: clamp(x, xMin, xMax),
-    y: clamp(y, yMin, yMax)
+    y: clamp(y, yMin, yMax),
   }
 }

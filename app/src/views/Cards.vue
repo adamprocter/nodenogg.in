@@ -176,8 +176,6 @@ export default {
   cursor: pointer;
 }
 
-
-
 .a {
   fill: #333;
   stroke: #707070;

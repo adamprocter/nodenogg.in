@@ -1,6 +1,6 @@
 <template>
   <div ref="nodes" class="node">
-    <vue-draggable-resizable
+    <draggable
       class="innernode"
       :w="127"
       :h="84"
@@ -27,14 +27,18 @@
           <line class="c" y2="41" transform="translate(1426.5 863.5)" />
         </g>
       </svg>
-    </vue-draggable-resizable>
+    </draggable>
   </div>
 </template>
 
 <script>
+import draggable from '@/experimental/Draggable'
 export default {
   data: function () {
     return {}
+  },
+  components: {
+    draggable,
   },
 }
 </script>

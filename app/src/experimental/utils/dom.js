@@ -23,7 +23,7 @@ export const getInteractionPoint = (target, event) => {
     y: parseInt(
       ((event.clientY - rect.top) / (rect.bottom - rect.top)) *
         target.offsetHeight
-    )
+    ),
   }
 }
 
@@ -32,13 +32,13 @@ const matches = [
   'webkitMatchesSelector',
   'mozMatchesSelector',
   'msMatchesSelector',
-  'oMatchesSelector'
+  'oMatchesSelector',
 ]
 
 export const matchesSelectorToParentElements = (el, selector, baseNode) => {
   let node = el
 
-  const matchesSelectorFunc = matches.find(func => isFunction(node[func]))
+  const matchesSelectorFunc = matches.find((func) => isFunction(node[func]))
 
   if (!isFunction(node[matchesSelectorFunc])) return false
 

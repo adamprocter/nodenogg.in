@@ -102,14 +102,6 @@ export default {
         e.preventDefault()
         this.shouldPreventTouchEndDefault = false
       }
-
-      // const { relativePoint, boardPoint } = getNormalisedInteraction(
-      //   this.$refs.container,
-      //   e,
-      //   this.translation,
-      //   this.scale
-      // )
-      // console.log(relativePoint, boardPoint)
     },
     reset() {},
     onMouseDown(e) {

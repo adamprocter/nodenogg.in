@@ -1,36 +1,36 @@
 export const palette = {
   coral: {
     light: '#FFD8E1',
-    dark: '#F56789'
+    dark: '#F56789',
   },
   lime: {
     light: '#EEFFBC',
-    dark: '#B9DF4E'
+    dark: '#B9DF4E',
   },
   blue: {
     light: '#CDEAFF',
-    dark: '#4EB4FF'
+    dark: '#4EB4FF',
   },
   orange: {
     light: '#FFD8CC',
-    dark: '#FF8762'
+    dark: '#FF8762',
   },
   purple: {
     light: '#DAD9FE',
-    dark: '#8A80F6'
+    dark: '#8A80F6',
   },
   pink: {
     light: '#FBE9FF',
-    dark: '#E47EFD'
+    dark: '#E47EFD',
   },
   yellow: {
     light: '#FFF3CA',
-    dark: '#FFD84F'
+    dark: '#FFD84F',
   },
   mono: {
     light: '#FFFFFF',
-    dark: '#A3A3A3'
-  }
+    dark: '#A3A3A3',
+  },
 }
 
 /**
@@ -47,8 +47,8 @@ export const getPalette = (color = 'mono', type) =>
 
 export const paletteArray = () => {
   const result = []
-  Object.keys(palette).forEach(p => {
-    Object.keys(palette[p]).forEach(h => {
+  Object.keys(palette).forEach((p) => {
+    Object.keys(palette[p]).forEach((h) => {
       result.push({ name: `${p}-${h}`, value: palette[p][h] })
     })
   })

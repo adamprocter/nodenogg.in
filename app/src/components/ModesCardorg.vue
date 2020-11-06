@@ -1,6 +1,6 @@
 <template>
   <div v-show="tipsplease">
-    <vue-draggable-resizable
+    <draggable
       class="innernode"
       :w="450"
       :h="590"
@@ -111,7 +111,7 @@
           <BaseButton buttonClass="danger" @click="hideTips()">Hide</BaseButton>
         </div>
       </div>
-    </vue-draggable-resizable>
+    </draggable>
     <div v-show="!tipsplease"></div>
   </div>
 </template>
@@ -119,8 +119,8 @@
 <script>
 import marked from 'marked'
 import { mapState } from 'vuex'
-
 import SvgButton from '@/components/SvgButton'
+import draggable from '@/experimental/Draggable'
 
 export default {
   data: function () {
@@ -148,6 +148,7 @@ export default {
   },
   components: {
     SvgButton,
+    draggable
   },
 }
 </script>

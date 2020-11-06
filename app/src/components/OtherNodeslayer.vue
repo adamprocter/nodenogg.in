@@ -3,13 +3,14 @@
     <div v-for="(value, index) in configPositions" v-bind:key="index">
       <div v-if="toolmode == 'move'">
         <!-- make draggable false as we are panning around -->
-        <vue-draggable-resizable
+        <draggable
           v-if="nodeid == value.node_id && deleted == false"
           :w="value.width"
           :h="value.height"
           :x="value.x_pos"
           :y="value.y_pos"
           :z="value.z_index"
+          :scale="scale"
           @activated="onActivated"
           @dragging="onDrag"
           @resizing="onResize"
@@ -102,17 +103,18 @@
               </div> -->
             </div>
           </div>
-        </vue-draggable-resizable>
+        </draggable>
       </div>
 
       <div v-else>
-        <vue-draggable-resizable
+        <draggable
           v-if="nodeid == value.node_id && deleted == false"
           :w="value.width"
           :h="value.height"
           :x="value.x_pos"
           :y="value.y_pos"
           :z="value.z_index"
+          :scale="scale"
           @activated="onActivated"
           @dragging="onDrag"
           @resizing="onResize"
@@ -203,7 +205,7 @@
               </div> -->
             </div>
           </div>
-        </vue-draggable-resizable>
+        </draggable>
       </div>
     </div>
   </div>
@@ -213,11 +215,13 @@
 import { mapState } from 'vuex'
 import EmojiPicker from 'vue-emoji-picker'
 import marked from 'marked'
+import draggable from '@/experimental/Draggable'
 
 export default {
   name: 'otherNodeslayer',
 
   components: {
+    draggable,
     EmojiPicker,
   },
   props: {
@@ -242,6 +246,7 @@ export default {
 
   mounted() {},
   computed: mapState({
+    scale: (state) => state.ui.scale,
     otherNodes: (state) => state.otherNodes,
     configPositions: (state) => state.configPositions,
     configConnections: (state) => state.configConnections,
