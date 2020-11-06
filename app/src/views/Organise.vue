@@ -52,6 +52,7 @@
               v-bind:deleted="value.deleted"
             />
             <TipsLayer />
+            <ModeCardorg />
             <ConnectionsLayer />
           </div>
 
@@ -113,6 +114,7 @@ import UploadLayer from '@/components/UploadLayer'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import OnBoard from '@/components/OnBoard.vue'
 import TipsLayer from '@/components/TipsLayer.vue'
+import ModeCardorg from '@/components/ModesCardorg.vue'
 import ModeToolbar from '@/experimental/ModeToolbar'
 import ViewToolbar from '@/experimental/ViewToolbar'
 // import SelectionLayer from '@/experimental/layers/SelectionLayer'
@@ -245,6 +247,7 @@ export default {
     UploadLayer,
     ScribbleLayer,
     TipsLayer,
+    ModeCardorg,
   },
 }
 </script>
