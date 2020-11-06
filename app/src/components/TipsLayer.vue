@@ -8,6 +8,7 @@
         :x="540"
         :y="15"
         :z="1"
+        :scale="scale"
         :draggable="true"
         :resizable="false"
         style="background-color: #6fcf97"
@@ -31,6 +32,7 @@
 <script>
 import marked from 'marked'
 import draggable from '@/experimental/Draggable'
+import { mapState } from 'vuex'
 export default {
   data: function () {
     return {
@@ -39,8 +41,9 @@ export default {
       tipsplease: true,
     }
   },
-
-  mounted() {},
+  computed: mapState({
+    scale: (state) => state.ui.scale,
+  }),
   filters: {
     marked: marked,
   },

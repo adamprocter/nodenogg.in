@@ -8,6 +8,7 @@
         :x="5"
         :y="15"
         :z="1"
+        :scale="scale"
         :draggable="true"
         :resizable="false"
         style="background-color: #6fcf97"
@@ -53,6 +54,7 @@
         :x="600"
         :y="15"
         :z="1"
+        :scale="scale"
         :draggable="true"
         :resizable="false"
         style="background-color: #6fcf97"
@@ -157,6 +159,7 @@
 import draggable from '@/experimental/Draggable'
 import Router from '@/router'
 import marked from 'marked'
+import { mapState } from 'vuex'
 
 export default {
   data: function () {
@@ -221,6 +224,9 @@ export default {
       this.$refs.microcosm.focus()
     },
   },
+  computed: mapState({
+        scale: (state) => state.ui.scale
+  }),
   components: {
     draggable,
   },
