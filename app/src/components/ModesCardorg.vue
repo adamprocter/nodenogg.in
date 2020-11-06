@@ -106,7 +106,7 @@
           to quickly format your text and add images from websources, you can
           even use html and embed codes.
         </p>
-
+        <SvgButton />
         <div class="btn-row">
           <BaseButton buttonClass="danger" @click="hideTips()">Hide</BaseButton>
         </div>
@@ -119,6 +119,8 @@
 <script>
 import marked from 'marked'
 import { mapState } from 'vuex'
+
+import SvgButton from '@/components/SvgButton'
 
 export default {
   data: function () {
@@ -143,6 +145,9 @@ export default {
       this.tipsplease = false
       //  this.hidetipsstate = false
     },
+  },
+  components: {
+    SvgButton,
   },
 }
 </script>
