@@ -2,7 +2,7 @@
   <div ref="nodes" class="node">
     <div v-for="(value, index) in configPositions" v-bind:key="index">
       <div v-if="toolmode == 'move'">
-        <vue-draggable-resizable
+        <draggable
           class="innernode"
           v-if="nodeid == value.node_id && deleted == false"
           :w="value.width"
@@ -10,6 +10,7 @@
           :x="value.x_pos"
           :y="value.y_pos"
           :z="value.z_index"
+          :scale="scale"
           :draggable="false"
           :resizable="false"
           style="border: 2px dashed black; background-color: rgb(155, 194, 216)"
@@ -78,13 +79,13 @@
               </div> -->
             </div>
           </form>
-        </vue-draggable-resizable>
+        </draggable>
       </div>
 
       <!-- Same code as above when in any other mode other than move so you can drag nodes-->
 
       <div v-else>
-        <vue-draggable-resizable
+        <draggable
           class="innernode"
           v-if="nodeid == value.node_id && deleted == false"
           :w="value.width"
@@ -92,6 +93,7 @@
           :x="value.x_pos"
           :y="value.y_pos"
           :z="value.z_index"
+          :scale="scale"
           @activated="onActivated"
           @dragging="onDrag"
           @resizing="onResize"
@@ -164,7 +166,7 @@
               </div>
             </div>
           </form>
-        </vue-draggable-resizable>
+        </draggable>
       </div>
     </div>
   </div>
@@ -174,6 +176,8 @@
 import { mapState } from 'vuex'
 import marked from 'marked'
 //import lodash from 'lodash'
+import draggable from '@/experimental/Draggable'
+
 var readmode
 
 export default {
@@ -215,6 +219,7 @@ export default {
   // },
 
   computed: mapState({
+    scale: (state) => state.ui.scale,
     myNodes: (state) => state.myNodes,
     configPositions: (state) => state.configPositions,
     configConnections: (state) => state.configConnections,
@@ -392,6 +397,9 @@ export default {
       }
     },
   },
+  components: {
+    draggable,
+  },
 }
 </script>
 
@@ -458,6 +466,4 @@ li {
 /* .dragging {
   transform: scale(0.7);
 } */
-
-
 </style>

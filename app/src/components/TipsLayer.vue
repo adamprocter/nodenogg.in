@@ -1,7 +1,7 @@
 <template>
   <div ref="nodes" class="node">
     <div v-show="tipsplease">
-      <vue-draggable-resizable
+      <draggable
         class="innernode"
         :w="250"
         :h="225"
@@ -21,7 +21,7 @@
             >
           </div>
         </div>
-      </vue-draggable-resizable>
+      </draggable>
     </div>
 
     <div v-show="!tipsplease"></div>
@@ -30,7 +30,7 @@
 
 <script>
 import marked from 'marked'
-
+import draggable from '@/experimental/Draggable'
 export default {
   data: function () {
     return {
@@ -49,6 +49,9 @@ export default {
     hideTips() {
       this.tipsplease = false
     },
+  },
+  components: {
+    draggable,
   },
 }
 </script>

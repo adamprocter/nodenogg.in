@@ -1,7 +1,7 @@
 <template>
   <div ref="nodes" class="node">
     <div v-if="this.currentroute.name == 'Organise'">
-      <vue-draggable-resizable
+      <draggable
         class="innernode"
         :w="300"
         :h="335"
@@ -44,9 +44,9 @@
             </div>
           </div>
         </div>
-      </vue-draggable-resizable>
+      </draggable>
 
-      <vue-draggable-resizable
+      <draggable
         class="innernode"
         :w="310"
         :h="375"
@@ -84,11 +84,11 @@
             <h4>Loading...</h4>
           </div>
         </div>
-      </vue-draggable-resizable>
+      </draggable>
     </div>
     <div v-else>
       <div class="nodes">
-        <vue-draggable-resizable class="hide"></vue-draggable-resizable>
+        <draggable class="hide"></draggable>
         <p id="nodeid" :inner-html.prop="nodetext | marked"></p>
         <div v-if="name == false">
           <input
@@ -154,6 +154,7 @@
 </template>
 
 <script>
+import draggable from '@/experimental/Draggable'
 import Router from '@/router'
 import marked from 'marked'
 
@@ -219,6 +220,9 @@ export default {
     focusInput() {
       this.$refs.microcosm.focus()
     },
+  },
+  components: {
+    draggable,
   },
 }
 </script>

@@ -1,14 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import PouchDB from 'pouchdb'
-import VueDraggableResizable from 'vue-draggable-resizable'
-import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 
 import uiStore from '@/experimental/uiStore'
 import Router from '@/router'
 
 Vue.use(Vuex)
-Vue.component('vue-draggable-resizable', VueDraggableResizable)
+
 var myclient = 'firstvisit'
 var localxpos = 50
 var localypos = 50
