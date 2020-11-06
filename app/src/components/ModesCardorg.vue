@@ -3,12 +3,12 @@
     <vue-draggable-resizable
       class="innernode"
       :w="450"
-      :h="585"
+      :h="590"
       :x="50"
       :y="15"
       :z="1"
       :draggable="true"
-      :resizable="true"
+      :resizable="false"
       style="background-color: #6fcf97"
     >
       <div class="nodes welcome">
@@ -16,7 +16,7 @@
 
         <p>
           organise mode is designed for you to start to organise your thoughts
-          together in your team
+          together in your team.
         </p>
         <p>
           You can move nodes together in real time using the arrow icon
@@ -152,7 +152,6 @@ img {
   max-width: 200px;
   padding: 0px;
   margin: 10px;
-
 }
 
 .vdr {

@@ -5,7 +5,7 @@
         class="innernode"
         :w="250"
         :h="225"
-        :x="205"
+        :x="540"
         :y="15"
         :z="1"
         :draggable="true"
@@ -84,18 +84,5 @@ h3 {
   margin-bottom: 5px;
   padding: 0px 0px 15px 10px;
   border-radius: 4px;
-}
-
-input {
-  font-size: 1em;
-  padding: 10px;
-  /* margin-left: 20px; */
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  margin: 10px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border-style: dotted;
 }
 </style>
