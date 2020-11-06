@@ -8,7 +8,7 @@
       :y="15"
       :z="1"
       :draggable="true"
-      :resizable="false"
+      :resizable="true"
       style="background-color: #6fcf97"
     >
       <div class="nodes welcome">
@@ -148,7 +148,7 @@ export default {
   },
   components: {
     SvgButton,
-    draggable
+    draggable,
   },
 }
 </script>

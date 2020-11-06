@@ -219,8 +219,8 @@ export default {
   background-color: rgb(245, 245, 245);
 }
 .inner {
-  width: 2000px;
-  height: 2000px;
+  width: 3000px;
+  height: 3000px;
   position: absolute;
   top: 0;
   left: 0;
