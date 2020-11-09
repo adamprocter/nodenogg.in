@@ -4,11 +4,12 @@
       <img src="https://alpha.nodenogg.in/files/collect.png" />
 
       <p>
-        magpie mode is designed for you to gather your thoughts and research, as
-        quickly and easily as possible.
+        Hey! Welcome <span class="inline">👋</span> to
+        <strong>magpie mode</strong> this is where you collect your thoughts and
+        ideas, without distraction and as quickly and easily as possible.
       </p>
       <p>
-        Tap or press the add a new node icon to start
+        Tap the new node icon
         <svg
           class="example"
           xmlns="http://www.w3.org/2000/svg"
@@ -28,8 +29,10 @@
             <line class="c" y2="41" transform="translate(1426.5 863.5)" />
           </g>
         </svg>
-        (shortcut <strong>n</strong>)
+        (shortcut <strong>n</strong>) to start (create as many nodes as you want
+        for each thought)
       </p>
+
       <p>
         You can use
         <strong
@@ -37,12 +40,13 @@
             >markdown</a
           ></strong
         >
-        to quickly format your text and add images from websources, you can even
-        use html and embed codes.
+        to quickly format your text and you can upload or add images from
+        websources, you can even use plain html and embed codes.
       </p>
       <p>
-        To see what everyone else has collected in your team and to start
-        organising, just switch to organise mode (best on a large display).
+        To see what <strong>everyone else</strong> is collecting and to start
+        organising your thoughts <strong>spatially</strong>, switch to organise
+        mode.
       </p>
       <p>
         If you want to hide any nodes tap or press the hide icon
@@ -138,6 +142,10 @@ img {
   background-color: #6fcf97;
   border: 2px solid black;
   padding: 1em;
+}
+
+.inline {
+  font-size: 2em;
 }
 
 .vdr {

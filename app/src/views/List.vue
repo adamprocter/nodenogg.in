@@ -2,7 +2,6 @@
   <div>
     <div v-if="clientset">
       <div id="listwrapper">
-        <!-- <h1 class="mobile">Your nodes - collect</h1> -->
         <ModesCard />
         <ListLayer
           @editTrue="(e) => editTrue(e)"
@@ -54,6 +53,13 @@
       </div>
     </div>
     <div v-else>
+      <WelcomeList
+        v-for="value in otherNodes"
+        v-bind:key="value.node_id"
+        v-bind:nodeid="value.node_id"
+        v-bind:nodetext="value.node_text"
+        v-bind:deleted="value.deleted"
+      />
       <OnBoard @clientAdded="clientAdded()" @editTrue="(e) => editTrue(e)" />
     </div>
   </div>
@@ -64,6 +70,7 @@ import ListLayer from '@/components/ListLayer'
 import ModesCard from '@/components/ModesCard'
 import UploadLayer from '@/components/UploadLayer'
 import OnBoard from '@/components/OnBoard'
+import WelcomeList from '@/components/WelcomeList'
 
 import { mapState } from 'vuex'
 
@@ -90,7 +97,7 @@ export default {
   computed: {
     ...mapState({
       myNodes: (state) => state.myNodes,
-      //otherNodes: (state) => state.otherNodes,
+      otherNodes: (state) => state.otherNodes,
       shortcutstate: (state) => state.shortcutstate,
       // toolmode: (state) => state.ui.mode,
     }),
@@ -132,6 +139,10 @@ export default {
 
     copyDone() {
       this.copyready = !this.copyready
+
+      // alert(
+      //   'Now all you need to do is paste into a new node to display your media'
+      // )
     },
   },
   components: {
@@ -139,6 +150,7 @@ export default {
     ListLayer,
     OnBoard,
     UploadLayer,
+    WelcomeList,
   },
 }
 </script>

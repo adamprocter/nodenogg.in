@@ -42,7 +42,11 @@ export default {
     setMode(mode) {
       this.$store.commit('ui/setMode', mode)
       if (mode == 'exit') {
-        this.removeLocal()
+        if (confirm('Are you sure you want to leave this microcoms?')) {
+          this.removeLocal()
+        } else {
+          // nothing happens
+        }
       }
       if (mode == 'addNode') {
         this.$store.dispatch('addNode')
@@ -52,6 +56,10 @@ export default {
       }
       if (mode == 'copy') {
         this.$emit('copyDone')
+
+        alert(
+          'Now all you need to do is paste into a new node to display your media'
+        )
       }
       if (mode == 'draw') {
         this.$emit('drawOn')

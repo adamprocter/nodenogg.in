@@ -55,8 +55,8 @@ button {
   cursor: pointer;
 }
 
-button.list {
-  background-color: white;
+button.nodes {
+  background-color: rgb(155, 194, 216);
 }
 
 .z {

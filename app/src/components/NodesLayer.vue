@@ -145,24 +145,27 @@
               </div>
             </div>
             <div class="btn-row">
-              <BaseButton buttonClass="danger" @click="deleteFlag()"
+              <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
                 >Discard</BaseButton
-              >
+              > -->
+              <SvgButton buttonClass="nodes" @click.prevent="deleteFlag()" />
               <div v-if="value.read_mode == true">
-                <BaseButton
+                <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
+                <!-- <BaseButton
                   class="read"
                   buttonClass="action"
                   @click="readFlag()"
                   >Edit Mode
-                </BaseButton>
+                </BaseButton> -->
               </div>
               <div v-else>
-                <BaseButton
+                <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
+                <!-- <BaseButton
                   class="read"
                   buttonClass="action"
                   @click="readFlag()"
                   >Read Mode</BaseButton
-                >
+                > -->
               </div>
             </div>
           </form>
@@ -175,7 +178,8 @@
 <script>
 import { mapState } from 'vuex'
 import marked from 'marked'
-//import lodash from 'lodash'
+import SvgButton from '@/components/SvgButton'
+import SvgButton2 from '@/components/SvgButton2'
 import draggable from '@/experimental/Draggable'
 
 var readmode
@@ -399,6 +403,8 @@ export default {
   },
   components: {
     draggable,
+    SvgButton,
+    SvgButton2,
   },
 }
 </script>

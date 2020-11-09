@@ -16,12 +16,12 @@
         <img src="https://alpha.nodenogg.in/files/organise.png" />
 
         <p>
-          organise mode is designed for you to start to organise your thoughts
-          together in your team.
+          Hey! Welcome <span class="inline">👋</span> to
+          <strong>web mode</strong> this is where you can start to organise your
+          thoughts <strong>spatially</strong>.
         </p>
         <p>
-          You can move nodes together in real time by pressing or tapping the
-          arrow icon
+          You can move nodes by choosing the arrow icon
 
           <svg
             class="example"
@@ -60,7 +60,7 @@
           (shortcut <strong>a</strong>)
         </p>
         <p>
-          You can also press or tap the connections icon
+          You create connections by choosing this icon
 
           <svg
             class="example"
@@ -97,17 +97,16 @@
               </g>
             </g>
           </svg>
-          to create connections between any nodes (shortcut <strong>c</strong>),
-          you can create as many as you want per node as can each team member.
+          (shortcut <strong>c</strong>), you can create unlimited connections
+          per node and per person.
         </p>
         <p>
-          You can still use add &amp; edit your (<strong
+          You can add (<strong
             ><a href="https://guides.github.com/features/mastering-markdown/"
               >markdown</a
             ></strong
           >
-          formatted) nodes here. Tap or press the add node icon tap or press the
-          add a new node icon to start
+          formatted) nodes here too just tap to the add node icon
           <svg
             class="example"
             xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +129,7 @@
         </p>
 
         <p>
-          And dont forget to hide any nodes just tap or press the hide icon
+          And remember to hide any nodes just tap the hide icon
           <svg
             class="example"
             xmlns="http://www.w3.org/2000/svg"
@@ -217,6 +216,10 @@ img {
   max-width: 200px;
   padding: 0px;
   margin: 10px;
+}
+
+.inline {
+  font-size: 2em;
 }
 
 .vdr {

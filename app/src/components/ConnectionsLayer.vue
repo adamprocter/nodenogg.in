@@ -297,8 +297,8 @@ export default {
   mounted() {
     const canvas = this.$refs.pixi
     this.PIXIApp = new PIXI.Application({
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: 3000,
+      height: 3000,
       antialias: true,
       transparent: true,
       view: canvas,

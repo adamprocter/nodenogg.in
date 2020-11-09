@@ -141,6 +141,9 @@ export default {
 
     copyDone() {
       this.copyready = !this.copyready
+      // alert(
+      //   'Now all you need to do is paste into a new node to display your media'
+      // )
     },
   },
   components: {

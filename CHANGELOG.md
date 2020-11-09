@@ -1,3 +1,17 @@
+# 0.1.35
+
+_7th November 2020_
+
+### Changed
+
+- Edited a lot of the onboarding language
+
+### Added
+
+- Welcome information node is now part of collect mode too
+- Prompt for pressing leave icon
+- Tip when pressing download icon to paste into a node
+
 # 0.1.34
 
 _6th November 2020_
