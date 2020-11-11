@@ -56,33 +56,11 @@
                 </p>
               </div>
             </div>
-
-            <div class="btn-row">
-              <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
-                >Delete</BaseButton
-              > -->
-              <!-- <div v-if="value.read_mode == true">
-                <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Edit Mode
-                </BaseButton>
-              </div>
-              <div v-else>
-                <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Read Mode</BaseButton
-                >
-              </div> -->
-            </div>
           </form>
         </draggable>
       </div>
 
-      <!-- Same code as above when in any other mode other than move so you can drag nodes-->
+      <!--  as above when in any other mode other than move so you can drag nodes-->
 
       <div v-else>
         <draggable
@@ -146,27 +124,12 @@
               </div>
             </div>
             <div class="btn-row">
-              <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
-                >Discard</BaseButton
-              > -->
               <SvgButton buttonClass="nodes" @click.prevent="deleteFlag()" />
               <div v-if="value.read_mode == true">
                 <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
-                <!-- <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Edit Mode
-                </BaseButton> -->
               </div>
               <div v-else>
                 <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
-                <!-- <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Read Mode</BaseButton
-                > -->
               </div>
             </div>
           </form>
@@ -183,14 +146,7 @@ import SvgButton from '@/components/SvgButton'
 import SvgButton2 from '@/components/SvgButton2'
 import draggable from '@/experimental/Draggable'
 
-//const splice = (text, idx, rem, str) =>
-// text.slice(0, idx) + str + text.slice(idx + Math.abs(rem))
-
 var readmode
-// var selection
-
-// var start
-// var finish
 
 export default {
   name: 'NodesLayer',
@@ -240,6 +196,7 @@ export default {
     toolmode: (state) => state.ui.mode,
   }),
   myArray: null,
+
   created() {
     //access the custom option using $options
     this.$options.myArray = this.myNodes
@@ -331,12 +288,7 @@ export default {
 
     editTrue(e) {
       this.$emit('editTrue', e)
-      // this.firstload = false
-      //  // console.log(e)
     },
-
-    // called on mouse/ cursor up and save
-    // may not work on mobile
 
     insertBold() {
       // this.text = this.nodetext
@@ -352,69 +304,13 @@ export default {
 
       // not a function error? for this next line
       textarea.focus()
+      // if this updates the textarea then editNode should be called
+      // to save changes to the backend
       setTimeout(() => {
         textarea.selectionStart = start + 1
         textarea.selectionEnd = end + 1
       })
     },
-
-    // TEMP
-    // onSelect(event) {
-    //   const { selectionStart, selectionEnd } = event.target
-    //   let str = this.nodetext
-    //   str = splice(str, selectionStart, 0, '**')
-    //   str = splice(str, selectionEnd + 1, 0, '**')
-    //   this.text = str
-    //   console.log(this.text)
-    //   var nodeid = this.nodeid
-    //   var nodetext = this.text
-    //   this.$store.dispatch('editNode', { nodeid, nodetext })
-    // },
-
-    // surroundSelection(event) {
-    //   // get the text
-    //   const activeTextarea = event.target
-    //   selection = activeTextarea.value.substring(
-    //     activeTextarea.selectionStart,
-    //     activeTextarea.selectionEnd
-    //   )
-    //   // obtain the index of the first selected character
-    //   start = activeTextarea.selectionStart
-    //   // obtain the index of the last selected character
-    //   finish = activeTextarea.selectionEnd
-    // },
-
-    // makeBold() {
-    //   var editSelection =
-    //     selection.substring(0, start) +
-    //     '**' +
-    //     selection +
-    //     '**' +
-    //     selection.substring(finish, selection.length)
-
-    //   console.log(editSelection)
-    //   // console logs old word*new word*
-
-    //   var nodeid = this.nodeid
-    //   var updatedtext =
-    //     this.nodetext.substring(0, start) +
-    //     editSelection +
-    //     this.nodetext.substring(finish + editSelection.length)
-
-    //   this.$store.dispatch('editNode', { nodeid, updatedtext })
-
-    //   //  console.log(newText)
-    //   // console.log(this.nodetext)
-    //   //console.log(newText)
-    //   // var nodetext =
-    //   //   e.target.parentElement.lastChild.previousSibling.previousSibling
-    //   //     .childNodes[0].childNodes[0].nodetext
-    //   //this.updateNode(nodeid, newText)
-    // },
-
-    // updateNode(nodeid, nodetext) {
-    //   this.$store.dispatch('editNode', { nodeid, nodetext })
-    // },
 
     editNode(e) {
       var nodeid = e.target.id
