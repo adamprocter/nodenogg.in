@@ -122,6 +122,7 @@
                   </textarea>
                 </div>
               </div>
+              <button @click.prevent="insertBold">B</button>
               <p class="info">*markdown supported &amp; autosaves</p>
             </div>
             <div v-if="value.read_mode == true">
@@ -182,7 +183,14 @@ import SvgButton from '@/components/SvgButton'
 import SvgButton2 from '@/components/SvgButton2'
 import draggable from '@/experimental/Draggable'
 
+//const splice = (text, idx, rem, str) =>
+// text.slice(0, idx) + str + text.slice(idx + Math.abs(rem))
+
 var readmode
+// var selection
+
+// var start
+// var finish
 
 export default {
   name: 'NodesLayer',
@@ -200,6 +208,7 @@ export default {
       pickupz: 1,
       localreadmode: false,
       mode: '',
+      text: '',
       // firstload: true,
     }
   },
@@ -326,45 +335,86 @@ export default {
       //  // console.log(e)
     },
 
-    // _.debounce(function(e) {
-    //             this.input = e.target.value;
-    //           }, 300)
+    // called on mouse/ cursor up and save
+    // may not work on mobile
 
-    // editNode(e) {
-    //   const el = e.target
-    //   const cursorPos = el.selectionStart
-    //   console.log(cursorPos)
-    //   var nodeid = e.target.id
-    //   var nodetext = e.target.value
+    insertBold() {
+      // this.text = this.nodetext
+      const { text } = this
+      const textarea = this.$refs['nodetext']
+      const { selectionStart: start, selectionEnd: end } = textarea
+      const symbol = '**'
+
+      this.text = `${text.substring(0, start)}${symbol}${text.substring(
+        start,
+        end
+      )}${symbol}${text.substring(end)}`
+
+      // not a function error? for this next line
+      textarea.focus()
+      setTimeout(() => {
+        textarea.selectionStart = start + 1
+        textarea.selectionEnd = end + 1
+      })
+    },
+
+    // TEMP
+    // onSelect(event) {
+    //   const { selectionStart, selectionEnd } = event.target
+    //   let str = this.nodetext
+    //   str = splice(str, selectionStart, 0, '**')
+    //   str = splice(str, selectionEnd + 1, 0, '**')
+    //   this.text = str
+    //   console.log(this.text)
+    //   var nodeid = this.nodeid
+    //   var nodetext = this.text
     //   this.$store.dispatch('editNode', { nodeid, nodetext })
+    // },
 
-    //   this.$nextTick(() => {
-    //     e.target.selectionStart = e.target.selectionEnd = cursorPos
-    //   })
+    // surroundSelection(event) {
+    //   // get the text
+    //   const activeTextarea = event.target
+    //   selection = activeTextarea.value.substring(
+    //     activeTextarea.selectionStart,
+    //     activeTextarea.selectionEnd
+    //   )
+    //   // obtain the index of the first selected character
+    //   start = activeTextarea.selectionStart
+    //   // obtain the index of the last selected character
+    //   finish = activeTextarea.selectionEnd
+    // },
 
-    // this.$nextTick(() => {
-    //   el.setSelectionRange(cursorPos, cursorPos)
-    // })
-    //},
+    // makeBold() {
+    //   var editSelection =
+    //     selection.substring(0, start) +
+    //     '**' +
+    //     selection +
+    //     '**' +
+    //     selection.substring(finish, selection.length)
 
-    // editNode: lodash.debounce(function (e) {
-    //   var nodeid = e.target.id
-    //   var nodetext = e.target.value
+    //   console.log(editSelection)
+    //   // console logs old word*new word*
+
+    //   var nodeid = this.nodeid
+    //   var updatedtext =
+    //     this.nodetext.substring(0, start) +
+    //     editSelection +
+    //     this.nodetext.substring(finish + editSelection.length)
+
+    //   this.$store.dispatch('editNode', { nodeid, updatedtext })
+
+    //   //  console.log(newText)
+    //   // console.log(this.nodetext)
+    //   //console.log(newText)
+    //   // var nodetext =
+    //   //   e.target.parentElement.lastChild.previousSibling.previousSibling
+    //   //     .childNodes[0].childNodes[0].nodetext
+    //   //this.updateNode(nodeid, newText)
+    // },
+
+    // updateNode(nodeid, nodetext) {
     //   this.$store.dispatch('editNode', { nodeid, nodetext })
-    // }, 600),
-
-    // editNode: lodash.debounce(function (e) {
-    //   const el = e.target
-    //   const cursorPos = el.selectionStart
-
-    //   var nodeid = e.target.id
-    //   var nodetext = e.target.value
-    //   this.$store.dispatch('editNode', { nodeid, nodetext })
-
-    //   this.$nextTick(() => {
-    //     el.setSelectionRange(cursorPos, cursorPos)
-    //   })
-    // }, 600),
+    // },
 
     editNode(e) {
       var nodeid = e.target.id
