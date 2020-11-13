@@ -545,7 +545,7 @@ const store = new Vuex.Store({
     },
 
     RESTORE_NODE(state, e) {
-      console.log(e)
+      // console.log(e)
       var i
       for (i = 0; i < Object.keys(state.myNodes).length; i++) {
         if (e.e == state.myNodes[i].node_id) {
