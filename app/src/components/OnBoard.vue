@@ -203,9 +203,13 @@ export default {
       lower = spaces.split(' ').join('')
       result = lower.split('-').join('')
 
-      this.$store.dispatch('createMicrocosm', result)
-      localStorage.setItem('mylastMicrocosm', result)
-      this.microcosm = true
+      if (this.clientid != '') {
+        this.$store.dispatch('createMicrocosm', result)
+        localStorage.setItem('mylastMicrocosm', result)
+        this.microcosm = true
+      } else {
+        // console.log('name not set')
+      }
     },
     setClient() {
       var result
@@ -233,7 +237,11 @@ export default {
     },
 
     letsGo() {
-      this.$emit('client-added')
+      if (this.clientid != '') {
+        this.$emit('client-added')
+      } else {
+        //console.log('name not set ')
+      }
     },
 
     focusInput() {
