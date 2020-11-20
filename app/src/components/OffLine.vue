@@ -39,10 +39,10 @@ export default {
   methods: {
     addDoc() {
       this.$store.dispatch('addDoc')
-      this.$emit('editMode')
+      this.$emit('edit-mode')
     },
     editTrue(e) {
-      this.$emit('editTrue', e)
+      this.$emit('edit-true', e)
       //// console.log(e)
     },
 

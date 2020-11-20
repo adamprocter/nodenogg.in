@@ -54,7 +54,7 @@ export default {
     },
     listView() {
       // FIXME: add action here to toggle visiblity
-      this.$emit('listView')
+      this.$emit('list-view')
     },
     exportStorage: function () {
       // Save local indexeddb document-store to JSON file
@@ -92,7 +92,7 @@ export default {
       } else {
         // handle offline status
         // console.log('offline')
-        ref.$emit('offlineTriggered')
+        ref.$emit('offline-triggered')
       }
     },
     isReachable: function (url) {
