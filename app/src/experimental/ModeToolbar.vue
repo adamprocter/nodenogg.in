@@ -52,21 +52,21 @@ export default {
         this.$store.dispatch('addNode')
       }
       if (mode == 'upload') {
-        this.$emit('uploadAdded')
+        this.$emit('upload-added')
       }
       if (mode == 'copy') {
-        this.$emit('copyDone')
+        this.$emit('copy-done')
 
         alert(
           'Now all you need to do is paste into a new node to display your media'
         )
       }
       if (mode == 'draw') {
-        this.$emit('drawOn')
+        this.$emit('draw-on')
         // console.log(mode)
       }
       if (mode != 'draw') {
-        this.$emit('drawOff')
+        this.$emit('draw-off')
         //console.log(mode)
       }
     },
@@ -98,7 +98,7 @@ export default {
       } else {
         // handle offline status
         console.log('offline')
-        ref.$emit('offlineTriggered')
+        ref.$emit('offline-triggered')
       }
     },
     isReachable: function (url) {

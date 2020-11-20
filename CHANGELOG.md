@@ -5,7 +5,7 @@ _20th November 2020_
 ### Fixed
 
 - a human can use spaces, dashes and caps if they like in name and microcosm but couchDB doesn't like them so they are removed on input
-- you can no longer join and microcosm without setting a name, this stops human from thinking they are safe to create nodes
+- you can no longer join a microcosm without setting a name, this stops human from thinking they are safe to create nodes
 
 # 0.1.35
 

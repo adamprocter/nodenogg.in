@@ -36,23 +36,12 @@
           </div>
 
           <div class="btn-row">
-            <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
-              >Discard</BaseButton
-            > -->
             <SvgButton buttonClass="nodes" @click.prevent="deleteFlag()" />
             <div v-if="value.read_mode == true && deleted == false">
               <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
-
-              <!-- <BaseButton class="read" buttonClass="action" @click="readFlag()"
-                >Edit Mode
-              </BaseButton> -->
             </div>
             <div v-else>
               <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
-
-              <!-- <BaseButton class="read" buttonClass="action" @click="readFlag()"
-                >Read Mode</BaseButton
-              > -->
             </div>
           </div>
         </form>
@@ -107,7 +96,7 @@ export default {
     },
 
     editTrue(e) {
-      this.$emit('editTrue', e)
+      this.$emit('edit-true', e)
     },
 
     deleteFlag(e) {

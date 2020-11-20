@@ -14,11 +14,11 @@
           v-bind:key="value.node_id"
           v-bind:nodeid="value.node_id"
           v-bind:nodetext="value.node_text"
-          @editTrue="(e) => editTrue(e)"
+          @edit-true="(e) => editTrue(e)"
         />
         <ModeToolbar
-          @offlineTriggered="offlineTriggered()"
-          @onlineTriggered="onlineTriggered()"
+          @offline-triggered="offlineTriggered()"
+          @online-triggered="onlineTriggered()"
         />
         <ViewToolbar />
 
@@ -43,7 +43,7 @@
               v-bind:deleted="value.deleted"
             />
             <NodesLayer
-              @editTrue="(e) => editTrue(e)"
+              @edit-true="(e) => editTrue(e)"
               v-for="value in myNodes"
               v-bind:key="value.node_id"
               v-bind:nodeid="value.node_id"
@@ -64,7 +64,7 @@
               v-bind:deleted="value.deleted"
             />
             <NodesLayer
-              @editTrue="(e) => editTrue(e)"
+              @edit-true="(e) => editTrue(e)"
               v-for="value in myNodes"
               v-bind:key="value.node_id"
               v-bind:nodeid="value.node_id"
@@ -81,19 +81,19 @@
         </PanZoomContainer>
         <!-- <ToolBar /> -->
         <ModeToolbar
-          @offlineTriggered="offlineTriggered()"
-          @onlineTriggered="onlineTriggered()"
-          @uploadAdded="uploadAdded()"
-          @copyDone="copyDone()"
-          @drawOn="drawOn()"
-          @drawOff="drawOff()"
+          @offline-triggered="offlineTriggered()"
+          @online-triggered="onlineTriggered()"
+          @upload-added="uploadAdded()"
+          @copy-done="copyDone()"
+          @draw-on="drawOn()"
+          @draw-off="drawOff()"
         />
         <ViewToolbar />
         <UploadLayer
           v-bind:uploadready="uploadready"
           v-bind:copyready="copyready"
-          @uploadAdded="uploadAdded()"
-          @copyDone="copyDone()"
+          @upload-added="uploadAdded()"
+          @copy-done="copyDone()"
         />
       </div>
     </div>
