@@ -2,6 +2,10 @@
 
 _20th November 2020_
 
+### Changed
+
+- Custom Events now use kebab-case as best practice and also prep for Vue 3
+
 ### Fixed
 
 - a human can use spaces, dashes and caps if they like in name and microcosm but couchDB doesn't like them so they are removed on input
