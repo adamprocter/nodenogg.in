@@ -196,20 +196,24 @@ export default {
 
   methods: {
     createMicrocosm() {
+      var result
       var str = this.localmicrocosm
-      var result = str.toLowerCase()
-      var final = result
-      result = final.split(' ').join('')
+      var lower = str.toLowerCase()
+      var spaces = lower
+      lower = spaces.split(' ').join('')
+      result = lower.split('-').join('')
 
       this.$store.dispatch('createMicrocosm', result)
       localStorage.setItem('mylastMicrocosm', result)
       this.microcosm = true
     },
     setClient() {
+      var result
       var str = this.clientid
-      var result = str.toLowerCase()
-      var final = result
-      result = final.split(' ').join('')
+      var lower = str.toLowerCase()
+      var spaces = lower
+      lower = spaces.split(' ').join('')
+      result = lower.split('-').join('')
 
       this.$store.dispatch('setClient', result),
         localStorage.setItem('myNNClient', result)
