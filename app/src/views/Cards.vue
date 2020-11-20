@@ -64,7 +64,7 @@
     </div>
 
     <div v-else>
-      <OnBoard @clientAdded="clientAdded()" @editTrue="(e) => editTrue(e)" />
+      <OnBoard @client-added="clientAdded()" @edit-true="(e) => editTrue(e)" />
     </div>
   </div>
 </template>

@@ -196,13 +196,18 @@ export default {
 
   methods: {
     createMicrocosm() {
-      this.$store.dispatch('createMicrocosm', this.localmicrocosm)
-      localStorage.setItem('mylastMicrocosm', this.localmicrocosm)
+      var str = this.localmicrocosm
+      var result = str.toLowerCase()
+      this.$store.dispatch('createMicrocosm', result)
+      localStorage.setItem('mylastMicrocosm', result)
       this.microcosm = true
     },
     setClient() {
-      this.$store.dispatch('setClient', this.clientid),
-        localStorage.setItem('myNNClient', this.clientid)
+      var str = this.clientid
+      var result = str.toLowerCase()
+
+      this.$store.dispatch('setClient', result),
+        localStorage.setItem('myNNClient', result)
       this.name = true
       this.focusInput()
     },
@@ -213,11 +218,13 @@ export default {
     },
 
     editTrue(e) {
-      this.$emit('editTrue', e)
+      // needs to be KebabCase now
+      //  this.$emit('my-event')
+      this.$emit('edit-true', e)
     },
 
     letsGo() {
-      this.$emit('clientAdded')
+      this.$emit('client-added')
     },
 
     focusInput() {
@@ -225,7 +232,7 @@ export default {
     },
   },
   computed: mapState({
-        scale: (state) => state.ui.scale
+    scale: (state) => state.ui.scale,
   }),
   components: {
     draggable,
