@@ -60,7 +60,7 @@
         v-bind:nodetext="value.node_text"
         v-bind:deleted="value.deleted"
       />
-      <OnBoard @clientAdded="clientAdded()" @editTrue="(e) => editTrue(e)" />
+      <OnBoard @client-added="clientAdded()" @edit-true="(e) => editTrue(e)" />
     </div>
   </div>
 </template>

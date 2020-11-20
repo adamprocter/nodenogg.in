@@ -72,8 +72,8 @@
               v-bind:deleted="value.deleted"
             />
             <OnBoard
-              @clientAdded="clientAdded()"
-              @editTrue="(e) => editTrue(e)"
+              @client-added="clientAdded()"
+              @edit-true="(e) => editTrue(e)"
             />
             <ConnectionsLayer />
           </div>
