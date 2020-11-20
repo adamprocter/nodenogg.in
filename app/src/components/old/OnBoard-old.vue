@@ -106,7 +106,7 @@ export default {
     },
 
     letsGo() {
-      this.$emit('clientAdded')
+      this.$emit('client-added')
       // this.$emit('readyMode')
     },
     setFocus() {

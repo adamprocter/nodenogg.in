@@ -99,7 +99,7 @@ export default {
     },
 
     editTrue(e) {
-      this.$emit('editTrue', e)
+      this.$emit('edit-true', e)
     },
 
     deleteFlag(e) {

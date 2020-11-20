@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import List from '../views/List.vue'
+import Collect from '../views/Collect.vue'
 import Organise from '../views/Organise.vue'
 import Cards from '../views/Cards.vue'
 import Discarded from '../views/Discarded.vue'
@@ -17,7 +17,7 @@ export const routes = [
   {
     path: '/',
     name: 'Collect',
-    component: List,
+    component: Collect,
   },
   {
     path: '/organise',
@@ -57,7 +57,7 @@ export const routes = [
   // dynamic segement `:microcosm` is added to the path
   {
     path: '/microcosm/:microcosm',
-    component: List,
+    component: Collect,
   },
 ]
 
