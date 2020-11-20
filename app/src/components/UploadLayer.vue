@@ -135,8 +135,8 @@ export default {
 
       copyHash.setSelectionRange(0, 99999) /*For mobile devices*/
       document.execCommand('copy')
-      this.$emit('uploadAdded')
-      this.$emit('copyDone')
+      this.$emit('upload-added')
+      this.$emit('copy-done')
     },
   },
 }

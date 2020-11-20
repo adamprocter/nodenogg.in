@@ -4,7 +4,7 @@
       <div id="listwrapper">
         <ModesCard />
         <ListLayer
-          @editTrue="(e) => editTrue(e)"
+          @edit-true="(e) => editTrue(e)"
           v-for="value in myNodes"
           v-bind:key="value.node_id"
           v-bind:nodeid="value.node_id"
@@ -47,8 +47,8 @@
         <UploadLayer
           v-bind:uploadready="uploadready"
           v-bind:copyready="copyready"
-          @uploadAdded="uploadAdded()"
-          @copyDone="copyDone()"
+          @upload-added="uploadAdded()"
+          @copy-done="copyDone()"
         />
       </div>
     </div>

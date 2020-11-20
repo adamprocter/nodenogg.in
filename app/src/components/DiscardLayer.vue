@@ -15,7 +15,6 @@
             </p>
           </div>
         </div>
-
         <div class="btn-row">
           <BaseButton buttonClass="danger" @click="restoreNode(nodeid)"
             >Restore</BaseButton

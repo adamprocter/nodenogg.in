@@ -51,8 +51,8 @@
         <UploadLayer
           v-bind:uploadready="uploadready"
           v-bind:copyready="copyready"
-          @uploadAdded="uploadAdded()"
-          @copyDone="copyDone()"
+          @upload-added="uploadAdded()"
+          @copy-done="copyDone()"
         />
       </div>
       <BaseButton class="new" buttonClass="action" @click="uploadAdded()"
