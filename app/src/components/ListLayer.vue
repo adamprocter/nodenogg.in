@@ -12,12 +12,63 @@
     <div v-for="(value, index) in emojis" v-bind:key="index">
       {{ value.emoji_text }}
     </div>
+
+    // current looper
+    <div v-for="(value, index) in configPositions" v-bind:key="index">
+      <div v-if="nodeid == value.node_id && deleted == false">
+        <form class="nodes">
+          <div v-if="value.read_mode == false">
+            <div v-for="value in $options.myArray" v-bind:key="value.node_id">
+              <textarea
+                v-if="nodeid == value.node_id"
+                @focus="editTrue(true)"
+                @blur="editTrue(false)"
+                autofocus
+                v-model="value.node_text"
+                @input="editNode"
+                :id="nodeid"
+                ref="nodetext"
+                placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
+              ></textarea>
+            </div>
+            <p class="info">*markdown supported &amp; autosaves</p>
+          </div>
+          <div class="readmode" v-if="value.read_mode && deleted == false">
+            <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
+          </div>
+
+          <div class="allemoji">
+            <div
+              class="eachemoji"
+              v-for="(emojis, index) in configEmoji"
+              :key="index"
+            >
+              <p v-if="nodeid == emojis.node_id">
+                {{ emojis.emoji_text }}
+              </p>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <SvgButton buttonClass="nodes" @click.prevent="deleteFlag()" />
+            <div v-if="value.read_mode == true && deleted == false">
+              <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
+            </div>
+            <div v-else>
+              <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import marked from 'marked'
+import SvgButton from '@/components/SvgButton'
+import SvgButton2 from '@/components/SvgButton2'
 
 var readmode
 export default {
@@ -81,7 +132,6 @@ export default {
 
   myArray: null,
   created() {
-    // SEE ABOVE
     this.$options.myArray = this.myNodes
     this.readFlag
   },
@@ -127,7 +177,10 @@ export default {
       }
     },
   },
-  components: {},
+  components: {
+    SvgButton,
+    SvgButton2,
+  },
 }
 </script>
 
