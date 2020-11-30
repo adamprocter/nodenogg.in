@@ -1,3 +1,11 @@
+# 0.1.37
+
+_30th November 2020_
+
+### Fixed
+
+- Add emoji reactions is no longer missing from Cards view.
+
 # 0.1.36
 
 _20th November 2020_
