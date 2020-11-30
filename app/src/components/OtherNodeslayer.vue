@@ -350,13 +350,13 @@ export default {
       this.input = ''
     },
   },
-  directives: {
-    focus: {
-      inserted(el) {
-        el.focus()
-      },
-    },
-  },
+  // directives: {
+  //   focus: {
+  //     inserted(el) {
+  //       el.focus()
+  //     },
+  //   },
+  // },
 }
 </script>
 
