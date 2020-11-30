@@ -90,14 +90,18 @@ export default {
     marked: marked,
   },
 
-  computed: mapState({
-    myNodes: (state) => state.myNodes,
-    configPositions: (state) => state.configPositions,
-    configEmoji: (state) => state.configEmoji,
+  computed: {
+    ...mapState({
+      myNodes: (state) => state.myNodes,
+      configPositions: (state) => state.configPositions,
+      configEmoji: (state) => state.configEmoji,
+    }),
 
     // FIXME: these filters dont work yet
-    nodes: () => {
-      return this.nodes.filter(function (node) {
+    // ALSO dont forget you did this.$options.myArray = this.myNodes
+    // Otherwise your hit the realtimesync issue again
+    nodes() {
+      return this.nodes.filter((node) => {
         return (
           (node == this.myNodes.node_id) == this.configPositions.node_id &&
           this.myNodes.deleted == false &&
@@ -105,24 +109,26 @@ export default {
         )
       })
     },
-    readnodes: () => {
-      return this.readnodes.filter(function (node) {
+
+    readnodes() {
+      return this.readnodes.filter((readnode) => {
         return (
-          (node == this.myNodes.node_id) == this.configPositions.node_id &&
+          (readnode == this.myNodes.node_id) == this.configPositions.node_id &&
           this.myNodes.deleted == false &&
           this.configPositions.read_mode == true
         )
       })
     },
-    emojis: () => {
-      return this.nodes.filter(function (emoji) {
+
+    emojis() {
+      return this.emojis.filter((emoji) => {
         return (
           (emoji == this.myNodes.node_id) == this.configPositions.node_id &&
           this.myNodes.deleted == false
         )
       })
     },
-  }),
+  },
 
   myArray: null,
   created() {
