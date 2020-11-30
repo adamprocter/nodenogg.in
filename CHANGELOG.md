@@ -5,6 +5,7 @@ _30th November 2020_
 ### Fixed
 
 - Add emoji reactions is no longer missing from Cards view.
+- Long URLS now wrap when viewing on smaller screen sizes, to accommodate increased link text.
 
 # 0.1.36
 

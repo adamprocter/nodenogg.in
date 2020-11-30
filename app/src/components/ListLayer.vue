@@ -190,6 +190,8 @@ textarea {
 @media only screen and (max-width: 600px) {
   .readmode >>> a {
     font-size: 2em;
+    word-break: break-all;
+    padding-right: 0.5em;
   }
 }
 </style>
