@@ -1,5 +1,19 @@
 <template>
   <div>
+    // FIXME : Future loop does not work yet // future loop Code
+    <div v-for="(value, index) in nodes" v-bind:key="index">
+      {{ value.node_text }}
+    </div>
+    // read mode version
+    <div v-for="(value, index) in readnodes" v-bind:key="index">
+      {{ value.node_text }}
+    </div>
+
+    <div v-for="(value, index) in emojis" v-bind:key="index">
+      {{ value.emoji_text }}
+    </div>
+
+    // current looper
     <div v-for="(value, index) in configPositions" v-bind:key="index">
       <div v-if="nodeid == value.node_id && deleted == false">
         <form class="nodes">
@@ -80,6 +94,34 @@ export default {
     myNodes: (state) => state.myNodes,
     configPositions: (state) => state.configPositions,
     configEmoji: (state) => state.configEmoji,
+
+    // FIXME: these filters dont work yet
+    nodes: () => {
+      return this.nodes.filter(function (node) {
+        return (
+          (node == this.myNodes.node_id) == this.configPositions.node_id &&
+          this.myNodes.deleted == false &&
+          this.configPositions.read_mode == false
+        )
+      })
+    },
+    readnodes: () => {
+      return this.readnodes.filter(function (node) {
+        return (
+          (node == this.myNodes.node_id) == this.configPositions.node_id &&
+          this.myNodes.deleted == false &&
+          this.configPositions.read_mode == true
+        )
+      })
+    },
+    emojis: () => {
+      return this.nodes.filter(function (emoji) {
+        return (
+          (emoji == this.myNodes.node_id) == this.configPositions.node_id &&
+          this.myNodes.deleted == false
+        )
+      })
+    },
   }),
 
   myArray: null,
