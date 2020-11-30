@@ -132,6 +132,7 @@ export default {
 
   myArray: null,
   created() {
+    //FIXME : now needs to use filter See Above
     this.$options.myArray = this.myNodes
     this.readFlag
   },
