@@ -1,8 +1,46 @@
 <template>
   <div>
-    <div v-for="(value, index) in nodes" v-bind:key="index">
-      {{ nodetext }}
+    <div v-for="(value, index) in nodes_filtered" v-bind:key="index">
+      <form class="nodes">
+        <textarea
+          @focus="editTrue(true)"
+          @blur="editTrue(false)"
+          autofocus
+          v-model="value.node_text"
+          @input="editNode"
+          :id="value.node_id"
+          placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
+        ></textarea>
+        <p class="info">*markdown supported &amp; autosaves</p>
+
+        <div class="btn-row">
+          <SvgButton
+            buttonClass="nodes"
+            @click.prevent="deleteFlag(value.node_id)"
+          />
+          <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
+        </div>
+
+        <div class="allemoji">
+          <div
+            class="eachemoji"
+            v-for="(emojis, index) in emojis_filtered"
+            :key="index"
+          >
+            <!-- shorthand is v-if here... but we want to filter -->
+            <!-- {{ emojis.emoji_id }} -->
+            {{ emojis.emoji_text }}
+          </div>
+        </div>
+      </form>
     </div>
+    <!-- <div v-for="(value, index) in nodes_filtered" v-bind:key="index">
+      {{ value.node_text }}
+    </div> -->
+
+    <!-- <div v-for="(value, index) in readnodes_filtered" v-bind:key="index">
+      {{ value.node_text }}
+    </div> -->
 
     <!-- <div v-for="(value, index) in readnodes" v-bind:key="index">
       {{ value.node_text }}
@@ -17,6 +55,8 @@
 <script>
 import { mapState } from 'vuex'
 import marked from 'marked'
+import SvgButton from '@/components/SvgButton'
+import SvgButton2 from '@/components/SvgButton2'
 
 var readmode
 export default {
@@ -29,9 +69,9 @@ export default {
   },
 
   props: {
-    nodeid: String,
-    nodetext: String,
-    deleted: Boolean,
+    // nodeid: String,
+    // nodetext: String,
+    // deleted: Boolean,
   },
 
   filters: {
@@ -45,13 +85,43 @@ export default {
       configEmoji: (state) => state.configEmoji,
     }),
 
+    nodes_filtered: function () {
+      return this.myNodes.filter((nodes) => {
+        return nodes.deleted == false
+      })
+    },
+
+    emojis_filtered() {
+      return this.configEmoji.filter((emojis) => {
+        console.log(emojis.nodeid)
+        // if emojis.nodeid == myNodes.node_id
+        return emojis
+      })
+    },
+
+    // emojis_filtered() {
+    //   return this.configEmoji.filter((emojis) => {
+    //     return (
+    //       (emojis == this.myNodes.node_id) == this.configPositions.node_id &&
+    //       this.myNodes.deleted == false
+    //     )
+    //   })
+    // },
+
+    /// THIS IS UNFINSHED
+
+    readnodes_filtered: function () {
+      // this read mode = true
+      // but readmode is on config positions
+      return this.myNodes.filter((u) => u.readmode)
+    },
+
     nodes() {
       return this.myNodes.filter((node) => {
-        return (
-          (node == this.myNodes.node_id) == this.configPositions.node_id &&
-          this.myNodes.deleted == false &&
-          this.configPositions.read_mode == false
-        )
+        return node
+        // (node == this.myNodes.node_id) == this.configPositions.node_id &&
+        // this.myNodes.deleted == false &&
+        // this.configPositions.read_mode == false
       })
     },
 
@@ -61,15 +131,6 @@ export default {
           (readnode == this.myNodes.node_id) == this.configPositions.node_id &&
           this.myNodes.deleted == false &&
           this.configPositions.read_mode == true
-        )
-      })
-    },
-
-    emojis() {
-      return this.configEmoji.filter((emoji) => {
-        return (
-          (emoji == this.myNodes.node_id) == this.configPositions.node_id &&
-          this.myNodes.deleted == false
         )
       })
     },
@@ -94,7 +155,7 @@ export default {
     },
 
     deleteFlag(e) {
-      e = this.nodeid
+      //e = this.nodeid
       if (confirm('Confirm discard?')) {
         this.$store.dispatch('deleteFlag', { e })
       } else {
@@ -123,7 +184,10 @@ export default {
       }
     },
   },
-  components: {},
+  components: {
+    SvgButton,
+    SvgButton2,
+  },
 }
 </script>
 
