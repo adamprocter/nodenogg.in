@@ -122,11 +122,11 @@ export default {
 
       if (this.localreadmode == true) {
         readmode = false
-        this.$store.dispatch('readFlag', { e, readmode })
+        this.$store.dispatch('legacyreadFlag', { e, readmode })
         this.mode = 'Read'
       } else {
         readmode = true
-        this.$store.dispatch('readFlag', { e, readmode })
+        this.$store.dispatch('legacyreadFlag', { e, readmode })
         this.mode = 'Edit'
       }
     },

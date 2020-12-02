@@ -750,6 +750,11 @@ const store = new Vuex.Store({
       commit('UPDATE_CONNECT_TWO', tonode, xposend, yposend)
     },
 
+    legacyreadFlag: ({ commit }, e) => {
+      // var text = e.target.value
+      commit('LEGACY_READ_FLAG', e)
+    },
+
     readFlag: ({ commit }, e) => {
       // var text = e.target.value
       commit('READ_FLAG', e)

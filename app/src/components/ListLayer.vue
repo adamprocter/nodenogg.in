@@ -94,7 +94,6 @@ export default {
     },
 
     deleteFlag(e) {
-      //e = this.nodeid
       if (confirm('Confirm discard?')) {
         this.$store.dispatch('deleteFlag', { e })
       } else {
@@ -143,7 +142,6 @@ textarea {
   font-family: 'Inter var', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   border: none;
   outline: none;
   background-color: rgb(187, 227, 255);
