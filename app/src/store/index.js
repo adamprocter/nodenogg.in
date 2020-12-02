@@ -183,7 +183,7 @@ const store = new Vuex.Store({
               nodes: [
                 {
                   // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
-                  // this shouldnt need to be here though
+                  // this shouldn't need to be here though
                   node_id: startup,
                   node_text:
                     '## Welcome \n This node was automatically by the system as a workaround for an iOS and URL routing bug, just ignore for now please \n ## 🤦🏻‍♂️',
@@ -390,23 +390,21 @@ const store = new Vuex.Store({
     //   state.connectionstate = e
     // },
 
-    ADD_NODE(state, e) {
+    ADD_NODE(state) {
       var uniqueid =
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15)
       state.localnodeid = uniqueid
 
       pouchdb.get(state.myclient).then(function (doc) {
-        if (e == undefined) {
-          doc.nodes.push({
-            node_id: uniqueid,
-            node_text: '',
-            node_owner: state.myclient,
-            content_type: 'sheet',
-            deleted: false,
-            attachment_name: e,
-          })
-        }
+        doc.nodes.push({
+          node_id: uniqueid,
+          node_text: '',
+          node_owner: state.myclient,
+          content_type: 'sheet',
+          deleted: false,
+          read_mode: false,
+        })
 
         return pouchdb
           .put({
@@ -578,6 +576,38 @@ const store = new Vuex.Store({
     },
 
     READ_FLAG(state, e) {
+      var i
+      for (i = 0; i < Object.keys(state.myNodes).length; i++) {
+        if (e.e == state.myNodes[i].node_id) {
+          state.myNodes[i].read_mode = e.readmode
+        }
+      }
+      pouchdb
+        .get(state.myclient)
+        .then(function (doc) {
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.myclient,
+              _rev: doc._rev,
+              _attachments: doc._attachments,
+              nodes: state.myNodes,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.myclient).then(function (doc) {
+            state.myNodes = doc.nodes
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
+    LEGACY_READ_FLAG(state, e) {
       var i
       // console.log(e.e)
       for (i = 0; i < Object.keys(state.configPositions).length; i++) {
