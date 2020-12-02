@@ -80,42 +80,42 @@ export default {
         return nodes.deleted == false
       })
     },
+  },
 
-    methods: {
-      editNode(e) {
-        var nodeid = e.target.id
-        var nodetext = e.target.value
-        this.$store.dispatch('editNode', { nodeid, nodetext })
-      },
-
-      editTrue(e) {
-        this.$emit('edit-true', e)
-      },
-
-      deleteFlag(e) {
-        //e = this.nodeid
-        if (confirm('Confirm discard?')) {
-          this.$store.dispatch('deleteFlag', { e })
-        } else {
-          // nothing happens
-        }
-      },
-      readFlag(e, f) {
-        readmode = f
-        readmode = !readmode
-        this.$store.dispatch('readFlag', { e, readmode })
-
-        if (readmode == true) {
-          this.mode = 'Read'
-        } else {
-          this.mode = 'Edit'
-        }
-      },
+  methods: {
+    editNode(e) {
+      var nodeid = e.target.id
+      var nodetext = e.target.value
+      this.$store.dispatch('editNode', { nodeid, nodetext })
     },
-    components: {
-      SvgButton,
-      SvgButton2,
+
+    editTrue(e) {
+      this.$emit('edit-true', e)
     },
+
+    deleteFlag(e) {
+      //e = this.nodeid
+      if (confirm('Confirm discard?')) {
+        this.$store.dispatch('deleteFlag', { e })
+      } else {
+        // nothing happens
+      }
+    },
+    readFlag(e, f) {
+      readmode = f
+      readmode = !readmode
+      this.$store.dispatch('readFlag', { e, readmode })
+
+      if (readmode == true) {
+        this.mode = 'Read'
+      } else {
+        this.mode = 'Edit'
+      }
+    },
+  },
+  components: {
+    SvgButton,
+    SvgButton2,
   },
 }
 </script>
