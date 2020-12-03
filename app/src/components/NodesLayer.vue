@@ -11,7 +11,7 @@
           :y="value.y_pos"
           :z="value.z_index"
           :scale="scale"
-          @activated="onActivated"
+          @activated="onActivated(nodes.node_id)"
           @dragging="onDrag"
           @resizing="onResize"
           @dragstop="onDragstop"
@@ -82,19 +82,12 @@ var readmode
 export default {
   name: 'NodesLayer',
 
-  props: {
-    nodeid: String,
-    nodetext: String,
-    nodewidth: Number,
-    nodeheight: Number,
-    deleted: Boolean,
-  },
-
   data() {
     return {
       pickupz: 1,
       localreadmode: false,
       mode: '',
+      nodeid: String,
       // firstload: true,
     }
   },
@@ -135,13 +128,23 @@ export default {
   },
   // this is to stop sync chasing bug
   myArray: null,
+  // NOTE: ok created here but not if this is the first view to load
   created() {
     //access the custom option using $options
     this.$options.myArray = this.nodes_filtered
   },
 
+  updated() {
+    this.$options.myArray = this.nodes_filtered
+  },
+
+  // updated() {
+  //   this.$options.myArray = this.nodes_filtered
+  // },
+
   methods: {
-    onActivated() {
+    onActivated(e) {
+      this.nodeid = e
       var i
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
@@ -150,7 +153,8 @@ export default {
         }
       }
     },
-    onResize(x, y, width, height) {
+    onResize(x, y, width, height, e) {
+      console.log(e)
       this.localx = x
       this.localy = y
       this.width = width
@@ -237,9 +241,10 @@ export default {
     },
 
     deleteFlag(e) {
-      e = this.nodeid
+      console.log(e)
       if (confirm('Confirm discard?')) {
         this.$store.dispatch('deleteFlag', { e })
+        this.$options.myArray = this.nodes_filtered
       } else {
         // nothing happens
       }
@@ -249,7 +254,7 @@ export default {
       readmode = f
       readmode = !readmode
       this.$store.dispatch('readFlag', { e, readmode })
-
+      this.$options.myArray = this.nodes_filtered
       if (readmode == true) {
         this.mode = 'Read'
       } else {
