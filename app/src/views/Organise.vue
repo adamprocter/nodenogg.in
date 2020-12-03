@@ -42,14 +42,7 @@
               v-bind:nodetext="value.node_text"
               v-bind:deleted="value.deleted"
             />
-            <NodesLayer
-              @edit-true="(e) => editTrue(e)"
-              v-for="value in myNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
+            <NodesLayer @edit-true="(e) => editTrue(e)" />
             <TipsLayer />
             <ModeCardorg />
             <ConnectionsLayer />

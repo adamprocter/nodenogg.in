@@ -82,6 +82,13 @@ export default {
     },
   },
 
+  // this is to stop sync chasing bug
+  myArray: null,
+  created() {
+    //access the custom option using $options
+    this.$options.myArray = this.nodes_filtered
+  },
+
   methods: {
     editNode(e) {
       var nodeid = e.target.id
