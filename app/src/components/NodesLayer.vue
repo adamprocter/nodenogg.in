@@ -1,10 +1,9 @@
 <template>
   <div ref="nodes" class="node">
-    <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
-      <div v-for="(value, index) in configPositions" v-bind:key="index">
+    <div v-for="(value, index) in positions_filtered" v-bind:key="index">
+      <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
         <draggable
           class="innernode"
-          v-if="nodes.node_id == value.node_id"
           :w="value.width"
           :h="value.height"
           :x="value.x_pos"
@@ -40,7 +39,7 @@
                 :inner-html.prop="nodes.node_text | marked"
               ></p>
             </template>
-
+            <!-- // v-if == 'select' -->
             <div class="btn-row">
               <SvgButton
                 buttonClass="nodes"
@@ -51,7 +50,7 @@
                 @click.prevent="readFlag(nodes.node_id, nodes.read_mode)"
               />
             </div>
-
+            <!-- // v-else // empty div -->
             <div class="allemoji">
               <div
                 class="eachemoji"
@@ -125,22 +124,29 @@ export default {
         return nodes.deleted == false
       })
     },
+
+    positions_filtered: function () {
+      return this.configPositions.filter((positions) => {
+        return this.myNodes.find((node) => {
+          return !node.deleted && positions.node_id == node.node_id
+        })
+      })
+    },
   },
   // this is to stop sync chasing bug
   myArray: null,
-  // NOTE: ok created here but not if this is the first view to load
+  // NOTE: ok as created here but NOT if this is the first view to load
   created() {
     //access the custom option using $options
     this.$options.myArray = this.nodes_filtered
   },
 
   updated() {
-    this.$options.myArray = this.nodes_filtered
+    if (this.toolmode == 'addNode') {
+      this.$options.myArray = this.nodes_filtered
+      this.$store.commit('ui/setMode', 'select')
+    }
   },
-
-  // updated() {
-  //   this.$options.myArray = this.nodes_filtered
-  // },
 
   methods: {
     onActivated(e) {
@@ -153,8 +159,7 @@ export default {
         }
       }
     },
-    onResize(x, y, width, height, e) {
-      console.log(e)
+    onResize(x, y, width, height) {
       this.localx = x
       this.localy = y
       this.width = width
@@ -230,8 +235,6 @@ export default {
 
     editTrue(e) {
       this.$emit('edit-true', e)
-      // this.firstload = false
-      //  // console.log(e)
     },
 
     editNode(e) {
