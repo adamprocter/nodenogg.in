@@ -49,7 +49,8 @@ export default {
         }
       }
       if (mode == 'addNode') {
-        this.$store.dispatch('addNode')
+        this.$emit('add-node')
+        // this.$store.dispatch('addNode')
       }
       if (mode == 'upload') {
         this.$emit('upload-added')

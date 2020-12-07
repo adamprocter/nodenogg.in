@@ -61,6 +61,7 @@
           @copy-done="copyDone()"
           @draw-on="drawOn()"
           @draw-off="drawOff()"
+          @add-node="addNode()"
         />
         <ViewToolbar />
         <UploadLayer
@@ -192,6 +193,7 @@ export default {
     // This is here to support the shortcuts
     addNode() {
       this.$store.dispatch('addNode')
+      this.$forceUpdate()
     },
     selectMode(mode) {
       this.$store.commit('ui/setMode', mode)

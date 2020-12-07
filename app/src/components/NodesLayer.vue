@@ -172,7 +172,8 @@ export default {
       localreadmode: false,
       mode: '',
       nodeid: String,
-      // firstload: true,
+      myArray: null,
+      positionsArray: null,
     }
   },
 
@@ -219,25 +220,30 @@ export default {
     },
   },
   // this is to stop sync chasing bug
-  myArray: null,
-  positionsArray: null,
-  // NOTE: ok as created here but NOT if this is the first view to load
+
   created() {
     //access the custom option using $options
+    setTimeout(this.loadData, 2000)
     this.$options.myArray = this.nodes_filtered
     this.$options.positionsArray = this.positions_filtered
   },
 
   updated() {
     this.$options.positionsArray = this.positions_filtered
-
+   
     if (this.toolmode == 'addNode') {
-      this.$options.myArray = this.nodes_filtered
+      setTimeout(this.loadData, 300)
+      // this.$options.myArray = this.nodes_filtered
       this.$store.commit('ui/setMode', 'select')
     }
   },
 
   methods: {
+    loadData() {
+      this.$options.myArray = this.nodes_filtered
+      this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+    },
     onActivated(e) {
       this.nodeid = e
       var i

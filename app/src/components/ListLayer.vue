@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(nodes, index) in nodes_filtered" v-bind:key="index">
+    <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
       <form class="nodes">
         <template v-if="nodes.read_mode == false">
           <textarea
@@ -61,6 +61,7 @@ export default {
   data: function () {
     return {
       localreadmode: false,
+      myArray: null,
     }
   },
 
@@ -73,6 +74,7 @@ export default {
       myNodes: (state) => state.myNodes,
       configPositions: (state) => state.configPositions,
       configEmoji: (state) => state.configEmoji,
+      // toolmode: (state) => state.ui.mode,
     }),
 
     nodes_filtered: function () {
@@ -82,14 +84,20 @@ export default {
     },
   },
 
-  // this is to stop sync chasing bug
-  myArray: null,
   mounted() {
-    //access the custom option using $options
+    setTimeout(this.loadData, 500)
     this.$options.myArray = this.nodes_filtered
   },
 
+  updated() {
+    setTimeout(this.loadData, 300)
+  },
+
   methods: {
+    loadData() {
+      this.$options.myArray = this.nodes_filtered
+      this.$forceUpdate()
+    },
     editNode(e) {
       var nodeid = e.target.id
       var nodetext = e.target.value

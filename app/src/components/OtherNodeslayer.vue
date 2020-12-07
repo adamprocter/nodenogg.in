@@ -240,6 +240,8 @@ export default {
       search: '',
       pickupz: 1,
       nodeid: String,
+
+      positionsArray: null,
     }
   },
 
@@ -272,10 +274,10 @@ export default {
     },
   },
 
-  positionsArray: null,
   // NOTE: ok as created here but NOT if this is the first view to load
   created() {
     //access the custom option using $options
+    setTimeout(this.loadData, 1000)
     this.$options.positionsArray = this.positions_filtered
   },
 
@@ -284,6 +286,10 @@ export default {
   },
 
   methods: {
+    loadData() {
+      this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+    },
     onActivated(e) {
       this.nodeid = e
       var i
