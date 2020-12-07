@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <div v-if="deleted == false">
+  <div class="grid">
+    <div v-for="(nodes, index) in othernodes_filtered" v-bind:key="index">
       <div class="nodes">
-        <p :inner-html.prop="nodetext | marked"></p>
+        <p :inner-html.prop="nodes.node_text | marked"></p>
 
         <div class="eeee">
-          <input :value="nodeid" name="id" readonly hidden />
+          <input :value="nodes.node_id" name="id" readonly hidden />
           <input
             id="emojifield"
             class="regular-input"
@@ -38,7 +38,7 @@
                 :style="{ top: display.y + 'px', left: display.x + 'px' }"
               >
                 <div class="emoji-picker__search">
-                  <input type="text" v-model="search" v-focus />
+                  <input type="text" v-model="search" />
                 </div>
                 <div>
                   <div v-for="(emojiGroup, category) in emojis" :key="category">
@@ -47,7 +47,7 @@
                       <span
                         v-for="(emoji, emojiName) in emojiGroup"
                         :key="emojiName"
-                        @click="insert(emoji), sentReact()"
+                        @click="insert(emoji), sentReact(nodes.node_id)"
                         :title="emojiName"
                         >{{ emoji }}</span
                       >
@@ -64,7 +64,7 @@
               v-for="(emojis, index) in configEmoji"
               :key="index"
             >
-              <p v-if="nodeid == emojis.node_id">
+              <p v-if="nodes.node_id == emojis.node_id">
                 {{ emojis.emoji_text }}
               </p>
             </div>
@@ -79,6 +79,10 @@
 import { mapState } from 'vuex'
 import EmojiPicker from 'vue-emoji-picker'
 import marked from 'marked'
+
+var nodeid
+var emojitext
+
 export default {
   name: 'OtherCardslayer',
 
@@ -93,16 +97,18 @@ export default {
     }
   },
 
-  props: {
-    nodeid: String,
-    nodetext: String,
-    deleted: Boolean,
-  },
+  computed: {
+    ...mapState({
+      otherNodes: (state) => state.otherNodes,
+      configEmoji: (state) => state.configEmoji,
+    }),
 
-  computed: mapState({
-    otherNodes: (state) => state.otherNodes,
-    configEmoji: (state) => state.configEmoji,
-  }),
+    othernodes_filtered: function () {
+      return this.otherNodes.filter((nodes) => {
+        return nodes.deleted == false
+      })
+    },
+  },
 
   filters: {
     marked: marked,
@@ -112,9 +118,10 @@ export default {
     append(emoji) {
       this.input += emoji
     },
-    sentReact(nodeid, emojitext) {
+    sentReact(e) {
       emojitext = this.input
-      nodeid = this.nodeid
+      nodeid = e
+
       this.$store.dispatch('addEmoji', {
         nodeid,
         emojitext,
@@ -127,6 +134,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
 .nodes {
   min-width: 343px;
   max-width: 343px;

@@ -3,14 +3,7 @@
     <div v-if="clientset">
       <div id="listwrapper">
         <ModesCard />
-        <ListLayer
-          @edit-true="(e) => editTrue(e)"
-          v-for="value in myNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          v-bind:deleted="value.deleted"
-        />
+        <ListLayer @edit-true="(e) => editTrue(e)" />
         <div class="btn-row">
           <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
             >Create Node</BaseButton

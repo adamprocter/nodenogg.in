@@ -35,47 +35,21 @@
           v-bind:translation="translation"
         >
           <div v-if="clientset">
-            <OtherNodeslayer
-              v-for="value in otherNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
-            <NodesLayer
-              @edit-true="(e) => editTrue(e)"
-              v-for="value in myNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
+            <OtherNodeslayer />
+            <NodesLayer @edit-true="(e) => editTrue(e)" />
             <TipsLayer />
             <ModeCardorg />
-            <ConnectionsLayer />
+            <!-- <ConnectionsLayer /> -->
           </div>
 
           <div v-else>
-            <OtherNodeslayer
-              v-for="value in otherNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
-            <NodesLayer
-              @edit-true="(e) => editTrue(e)"
-              v-for="value in myNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
+            <OtherNodeslayer />
+            <NodesLayer @edit-true="(e) => editTrue(e)" />
             <OnBoard
               @client-added="clientAdded()"
               @edit-true="(e) => editTrue(e)"
             />
-            <ConnectionsLayer />
+            <!-- <ConnectionsLayer /> -->
           </div>
           <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
         </PanZoomContainer>
@@ -102,7 +76,7 @@
 
 <script>
 import PanZoomContainer from '@/experimental/PanZoomContainer'
-import ConnectionsLayer from '@/components/ConnectionsLayer'
+// import ConnectionsLayer from '@/components/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OffLine from '@/components/OffLine'
 
@@ -238,7 +212,7 @@ export default {
     // SelectionLayer,
     NodesLayer,
     OtherNodeslayer,
-    ConnectionsLayer,
+    // ConnectionsLayer,
     OnBoard,
     // ToolBar,
     OffLine,

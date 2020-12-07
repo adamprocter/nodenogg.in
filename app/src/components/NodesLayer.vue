@@ -1,175 +1,154 @@
 <template>
   <div ref="nodes" class="node">
-    <div v-for="(value, index) in configPositions" v-bind:key="index">
-      <div v-if="toolmode == 'move'">
-        <draggable
-          class="innernode"
-          v-if="nodeid == value.node_id && deleted == false"
-          :w="value.width"
-          :h="value.height"
-          :x="value.x_pos"
-          :y="value.y_pos"
-          :z="value.z_index"
-          :scale="scale"
-          :draggable="false"
-          :resizable="false"
-          style="border: 2px dashed black; background-color: rgb(155, 194, 216)"
-          :min-width="200"
-          :min-height="220"
-        >
-          <form>
-            <div v-if="value.read_mode == false">
-              <div v-for="value in $options.myArray" v-bind:key="value.node_id">
+    <div v-if="toolmode == 'move'">
+      <div v-for="(value, index) in $options.positionsArray" v-bind:key="index">
+        <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
+          <draggable
+            class="innernode"
+            v-if="nodes.node_id == value.node_id"
+            :w="value.width"
+            :h="value.height"
+            :x="value.x_pos"
+            :y="value.y_pos"
+            :z="value.z_index"
+            :scale="scale"
+            @activated="onActivated(nodes.node_id)"
+            :draggable="false"
+            :resizable="false"
+            @dragging="onDrag"
+            @resizing="onResize"
+            @dragstop="onDragstop"
+            @resizestop="onResizestop"
+            :drag-cancel="'.drag-cancel'"
+            style="
+              border: 2px dashed black;
+              background-color: rgb(155, 194, 216);
+            "
+            :min-width="200"
+            :min-height="220"
+          >
+            <form class="nodes">
+              <template v-if="nodes.read_mode == false">
                 <textarea
-                  v-if="nodeid == value.node_id"
                   @focus="editTrue(true)"
                   @blur="editTrue(false)"
-                  v-model="value.node_text"
                   autofocus
+                  v-model="nodes.node_text"
                   @input="editNode"
-                  :id="nodeid"
-                  class="drag-cancel"
-                  ref="nodetext"
+                  :id="nodes.node_id"
                   placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
                 ></textarea>
-              </div>
-              <p class="info">*markdown supported &amp; autosaves</p>
-            </div>
-            <div v-if="value.read_mode == true">
-              <p
-                class="read"
-                :id="nodeid"
-                :inner-html.prop="nodetext | marked"
-              ></p>
-            </div>
+                <p class="info">*markdown supported &amp; autosaves</p>
+              </template>
+              <template v-else>
+                <p
+                  :id="nodes.node_id"
+                  :inner-html.prop="nodes.node_text | marked"
+                ></p>
+              </template>
+              <template v-if="toolmode == 'select'">
+                <div class="btn-row">
+                  <SvgButton
+                    buttonClass="nodes"
+                    @click.prevent="deleteFlag(nodes.node_id)"
+                  />
+                  <SvgButton2
+                    buttonClass="nodes"
+                    @click.prevent="readFlag(nodes.node_id, nodes.read_mode)"
+                  />
+                </div>
+              </template>
 
-            <!-- <h3>Reactions</h3> -->
-
-            <div class="allemoji">
-              <div
-                class="eachemoji"
-                v-for="(emojis, index) in configEmoji"
-                :key="index"
-              >
-                <p v-if="nodeid == emojis.node_id">
-                  {{ emojis.emoji_text }}
-                </p>
-              </div>
-            </div>
-
-            <div class="btn-row">
-              <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
-                >Delete</BaseButton
-              > -->
-              <!-- <div v-if="value.read_mode == true">
-                <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Edit Mode
-                </BaseButton>
-              </div>
-              <div v-else>
-                <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Read Mode</BaseButton
+              <div class="allemoji">
+                <div
+                  class="eachemoji"
+                  v-for="(emojis, index) in configEmoji"
+                  :key="index"
                 >
-              </div> -->
-            </div>
-          </form>
-        </draggable>
-      </div>
-
-      <!-- Same code as above when in any other mode other than move so you can drag nodes-->
-
-      <div v-else>
-        <draggable
-          class="innernode"
-          v-if="nodeid == value.node_id && deleted == false"
-          :w="value.width"
-          :h="value.height"
-          :x="value.x_pos"
-          :y="value.y_pos"
-          :z="value.z_index"
-          :scale="scale"
-          @activated="onActivated"
-          @dragging="onDrag"
-          @resizing="onResize"
-          @dragstop="onDragstop"
-          @resizestop="onResizestop"
-          :drag-cancel="'.drag-cancel'"
-          style="border: 2px dashed black; background-color: rgb(155, 194, 216)"
-          :min-width="200"
-          :min-height="220"
-        >
-          <form>
-            <div v-if="value.read_mode == false">
-              <div v-for="value in $options.myArray" v-bind:key="value.node_id">
-                <div v-if="nodeid == value.node_id">
-                  <textarea
-                    @focus="editTrue(true)"
-                    @blur="editTrue(false)"
-                    autofocus
-                    v-model="value.node_text"
-                    @input="editNode"
-                    :id="nodeid"
-                    class="drag-cancel"
-                    ref="nodetext"
-                    placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
-                  >
-                  </textarea>
+                  <template v-if="emojis.node_id == nodes.node_id">{{
+                    emojis.emoji_text
+                  }}</template>
                 </div>
               </div>
-              <p class="info">*markdown supported &amp; autosaves</p>
-            </div>
-            <div v-if="value.read_mode == true">
-              <p
-                class="read"
-                :id="nodeid"
-                :inner-html.prop="nodetext | marked"
-              ></p>
-            </div>
+            </form>
+          </draggable>
+        </div>
+      </div>
+    </div>
 
-            <!-- <h3>Reactions</h3> -->
-            <div class="allemoji">
-              <div
-                class="eachemoji"
-                v-for="(emojis, index) in configEmoji"
-                :key="index"
-              >
-                <p v-if="nodeid == emojis.node_id">
-                  {{ emojis.emoji_text }}
-                </p>
+    <!-- IF NOT MOVE -->
+
+    <div v-if="toolmode != 'move'">
+      <div v-for="(value, index) in $options.positionsArray" v-bind:key="index">
+        <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
+          <draggable
+            class="innernode"
+            v-if="nodes.node_id == value.node_id"
+            :w="value.width"
+            :h="value.height"
+            :x="value.x_pos"
+            :y="value.y_pos"
+            :z="value.z_index"
+            :scale="scale"
+            @activated="onActivated(nodes.node_id)"
+            @dragging="onDrag"
+            @resizing="onResize"
+            @dragstop="onDragstop"
+            @resizestop="onResizestop"
+            :drag-cancel="'.drag-cancel'"
+            style="
+              border: 2px dashed black;
+              background-color: rgb(155, 194, 216);
+            "
+            :min-width="200"
+            :min-height="220"
+          >
+            <form class="nodes">
+              <template v-if="nodes.read_mode == false">
+                <textarea
+                  @focus="editTrue(true)"
+                  @blur="editTrue(false)"
+                  autofocus
+                  v-model="nodes.node_text"
+                  @input="editNode"
+                  :id="nodes.node_id"
+                  placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
+                ></textarea>
+                <p class="info">*markdown supported &amp; autosaves</p>
+              </template>
+              <template v-else>
+                <p
+                  :id="nodes.node_id"
+                  :inner-html.prop="nodes.node_text | marked"
+                ></p>
+              </template>
+              <template v-if="toolmode == 'select'">
+                <div class="btn-row">
+                  <SvgButton
+                    buttonClass="nodes"
+                    @click.prevent="deleteFlag(nodes.node_id)"
+                  />
+                  <SvgButton2
+                    buttonClass="nodes"
+                    @click.prevent="readFlag(nodes.node_id, nodes.read_mode)"
+                  />
+                </div>
+              </template>
+
+              <div class="allemoji">
+                <div
+                  class="eachemoji"
+                  v-for="(emojis, index) in configEmoji"
+                  :key="index"
+                >
+                  <template v-if="emojis.node_id == nodes.node_id">{{
+                    emojis.emoji_text
+                  }}</template>
+                </div>
               </div>
-            </div>
-            <div class="btn-row">
-              <!-- <BaseButton buttonClass="danger" @click="deleteFlag()"
-                >Discard</BaseButton
-              > -->
-              <SvgButton buttonClass="nodes" @click.prevent="deleteFlag()" />
-              <div v-if="value.read_mode == true">
-                <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
-                <!-- <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Edit Mode
-                </BaseButton> -->
-              </div>
-              <div v-else>
-                <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
-                <!-- <BaseButton
-                  class="read"
-                  buttonClass="action"
-                  @click="readFlag()"
-                  >Read Mode</BaseButton
-                > -->
-              </div>
-            </div>
-          </form>
-        </draggable>
+            </form>
+          </draggable>
+        </div>
       </div>
     </div>
   </div>
@@ -187,19 +166,12 @@ var readmode
 export default {
   name: 'NodesLayer',
 
-  props: {
-    nodeid: String,
-    nodetext: String,
-    nodewidth: Number,
-    nodeheight: Number,
-    deleted: Boolean,
-  },
-
   data() {
     return {
       pickupz: 1,
       localreadmode: false,
       mode: '',
+      nodeid: String,
       // firstload: true,
     }
   },
@@ -222,22 +194,52 @@ export default {
   //   this.$refs.nodetext.focus()
   // },
 
-  computed: mapState({
-    scale: (state) => state.ui.scale,
-    myNodes: (state) => state.myNodes,
-    configPositions: (state) => state.configPositions,
-    configConnections: (state) => state.configConnections,
-    configEmoji: (state) => state.configEmoji,
-    toolmode: (state) => state.ui.mode,
-  }),
+  computed: {
+    ...mapState({
+      scale: (state) => state.ui.scale,
+      myNodes: (state) => state.myNodes,
+      configPositions: (state) => state.configPositions,
+      configConnections: (state) => state.configConnections,
+      configEmoji: (state) => state.configEmoji,
+      toolmode: (state) => state.ui.mode,
+    }),
+
+    nodes_filtered: function () {
+      return this.myNodes.filter((nodes) => {
+        return nodes.deleted == false
+      })
+    },
+    // this is not working correctly as dragging around moves wrong things
+    positions_filtered: function () {
+      return this.configPositions.filter((positions) => {
+        return this.myNodes.some((node) => {
+          return positions.node_id == node.node_id
+        })
+      })
+    },
+  },
+  // this is to stop sync chasing bug
   myArray: null,
+  positionsArray: null,
+  // NOTE: ok as created here but NOT if this is the first view to load
   created() {
     //access the custom option using $options
-    this.$options.myArray = this.myNodes
+    this.$options.myArray = this.nodes_filtered
+    this.$options.positionsArray = this.positions_filtered
+  },
+
+  updated() {
+    this.$options.positionsArray = this.positions_filtered
+
+    if (this.toolmode == 'addNode') {
+      this.$options.myArray = this.nodes_filtered
+      this.$store.commit('ui/setMode', 'select')
+    }
   },
 
   methods: {
-    onActivated() {
+    onActivated(e) {
+      this.nodeid = e
       var i
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
@@ -322,49 +324,7 @@ export default {
 
     editTrue(e) {
       this.$emit('edit-true', e)
-      // this.firstload = false
-      //  // console.log(e)
     },
-
-    // _.debounce(function(e) {
-    //             this.input = e.target.value;
-    //           }, 300)
-
-    // editNode(e) {
-    //   const el = e.target
-    //   const cursorPos = el.selectionStart
-    //   console.log(cursorPos)
-    //   var nodeid = e.target.id
-    //   var nodetext = e.target.value
-    //   this.$store.dispatch('editNode', { nodeid, nodetext })
-
-    //   this.$nextTick(() => {
-    //     e.target.selectionStart = e.target.selectionEnd = cursorPos
-    //   })
-
-    // this.$nextTick(() => {
-    //   el.setSelectionRange(cursorPos, cursorPos)
-    // })
-    //},
-
-    // editNode: lodash.debounce(function (e) {
-    //   var nodeid = e.target.id
-    //   var nodetext = e.target.value
-    //   this.$store.dispatch('editNode', { nodeid, nodetext })
-    // }, 600),
-
-    // editNode: lodash.debounce(function (e) {
-    //   const el = e.target
-    //   const cursorPos = el.selectionStart
-
-    //   var nodeid = e.target.id
-    //   var nodetext = e.target.value
-    //   this.$store.dispatch('editNode', { nodeid, nodetext })
-
-    //   this.$nextTick(() => {
-    //     el.setSelectionRange(cursorPos, cursorPos)
-    //   })
-    // }, 600),
 
     editNode(e) {
       var nodeid = e.target.id
@@ -373,30 +333,22 @@ export default {
     },
 
     deleteFlag(e) {
-      e = this.nodeid
       if (confirm('Confirm discard?')) {
         this.$store.dispatch('deleteFlag', { e })
+        this.$options.myArray = this.nodes_filtered
       } else {
         // nothing happens
       }
     },
-    readFlag(e) {
-      e = this.nodeid
 
-      var i
-      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        if (this.configPositions[i].node_id == this.nodeid) {
-          this.localreadmode = this.configPositions[i].read_mode
-        }
-      }
-
-      if (this.localreadmode == true) {
-        readmode = false
-        this.$store.dispatch('readFlag', { e, readmode })
+    readFlag(e, f) {
+      readmode = f
+      readmode = !readmode
+      this.$store.dispatch('readFlag', { e, readmode })
+      this.$options.myArray = this.nodes_filtered
+      if (readmode == true) {
         this.mode = 'Read'
       } else {
-        readmode = true
-        this.$store.dispatch('readFlag', { e, readmode })
         this.mode = 'Edit'
       }
     },
