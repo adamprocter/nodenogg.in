@@ -76,7 +76,7 @@
 
 <script>
 import PanZoomContainer from '@/experimental/PanZoomContainer'
-//import ConnectionsLayer from '@/components/ConnectionsLayer'
+// import ConnectionsLayer from '@/components/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OffLine from '@/components/OffLine'
 

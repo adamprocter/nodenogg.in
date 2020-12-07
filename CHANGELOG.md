@@ -1,3 +1,12 @@
+# 0.1.38
+
+_5th December 2020_
+
+### Changed
+
+- read mode is now attached to each node instead of positions.
+- node text and positioning is now using a computed filter - so the iterating should be less CPU intensive.
+
 # 0.1.37
 
 _30th November 2020_
