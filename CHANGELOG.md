@@ -1,11 +1,15 @@
 # 0.1.38
 
-_5th December 2020_
+_7th December 2020_
 
 ### Changed
 
 - read mode is now attached to each node instead of positions.
 - node text and positioning is now using a computed filter - so the iterating should be less CPU intensive.
+
+### Removed
+
+- Pixi.js for drawing connections (temporary removal).
 
 # 0.1.37
 
