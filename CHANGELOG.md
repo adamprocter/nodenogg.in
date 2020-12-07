@@ -1,3 +1,25 @@
+# 0.1.38
+
+_7th December 2020_
+
+### Changed
+
+- read mode is now attached to each node instead of positions.
+- node text and positioning is now using a computed filter - so the iterating should be less CPU intensive.
+
+### Removed
+
+- Pixi.js for drawing connections (temporary removal).
+
+# 0.1.37
+
+_30th November 2020_
+
+### Fixed
+
+- Add emoji reactions is no longer missing from Cards view.
+- Long URLS now wrap when viewing on smaller screen sizes, to accommodate increased link text.
+
 # 0.1.36
 
 _20th November 2020_

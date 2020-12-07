@@ -3,24 +3,9 @@
     <div v-if="clientset">
       <h1 class="mobile">All nodes - card view</h1>
 
-      <div class="grid">
-        <CardsLayer
-          @editTrue="(e) => editTrue(e)"
-          v-for="value in myNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          v-bind:deleted="value.deleted"
-        />
+      <CardsLayer @editTrue="(e) => editTrue(e)" />
 
-        <OtherCardslayer
-          v-for="value in otherNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          v-bind:deleted="value.deleted"
-        />
-      </div>
+      <OtherCardslayer />
 
       <div class="btn-row">
         <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
@@ -156,11 +141,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .mobile {
   margin-left: 1em;
   font-size: 1em;

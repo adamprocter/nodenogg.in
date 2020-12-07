@@ -1,54 +1,48 @@
 <template>
-  <div>
-    <div v-for="(value, index) in configPositions" v-bind:key="index">
-      <div class="nodes" v-if="nodeid == value.node_id && deleted == false">
-        <form>
-          <div v-if="value.read_mode == false">
-            <div v-for="value in $options.myArray" v-bind:key="value.node_id">
-              <textarea
-                v-if="nodeid == value.node_id"
-                @focus="editTrue(true)"
-                @blur="editTrue(false)"
-                autofocus
-                v-model="value.node_text"
-                @input="editNode"
-                :id="nodeid"
-                ref="nodetext"
-                placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
-              ></textarea>
-            </div>
-            <p class="info">*markdown supported &amp; autosaves</p>
-          </div>
-          <div class="readmode" v-if="value.read_mode && deleted == false">
-            <p :id="nodeid" :inner-html.prop="nodetext | marked"></p>
-          </div>
-          <div class="allemoji">
-            <div
-              class="eachemoji"
-              v-for="(emojis, index) in configEmoji"
-              :key="index"
-            >
-              <p v-if="nodeid == emojis.node_id">
-                {{ emojis.emoji_text }}
-              </p>
-            </div>
-          </div>
+  <div class="grid">
+    <div v-for="(nodes, index) in nodes_filtered" v-bind:key="index">
+      <form class="nodes">
+        <template v-if="nodes.read_mode == false">
+          <textarea
+            @focus="editTrue(true)"
+            @blur="editTrue(false)"
+            autofocus
+            v-model="nodes.node_text"
+            @input="editNode"
+            :id="nodes.node_id"
+            ref="nodetext"
+            placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
+          ></textarea>
+        </template>
+        <template v-else>
+          <p
+            :id="nodes.node_id"
+            :inner-html.prop="nodes.node_text | marked"
+          ></p>
+        </template>
+        <div class="btn-row">
+          <SvgButton
+            buttonClass="nodes"
+            @click.prevent="deleteFlag(nodes.node_id)"
+          />
+          <SvgButton2
+            buttonClass="nodes"
+            @click.prevent="readFlag(nodes.node_id, nodes.read_mode)"
+          />
+        </div>
 
-          <div class="btn-row">
-            <SvgButton buttonClass="nodes" @click.prevent="deleteFlag()" />
-            <div v-if="value.read_mode == true && deleted == false">
-              <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
-
-              <!-- <BaseButton class="read" buttonClass="action" @click="readFlag()"
-                >Edit Mode
-              </BaseButton> -->
-            </div>
-            <div v-else>
-              <SvgButton2 buttonClass="nodes" @click.prevent="readFlag()" />
-            </div>
+        <div class="allemoji">
+          <div
+            class="eachemoji"
+            v-for="(emojis, index) in configEmoji"
+            :key="index"
+          >
+            <template v-if="emojis.node_id == nodes.node_id">{{
+              emojis.emoji_text
+            }}</template>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -69,26 +63,28 @@ export default {
     }
   },
 
-  props: {
-    nodeid: String,
-    nodetext: String,
-    deleted: Boolean,
-  },
-
   filters: {
     marked: marked,
   },
+  computed: {
+    ...mapState({
+      myNodes: (state) => state.myNodes,
+      configPositions: (state) => state.configPositions,
+      configEmoji: (state) => state.configEmoji,
+    }),
 
-  computed: mapState({
-    myNodes: (state) => state.myNodes,
-    configPositions: (state) => state.configPositions,
-    configEmoji: (state) => state.configEmoji,
-  }),
+    nodes_filtered: function () {
+      return this.myNodes.filter((nodes) => {
+        return nodes.deleted == false
+      })
+    },
+  },
 
+  // this is to stop sync chasing bug
   myArray: null,
-  created() {
-    this.$options.myArray = this.myNodes
-    this.readFlag
+  mounted() {
+    //access the custom option using $options
+    this.$options.myArray = this.nodes_filtered
   },
 
   methods: {
@@ -110,29 +106,17 @@ export default {
         // nothing happens
       }
     },
-    readFlag(e) {
-      e = this.nodeid
+    readFlag(e, f) {
+      readmode = f
+      readmode = !readmode
+      this.$store.dispatch('readFlag', { e, readmode })
 
-      var i
-      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        if (this.configPositions[i].node_id == this.nodeid) {
-          this.localreadmode = this.configPositions[i].read_mode
-        }
-      }
-
-      if (this.localreadmode == true) {
-        readmode = false
-        this.$store.dispatch('readFlag', { e, readmode })
+      if (readmode == true) {
         this.mode = 'Read'
       } else {
-        readmode = true
-        this.$store.dispatch('readFlag', { e, readmode })
         this.mode = 'Edit'
       }
     },
-    // setFocus() {
-    //   this.$refs.nodetext.focus()
-    // },
   },
   components: {
     SvgButton,
@@ -142,6 +126,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
 .nodes {
   min-width: 343px;
   max-width: 343px;
@@ -198,6 +186,8 @@ textarea {
 @media only screen and (max-width: 600px) {
   .readmode >>> a {
     font-size: 2em;
+    word-break: break-all;
+    padding-right: 0.5em;
   }
 }
 </style>
