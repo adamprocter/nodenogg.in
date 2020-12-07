@@ -7,6 +7,10 @@ _7th December 2020_
 - read mode is now attached to each node instead of positions.
 - node text and positioning is now using a computed filter - so the iterating should be less CPU intensive.
 
+### Fixed
+
+- pressing n keyboard short in card view no longer creates nodes
+
 ### Removed
 
 - Pixi.js for drawing connections (temporary removal).
