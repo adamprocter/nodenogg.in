@@ -9,7 +9,7 @@ _7th December 2020_
 
 ### Fixed
 
-- pressing n keyboard short in card view no longer creates nodes
+- pressing n on keyboard when editing node in card view no longer creates nodes.
 
 ### Removed
 
