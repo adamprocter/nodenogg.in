@@ -3,7 +3,7 @@
     <div v-if="clientset">
       <div id="listwrapper">
         <ModesCard />
-        <ListLayer @edit-true="(e) => editTrue(e)" />
+        <ListLayer @edit-true="(e) => editTrue(e)" :added="added" />
         <div class="btn-row">
           <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
             >Create Node</BaseButton
@@ -78,13 +78,8 @@ export default {
       clientset: false,
       uploadready: false,
       copyready: false,
+      added: true,
     }
-  },
-
-  props: {
-    nodeid: String,
-    nodetext: String,
-    deleted: Boolean,
   },
 
   computed: {
@@ -120,6 +115,7 @@ export default {
 
     addNode() {
       this.$store.dispatch('addNode')
+      this.added = !this.added
     },
 
     editTrue(e) {

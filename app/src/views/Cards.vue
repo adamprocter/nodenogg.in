@@ -3,7 +3,7 @@
     <div v-if="clientset">
       <h1 class="mobile">All nodes - card view</h1>
 
-      <CardsLayer @editTrue="(e) => editTrue(e)" />
+      <CardsLayer @edit-true="(e) => editTrue(e)" :added="added" />
 
       <OtherCardslayer />
 
@@ -72,13 +72,8 @@ export default {
       clientset: false,
       uploadready: false,
       copyready: false,
+      added: true,
     }
-  },
-
-  props: {
-    nodeid: String,
-    nodetext: String,
-    deleted: Boolean,
   },
 
   computed: {
@@ -114,6 +109,7 @@ export default {
 
     addNode() {
       this.$store.dispatch('addNode')
+      this.added = !this.added
     },
 
     editTrue(e) {

@@ -24,11 +24,13 @@
         <div class="btn-row">
           <SvgButton
             buttonClass="nodes"
-            @click.prevent="deleteFlag(nodes.node_id)"
+            @click.prevent="deleteFlag(nodes.node_id), updateNodes()"
           />
           <SvgButton2
             buttonClass="nodes"
-            @click.prevent="readFlag(nodes.node_id, nodes.read_mode)"
+            @click.prevent="
+              readFlag(nodes.node_id, nodes.read_mode), updateNodes()
+            "
           />
         </div>
 
@@ -58,10 +60,15 @@ var readmode
 export default {
   name: 'ListLayer',
 
+  props: {
+    added: Boolean,
+  },
+
   data: function () {
     return {
       localreadmode: false,
       myArray: null,
+      update: false,
     }
   },
 
@@ -90,10 +97,30 @@ export default {
   },
 
   updated() {
-    setTimeout(this.loadData, 300)
+    // setTimeout(this.loadData, 300)
+  },
+
+  watch: {
+    added: {
+      deep: true,
+
+      handler() {
+        setTimeout(this.loadData, 200)
+      },
+    },
+    update: {
+      deep: true,
+
+      handler() {
+        setTimeout(this.loadData, 200)
+      },
+    },
   },
 
   methods: {
+    updateNodes() {
+      this.update = !this.update
+    },
     loadData() {
       this.$options.myArray = this.nodes_filtered
       this.$forceUpdate()
