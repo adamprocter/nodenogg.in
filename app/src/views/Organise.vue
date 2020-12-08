@@ -39,7 +39,7 @@
             <NodesLayer @edit-true="(e) => editTrue(e)" />
             <TipsLayer />
             <ModeCardorg />
-            <!-- <ConnectionsLayer /> -->
+            <ConnectionsLayer />
           </div>
 
           <div v-else>
@@ -49,7 +49,7 @@
               @client-added="clientAdded()"
               @edit-true="(e) => editTrue(e)"
             />
-            <!-- <ConnectionsLayer /> -->
+            <ConnectionsLayer />
           </div>
           <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
         </PanZoomContainer>
@@ -77,7 +77,7 @@
 
 <script>
 import PanZoomContainer from '@/experimental/PanZoomContainer'
-// import ConnectionsLayer from '@/components/ConnectionsLayer'
+import ConnectionsLayer from '@/components/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OffLine from '@/components/OffLine'
 
@@ -214,7 +214,7 @@ export default {
     // SelectionLayer,
     NodesLayer,
     OtherNodeslayer,
-    // ConnectionsLayer,
+    ConnectionsLayer,
     OnBoard,
     // ToolBar,
     OffLine,
