@@ -89,25 +89,24 @@ export default {
 
   // this is to stop sync chasing bug
 
-  created() {
+  mounted() {
     //access the custom option using $options
-    setTimeout(this.loadData, 500)
-    this.$options.myArray = this.nodes_filtered
-  },
+    const unwatch = this.$watch('nodes_filtered', (value) => {
+      this.$options.myArray = this.nodes_filtered
 
-  updated() {
-    // setTimeout(this.loadData, 300)
+      this.$forceUpdate()
+      // ignore falsy values
+      if (!value) return
+
+      // stop watching when nodes_filtered[] is not empty
+      if (value && value.length) unwatch()
+
+      // process value here
+    })
   },
 
   watch: {
     added: {
-      deep: true,
-
-      handler() {
-        setTimeout(this.loadData, 200)
-      },
-    },
-    update: {
       deep: true,
 
       handler() {

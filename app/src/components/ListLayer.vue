@@ -92,12 +92,19 @@ export default {
   },
 
   mounted() {
-    setTimeout(this.loadData, 500)
-    this.$options.myArray = this.nodes_filtered
-  },
+    // setTimeout(this.loadData, 500)
 
-  updated() {
-    // setTimeout(this.loadData, 300)
+    const unwatch = this.$watch('nodes_filtered', (value) => {
+      this.$options.myArray = this.nodes_filtered
+      this.$forceUpdate()
+      // ignore falsy values
+      if (!value) return
+
+      // stop watching when nodes_filtered[] is not empty
+      if (value && value.length) unwatch()
+
+      // process value here
+    })
   },
 
   watch: {
@@ -108,13 +115,13 @@ export default {
         setTimeout(this.loadData, 200)
       },
     },
-    update: {
-      deep: true,
+    // update: {
+    //   deep: true,
 
-      handler() {
-        setTimeout(this.loadData, 200)
-      },
-    },
+    //   handler() {
+    //     setTimeout(this.loadData, 200)
+    //   },
+    // },
   },
 
   methods: {

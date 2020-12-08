@@ -240,7 +240,6 @@ export default {
       search: '',
       pickupz: 1,
       nodeid: String,
-
       positionsArray: null,
     }
   },
@@ -274,11 +273,34 @@ export default {
     },
   },
 
-  // NOTE: ok as created here but NOT if this is the first view to load
-  created() {
+  mounted() {
     //access the custom option using $options
-    setTimeout(this.loadData, 1000)
-    this.$options.positionsArray = this.positions_filtered
+
+    const unwatch = this.$watch('othernodes_filtered', (value) => {
+      this.$options.myArray = this.othernodes_filtered
+      // this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+      // ignore falsy values
+      if (!value) return
+
+      // stop watching when nodes_filtered[] is not empty
+      if (value && value.length) unwatch()
+
+      // process value here
+    })
+
+    const unwatchtwo = this.$watch('positions_filtered', (value) => {
+      // this.$options.myArray = this.nodes_filtered
+      this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+      // ignore falsy values
+      if (!value) return
+
+      // stop watching when nodes_filtered[] is not empty
+      if (value && value.length) unwatchtwo()
+
+      // process value here
+    })
   },
 
   updated() {
@@ -286,10 +308,10 @@ export default {
   },
 
   methods: {
-    loadData() {
-      this.$options.positionsArray = this.positions_filtered
-      this.$forceUpdate()
-    },
+    // loadData() {
+    //   this.$options.positionsArray = this.positions_filtered
+    //   this.$forceUpdate()
+    // },
     onActivated(e) {
       this.nodeid = e
       var i
