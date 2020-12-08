@@ -4,7 +4,11 @@ _8th December 2020_
 
 ### Changed
 
-- edits to the new computed filter to use watch / unwatch over a timer for initial load should mean doesn't matter on hardware or network all nodes will load when ready
+- edits to the new computed filter to use watch / unwatch over a timer for initial load should mean doesn't matter on hardware or network all nodes will load when ready.
+
+### Fixed
+
+- brought back selecting text and not dragging missed class.
 
 # 0.1.38
 
@@ -21,7 +25,7 @@ _7th December 2020_
 
 ### Removed
 
-- Pixi.js for drawing connections (temporary removal).
+- Pixi.js for drawing connections (temporary removal replacement tech needed).
 
 # 0.1.37
 
