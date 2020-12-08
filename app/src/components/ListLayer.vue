@@ -115,13 +115,13 @@ export default {
         setTimeout(this.loadData, 200)
       },
     },
-    // update: {
-    //   deep: true,
+    update: {
+      deep: true,
 
-    //   handler() {
-    //     setTimeout(this.loadData, 200)
-    //   },
-    // },
+      handler() {
+        setTimeout(this.loadData, 200)
+      },
+    },
   },
 
   methods: {
