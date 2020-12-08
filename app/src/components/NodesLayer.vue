@@ -106,6 +106,7 @@
             <form class="nodes">
               <template v-if="nodes.read_mode == false">
                 <textarea
+                  class="drag-cancel"
                   @focus="editTrue(true)"
                   @blur="editTrue(false)"
                   autofocus
