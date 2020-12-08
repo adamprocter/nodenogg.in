@@ -221,16 +221,37 @@ export default {
   },
   // this is to stop sync chasing bug
 
-  created() {
-    //access the custom option using $options
-    setTimeout(this.loadData, 2000)
-    this.$options.myArray = this.nodes_filtered
-    this.$options.positionsArray = this.positions_filtered
+  mounted() {
+    const unwatch = this.$watch('nodes_filtered', (value) => {
+      this.$options.myArray = this.nodes_filtered
+      // this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+      // ignore falsy values
+      if (!value) return
+
+      // stop watching when nodes_filtered[] is not empty
+      if (value && value.length) unwatch()
+
+      // process value here
+    })
+
+    const unwatchtwo = this.$watch('positions_filtered', (value) => {
+      // this.$options.myArray = this.nodes_filtered
+      this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+      // ignore falsy values
+      if (!value) return
+
+      // stop watching when nodes_filtered[] is not empty
+      if (value && value.length) unwatchtwo()
+
+      // process value here
+    })
   },
 
   updated() {
     this.$options.positionsArray = this.positions_filtered
-   
+
     if (this.toolmode == 'addNode') {
       setTimeout(this.loadData, 300)
       // this.$options.myArray = this.nodes_filtered
