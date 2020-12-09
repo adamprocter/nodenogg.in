@@ -6,19 +6,22 @@
       <g v-for="(value, index) in positions_filtered" v-bind:key="index">
         <!-- still empty divs -->
         <g v-for="(nodes, index) in nodes_filtered" v-bind:key="index">
-          <circle
-            v-if="nodes.node_id == value.node_id"
-            :cx="value.x_pos + value.width"
-            :cy="value.y_pos + value.height / 4"
-            r="15"
-            width="30"
-            height="30"
-            @mousedown.prevent="
-              buttonPress(nodes.node_id, value.x_pos, value.y_pos)
-            "
-            @mouseup.prevent="buttonUp(nodes.node_id, value.x_pos, value.y_pos)"
-          />
-
+          <template v-if="toolmode == 'connect'">
+            <circle
+              v-if="nodes.node_id == value.node_id"
+              :cx="value.x_pos + value.width"
+              :cy="value.y_pos + value.height / 4"
+              r="15"
+              width="30"
+              height="30"
+              @mousedown.prevent="
+                buttonPress(nodes.node_id, value.x_pos, value.y_pos)
+              "
+              @mouseup.prevent="
+                buttonUp(nodes.node_id, value.x_pos, value.y_pos)
+              "
+            />
+          </template>
           <g v-for="(lines, index) in configConnections" v-bind:key="index">
             <line
               v-if="lines.start_id == value.node_id"
@@ -34,18 +37,22 @@
 
       <g v-for="(value, index) in otherpositions_filtered" v-bind:key="index">
         <g v-for="(nodes, index) in otherNodes" v-bind:key="index">
-          <circle
-            v-if="nodes.node_id == value.node_id"
-            :cx="value.x_pos + value.width"
-            :cy="value.y_pos + value.height / 4"
-            r="15"
-            width="30"
-            height="30"
-            @mousedown.prevent="
-              buttonPress(nodes.node_id, value.x_pos, value.y_pos)
-            "
-            @mouseup.prevent="buttonUp(nodes.node_id, value.x_pos, value.y_pos)"
-          />
+          <template v-if="toolmode == 'connect'">
+            <circle
+              v-if="nodes.node_id == value.node_id"
+              :cx="value.x_pos + value.width"
+              :cy="value.y_pos + value.height / 4"
+              r="15"
+              width="30"
+              height="30"
+              @mousedown.prevent="
+                buttonPress(nodes.node_id, value.x_pos, value.y_pos)
+              "
+              @mouseup.prevent="
+                buttonUp(nodes.node_id, value.x_pos, value.y_pos)
+              "
+            />
+          </template>
         </g>
         <g v-for="(lines, index) in configConnections" v-bind:key="index">
           <line
