@@ -145,7 +145,6 @@ export default {
     },
     // this should only fire if toolmode = connect
     buttonPress(id, x, y) {
-      console.log(id, x, y)
       if (connectmode == true) {
         drawing = true
         this.id = id
@@ -173,7 +172,6 @@ export default {
     },
 
     buttonUp(id, x, y) {
-      console.log(id, x, y)
       drawing = false
       document.getElementById('connections').removeChild(newLine)
       fromnode = this.id
