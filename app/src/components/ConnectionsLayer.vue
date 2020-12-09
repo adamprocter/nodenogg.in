@@ -1,12 +1,70 @@
 <template>
-  <div class="connections">
-    <canvas ref="pixi" id="pixi"></canvas>
+  <div>
+    <!-- view box same width as canvas -->
+    <!-- falls off edge -->
+    <svg id="connections" viewBox="0 0 2000 2000">
+      <g v-for="(value, index) in positions_filtered" v-bind:key="index">
+        <!-- still empty divs -->
+        <g v-for="(nodes, index) in nodes_filtered" v-bind:key="index">
+          <circle
+            v-if="nodes.node_id == value.node_id"
+            :cx="value.x_pos + value.width"
+            :cy="value.y_pos + value.height / 4"
+            r="15"
+            width="30"
+            height="30"
+            @mousedown.prevent="
+              buttonPress(nodes.node_id, value.x_pos, value.y_pos)
+            "
+            @mouseup.prevent="buttonUp(nodes.node_id, value.x_pos, value.y_pos)"
+          />
+
+          <g v-for="(lines, index) in configConnections" v-bind:key="index">
+            <line
+              v-if="lines.start_id == value.node_id"
+              :x1="lines.x_pos_start + value.width"
+              :y1="lines.y_pos_start + value.height / 4"
+              :x2="lines.x_pos_end"
+              :y2="lines.y_pos_end + value.height / 4"
+              style="stroke: rgb(255, 0, 0); stroke-width: 2"
+            />
+          </g>
+        </g>
+      </g>
+
+      <g v-for="(value, index) in otherpositions_filtered" v-bind:key="index">
+        <g v-for="(nodes, index) in otherNodes" v-bind:key="index">
+          <circle
+            v-if="nodes.node_id == value.node_id"
+            :cx="value.x_pos + value.width"
+            :cy="value.y_pos + value.height / 4"
+            r="15"
+            width="30"
+            height="30"
+            @mousedown.prevent="
+              buttonPress(nodes.node_id, value.x_pos, value.y_pos)
+            "
+            @mouseup.prevent="buttonUp(nodes.node_id, value.x_pos, value.y_pos)"
+          />
+        </g>
+        <g v-for="(lines, index) in configConnections" v-bind:key="index">
+          <line
+            v-if="lines.start_id == value.node_id"
+            :x1="lines.x_pos_start + value.width"
+            :y1="lines.y_pos_start + value.height / 4"
+            :x2="lines.x_pos_end"
+            :y2="lines.y_pos_end + value.height / 4"
+            style="stroke: rgb(255, 0, 0); stroke-width: 2"
+          />
+        </g>
+      </g>
+    </svg>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import * as PIXI from 'pixi.js'
+
 //var initialMoveTo
 //var id
 var fromnode
@@ -15,296 +73,153 @@ var xposstart
 var yposstart
 var xposend
 var yposend
-var endState = false
+var connectmode = false
+let newLine
+
+let drawing = false
 
 export default {
   name: 'ConnectionsLayer',
 
   data() {
     return {
-      //  localtoolstate: this.toolmode,
+      id: Number,
+      x: Number,
+      y: Number,
     }
   },
-  computed: mapState({
-    configConnections: (state) => state.configConnections,
-    configPositions: (state) => state.configPositions,
-    myNodes: (state) => state.myNodes,
-    otherNodes: (state) => state.otherNodes,
-    toolmode: (state) => state.ui.mode,
-    // connectionstate: (state) => state.connectionstate,
-  }),
+  computed: {
+    ...mapState({
+      configConnections: (state) => state.configConnections,
+      configPositions: (state) => state.configPositions,
+      myNodes: (state) => state.myNodes,
+      otherNodes: (state) => state.otherNodes,
+      toolmode: (state) => state.ui.mode,
+      // connectionstate: (state) => state.connectionstate,
+    }),
+
+    nodes_filtered: function () {
+      return this.myNodes.filter((nodes) => {
+        return nodes.deleted == false
+      })
+    },
+
+    positions_filtered: function () {
+      return this.configPositions.filter((positions) => {
+        return this.myNodes.some((node) => {
+          return positions.node_id == node.node_id
+        })
+      })
+    },
+
+    otherpositions_filtered: function () {
+      return this.configPositions.filter((otherpositions) => {
+        return this.otherNodes.some((node) => {
+          return otherpositions.node_id == node.node_id
+        })
+      })
+    },
+  },
 
   watch: {
-    configConnections: {
-      deep: true,
-
-      handler() {
-        this.connectionsDraw()
-      },
-    },
     toolmode: {
       handler() {
         this.toolState()
       },
     },
   },
-
   methods: {
     toolState() {
       if (this.toolmode == 'connect') {
-        this.buttonsDraw()
+        connectmode = true
       } else {
-        this.connectionsDraw()
+        connectmode = false
       }
     },
+    // this should only fire if toolmode = connect
+    buttonPress(id, x, y) {
+      console.log(id, x, y)
+      if (connectmode == true) {
+        drawing = true
+        this.id = id
+        this.x = x
+        this.y = y
 
-    makeConnection(id, xpos, ypos) {
-      if (endState == false) {
-        fromnode = id
-        xposstart = xpos
-        yposstart = ypos
+        newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line')
 
-        //count = 1
-        // this.$store.dispatch('connectionState', true)
-      } else if (endState == true) {
-        tonode = id
-        xposend = xpos
-        yposend = ypos
-
-        // count = 0
-        //  this.$store.dispatch('connectionState', false)
-        // console.log(fromnode, tonode, xposstart, yposstart, xposend, yposend)
-        this.$store.dispatch('makeConnect', {
-          fromnode,
-          tonode,
-          xposstart,
-          yposstart,
-          xposend,
-          yposend,
-        })
-        endState = false
-      }
-    },
-    buttonsDraw() {
-      var i
-      var j
-      //var n = 1
-      var ref = this
-      var buttonMap = {}
-      var buttonMapOther = {}
-
-      this.canvas = this.$refs.pixi
-      const stage = this.PIXIApp.stage
-      //const allButtons = new PIXI.Container()
-
-      for (i = 0; i < Object.keys(this.myNodes).length; i++) {
-        buttonMap[i] = new PIXI.Graphics()
-        // console.log(buttonMap[i])
-        for (j = 0; j < Object.keys(this.configPositions).length; j++) {
-          if (
-            this.configPositions[j].node_id == this.myNodes[i].node_id &&
-            this.myNodes[i].deleted == false
-          ) {
-            buttonMap[i].name = this.myNodes[i].node_id
-            // console.log(button_one.name)
-            buttonMap[i].lineStyle(1)
-            buttonMap[i].beginFill(0xcab6ff, 1)
-            // x, y, radius
-
-            buttonMap[i].drawCircle(
-              this.configPositions[j].x_pos + this.configPositions[j].width,
-              this.configPositions[j].y_pos +
-                this.configPositions[j].height / 2,
-              15
-            )
-            buttonMap[i].endFill()
-            // names it the last one only?
-          }
-          //  allButtons.addChild(buttonMap[i])
-          //  stage.addChild(allButtons)
-          stage.addChild(buttonMap[i])
-          // Opt-in to interactivity
-          buttonMap[i].interactive = true
-          // Shows hand cursor
-          buttonMap[i].buttonMode = true
-        }
-
-        buttonMap[i]
-          .on('pointerdown', onDragStart)
-          .on('pointerdown', start)
-          .on('pointerup', onDragEnd)
-          .on('pointerup', finish)
-          .on('pointerupoutside', onDragEndOutside)
-          .on('pointermove', onDragMove)
-      }
-
-      for (i = 0; i < Object.keys(this.otherNodes).length; i++) {
-        buttonMapOther[i] = new PIXI.Graphics()
-        // console.log(buttonMap[i])
-        for (j = 0; j < Object.keys(this.configPositions).length; j++) {
-          if (this.configPositions[j].node_id == this.otherNodes[i].node_id) {
-            buttonMapOther[i].name = this.otherNodes[i].node_id
-            // console.log(button_one.name)
-            buttonMapOther[i].lineStyle(1)
-            buttonMapOther[i].beginFill(0xcab6ff, 1)
-            // x, y, radius
-
-            buttonMapOther[i].drawCircle(
-              this.configPositions[j].x_pos + this.configPositions[j].width,
-              this.configPositions[j].y_pos +
-                this.configPositions[j].height / 2,
-              15
-            )
-            buttonMapOther[i].endFill()
-            // names it the last one only?
-          }
-          stage.addChild(buttonMapOther[i])
-
-          // Opt-in to interactivity
-          buttonMapOther[i].interactive = true
-          // Shows hand cursor
-          buttonMapOther[i].buttonMode = true
-        }
-
-        buttonMapOther[i]
-          .on('pointerdown', onDragStart)
-          .on('pointerdown', start)
-          .on('pointerup', finish)
-          .on('pointerup', onDragEnd)
-          .on('pointerupoutside', onDragEndOutside)
-          .on('pointermove', onDragMove)
-      }
-
-      let line = new PIXI.Graphics()
-      var initialMoveTo
-      let lines = []
-
-      function start(event) {
-        // console.log(this.getChildByName)
-        this.id = this.name
-        ref.makeConnection(this.id, event.data.global.x, event.data.global.y)
-      }
-
-      function finish(event) {
-        this.id = this.name
-        if (this.id != fromnode) {
-          endState = true
-          ref.makeConnection(this.id, event.data.global.x, event.data.global.y)
-        } else {
-          endState = false
-        }
-      }
-
-      function onDragStart(event) {
-        this.dragging = true
-        // returns on the last one in the loop
-        // console.log(button_one.name)
-        let mouseX = event.data.global.x
-        let mouseY = event.data.global.y
-
-        initialMoveTo = [mouseX, mouseY]
-
-        line.lineStyle(8, 0xcab6ff)
-        line.moveTo(mouseX, mouseY)
-
-        lines = [line].concat(lines)
-
-        stage.addChild(line)
-      }
-
-      function onDragEnd() {
-        //endState = true
-        this.dragging = false
-        stage.removeChild(line)
-      }
-
-      function onDragEndOutside() {
-        stage.removeChild(line)
-        // console.log('outside')
-        // console.log(this.name)
-        // console.log(fromnode)
-        // if (this.name != fromnode) {
-        //   console.log('diff')
-        //   endState = true
-        //   this.dragging = false
-        //   stage.removeChild(line)
-        //   this.finish()
-        // }
-        // } else {
-        //   endState = false
-        //   this.dragging = false
-        //   stage.removeChild(line)
-        // }
-      }
-
-      function onDragMove(event) {
-        if (this.dragging) {
-          let mouseX = event.data.global.x
-          let mouseY = event.data.global.y
-          lines[0].clear()
-          lines[0].lineStyle(8, 0xcab6ff)
-          lines[0].moveTo(initialMoveTo[0], initialMoveTo[1])
-          lines[0].lineTo(mouseX, mouseY)
-        }
-      }
-    },
-
-    connectionsDraw() {
-      var i
-      //  var j
-      this.canvas = this.$refs.pixi
-      const stage = this.PIXIApp.stage
-      let graphics = new PIXI.Graphics()
-      //let line = new PIXI.Graphics()
-
-      graphics.lineStyle(8, 0xcab6ff)
-      // move the lines to start and end pos based on if to_node == node_id
-      // or from_id == node_id
-      //start_id == node_id
-      // this will put them in the same place as buttons
-
-      //     for (i = 0; i < Object.keys(this.otherNodes).length; i++) {
-
-      // for (j = 0; j < Object.keys(this.configPositions).length; j++) {
-      //   if (this.configConnections[j].start_id == this.otherNodes[i].node_id) {
-
-      // for (j = 0; j < Object.keys(this.otherNodes).length; j++) {
-      for (i = 0; i < Object.keys(this.configConnections).length; i++) {
-        //start
-
-        graphics.moveTo(
-          this.configConnections[i].x_pos_start,
-          this.configConnections[i].y_pos_start
+        const pt = document.getElementById('connections').createSVGPoint()
+        pt.x = event.clientX
+        pt.y = event.clientY
+        const svgP = pt.matrixTransform(
+          document.getElementById('connections').getScreenCTM().inverse()
         )
 
-        //end
-        graphics.lineTo(
-          this.configConnections[i].x_pos_end,
-          this.configConnections[i].y_pos_end
-        )
-      }
-      //  }
-      for (var l = stage.children.length - 1; l >= 0; l--) {
-        stage.removeChild(stage.children[l])
-      }
+        newLine.setAttribute('stroke', 'red')
+        newLine.setAttribute('stroke-width', '2')
+        newLine.setAttribute('x1', svgP.x)
+        newLine.setAttribute('y1', svgP.y)
+        newLine.setAttribute('x2', svgP.x)
+        newLine.setAttribute('y2', svgP.y)
 
-      stage.addChild(graphics)
-      if (this.toolmode == 'connect') {
-        this.buttonsDraw()
+        document.getElementById('connections').appendChild(newLine)
       }
     },
-  },
-  mounted() {
-    const canvas = this.$refs.pixi
-    this.PIXIApp = new PIXI.Application({
-      width: 3000,
-      height: 3000,
-      antialias: true,
-      transparent: true,
-      view: canvas,
-    })
 
-    this.connectionsDraw()
+    buttonUp(id, x, y) {
+      console.log(id, x, y)
+      drawing = false
+      document.getElementById('connections').removeChild(newLine)
+      fromnode = this.id
+      xposstart = this.x
+      yposstart = this.y
+      tonode = id
+      xposend = x
+      yposend = y
+
+      this.$store.dispatch('makeConnect', {
+        fromnode,
+        tonode,
+        xposstart,
+        yposstart,
+        xposend,
+        yposend,
+      })
+    },
   },
 }
+
+function onMouseMove() {
+  //Add code here
+  if (drawing) {
+    // const pt = document.getElementById('connections').createSVGPoint()
+    // pt.x = event.clientX
+    // pt.y = event.clientY
+    // const svgP = pt.matrixTransform(
+    //   document.getElementById('connections').getScreenCTM().inverse()
+    // )
+
+    newLine.setAttribute('x2', event.clientX)
+    newLine.setAttribute('y2', event.clientY)
+  }
+}
+function onMouseUp() {
+  if (drawing) {
+    document.getElementById('connections').removeChild(newLine)
+  }
+}
+
+function setup() {
+  document.addEventListener('mousemove', onMouseMove)
+  document.addEventListener('mouseup', onMouseUp)
+}
+
+window.onload = () => setup()
 </script>
+
+<style scoped>
+circle {
+  fill: rgb(187, 227, 255);
+  stroke: black;
+  stroke-width: 2;
+}
+</style>

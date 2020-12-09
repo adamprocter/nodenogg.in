@@ -1,3 +1,11 @@
+# 0.1.40
+
+_9th December 2020_
+
+## Fixed
+
+- Connections are now working in the same way as before but using native SVG code and no longer the pixi library.
+
 # 0.1.39
 
 _8th December 2020_

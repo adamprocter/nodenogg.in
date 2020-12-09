@@ -39,7 +39,7 @@
             <NodesLayer @edit-true="(e) => editTrue(e)" />
             <TipsLayer />
             <ModeCardorg />
-            <!-- <ConnectionsLayer /> -->
+            <ConnectionsLayer />
           </div>
 
           <div v-else>
@@ -49,9 +49,9 @@
               @client-added="clientAdded()"
               @edit-true="(e) => editTrue(e)"
             />
-            <!-- <ConnectionsLayer /> -->
+            <ConnectionsLayer />
           </div>
-          <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
+          <!-- <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer> -->
         </PanZoomContainer>
         <!-- <ToolBar /> -->
         <ModeToolbar
@@ -77,12 +77,12 @@
 
 <script>
 import PanZoomContainer from '@/experimental/PanZoomContainer'
-// import ConnectionsLayer from '@/components/ConnectionsLayer'
+import ConnectionsLayer from '@/components/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
 import OffLine from '@/components/OffLine'
 
 // import ToolBar from '@/components/ToolBar'
-import ScribbleLayer from '@/components/ScribbleLayer'
+//import ScribbleLayer from '@/components/ScribbleLayer'
 import UploadLayer from '@/components/UploadLayer'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import OnBoard from '@/components/OnBoard.vue'
@@ -214,12 +214,12 @@ export default {
     // SelectionLayer,
     NodesLayer,
     OtherNodeslayer,
-    // ConnectionsLayer,
+    ConnectionsLayer,
     OnBoard,
     // ToolBar,
     OffLine,
     UploadLayer,
-    ScribbleLayer,
+    // ScribbleLayer,
     TipsLayer,
     ModeCardorg,
   },
