@@ -391,6 +391,20 @@ const store = new Vuex.Store({
     // },
 
     ADD_NODE(state) {
+      var i
+      for (i = 0; i < Object.keys(state.allNodes).length; i++) {
+        if (
+          state.allNodes[i].id != state.global_pos_name &&
+          state.allNodes[i].id != state.global_emoji_name &&
+          state.allNodes[i].id != state.global_con_name //&&
+          //
+        ) {
+          // each loop gets the array
+          // add them each loop
+          var j = state.allNodes[i].doc.nodes.length
+        }
+      }
+
       var uniqueid =
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15)
