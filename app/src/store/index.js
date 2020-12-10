@@ -392,6 +392,8 @@ const store = new Vuex.Store({
 
     ADD_NODE(state) {
       var i
+      var totalNodes = []
+      const reducer = (accumulator, currentValue) => accumulator + currentValue
       for (i = 0; i < Object.keys(state.allNodes).length; i++) {
         if (
           state.allNodes[i].id != state.global_pos_name &&
@@ -399,12 +401,12 @@ const store = new Vuex.Store({
           state.allNodes[i].id != state.global_con_name //&&
           //
         ) {
-          // each loop gets the array
-          // add them each loop
-          var j = state.allNodes[i].doc.nodes.length
+          // console.log(state.allNodes[i].doc.nodes.length)
+          totalNodes.push(state.allNodes[i].doc.nodes.length)
         }
       }
 
+      var zindex = totalNodes.reduce(reducer)
       var uniqueid =
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15)
@@ -475,7 +477,7 @@ const store = new Vuex.Store({
           y_pos: localypos,
           width: 200,
           height: 370,
-          z_index: 10,
+          z_index: zindex,
           read_mode: false,
         })
         return pouchdb

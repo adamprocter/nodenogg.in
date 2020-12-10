@@ -310,7 +310,7 @@ export default {
     },
     onDragstop(x, y, width, height, zindex) {
       var localnodeid = this.nodeid
-      zindex = this.pickupz
+      // zindex = this.pickupz
       width = this.width
       height = this.height
       var i
