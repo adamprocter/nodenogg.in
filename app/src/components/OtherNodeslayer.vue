@@ -262,6 +262,10 @@ export default {
 
     othernodes_filtered: function () {
       return this.otherNodes.filter((nodes) => {
+        // backwards compatablity fix 
+        if (nodes.color == undefined || '') {
+          nodes.color = '#A4C2D6'
+        }
         return nodes.deleted == false
       })
     },

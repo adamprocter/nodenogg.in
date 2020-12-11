@@ -1,3 +1,11 @@
+# 0.1.42
+
+_11th December 2020_
+
+### Added
+
+- You can now colour code your nodes.
+
 # 0.1.41
 
 _11th December 2020_

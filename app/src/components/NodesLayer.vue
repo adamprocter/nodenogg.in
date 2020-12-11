@@ -133,14 +133,24 @@
                     buttonClass="nodes"
                     @click.prevent="readFlag(nodes.node_id, nodes.read_mode)"
                   />
+                  <v-swatches
+                    v-model="color"
+                    @input="chooseColor(color, nodes.node_id)"
+                    :swatches="swatches"
+                    :shapes="shapes"
+                    show-border
+                    show-fallback
+                    fallback-input-type="color"
+                  >
+                    <SvgButton3
+                      buttonClass="nodes"
+                      @click.prevent
+                      slot="trigger"
+                    />
+                  </v-swatches>
                 </div>
               </template>
-              <v-swatches
-                v-model="color"
-                @input="chooseColor(color, nodes.node_id)"
-                show-fallback
-                fallback-input-type="color"
-              ></v-swatches>
+
               <div class="allemoji">
                 <div
                   class="eachemoji"
@@ -165,8 +175,10 @@ import { mapState } from 'vuex'
 import marked from 'marked'
 import SvgButton from '@/components/SvgButton'
 import SvgButton2 from '@/components/SvgButton2'
+import SvgButton3 from '@/components/SvgButton3'
 import draggable from '@/experimental/Draggable'
 import VSwatches from 'vue-swatches'
+import 'vue-swatches/dist/vue-swatches.css'
 
 var readmode
 
@@ -177,6 +189,15 @@ export default {
     return {
       border: '2px dashed black',
       color: '#9bc2d8',
+      shapes: 'circles',
+
+      // swatches: [{ color: '#F493A7', showBorder: true }],
+      swatches: [
+        ['#EB5757', '#F2994A', '#F2C94C'],
+        ['#219653', '#27AE60', '#6FCF97'],
+        ['#2F80ED', '#2D9CDB', '#56CCF2'],
+        ['#9B51E0', '#BB6BD9', '#E9B7FC'],
+      ],
 
       pickupz: 1,
       localreadmode: false,
@@ -218,7 +239,10 @@ export default {
 
     nodes_filtered: function () {
       return this.myNodes.filter((nodes) => {
-        console.log(nodes)
+        // backwards compatablity fix
+        if (nodes.color == undefined || '') {
+          nodes.color = '#A4C2D6'
+        }
         return nodes.deleted == false
       })
     },
@@ -422,6 +446,7 @@ export default {
     draggable,
     SvgButton,
     SvgButton2,
+    SvgButton3,
     VSwatches,
   },
 }
