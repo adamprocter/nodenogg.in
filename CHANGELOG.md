@@ -1,3 +1,11 @@
+# 0.1.41
+
+_11th December 2020_
+
+### Changed
+
+- added basic z-index incrementing, when you touch a node it will jump to the front a node gets to within max z-index > 2147483640 all nodes will reset to 0.
+
 # 0.1.40
 
 _9th December 2020_

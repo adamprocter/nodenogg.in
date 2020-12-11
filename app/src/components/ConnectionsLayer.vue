@@ -35,34 +35,41 @@
         </g>
       </g>
 
-      <g v-for="(value, index) in otherpositions_filtered" v-bind:key="index">
-        <g v-for="(nodes, index) in otherNodes" v-bind:key="index">
+      <g
+        v-for="(others, index) in otherpositions_filtered"
+        v-bind:key="'o' + index"
+      >
+        <g v-for="(othernodes, index) in otherNodes" v-bind:key="index">
           <template v-if="toolmode == 'connect'">
             <circle
-              v-if="nodes.node_id == value.node_id"
-              :cx="value.x_pos + value.width"
-              :cy="value.y_pos + value.height / 4"
+              v-if="othernodes.node_id == others.node_id"
+              :cx="others.x_pos + others.width"
+              :cy="others.y_pos + others.height / 4"
               r="15"
               width="30"
               height="30"
               @mousedown.prevent="
-                buttonPress(nodes.node_id, value.x_pos, value.y_pos)
+                buttonPress(othernodes.node_id, others.x_pos, others.y_pos)
               "
               @mouseup.prevent="
-                buttonUp(nodes.node_id, value.x_pos, value.y_pos)
+                buttonUp(othernodes.node_id, others.x_pos, others.y_pos)
               "
             />
           </template>
-        </g>
-        <g v-for="(lines, index) in configConnections" v-bind:key="index">
-          <line
-            v-if="lines.start_id == value.node_id"
-            :x1="lines.x_pos_start + value.width"
-            :y1="lines.y_pos_start + value.height / 4"
-            :x2="lines.x_pos_end"
-            :y2="lines.y_pos_end + value.height / 4"
-            style="stroke: rgb(255, 0, 0); stroke-width: 2"
-          />
+
+          <g
+            v-for="(otherlines, index) in configConnections"
+            v-bind:key="index"
+          >
+            <line
+              v-if="otherlines.start_id == others.node_id"
+              :x1="otherlines.x_pos_start + others.width"
+              :y1="otherlines.y_pos_start + others.height / 4"
+              :x2="otherlines.x_pos_end"
+              :y2="otherlines.y_pos_end + others.height / 4"
+              style="stroke: rgb(255, 0, 0); stroke-width: 2"
+            />
+          </g>
         </g>
       </g>
     </svg>
