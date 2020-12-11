@@ -262,7 +262,7 @@ export default {
 
     othernodes_filtered: function () {
       return this.otherNodes.filter((nodes) => {
-        // backwards compatablity fix 
+        // backwards compatablity fix
         if (nodes.color == undefined || '') {
           nodes.color = '#A4C2D6'
         }
@@ -496,7 +496,7 @@ h3 {
   /* transform: scale(1.5); */
 }
 .emoji-invoker > svg {
-  fill: #b1c6d0;
+  fill: #4e4e4e;
   margin-top: 10px;
   margin-left: 0.2em;
   transform: scale(1.5);
@@ -530,7 +530,7 @@ h3 {
 .emoji-picker h5 {
   margin-top: 0;
   margin-bottom: 0;
-  color: #b1b1b1;
+  color: #5c5c5c;
   text-transform: uppercase;
   font-size: 0.8rem;
   cursor: default;
