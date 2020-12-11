@@ -345,7 +345,7 @@ export default {
       this.width = width
       this.height = height
     },
-    onResizestop(x, y, width, height, zindex) {
+    onResizestop(x, y, width, height) {
       var localnodeid = this.nodeid
       var zindex
       var i
@@ -371,7 +371,7 @@ export default {
       this.localx = x
       this.localy = y
     },
-    onDragstop(x, y, width, height, zindex) {
+    onDragstop(x, y, width, height) {
       var localnodeid = this.nodeid
       var zindex
       width = this.width
