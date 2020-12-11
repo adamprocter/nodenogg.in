@@ -12,7 +12,7 @@
             :y="value.y_pos"
             :z="value.z_index"
             :scale="scale"
-            @activated="onActivated(nodes.node_id)"
+            @activated="onActivated(nodes.node_id, value.z_index)"
             :draggable="false"
             :resizable="false"
             @dragging="onDrag"
@@ -90,7 +90,7 @@
             :y="value.y_pos"
             :z="value.z_index"
             :scale="scale"
-            @activated="onActivated(nodes.node_id)"
+            @activated="onActivated(nodes.node_id, value.z_index)"
             @dragging="onDrag"
             @resizing="onResize"
             @dragstop="onDragstop"
@@ -200,6 +200,7 @@ export default {
     ...mapState({
       scale: (state) => state.ui.scale,
       myNodes: (state) => state.myNodes,
+
       configPositions: (state) => state.configPositions,
       configConnections: (state) => state.configConnections,
       configEmoji: (state) => state.configEmoji,
@@ -266,14 +267,36 @@ export default {
       this.$options.positionsArray = this.positions_filtered
       this.$forceUpdate()
     },
-    onActivated(e) {
-      this.nodeid = e
+    onActivated(id, zindex) {
+      this.zindex = zindex
+      this.nodeid = id
       var i
+      var zindexes = []
+
+      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+        //console.log(Math.max(...this.configPositions[i].z_index))
+        zindexes.push(this.configPositions[i].z_index)
+
+        if (this.configPositions[i].node_id == this.nodeid) {
+          this.width = this.configPositions[i].width
+          this.height = this.configPositions[i].height
+          this.zindex = this.configPositions[i].z_index
+        }
+        // console.log(Math.max(...zindexes))
+      }
+      var topZ = Math.max(...zindexes)
+
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
+          if (topZ > 9999) {
+            this.configPositions[i].z_index = 0
+          } else {
+            this.configPositions[i].z_index = topZ + 1
+          }
         }
+        // console.log(Math.max(...zindexes))
       }
     },
     onResize(x, y, width, height) {
@@ -282,15 +305,15 @@ export default {
       this.width = width
       this.height = height
     },
-    onResizestop(x, y, width, height, zindex) {
+    onResizestop(x, y, width, height) {
       var localnodeid = this.nodeid
-      zindex = this.pickupz
+      var zindex
       var i
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
-          this.pickupz = this.configPositions[i].z_index
+          zindex = this.configPositions[i].z_index
         }
       }
       this.width = width
@@ -308,9 +331,9 @@ export default {
       this.localx = x
       this.localy = y
     },
-    onDragstop(x, y, width, height, zindex) {
+    onDragstop(x, y, width, height) {
       var localnodeid = this.nodeid
-      // zindex = this.pickupz
+      var zindex
       width = this.width
       height = this.height
       var i
@@ -319,7 +342,7 @@ export default {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.localx = this.configPositions[i].x_pos
           this.localy = this.configPositions[i].y_pos
-          this.pickupz = this.configPositions[i].z_index
+          zindex = this.configPositions[i].z_index
         }
       }
       this.$store.dispatch('movePos', {
