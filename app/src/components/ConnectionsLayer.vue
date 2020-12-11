@@ -29,7 +29,7 @@
               :y1="lines.y_pos_start + value.height / 4"
               :x2="lines.x_pos_end"
               :y2="lines.y_pos_end + value.height / 4"
-              style="stroke: rgb(255, 0, 0); stroke-width: 2"
+              style="stroke: rgb(255, 0, 0); stroke-width: 5"
             />
           </g>
         </g>
@@ -67,7 +67,7 @@
               :y1="otherlines.y_pos_start + others.height / 4"
               :x2="otherlines.x_pos_end"
               :y2="otherlines.y_pos_end + others.height / 4"
-              style="stroke: rgb(255, 0, 0); stroke-width: 2"
+              style="stroke: rgb(255, 0, 0); stroke-width: 5"
             />
           </g>
         </g>
@@ -168,7 +168,7 @@ export default {
         )
 
         newLine.setAttribute('stroke', 'red')
-        newLine.setAttribute('stroke-width', '2')
+        newLine.setAttribute('stroke-width', '5')
         newLine.setAttribute('x1', svgP.x)
         newLine.setAttribute('y1', svgP.y)
         newLine.setAttribute('x2', svgP.x)
