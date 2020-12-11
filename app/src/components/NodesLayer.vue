@@ -276,7 +276,6 @@ export default {
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         //console.log(Math.max(...this.configPositions[i].z_index))
         zindexes.push(this.configPositions[i].z_index)
-
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
@@ -287,16 +286,15 @@ export default {
       var topZ = Math.max(...zindexes)
 
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+        if (topZ > 2147483640) {
+          this.configPositions[i].z_index = 0
+        }
+
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
-          if (topZ > 9999) {
-            this.configPositions[i].z_index = 0
-          } else {
-            this.configPositions[i].z_index = topZ + 1
-          }
+          this.configPositions[i].z_index = topZ + 1
         }
-        // console.log(Math.max(...zindexes))
       }
     },
     onResize(x, y, width, height) {
