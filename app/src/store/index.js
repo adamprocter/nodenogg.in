@@ -136,6 +136,7 @@ const store = new Vuex.Store({
               node_id: state.allNodes[i].doc.nodes[j].node_id,
               node_text: state.allNodes[i].doc.nodes[j].node_text,
               deleted: state.allNodes[i].doc.nodes[j].deleted,
+              color: state.allNodes[i].doc.nodes[j].color,
             }
 
             state.otherNodes.push(newNode)
@@ -420,6 +421,7 @@ const store = new Vuex.Store({
           content_type: 'sheet',
           deleted: false,
           read_mode: false,
+          color: '#9bc2d8',
         })
 
         return pouchdb
@@ -498,6 +500,40 @@ const store = new Vuex.Store({
       for (i = 0; i < Object.keys(state.myNodes).length; i++) {
         if (e.nodeid == state.myNodes[i].node_id) {
           state.myNodes[i].node_text = e.nodetext
+        }
+      }
+      pouchdb
+        .get(state.myclient)
+        .then(function (doc) {
+          // put the store into pouchdb
+
+          return pouchdb.bulkDocs([
+            {
+              _id: state.myclient,
+              _rev: doc._rev,
+              _attachments: doc._attachments,
+              nodes: state.myNodes,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.myclient).then(function (doc) {
+            state.myNodes = doc.nodes
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
+    COLOR_NODE(state, e) {
+      //   console.log(e)
+      var i
+      for (i = 0; i < Object.keys(state.myNodes).length; i++) {
+        if (e.nodeid == state.myNodes[i].node_id) {
+          state.myNodes[i].color = e.color
         }
       }
       pouchdb
@@ -780,6 +816,10 @@ const store = new Vuex.Store({
     },
     editNode: ({ commit }, { nodeid, nodetext }) => {
       commit('EDIT_NODE', { nodeid, nodetext })
+    },
+
+    colorNode: ({ commit }, { nodeid, color }) => {
+      commit('COLOR_NODE', { nodeid, color })
     },
 
     makeConnect: (

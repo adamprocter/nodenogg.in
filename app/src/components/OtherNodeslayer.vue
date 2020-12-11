@@ -18,10 +18,10 @@
             @resizing="onResize"
             @dragstop="onDragstop"
             @resizestop="onResizestop"
-            style="
-              border: 2px solid black;
-              background-color: rgb(205, 234, 255);
-            "
+            :style="{
+              border: border,
+              backgroundColor: nodes.color,
+            }"
             :min-width="200"
             :min-height="220"
           >
@@ -127,10 +127,10 @@
             @resizing="onResize"
             @dragstop="onDragstop"
             @resizestop="onResizestop"
-            style="
-              border: 2px solid black;
-              background-color: rgb(205, 234, 255);
-            "
+            :style="{
+              border: border,
+              backgroundColor: nodes.color,
+            }"
             :min-width="200"
             :min-height="220"
           >
@@ -236,6 +236,8 @@ export default {
 
   data() {
     return {
+      border: '2px solid black',
+      color: '#CDEAFF',
       input: '',
       search: '',
       pickupz: 1,
@@ -410,6 +412,7 @@ export default {
           })
         }
       }
+      this.$options.myArray = this.othernodes_filtered
     },
     append(emoji) {
       this.input += emoji

@@ -20,10 +20,10 @@
             @dragstop="onDragstop"
             @resizestop="onResizestop"
             :drag-cancel="'.drag-cancel'"
-            style="
-              border: 2px dashed black;
-              background-color: rgb(155, 194, 216);
-            "
+            :style="{
+              border: border,
+              backgroundColor: nodes.color,
+            }"
             :min-width="200"
             :min-height="220"
           >
@@ -96,10 +96,10 @@
             @dragstop="onDragstop"
             @resizestop="onResizestop"
             :drag-cancel="'.drag-cancel'"
-            style="
-              border: 2px dashed black;
-              background-color: rgb(155, 194, 216);
-            "
+            :style="{
+              border: border,
+              backgroundColor: nodes.color,
+            }"
             :min-width="200"
             :min-height="220"
           >
@@ -135,7 +135,12 @@
                   />
                 </div>
               </template>
-
+              <v-swatches
+                v-model="color"
+                @input="chooseColor(color, nodes.node_id)"
+                show-fallback
+                fallback-input-type="color"
+              ></v-swatches>
               <div class="allemoji">
                 <div
                   class="eachemoji"
@@ -161,6 +166,7 @@ import marked from 'marked'
 import SvgButton from '@/components/SvgButton'
 import SvgButton2 from '@/components/SvgButton2'
 import draggable from '@/experimental/Draggable'
+import VSwatches from 'vue-swatches'
 
 var readmode
 
@@ -169,6 +175,9 @@ export default {
 
   data() {
     return {
+      border: '2px dashed black',
+      color: '#9bc2d8',
+
       pickupz: 1,
       localreadmode: false,
       mode: '',
@@ -209,6 +218,7 @@ export default {
 
     nodes_filtered: function () {
       return this.myNodes.filter((nodes) => {
+        console.log(nodes)
         return nodes.deleted == false
       })
     },
@@ -262,6 +272,11 @@ export default {
   },
 
   methods: {
+    chooseColor(color, nodeid) {
+      this.$store.dispatch('colorNode', { nodeid, color })
+      this.$options.myArray = this.nodes_filtered
+    },
+
     loadData() {
       this.$options.myArray = this.nodes_filtered
       this.$options.positionsArray = this.positions_filtered
@@ -369,6 +384,7 @@ export default {
           })
         }
       }
+      this.$options.myArray = this.nodes_filtered
     },
 
     editTrue(e) {
@@ -406,6 +422,7 @@ export default {
     draggable,
     SvgButton,
     SvgButton2,
+    VSwatches,
   },
 }
 </script>

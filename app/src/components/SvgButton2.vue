@@ -38,7 +38,7 @@ button {
 }
 
 button.nodes {
-  background-color: rgb(155, 194, 216);
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .a {
