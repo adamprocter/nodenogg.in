@@ -1,3 +1,11 @@
+# 0.1.43
+
+_12th December 2020_
+
+## Fixed
+
+- Partial fix so that nodes will resize to fit content (after dragging into position)
+
 # 0.1.42
 
 _11th December 2020_

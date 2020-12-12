@@ -342,9 +342,12 @@ export default {
       this.height = height
     },
     onResizestop(x, y, width, height) {
+      // var nodecontentHeight = document.getElementById(this.nodeid).clientHeight
+
       var localnodeid = this.nodeid
       var zindex
       var i
+
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
@@ -354,6 +357,11 @@ export default {
       }
       this.width = width
       this.height = height
+
+      // if (nodecontentHeight > this.height) {
+      //   height = nodecontentHeight + 150
+      // }
+
       this.$store.dispatch('movePos', {
         localnodeid,
         x,
@@ -375,11 +383,11 @@ export default {
       width = this.width
       height = this.height
       var i
-      // FIXME: What is this for loop doing ??
+
       if (nodecontentHeight > this.height) {
         this.height = nodecontentHeight + 150
       }
-
+      // FIXME: What is this for loop doing ??
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.localx = this.configPositions[i].x_pos
