@@ -313,14 +313,13 @@ export default {
       var zindexes = []
 
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
-        //console.log(Math.max(...this.configPositions[i].z_index))
         zindexes.push(this.configPositions[i].z_index)
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
           this.zindex = this.configPositions[i].z_index
         }
-        // console.log(Math.max(...zindexes))
+        // console.log(zindexes)
       }
       var topZ = Math.max(...zindexes)
 
@@ -369,12 +368,18 @@ export default {
       this.localy = y
     },
     onDragstop(x, y, width, height) {
+      var nodecontentHeight = document.getElementById(this.nodeid).clientHeight
+
       var localnodeid = this.nodeid
       var zindex
       width = this.width
       height = this.height
       var i
       // FIXME: What is this for loop doing ??
+      if (nodecontentHeight > this.height) {
+        this.height = nodecontentHeight + 150
+      }
+
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.localx = this.configPositions[i].x_pos
