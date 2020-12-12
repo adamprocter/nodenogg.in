@@ -7,7 +7,7 @@
         :h="225"
         :x="540"
         :y="15"
-        :z="1"
+        :z="0"
         :scale="scale"
         :draggable="true"
         :resizable="false"
