@@ -22,7 +22,7 @@
 
 <script>
 import VueIpfs from 'ipfs'
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 const ipfs = VueIpfs.create()
 var node
 var output
@@ -52,11 +52,11 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState({
-      myNodes: (state) => state.myNodes,
-    }),
-  },
+  // computed: {
+  //   ...mapState({
+  //     myNodes: (state) => state.myNodes,
+  //   }),
+  // },
 
   mounted: function () {
     this.getIpfsNodeInfo()
@@ -168,9 +168,9 @@ export default {
 
     copyClipBoard(e) {
       this.copytext = '![](https://ipfs.io/ipfs/' + e + ')'
-      this.$store.dispatch('addNode')
+      // this.$store.dispatch('addNode')
       //this.copyready = true
-      setTimeout(this.copyClick, 3000)
+      // setTimeout(this.copyClick, 3000)
     },
 
     copyClick() {
