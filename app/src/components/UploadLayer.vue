@@ -130,23 +130,31 @@ export default {
       dropArea.addEventListener('drop', this.handleDrop, false)
 
       function overStateList() {
-        document.getElementsByClassName('dropList')[0].className =
-          'ipfsupload dropList dragover'
+        if (document.getElementsByClassName('dropList')[0] != undefined) {
+          document.getElementsByClassName('dropList')[0].className =
+            'ipfsupload dropList dragover'
+        }
       }
 
       function leaveStateList() {
-        document.getElementsByClassName('dropList')[0].className =
-          'ipfsupload dropList'
+        if (document.getElementsByClassName('dropList')[0] != undefined) {
+          document.getElementsByClassName('dropList')[0].className =
+            'ipfsupload dropList'
+        }
       }
 
       function overState() {
-        document.getElementsByClassName('dropORG')[0].className =
-          'ipfsupload dropORG dragover'
+        if (document.getElementsByClassName('dropORG')[0] != undefined) {
+          document.getElementsByClassName('dropORG')[0].className =
+            'ipfsupload dropORG dragover'
+        }
       }
 
       function leaveState() {
-        document.getElementsByClassName('dropORG')[0].className =
-          'ipfsupload dropORG'
+        if (document.getElementsByClassName('dropORG')[0] != undefined) {
+          document.getElementsByClassName('dropORG')[0].className =
+            'ipfsupload dropORG'
+        }
       }
     },
     preventDefaults(e) {
