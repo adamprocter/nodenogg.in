@@ -168,7 +168,7 @@ export default {
         )
 
         newLine.setAttribute('stroke', 'red')
-        newLine.setAttribute('stroke-width', '2')
+        newLine.setAttribute('stroke-width', '5')
         newLine.setAttribute('x1', svgP.x)
         newLine.setAttribute('y1', svgP.y)
         newLine.setAttribute('x2', svgP.x)
