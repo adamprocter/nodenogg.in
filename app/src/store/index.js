@@ -472,7 +472,7 @@ const store = new Vuex.Store({
             localypos = 50
           }
         }
-
+        console.log(zindex)
         doc.positions.push({
           node_id: uniqueid,
           x_pos: localxpos,

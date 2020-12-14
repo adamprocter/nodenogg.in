@@ -12,7 +12,7 @@
       />
     </button>
 
-    <p>{{ clientid }} / {{ microcosm }}</p>
+    <!-- <p>{{ clientid }} / {{ microcosm }}</p> -->
   </nav>
 </template>
 
