@@ -65,6 +65,7 @@
         />
         <ViewToolbar />
         <UploadLayer
+          class="orgupload"
           v-bind:uploadready="uploadready"
           v-bind:copyready="copyready"
           @upload-added="uploadAdded()"
@@ -232,5 +233,7 @@ export default {
   width: calc(100%);
   margin: 0px;
   position: relative;
+}
+.orgupload {
 }
 </style>
