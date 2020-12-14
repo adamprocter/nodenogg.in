@@ -1,3 +1,17 @@
+# 0.1.44
+
+_14th December 2020_
+
+### Changed
+
+- Upload is now smarter and will generate markdown for images, video and audio "automagically", media that is not recognised will be uploaded and generated as a plain URL (link).
+- Now using Cloudflare's IPFS Gateway as we move towards more robust upload support.
+- Video is using using infura gateway (cloudflares gateway doesnt like playing back video)
+
+### Added
+
+- You can now Drag and drop to upload.
+
 # 0.1.43
 
 _12th December 2020_

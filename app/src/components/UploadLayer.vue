@@ -326,7 +326,7 @@ export default {
     async saveIPFS() {
       try {
         this.fileContents = await node.add(this.selectedFile)
-        this.getIPFS()
+        this.getIPFS(this.selectedFile.type)
       } catch (err) {
         // Set error status text.
         this.status = `Error: ${err}`
@@ -361,20 +361,25 @@ export default {
     },
 
     copyClipBoard(e, type) {
+      console.log(type)
       switch (true) {
         case type.includes('image/'):
-          this.copytext = '![](https://ipfs.io/ipfs/' + e + ')'
+          this.copytext = '![](https://cloudflare-ipfs.com/ipfs/' + e + ')'
           break
         case type.includes('audio/'):
           this.copytext =
-            '<audio src="https://ipfs.io/ipfs/' + e + '" controls></audio>'
+            '<audio src="https://cloudflare-ipfs.com/ipfs/' +
+            e +
+            '" controls></audio>'
           break
         case type.includes('video/'):
           this.copytext =
-            '<video src="https://ipfs.io/ipfs/' + e + '" controls></video>'
+            '<video src="https://ipfs.infura.io/ipfs/' +
+            e +
+            '" controls></video>'
           break
         default:
-          this.copytext = 'https://ipfs.io/ipfs/' + e
+          this.copytext = 'https://cloudflare-ipfs.com/ipfs/' + e
       }
     },
 
