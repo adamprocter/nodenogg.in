@@ -5,7 +5,7 @@
 
       <CardsLayer @edit-true="(e) => editTrue(e)" :added="added" />
 
-      <OtherCardslayer />
+      <!-- <OtherCardslayer /> -->
 
       <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
             >Create Node</BaseButton
@@ -58,6 +58,7 @@ import CardsLayer from '@/components/CardsLayer'
 import OtherCardslayer from '@/components/OtherCardslayer'
 import OnBoard from '@/components/OnBoard'
 import UploadLayer from '@/components/UploadLayer'
+
 import { mapState } from 'vuex'
 
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
