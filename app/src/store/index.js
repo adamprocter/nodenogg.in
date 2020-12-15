@@ -481,6 +481,7 @@ const store = new Vuex.Store({
           height: 370,
           z_index: zindex,
           read_mode: false,
+          node_sort: 0,
         })
         return pouchdb
           .put({
@@ -659,6 +660,38 @@ const store = new Vuex.Store({
         })
     },
 
+    SORT_NODE(state, e) {
+      var i
+      for (i = 0; i < Object.keys(state.configPositions).length; i++) {
+        if (e.nodeid == state.configPositions[i].node_id) {
+          state.configPositions[i].node_sort = e.nodesort
+        }
+      }
+      pouchdb
+        .get(state.global_pos_name)
+        .then(function (doc) {
+          //  // console.log(doc)
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.global_pos_name,
+              _rev: doc._rev,
+              positions: state.configPositions,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.global_pos_name).then(function (doc) {
+            state.configPositions = doc.positions
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
     LEGACY_READ_FLAG(state, e) {
       var i
       // console.log(e.e)
@@ -795,6 +828,9 @@ const store = new Vuex.Store({
       commit('MOVE_POS', nodeid, xpos, ypos, width, height, zindex)
     },
 
+    sortNode: ({ commit }, e) => {
+      commit('SORT_NODE', e)
+    },
     updateConnect: ({ commit }, fromnode, xposstart, yposstart) => {
       commit('UPDATE_CONNECT', fromnode, xposstart, yposstart)
     },

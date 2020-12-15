@@ -1,112 +1,60 @@
 <template>
-  <draggable @start="drag = true" @end="drag = false">
-    <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
-      <form class="nodes">
-        <template v-if="nodes.read_mode == false">
-          <textarea
-            @focus="editTrue(true)"
-            @blur="editTrue(false)"
-            autofocus
-            v-model="nodes.node_text"
-            @input="editNode"
-            :id="nodes.node_id"
-            ref="nodetext"
-            placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
-          ></textarea>
-        </template>
-        <template v-else>
-          <p
-            :id="nodes.node_id"
-            :inner-html.prop="nodes.node_text | marked"
-          ></p>
-        </template>
-        <div class="btn-row">
-          <SvgButton
-            buttonClass="nodes"
-            @click.prevent="deleteFlag(nodes.node_id), updateNodes()"
-          />
-          <SvgButton2
-            buttonClass="nodes"
-            @click.prevent="
-              readFlag(nodes.node_id, nodes.read_mode), updateNodes()
-            "
-          />
-        </div>
-
-        <div class="allemoji">
-          <div
-            class="eachemoji"
-            v-for="(emojis, index) in configEmoji"
-            :key="index"
-          >
-            <template v-if="emojis.node_id == nodes.node_id">{{
-              emojis.emoji_text
-            }}</template>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <div
-      v-for="(othernodes, index) in othernodes_filtered"
-      v-bind:key="index.nodeid"
+  <div class="grid">
+    <draggable
+      class="grid"
+      name="grid"
+      @start="drag = true"
+      @end="drag = false"
+      @update="nodePositionIndex"
     >
-      <div class="nodes">
-        <p :inner-html.prop="othernodes.node_text | marked"></p>
-
-        <div class="eeee">
-          <input :value="othernodes.node_id" name="id" readonly hidden />
-          <input
-            id="emojifield"
-            class="regular-input"
-            v-model="input"
-            readonly
-          />
-
-          <emoji-picker @emoji="append" :search="search">
-            <div
-              class="emoji-invoker"
-              slot="emoji-invoker"
-              slot-scope="{ events: { click: clickEvent } }"
-              @click.stop="clickEvent"
+      <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
+        <form
+          class="nodes cell"
+          :style="{
+            backgroundColor: nodes.color,
+          }"
+        >
+          <template v-if="nodes.read_mode == false">
+            <textarea
+              @focus="editTrue(true)"
+              @blur="editTrue(false)"
+              autofocus
+              v-model="nodes.node_text"
+              @input="editNode"
+              :id="nodes.node_id"
+              ref="nodetext"
+              placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
+            ></textarea>
+          </template>
+          <template v-else>
+            <p
+              :id="nodes.node_id"
+              :inner-html.prop="nodes.node_text | marked"
+            ></p>
+          </template>
+          <div class="btn-row">
+            <SvgButton
+              buttonClass="nodes"
+              @click.prevent="deleteFlag(nodes.node_id), updateNodes()"
+            />
+            <SvgButton2
+              buttonClass="nodes"
+              @click.prevent="
+                readFlag(nodes.node_id, nodes.read_mode), updateNodes()
+              "
+            />
+            <v-swatches
+              v-model="color"
+              @input="chooseColor(color, nodes.node_id)"
+              :swatches="swatches"
+              :shapes="shapes"
+              show-border
+              show-fallback
+              fallback-input-type="color"
             >
-              <svg
-                height="24"
-                viewBox="0 0 24 24"
-                width="24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M0 0h24v24H0z" fill="none" />
-                <path
-                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"
-                />
-              </svg>
-            </div>
-            <div slot="emoji-picker" slot-scope="{ emojis, insert, display }">
-              <div
-                class="emoji-picker"
-                :style="{ top: display.y + 'px', left: display.x + 'px' }"
-              >
-                <div class="emoji-picker__search">
-                  <input type="text" v-model="search" />
-                </div>
-                <div>
-                  <div v-for="(emojiGroup, category) in emojis" :key="category">
-                    <h5>{{ category }}</h5>
-                    <div class="emojis">
-                      <span
-                        v-for="(emoji, emojiName) in emojiGroup"
-                        :key="emojiName"
-                        @click="insert(emoji), sentReact(othernodes.node_id)"
-                        :title="emojiName"
-                        >{{ emoji }}</span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </emoji-picker>
+              <SvgButton3 buttonClass="nodes" @click.prevent slot="trigger" />
+            </v-swatches>
+          </div>
 
           <div class="allemoji">
             <div
@@ -114,15 +62,99 @@
               v-for="(emojis, index) in configEmoji"
               :key="index"
             >
-              <p v-if="othernodes.node_id == emojis.node_id">
-                {{ emojis.emoji_text }}
-              </p>
+              <template v-if="emojis.node_id == nodes.node_id">{{
+                emojis.emoji_text
+              }}</template>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div
+        v-for="(othernodes, index) in othernodes_filtered"
+        v-bind:key="index.nodeid"
+      >
+        <div
+          class="othernodes cell"
+          :style="{
+            backgroundColor: othernodes.color,
+          }"
+        >
+          <p :inner-html.prop="othernodes.node_text | marked"></p>
+
+          <div class="eeee">
+            <input :value="othernodes.node_id" name="id" readonly hidden />
+            <input
+              id="emojifield"
+              class="regular-input"
+              v-model="input"
+              readonly
+            />
+
+            <emoji-picker @emoji="append" :search="search">
+              <div
+                class="emoji-invoker"
+                slot="emoji-invoker"
+                slot-scope="{ events: { click: clickEvent } }"
+                @click.stop="clickEvent"
+              >
+                <svg
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"
+                  />
+                </svg>
+              </div>
+              <div slot="emoji-picker" slot-scope="{ emojis, insert, display }">
+                <div
+                  class="emoji-picker"
+                  :style="{ top: display.y + 'px', left: display.x + 'px' }"
+                >
+                  <div class="emoji-picker__search">
+                    <input type="text" v-model="search" />
+                  </div>
+                  <div>
+                    <div
+                      v-for="(emojiGroup, category) in emojis"
+                      :key="category"
+                    >
+                      <h5>{{ category }}</h5>
+                      <div class="emojis">
+                        <span
+                          v-for="(emoji, emojiName) in emojiGroup"
+                          :key="emojiName"
+                          @click="insert(emoji), sentReact(othernodes.node_id)"
+                          :title="emojiName"
+                          >{{ emoji }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </emoji-picker>
+
+            <div class="allemoji">
+              <div
+                class="eachemoji"
+                v-for="(emojis, index) in configEmoji"
+                :key="index"
+              >
+                <p v-if="othernodes.node_id == emojis.node_id">
+                  {{ emojis.emoji_text }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </draggable>
+    </draggable>
+  </div>
 </template>
 
 <script>
@@ -132,8 +164,13 @@ import draggable from 'vuedraggable'
 import EmojiPicker from 'vue-emoji-picker'
 import SvgButton from '@/components/SvgButton'
 import SvgButton2 from '@/components/SvgButton2'
+import SvgButton3 from '@/components/SvgButton3'
+import VSwatches from 'vue-swatches'
+import 'vue-swatches/dist/vue-swatches.css'
+
 var readmode
 var nodeid
+var nodesort
 var emojitext
 
 export default {
@@ -144,6 +181,16 @@ export default {
   },
   data: function () {
     return {
+      color: '#9bc2d8',
+      shapes: 'circles',
+
+      // swatches: [{ color: '#F493A7', showBorder: true }],
+      swatches: [
+        ['#EB5757', '#F2994A', '#F2C94C'],
+        ['#219653', '#27AE60', '#6FCF97'],
+        ['#2F80ED', '#2D9CDB', '#56CCF2'],
+        ['#9B51E0', '#BB6BD9', '#E9B7FC'],
+      ],
       localreadmode: false,
       myArray: null,
       update: false,
@@ -211,6 +258,20 @@ export default {
   },
 
   methods: {
+    nodePositionIndex(e) {
+      console.log(e.newIndex)
+      // this index is where I came from so object 
+      console.log(e.oldIndex)
+     
+      nodeid = e.item.firstChild.firstChild.id
+      nodesort = e.newIndex
+      this.$store.dispatch('sortNode', { nodeid, nodesort })
+    },
+    chooseColor(color, nodeid) {
+      this.$store.dispatch('colorNode', { nodeid, color })
+      this.$options.myArray = this.nodes_filtered
+    },
+
     append(emoji) {
       this.input += emoji
     },
@@ -265,6 +326,8 @@ export default {
   components: {
     SvgButton,
     SvgButton2,
+    SvgButton3,
+    VSwatches,
     EmojiPicker,
     draggable,
   },
@@ -272,14 +335,38 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.grid {
+/* .grid {
   display: flex;
   flex-wrap: wrap;
+} */
+
+.grid {
+  display: grid;
+  /* grid-template-columns: repeat(3, 350px); */
+  /* grid-template-rows: repeat(3, 350px); */
+  grid-gap: 0.2em;
 }
+
+.grid-move {
+  transition: all 0.3s;
+}
+
 .nodes {
+  padding: 0.5em 0.5em;
   min-width: 343px;
-  max-width: 343px;
+  /* max-width: 343px; */
   border: 2px dashed black;
+  /* background-color: rgb(155, 194, 216); */
+  margin-top: 1em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.othernodes {
+  padding: 0.5em 0.5em;
+  min-width: 343px;
+  /* max-width: 343px; */
+  border: 2px solid black;
   background-color: rgb(155, 194, 216);
   margin-top: 1em;
   margin-left: 0.5em;
@@ -313,8 +400,7 @@ textarea {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 0 15px;
-  border-radius: 4px;
+  padding: 0 25px;
 }
 
 .allemoji {
@@ -425,6 +511,20 @@ input {
     font-size: 2em;
     word-break: break-all;
     padding-right: 0.5em;
+  }
+}
+
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 auto;
+    max-width: 1100px;
   }
 }
 </style>
