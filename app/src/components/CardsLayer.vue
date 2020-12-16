@@ -258,11 +258,28 @@ export default {
   },
 
   methods: {
+    save() {
+      this.$options.myArray.forEach((node, key) => {
+        console.log('key' + key, ':' + node.node_text)
+      })
+    },
     nodePositionIndex(e) {
-      console.log(e.newIndex)
-      // this index is where I came from so object 
-      console.log(e.oldIndex)
-     
+      // var items = this.configPositions.map((node_sort, index) => {
+      //   console.log(items)
+      //   console.log(node_sort)
+      //   console.log(index)
+      // })
+      // this.$options.myArray.forEach((node, key) => {
+      //   console.log(node.node_text, key)
+      // })
+      // var items = this.items.map(function (item, index) {
+      //   console.log(items)
+      //   return { item: item, order: index }
+      // })
+      // console.log(e)
+      // console.log(e.newIndex)
+      // this index is where came from
+      // console.log(e.oldIndex)
       nodeid = e.item.firstChild.firstChild.id
       nodesort = e.newIndex
       this.$store.dispatch('sortNode', { nodeid, nodesort })

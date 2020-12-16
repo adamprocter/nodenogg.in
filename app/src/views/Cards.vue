@@ -55,7 +55,7 @@
 
 <script>
 import CardsLayer from '@/components/CardsLayer'
-import OtherCardslayer from '@/components/OtherCardslayer'
+// import OtherCardslayer from '@/components/OtherCardslayer'
 import OnBoard from '@/components/OnBoard'
 import UploadLayer from '@/components/UploadLayer'
 
@@ -129,7 +129,7 @@ export default {
   },
   components: {
     CardsLayer,
-    OtherCardslayer,
+    // OtherCardslayer,
     UploadLayer,
     OnBoard,
   },
