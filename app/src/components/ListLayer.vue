@@ -1,7 +1,12 @@
 <template>
   <div>
     <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
-      <form class="nodes">
+      <form
+        class="nodes"
+        :style="{
+          backgroundColor: nodes.color,
+        }"
+      >
         <template v-if="nodes.read_mode == false">
           <textarea
             @focus="editTrue(true)"
@@ -32,6 +37,17 @@
               readFlag(nodes.node_id, nodes.read_mode), updateNodes()
             "
           />
+          <v-swatches
+            v-model="color"
+            @input="chooseColor(color, nodes.node_id)"
+            :swatches="swatches"
+            :shapes="shapes"
+            show-border
+            show-fallback
+            fallback-input-type="color"
+          >
+            <SvgButton3 buttonClass="nodes" @click.prevent slot="trigger" />
+          </v-swatches>
         </div>
 
         <div class="allemoji">
@@ -55,6 +71,9 @@ import { mapState } from 'vuex'
 import marked from 'marked'
 import SvgButton from '@/components/SvgButton'
 import SvgButton2 from '@/components/SvgButton2'
+import SvgButton3 from '@/components/SvgButton3'
+import VSwatches from 'vue-swatches'
+import 'vue-swatches/dist/vue-swatches.css'
 
 var readmode
 export default {
@@ -66,6 +85,15 @@ export default {
 
   data: function () {
     return {
+      color: '#9bc2d8',
+      shapes: 'circles',
+      // swatches: [{ color: '#F493A7', showBorder: true }],
+      swatches: [
+        ['#EB5757', '#F2994A', '#F2C94C'],
+        ['#219653', '#27AE60', '#6FCF97'],
+        ['#2F80ED', '#2D9CDB', '#56CCF2'],
+        ['#9B51E0', '#BB6BD9', '#E9B7FC'],
+      ],
       localreadmode: false,
       myArray: null,
       update: false,
@@ -125,6 +153,10 @@ export default {
   },
 
   methods: {
+    chooseColor(color, nodeid) {
+      this.$store.dispatch('colorNode', { nodeid, color })
+      this.$options.myArray = this.nodes_filtered
+    },
     updateNodes() {
       this.update = !this.update
     },
@@ -164,6 +196,8 @@ export default {
   components: {
     SvgButton,
     SvgButton2,
+    SvgButton3,
+    VSwatches,
   },
 }
 </script>

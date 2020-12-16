@@ -1,6 +1,7 @@
 <template>
-  <div class="grid">
+  <div>
     <draggable
+      id="dragger"
       class="grid"
       name="grid"
       @start="drag = true"
@@ -196,6 +197,7 @@ export default {
       update: false,
       input: '',
       search: '',
+      orders: this.configPositions,
     }
   },
 
@@ -258,31 +260,25 @@ export default {
   },
 
   methods: {
-    save() {
-      this.$options.myArray.forEach((node, key) => {
-        console.log('key' + key, ':' + node.node_text)
-      })
-    },
-    nodePositionIndex(e) {
-      // var items = this.configPositions.map((node_sort, index) => {
-      //   console.log(items)
-      //   console.log(node_sort)
-      //   console.log(index)
-      // })
-      // this.$options.myArray.forEach((node, key) => {
-      //   console.log(node.node_text, key)
-      // })
-      // var items = this.items.map(function (item, index) {
-      //   console.log(items)
-      //   return { item: item, order: index }
-      // })
-      // console.log(e)
-      // console.log(e.newIndex)
-      // this index is where came from
-      // console.log(e.oldIndex)
-      nodeid = e.item.firstChild.firstChild.id
-      nodesort = e.newIndex
-      this.$store.dispatch('sortNode', { nodeid, nodesort })
+    nodePositionIndex() {
+      var i
+      var j
+      var dragger = document.getElementById('dragger')
+
+      for (i = 0; i < dragger.childNodes.length; i++) {
+        var count = i
+
+        for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+          if (
+            dragger.childNodes[i].firstChild[0].id ==
+            this.configPositions[j].node_id
+          ) {
+            nodeid = this.configPositions[j].node_id
+            nodesort = count
+            this.$store.dispatch('sortNode', { nodeid, nodesort })
+          }
+        }
+      }
     },
     chooseColor(color, nodeid) {
       this.$store.dispatch('colorNode', { nodeid, color })
@@ -308,7 +304,6 @@ export default {
     },
     loadData() {
       this.$options.myArray = this.nodes_filtered
-
       this.$forceUpdate()
     },
     editNode(e) {

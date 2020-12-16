@@ -230,7 +230,6 @@ export default {
     ...mapState({
       scale: (state) => state.ui.scale,
       myNodes: (state) => state.myNodes,
-
       configPositions: (state) => state.configPositions,
       configConnections: (state) => state.configConnections,
       configEmoji: (state) => state.configEmoji,
