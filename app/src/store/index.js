@@ -214,7 +214,7 @@ const store = new Vuex.Store({
                   // this shouldn't need to be here though
                   node_id: startup,
                   node_text:
-                    '## Welcome \n This node was automatically by the system as a workaround for an iOS and URL routing bug, just ignore for now please \n ## 🤦🏻‍♂️',
+                    '## Welcome \n This node was automatically created by the system as a workaround for an iOS and URL routing bug, just ignore for now please \n ## 🤦🏻‍♂️',
                   node_owner: state.myclient,
                   content_type: 'sheet',
                   // NOTE: the first node is also hidden due to a position not being created
