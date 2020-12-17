@@ -8,8 +8,10 @@ _17th December 2020_
 
 ### Fixed
 
-- You can now colour nodes in Collect and Card views
-- initial node creation failed on new microcosm without switching views
+- Some sync bug fixes.
+- You can now colour nodes in Collect and Card views.
+- initial node creation failed on new microcosm without switching views.
+- Force load on Collect view.
 
 # 0.1.44
 

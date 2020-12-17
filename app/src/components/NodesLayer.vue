@@ -257,6 +257,8 @@ export default {
   // this is to stop sync chasing bug
 
   mounted() {
+    setTimeout(this.loadData, 500)
+
     const unwatch = this.$watch('nodes_filtered', (value) => {
       this.$options.myArray = this.nodes_filtered
       // this.$options.positionsArray = this.positions_filtered

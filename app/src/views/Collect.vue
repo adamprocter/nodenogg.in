@@ -116,7 +116,6 @@ export default {
     addNode() {
       this.$store.dispatch('addNode')
       this.added = !this.added
-      this.$forceUpdate()
     },
 
     editTrue(e) {

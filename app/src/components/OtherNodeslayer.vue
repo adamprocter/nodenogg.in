@@ -281,6 +281,7 @@ export default {
 
   mounted() {
     //access the custom option using $options
+    setTimeout(this.loadData, 500)
 
     const unwatch = this.$watch('othernodes_filtered', (value) => {
       this.$options.myArray = this.othernodes_filtered
@@ -314,10 +315,10 @@ export default {
   },
 
   methods: {
-    // loadData() {
-    //   this.$options.positionsArray = this.positions_filtered
-    //   this.$forceUpdate()
-    // },
+    loadData() {
+      this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+    },
     onActivated(id, zindex) {
       this.zindex = zindex
       this.nodeid = id
