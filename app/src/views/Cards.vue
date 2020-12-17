@@ -2,7 +2,7 @@
   <div id="listwrapper">
     <div v-if="clientset">
       <h1 class="mobile">All nodes - card view</h1>
-
+      <h2 class="danger">Positions not saved</h2>
       <CardsLayer @edit-true="(e) => editTrue(e)" :added="added" />
 
       <!-- <OtherCardslayer /> -->
@@ -137,6 +137,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.danger {
+  color: red;
+}
 .mobile {
   margin-left: 1em;
   font-size: 1em;

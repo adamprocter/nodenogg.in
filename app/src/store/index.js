@@ -69,6 +69,18 @@ const store = new Vuex.Store({
     configEmoji: [
       //{}
     ],
+    configRemote: [
+      // {
+      // protocol: 'https://',
+      // couchusername: 'something',
+      // couchpassword: 'passcouch',
+      // couchurl: 'domain.com',
+      // },
+      //{ https://,
+      // couchusername
+      // couchpassword
+      // couchURL}
+    ],
   },
   mutations: {
     CREATE_MICROCOSM(state, doc) {
@@ -82,16 +94,31 @@ const store = new Vuex.Store({
         } else {
           microcosm = doc
         }
+
         pouchdb = new PouchDB(microcosm)
-        remote =
-          process.env.VUE_APP_COUCH_HTTP +
-          '://' +
-          process.env.VUE_APP_COUCH_USER +
-          ':' +
-          process.env.VUE_APP_COUCH_PASS +
-          process.env.VUE_APP_COUCH_URL +
-          microcosm +
-          '/'
+        if (state.configRemote && state.configRemote.length > 0) {
+          remote =
+            state.configRemote[0].protocol +
+            state.configRemote[0].couchusername +
+            ':' +
+            state.configRemote[0].couchpassword +
+            '@' +
+            state.configRemote[0].couchurl +
+            '/' +
+            microcosm +
+            '/'
+        } else {
+          remote =
+            process.env.VUE_APP_COUCH_HTTP +
+            '://' +
+            process.env.VUE_APP_COUCH_USER +
+            ':' +
+            process.env.VUE_APP_COUCH_PASS +
+            process.env.VUE_APP_COUCH_URL +
+            microcosm +
+            '/'
+        }
+
         store.dispatch('syncDB')
       })
     },
@@ -387,14 +414,21 @@ const store = new Vuex.Store({
       state.shortcutstate = e
     },
 
-    // CONNECTION_STATE(state, e) {
-    //   state.connectionstate = e
-    // },
+    UPDATE_REMOTE(state, e) {
+      state.configRemote = [
+        {
+          protocol: e.protocol,
+          couchusername: e.couchusername,
+          couchpassword: e.couchpassword,
+          couchurl: e.couchurl,
+        },
+      ]
+    },
 
     ADD_NODE(state) {
       var i
+      var zindex
       var totalNodes = []
-      const reducer = (accumulator, currentValue) => accumulator + currentValue
       for (i = 0; i < Object.keys(state.allNodes).length; i++) {
         if (
           state.allNodes[i].id != state.global_pos_name &&
@@ -406,8 +440,13 @@ const store = new Vuex.Store({
           totalNodes.push(state.allNodes[i].doc.nodes.length)
         }
       }
+      const reducer = (accumulator, currentValue) => accumulator + currentValue
+      if (totalNodes && totalNodes.length > 0) {
+        zindex = totalNodes.reduce(reducer)
+      } else {
+        zindex = 1
+      }
 
-      var zindex = totalNodes.reduce(reducer)
       var uniqueid =
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15)
@@ -856,6 +895,18 @@ const store = new Vuex.Store({
 
     colorNode: ({ commit }, { nodeid, color }) => {
       commit('COLOR_NODE', { nodeid, color })
+    },
+
+    updateRemote: (
+      { commit },
+      { protocol, couchusername, couchpassword, couchurl }
+    ) => {
+      commit('UPDATE_REMOTE', {
+        protocol,
+        couchusername,
+        couchpassword,
+        couchurl,
+      })
     },
 
     makeConnect: (

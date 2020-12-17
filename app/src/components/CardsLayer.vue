@@ -8,67 +8,70 @@
       @end="drag = false"
       @update="nodePositionIndex"
     >
-      <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
-        <form
-          class="nodes cell"
-          :style="{
-            backgroundColor: nodes.color,
-          }"
-        >
-          <template v-if="nodes.read_mode == false">
-            <textarea
-              @focus="editTrue(true)"
-              @blur="editTrue(false)"
-              autofocus
-              v-model="nodes.node_text"
-              @input="editNode"
-              :id="nodes.node_id"
-              ref="nodetext"
-              placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
-            ></textarea>
-          </template>
-          <template v-else>
-            <p
-              :id="nodes.node_id"
-              :inner-html.prop="nodes.node_text | marked"
-            ></p>
-          </template>
-          <div class="btn-row">
-            <SvgButton
-              buttonClass="nodes"
-              @click.prevent="deleteFlag(nodes.node_id), updateNodes()"
-            />
-            <SvgButton2
-              buttonClass="nodes"
-              @click.prevent="
-                readFlag(nodes.node_id, nodes.read_mode), updateNodes()
-              "
-            />
-            <v-swatches
-              v-model="color"
-              @input="chooseColor(color, nodes.node_id)"
-              :swatches="swatches"
-              :shapes="shapes"
-              show-border
-              show-fallback
-              fallback-input-type="color"
-            >
-              <SvgButton3 buttonClass="nodes" @click.prevent slot="trigger" />
-            </v-swatches>
-          </div>
-
-          <div class="allemoji">
-            <div
-              class="eachemoji"
-              v-for="(emojis, index) in configEmoji"
-              :key="index"
-            >
-              <template v-if="emojis.node_id == nodes.node_id">{{
-                emojis.emoji_text
-              }}</template>
+      <div v-for="(value, index) in configPositions" v-bind:key="index">
+        <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
+          <form
+            class="nodes cell"
+            :style="{
+              backgroundColor: nodes.color,
+            }"
+            v-if="nodes.node_id == value.node_id"
+          >
+            <template v-if="nodes.read_mode == false">
+              <textarea
+                @focus="editTrue(true)"
+                @blur="editTrue(false)"
+                autofocus
+                v-model="nodes.node_text"
+                @input="editNode"
+                :id="nodes.node_id"
+                ref="nodetext"
+                placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
+              ></textarea>
+            </template>
+            <template v-else>
+              <p
+                :id="nodes.node_id"
+                :inner-html.prop="nodes.node_text | marked"
+              ></p>
+            </template>
+            <div class="btn-row">
+              <SvgButton
+                buttonClass="nodes"
+                @click.prevent="deleteFlag(nodes.node_id), updateNodes()"
+              />
+              <SvgButton2
+                buttonClass="nodes"
+                @click.prevent="
+                  readFlag(nodes.node_id, nodes.read_mode), updateNodes()
+                "
+              />
+              <v-swatches
+                v-model="color"
+                @input="chooseColor(color, nodes.node_id)"
+                :swatches="swatches"
+                :shapes="shapes"
+                show-border
+                show-fallback
+                fallback-input-type="color"
+              >
+                <SvgButton3 buttonClass="nodes" @click.prevent slot="trigger" />
+              </v-swatches>
             </div>
-          </div>
-        </form>
+
+            <div class="allemoji">
+              <div
+                class="eachemoji"
+                v-for="(emojis, index) in configEmoji"
+                :key="index"
+              >
+                <template v-if="emojis.node_id == nodes.node_id">{{
+                  emojis.emoji_text
+                }}</template>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
 
       <div
@@ -171,7 +174,7 @@ import 'vue-swatches/dist/vue-swatches.css'
 
 var readmode
 var nodeid
-var nodesort
+//var nodesort
 var emojitext
 
 export default {
@@ -184,7 +187,6 @@ export default {
     return {
       color: '#9bc2d8',
       shapes: 'circles',
-
       // swatches: [{ color: '#F493A7', showBorder: true }],
       swatches: [
         ['#EB5757', '#F2994A', '#F2C94C'],
@@ -261,24 +263,26 @@ export default {
 
   methods: {
     nodePositionIndex() {
-      var i
-      var j
-      var dragger = document.getElementById('dragger')
-
-      for (i = 0; i < dragger.childNodes.length; i++) {
-        var count = i
-
-        for (j = 0; j < Object.keys(this.configPositions).length; j++) {
-          if (
-            dragger.childNodes[i].firstChild[0].id ==
-            this.configPositions[j].node_id
-          ) {
-            nodeid = this.configPositions[j].node_id
-            nodesort = count
-            this.$store.dispatch('sortNode', { nodeid, nodesort })
-          }
-        }
-      }
+      // var i
+      // var j
+      // var dragger = document.getElementById('dragger')
+      // // console.log(dragger.childNodes.length)
+      // for (i = 0; i < dragger.childNodes.length; i++) {
+      //   var count = i
+      //   for (j = 0; j < Object.keys(this.configPositions).length; j++) {
+      //     if (dragger.childNodes[i].firstChild != 'undefined') {
+      //       if (
+      //         dragger.childNodes[i].firstChild[0].id ==
+      //         this.configPositions[j].node_id
+      //       ) {
+      //         nodeid = this.configPositions[j].node_id
+      //         nodesort = count
+      //         this.$store.dispatch('sortNode', { nodeid, nodesort })
+      //       }
+      //     }
+      //     //  console.log(nodesort)
+      //   }
+      // }
     },
     chooseColor(color, nodeid) {
       this.$store.dispatch('colorNode', { nodeid, color })
