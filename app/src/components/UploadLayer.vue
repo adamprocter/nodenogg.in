@@ -361,7 +361,7 @@ export default {
     },
 
     copyClipBoard(e, type) {
-      console.log(type)
+      // console.log(type)
       switch (true) {
         case type.includes('image/'):
           this.copytext = '![](https://cloudflare-ipfs.com/ipfs/' + e + ')'
