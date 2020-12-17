@@ -1,12 +1,7 @@
 <template>
-  <div>
+  <div class="grid">
     <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
-      <form
-        class="nodes"
-        :style="{
-          backgroundColor: nodes.color,
-        }"
-      >
+      <form class="nodes">
         <template v-if="nodes.read_mode == false">
           <textarea
             @focus="editTrue(true)"
@@ -15,9 +10,9 @@
             v-model="nodes.node_text"
             @input="editNode"
             :id="nodes.node_id"
+            ref="nodetext"
             placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
           ></textarea>
-          <p class="info">*markdown supported &amp; autosaves</p>
         </template>
         <template v-else>
           <p
@@ -25,7 +20,6 @@
             :inner-html.prop="nodes.node_text | marked"
           ></p>
         </template>
-
         <div class="btn-row">
           <SvgButton
             buttonClass="nodes"
@@ -37,17 +31,6 @@
               readFlag(nodes.node_id, nodes.read_mode), updateNodes()
             "
           />
-          <v-swatches
-            v-model="color"
-            @input="chooseColor(color, nodes.node_id)"
-            :swatches="swatches"
-            :shapes="shapes"
-            show-border
-            show-fallback
-            fallback-input-type="color"
-          >
-            <SvgButton3 buttonClass="nodes" @click.prevent slot="trigger" />
-          </v-swatches>
         </div>
 
         <div class="allemoji">
@@ -69,31 +52,19 @@
 <script>
 import { mapState } from 'vuex'
 import marked from 'marked'
+
 import SvgButton from '@/components/SvgButton'
 import SvgButton2 from '@/components/SvgButton2'
-import SvgButton3 from '@/components/SvgButton3'
-import VSwatches from 'vue-swatches'
-import 'vue-swatches/dist/vue-swatches.css'
-
 var readmode
+
 export default {
-  name: 'ListLayer',
+  name: 'CardsLayer',
 
   props: {
     added: Boolean,
   },
-
   data: function () {
     return {
-      color: '#9bc2d8',
-      shapes: 'circles',
-      // swatches: [{ color: '#F493A7', showBorder: true }],
-      swatches: [
-        ['#EB5757', '#F2994A', '#F2C94C'],
-        ['#219653', '#27AE60', '#6FCF97'],
-        ['#2F80ED', '#2D9CDB', '#56CCF2'],
-        ['#9B51E0', '#BB6BD9', '#E9B7FC'],
-      ],
       localreadmode: false,
       myArray: null,
       update: false,
@@ -103,13 +74,11 @@ export default {
   filters: {
     marked: marked,
   },
-
   computed: {
     ...mapState({
       myNodes: (state) => state.myNodes,
       configPositions: (state) => state.configPositions,
       configEmoji: (state) => state.configEmoji,
-      // toolmode: (state) => state.ui.mode,
     }),
 
     nodes_filtered: function () {
@@ -119,11 +88,13 @@ export default {
     },
   },
 
-  mounted() {
-    // setTimeout(this.loadData, 500)
+  // this is to stop sync chasing bug
 
+  mounted() {
+    //access the custom option using $options
     const unwatch = this.$watch('nodes_filtered', (value) => {
       this.$options.myArray = this.nodes_filtered
+
       this.$forceUpdate()
       // ignore falsy values
       if (!value) return
@@ -153,10 +124,6 @@ export default {
   },
 
   methods: {
-    chooseColor(color, nodeid) {
-      this.$store.dispatch('colorNode', { nodeid, color })
-      this.$options.myArray = this.nodes_filtered
-    },
     updateNodes() {
       this.update = !this.update
     },
@@ -196,35 +163,41 @@ export default {
   components: {
     SvgButton,
     SvgButton2,
-    SvgButton3,
-    VSwatches,
   },
 }
 </script>
 
 <style lang="css" scoped>
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
 .nodes {
-  width: 95%;
+  min-width: 343px;
+  max-width: 343px;
   border: 2px dashed black;
   background-color: rgb(155, 194, 216);
   margin-top: 1em;
   margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
 .readmode {
   margin-top: 1em;
   margin-left: 1em;
+  padding-right: 1em;
 }
 
 textarea {
   width: 100%;
   height: 175px;
   resize: none;
-  box-sizing: border-box;
   font-size: 18px;
+  box-sizing: border-box;
   font-family: 'Inter var', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   border: none;
   outline: none;
   background-color: rgb(187, 227, 255);

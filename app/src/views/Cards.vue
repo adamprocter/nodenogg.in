@@ -2,10 +2,10 @@
   <div id="listwrapper">
     <div v-if="clientset">
       <h1 class="mobile">All nodes - card view</h1>
-
+      <h2 class="danger">Positions not saved</h2>
       <CardsLayer @edit-true="(e) => editTrue(e)" :added="added" />
 
-      <OtherCardslayer />
+      <!-- <OtherCardslayer /> -->
 
       <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
             >Create Node</BaseButton
@@ -55,9 +55,10 @@
 
 <script>
 import CardsLayer from '@/components/CardsLayer'
-import OtherCardslayer from '@/components/OtherCardslayer'
+// import OtherCardslayer from '@/components/OtherCardslayer'
 import OnBoard from '@/components/OnBoard'
 import UploadLayer from '@/components/UploadLayer'
+
 import { mapState } from 'vuex'
 
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
@@ -128,7 +129,7 @@ export default {
   },
   components: {
     CardsLayer,
-    OtherCardslayer,
+    // OtherCardslayer,
     UploadLayer,
     OnBoard,
   },
@@ -136,6 +137,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.danger {
+  color: red;
+}
 .mobile {
   margin-left: 1em;
   font-size: 1em;

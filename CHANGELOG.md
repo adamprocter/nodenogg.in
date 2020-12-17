@@ -1,3 +1,16 @@
+# 0.1.45
+
+_17th December 2020_
+
+### Changed
+
+- Card view can now be sorted however this is not saved yet.
+
+### Fixed
+
+- You can now colour nodes in Collect and Card views
+- initial node creation failed on new microcosm without switching views
+
 # 0.1.44
 
 _14th December 2020_
@@ -16,7 +29,7 @@ _14th December 2020_
 
 _12th December 2020_
 
-## Fixed
+### Fixed
 
 - Partial fix so that nodes will resize to fit content (after dragging into position)
 

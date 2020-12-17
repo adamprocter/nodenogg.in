@@ -1,8 +1,10 @@
 <template>
   <nav class="navigation">
-    <router-link v-for="route in routes" :key="route.name" :to="route.path">{{
-      route.name
-    }}</router-link>
+    <router-link v-for="route in routes" :key="route.name" :to="route.path">
+      <div v-if="route.path != '/nitpicky'">
+        {{ route.name }}
+      </div></router-link
+    >
   </nav>
 </template>
 

@@ -7,9 +7,10 @@
       concepts
     </p>
     <p>
-      Made by Adam Procter and Toby Milner-Gulland.
+      Made by Adam Procter.
       <em>
-        (+ many helpers (Mathew Parker, im looking at you) &amp;
+        (+ many helpers (Toby Milner-Gulland &amp; Mathew Parker, I'm looking at
+        you) &amp;
         <a href="https://patreon.com/procterbot">supporters</a>)
       </em>
     </p>

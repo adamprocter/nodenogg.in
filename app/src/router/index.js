@@ -7,6 +7,7 @@ import Discarded from '../views/Discarded.vue'
 import Leave from '../views/Leave.vue'
 import About from '../views/About.vue'
 import NotFound from '../views/NotFound.vue'
+import NitPicky from '../views/NitPicky.vue'
 //import store from '../store'
 // import Oldhome from '../views/Oldhome'
 //import Test from '../views/Test'
@@ -45,6 +46,11 @@ export const routes = [
     path: '/about',
     name: 'About',
     component: About,
+  },
+  {
+    path: '/nitpicky',
+    name: 'NitPicky',
+    component: NitPicky,
   },
 
   {
