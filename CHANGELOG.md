@@ -9,6 +9,7 @@ _17th December 2020_
 ### Fixed
 
 - Some sync bug fixes.
+- The initial onboarding microcosm should not longer allow you to save nodes.
 - You can now colour nodes in Collect and Card views.
 - initial node creation failed on new microcosm without switching views.
 - Force load on Collect view.

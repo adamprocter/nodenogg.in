@@ -451,87 +451,90 @@ const store = new Vuex.Store({
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15)
       state.localnodeid = uniqueid
-
-      pouchdb.get(state.myclient).then(function (doc) {
-        doc.nodes.push({
-          node_id: uniqueid,
-          node_text: '',
-          node_owner: state.myclient,
-          content_type: 'sheet',
-          deleted: false,
-          read_mode: false,
-          color: '#9bc2d8',
-        })
-
-        return pouchdb
-          .put({
-            _id: state.myclient,
-            _rev: doc._rev,
-            _attachments: doc._attachments,
-            nodes: doc.nodes,
+      if (state.microcosm == 'firstvisit') {
+        console.log('not allowed on this microcosm')
+      } else {
+        pouchdb.get(state.myclient).then(function (doc) {
+          doc.nodes.push({
+            node_id: uniqueid,
+            node_text: '',
+            node_owner: state.myclient,
+            content_type: 'sheet',
+            deleted: false,
+            read_mode: false,
+            color: '#9bc2d8',
           })
-          .then(function () {
-            return pouchdb.get(state.myclient).then(function (doc) {
-              state.myNodes = doc.nodes
-              var end = Object.keys(state.myNodes).length - 1
-              const newNode = {
-                nodeid: state.myNodes[end].id,
-                nodetext: state.myNodes[end].text,
-                //  content_type: state.notes[end].content_type
-              }
-              state.activeNode = newNode
+
+          return pouchdb
+            .put({
+              _id: state.myclient,
+              _rev: doc._rev,
+              _attachments: doc._attachments,
+              nodes: doc.nodes,
             })
-          })
-          .catch(function (err) {
-            if (err.status == 404) {
-              // pouchdb.put({  })
-            }
-          })
-      })
-      pouchdb.get(state.global_pos_name).then(function (doc) {
-        //console.log(doc.positions[doc.positions.length - 1].z_index)
-        var i
-        localxpos = 50
-        localypos = 50
-        for (i = 0; i < Object.keys(doc.positions).length; i++) {
-          if (doc.positions[i].x_pos == 50) {
-            localxpos = 70
-            localypos = 70
-          }
-          if (doc.positions[i].x_pos == 70) {
-            localxpos = 90
-            localypos = 90
-          }
-          if (doc.positions[i].x_pos == 90) {
-            localxpos = 110
-            localypos = 110
-          }
-          if (doc.positions[i].x_pos == 110) {
-            localxpos = 50
-            localypos = 50
-          }
-        }
-
-        doc.positions.push({
-          node_id: uniqueid,
-          x_pos: localxpos,
-          y_pos: localypos,
-          width: 200,
-          height: 370,
-          z_index: zindex,
-          read_mode: false,
-          node_sort: 0,
+            .then(function () {
+              return pouchdb.get(state.myclient).then(function (doc) {
+                state.myNodes = doc.nodes
+                var end = Object.keys(state.myNodes).length - 1
+                const newNode = {
+                  nodeid: state.myNodes[end].id,
+                  nodetext: state.myNodes[end].text,
+                  //  content_type: state.notes[end].content_type
+                }
+                state.activeNode = newNode
+              })
+            })
+            .catch(function (err) {
+              if (err.status == 404) {
+                // pouchdb.put({  })
+              }
+            })
         })
-        return pouchdb
-          .put({
-            _id: state.global_pos_name,
-            _rev: doc._rev,
-            positions: doc.positions,
+        pouchdb.get(state.global_pos_name).then(function (doc) {
+          //console.log(doc.positions[doc.positions.length - 1].z_index)
+          var i
+          localxpos = 50
+          localypos = 50
+          for (i = 0; i < Object.keys(doc.positions).length; i++) {
+            if (doc.positions[i].x_pos == 50) {
+              localxpos = 70
+              localypos = 70
+            }
+            if (doc.positions[i].x_pos == 70) {
+              localxpos = 90
+              localypos = 90
+            }
+            if (doc.positions[i].x_pos == 90) {
+              localxpos = 110
+              localypos = 110
+            }
+            if (doc.positions[i].x_pos == 110) {
+              localxpos = 50
+              localypos = 50
+            }
+          }
+
+          doc.positions.push({
+            node_id: uniqueid,
+            x_pos: localxpos,
+            y_pos: localypos,
+            width: 200,
+            height: 370,
+            z_index: zindex,
+            read_mode: false,
+            node_sort: 0,
           })
-          .catch(function (err) {
-            console.log(err)
-          })
-      })
+          return pouchdb
+            .put({
+              _id: state.global_pos_name,
+              _rev: doc._rev,
+              positions: doc.positions,
+            })
+            .catch(function (err) {
+              console.log(err)
+            })
+        })
+      }
     },
 
     EDIT_NODE(state, e) {
