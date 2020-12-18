@@ -96,7 +96,7 @@ import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
 import { mapGetters, mapState } from 'vuex'
 
 export default {
-  name: 'Home',
+  name: 'Organise',
   mixins: [shortcutsMixin],
   data: function () {
     return {
