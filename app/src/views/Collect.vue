@@ -98,8 +98,7 @@ export default {
   },
 
   mounted() {
-    var e = false
-    this.$store.dispatch('shortcutState', e)
+    setTimeout(this.loadShortcut, 1000)
   },
 
   beforeDestroy() {
@@ -109,11 +108,17 @@ export default {
   },
 
   methods: {
+    loadShortcut() {
+      var e = false
+      this.$store.dispatch('shortcutState', e)
+    },
+
     clientAdded() {
       this.clientset = !this.clientset
     },
 
     addNode() {
+      // console.log('add called')
       this.$store.dispatch('addNode')
       this.added = !this.added
     },

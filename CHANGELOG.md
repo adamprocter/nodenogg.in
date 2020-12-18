@@ -1,3 +1,12 @@
+# 0.1.46
+
+_18th Decemeber 2020_
+
+### Fixed
+
+- The initial onboarding microcosm should not longer allow you to save nodes.
+- Keyboard shortcut n now works on Collect view on first visit to new microcosm.
+
 # 0.1.45
 
 _17th December 2020_
@@ -9,7 +18,6 @@ _17th December 2020_
 ### Fixed
 
 - Some sync bug fixes.
-- The initial onboarding microcosm should not longer allow you to save nodes.
 - You can now colour nodes in Collect and Card views.
 - initial node creation failed on new microcosm without switching views.
 - Force load on Collect view.
