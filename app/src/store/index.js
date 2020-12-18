@@ -40,7 +40,7 @@ var remote =
 const store = new Vuex.Store({
   state: {
     shortcutstate: false,
-    hidetipsstate: true,
+    showtipsstate: true,
     //  connectionstate: false,
     version: process.env.VUE_APP_VERSION,
     localnodeid: '',
@@ -412,6 +412,10 @@ const store = new Vuex.Store({
 
     SHORTCUT_STATE(state, e) {
       state.shortcutstate = e
+    },
+
+    SHOWTIPS_STATE(state, e) {
+      state.showtipsstate = e
     },
 
     UPDATE_REMOTE(state, e) {
@@ -927,6 +931,10 @@ const store = new Vuex.Store({
     },
     shortcutState: ({ commit }, e) => {
       commit('SHORTCUT_STATE', e)
+    },
+
+    showTipsstate: ({ commit }, e) => {
+      commit('SHOWTIPS_STATE', e)
     },
 
     // connectionState: ({ commit }, e) => {

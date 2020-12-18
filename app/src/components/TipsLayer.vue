@@ -1,6 +1,6 @@
 <template>
   <div ref="nodes" class="node">
-    <div v-show="tipsplease">
+    <div v-show="showtipsstate">
       <draggable
         class="innernode"
         :w="250"
@@ -21,7 +21,7 @@
       </draggable>
     </div>
 
-    <div v-show="!tipsplease"></div>
+    <div v-show="!showtipsstate"></div>
   </div>
 </template>
 
@@ -35,10 +35,11 @@ export default {
     return {
       nodetext:
         '## Shortcuts 🐢 -> 🐰 \n **n** to create new nodes. </br> **c** create connections </br> **a** or **s** select &amp; move nodes. </br> **m** pan and zoom canvas',
-      tipsplease: true,
+      // showtipsstate: true,
     }
   },
   computed: mapState({
+    showtipsstate: (state) => state.showtipsstate,
     scale: (state) => state.ui.scale,
   }),
   filters: {
@@ -47,7 +48,8 @@ export default {
 
   methods: {
     hideTips() {
-      this.tipsplease = false
+      var e = false
+      this.$store.dispatch('showTipsstate', e)
     },
   },
   components: {
