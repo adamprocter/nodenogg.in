@@ -4,6 +4,7 @@ _23rd December 2020_
 
 ### Changed
 
+- Fixed min width and height on nodes (support towards better auto resizing)
 - Hiding shortcut tips now will stay hidden per session. (n.b this hides them on all views)
 - Focusses input when creating new node enabling fasting entry.
   - in Collect view press n, instantly type in ideas, press tab, press n for next idea (SO FAST!)
