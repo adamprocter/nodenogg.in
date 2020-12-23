@@ -5,10 +5,6 @@
         <ModesCard />
         <ListLayer @edit-true="(e) => editTrue(e)" :added="added" />
         <div class="btn-row">
-          <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
-            >Create Node</BaseButton
-          > -->
-
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="80"

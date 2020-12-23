@@ -156,13 +156,6 @@ export default {
   },
 
   methods: {
-    // focusInput() {
-    //   console.log('focus')
-    //   this.nextTick(() => {
-    //     this.$refs.textentry.$el.focus()
-    //   })
-    // },
-
     chooseColor(color, nodeid) {
       this.$store.dispatch('colorNode', { nodeid, color })
       this.$options.myArray = this.nodes_filtered

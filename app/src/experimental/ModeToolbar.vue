@@ -17,15 +17,12 @@
 </template>
 
 <script>
-var serverUrl = 'https://nodenogg.in'
 import { mapState, mapGetters } from 'vuex'
 
 import * as allModes from '@/experimental/modes'
 
 export default {
   mounted() {
-    window.addEventListener('online', this.handleConnection)
-    window.addEventListener('offline', this.handleConnection)
     this.clientid = localStorage.myNNClient
     this.microcosm = localStorage.mylastMicrocosm
   },
@@ -82,38 +79,6 @@ export default {
       location.assign(
         process.env.VUE_APP_HTTP + '://' + process.env.VUE_APP_URL + '/'
       )
-    },
-
-    handleConnection: function () {
-      var ref = this
-      if (navigator.onLine) {
-        this.isReachable(this.getServerUrl()).then(function (online) {
-          if (online) {
-            // handle online status
-            console.log('online')
-            location.reload()
-          } else {
-            console.log('no connectivity')
-          }
-        })
-      } else {
-        // handle offline status
-        console.log('offline')
-        ref.$emit('offline-triggered')
-      }
-    },
-    isReachable: function (url) {
-      // This should pick up a CORS error but it doesnt seem to //
-      return fetch(url, { method: 'HEAD', mode: 'no-cors' })
-        .then(function (resp) {
-          return resp && (resp.ok || resp.type === 'opaque')
-        })
-        .catch(function (err) {
-          console.warn('[conn test failure]:', err)
-        })
-    },
-    getServerUrl: function () {
-      return serverUrl || window.location.origin
     },
   },
   data() {

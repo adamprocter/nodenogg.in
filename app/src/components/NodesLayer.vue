@@ -208,23 +208,25 @@ export default {
     }
   },
 
+  props: {
+    added: Boolean,
+  },
+
   filters: {
     marked: marked,
   },
 
   // FIXME: how do we know how to focus on the newest node ?
   // FIXME: Tab between them would also be good
-  // var delay = 100
-  // var input
-  // mounted() {
-  //   setTimeout(this.setFocus, delay)
-  //   input = this.$refs.nodetext
-  //   // console.log(input)
-  // },
-  // method
-  // setFocus() {
-  //   this.$refs.nodetext.focus()
-  // },
+  watch: {
+    added: {
+      deep: true,
+
+      handler() {
+        setTimeout(this.loadData, 200)
+      },
+    },
+  },
 
   computed: {
     ...mapState({
@@ -245,7 +247,6 @@ export default {
         return nodes.deleted == false
       })
     },
-    // this is not working correctly as dragging around moves wrong things
     positions_filtered: function () {
       return this.configPositions.filter((positions) => {
         return this.myNodes.some((node) => {
