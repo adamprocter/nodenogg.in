@@ -24,8 +24,7 @@
               border: border,
               backgroundColor: nodes.color,
             }"
-            :min-width="200"
-            :min-height="220"
+            ref="node"
           >
             <form class="nodes">
               <template v-if="nodes.read_mode == false">
@@ -101,8 +100,7 @@
               border: border,
               backgroundColor: nodes.color,
             }"
-            :min-width="200"
-            :min-height="220"
+            ref="node"
           >
             <form class="nodes">
               <template v-if="nodes.read_mode == false">
@@ -309,6 +307,7 @@ export default {
       this.$options.positionsArray = this.positions_filtered
       this.$forceUpdate()
     },
+
     onActivated(id, zindex) {
       this.zindex = zindex
       this.nodeid = id
@@ -476,6 +475,8 @@ export default {
 
 .vdr {
   padding: 0 0.5em;
+  min-width: 260px;
+  min-height: 265px;
 }
 
 .info {
