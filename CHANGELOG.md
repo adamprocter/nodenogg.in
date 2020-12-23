@@ -1,3 +1,13 @@
+# 0.1.47
+
+_23rd December 2020_
+
+### Changed
+
+- Hiding shortcut tips now will stay hidden per session. (n.b this hides them on all views)
+- Focusses input when creating new node enabling fasting entry.
+  - in Collect view press n, instantly type in ideas, press tab, press n for next idea (SO FAST!)
+
 # 0.1.46
 
 _18th Decemeber 2020_

@@ -22,6 +22,7 @@
                 @focus="editTrue(true)"
                 @blur="editTrue(false)"
                 autofocus
+                v-focus
                 v-model="nodes.node_text"
                 @input="editNode"
                 :id="nodes.node_id"
