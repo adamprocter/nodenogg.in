@@ -34,6 +34,7 @@
                   @blur="editTrue(false)"
                   autofocus
                   v-model="nodes.node_text"
+                  v-focus
                   @input="editNode"
                   :id="nodes.node_id"
                   placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
@@ -110,6 +111,7 @@
                   @focus="editTrue(true)"
                   @blur="editTrue(false)"
                   autofocus
+                  v-focus
                   v-model="nodes.node_text"
                   @input="editNode"
                   :id="nodes.node_id"

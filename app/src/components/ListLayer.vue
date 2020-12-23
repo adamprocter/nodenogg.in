@@ -15,6 +15,8 @@
             v-model="nodes.node_text"
             @input="editNode"
             :id="nodes.node_id"
+            v-focus
+            ref="textentry"
             placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
           ></textarea>
           <p class="info">*markdown supported &amp; autosaves</p>
@@ -125,6 +127,7 @@ export default {
     const unwatch = this.$watch('nodes_filtered', (value) => {
       this.$options.myArray = this.nodes_filtered
       this.$forceUpdate()
+      // this.focusInput()
       // ignore falsy values
       if (!value) return
 
@@ -153,6 +156,13 @@ export default {
   },
 
   methods: {
+    // focusInput() {
+    //   console.log('focus')
+    //   this.nextTick(() => {
+    //     this.$refs.textentry.$el.focus()
+    //   })
+    // },
+
     chooseColor(color, nodeid) {
       this.$store.dispatch('colorNode', { nodeid, color })
       this.$options.myArray = this.nodes_filtered
