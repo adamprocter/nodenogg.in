@@ -296,6 +296,10 @@ export default {
     }
   },
 
+  beforeDestroy() {
+    if (this.observer) this.observer.unobserve(this.$refs.box)
+  },
+
   methods: {
     chooseColor(color, nodeid) {
       this.$store.dispatch('colorNode', { nodeid, color })
@@ -337,11 +341,27 @@ export default {
         }
       }
     },
-    onResize(x, y, width, height) {
-      this.localx = x
-      this.localy = y
+
+    onResize() {
+      const node = this.$refs.node,
+        width = this.$refs.node.offsetWidth + 'px',
+        height = this.$refs.node.offsetHeight + 'px'
+      console.log(node)
       this.width = width
       this.height = height
+
+      this.$emit('resize', { width, height })
+
+      // this.localx = x
+      // this.localy = y
+      // this.width = width
+      // this.height = height
+    },
+
+    initObserver() {
+      const observer = new ResizeObserver(this.onResize)
+      observer.observe(this.$refs.node)
+      this.observer = observer
     },
     onResizestop(x, y, width, height) {
       // var nodecontentHeight = document.getElementById(this.nodeid).clientHeight
