@@ -11,17 +11,17 @@
             :y="value.y_pos"
             :z="value.z_index"
             :scale="scale"
-            @activated="onActivated(nodes.node_id)"
+            @activated="onActivated(nodes.node_id, value.z_index)"
             :draggable="false"
             :resizable="false"
             @dragging="onDrag"
             @resizing="onResize"
             @dragstop="onDragstop"
             @resizestop="onResizestop"
-            style="
-              border: 2px solid black;
-              background-color: rgb(205, 234, 255);
-            "
+            :style="{
+              border: border,
+              backgroundColor: nodes.color,
+            }"
             :min-width="200"
             :min-height="220"
           >
@@ -122,15 +122,15 @@
             :y="value.y_pos"
             :z="value.z_index"
             :scale="scale"
-            @activated="onActivated(nodes.node_id)"
+            @activated="onActivated(nodes.node_id, value.z_index)"
             @dragging="onDrag"
             @resizing="onResize"
             @dragstop="onDragstop"
             @resizestop="onResizestop"
-            style="
-              border: 2px solid black;
-              background-color: rgb(205, 234, 255);
-            "
+            :style="{
+              border: border,
+              backgroundColor: nodes.color,
+            }"
             :min-width="200"
             :min-height="220"
           >
@@ -236,10 +236,13 @@ export default {
 
   data() {
     return {
+      border: '2px solid black',
+      color: '#CDEAFF',
       input: '',
       search: '',
       pickupz: 1,
       nodeid: String,
+      positionsArray: null,
     }
   },
 
@@ -259,6 +262,10 @@ export default {
 
     othernodes_filtered: function () {
       return this.otherNodes.filter((nodes) => {
+        // backwards compatablity fix
+        if (nodes.color == undefined || '') {
+          nodes.color = '#A4C2D6'
+        }
         return nodes.deleted == false
       })
     },
@@ -272,11 +279,35 @@ export default {
     },
   },
 
-  positionsArray: null,
-  // NOTE: ok as created here but NOT if this is the first view to load
-  created() {
+  mounted() {
     //access the custom option using $options
-    this.$options.positionsArray = this.positions_filtered
+    setTimeout(this.loadData, 500)
+
+    const unwatch = this.$watch('othernodes_filtered', (value) => {
+      this.$options.myArray = this.othernodes_filtered
+      // this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+      // ignore falsy values
+      if (!value) return
+
+      // stop watching when nodes_filtered[] is not empty
+      if (value && value.length) unwatch()
+
+      // process value here
+    })
+
+    const unwatchtwo = this.$watch('positions_filtered', (value) => {
+      // this.$options.myArray = this.nodes_filtered
+      this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+      // ignore falsy values
+      if (!value) return
+
+      // stop watching when nodes_filtered[] is not empty
+      if (value && value.length) unwatchtwo()
+
+      // process value here
+    })
   },
 
   updated() {
@@ -284,14 +315,34 @@ export default {
   },
 
   methods: {
-    onActivated(e) {
-      this.nodeid = e
+    loadData() {
+      this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+    },
+    onActivated(id, zindex) {
+      this.zindex = zindex
+      this.nodeid = id
       var i
+      var zindexes = []
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+        zindexes.push(this.configPositions[i].z_index)
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
-          this.pickupz = this.configPositions[i].z_index
+          this.zindex = this.configPositions[i].z_index
+        }
+      }
+      var topZ = Math.max(...zindexes)
+
+      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+        if (topZ > 2147483640) {
+          this.configPositions[i].z_index = 0
+        }
+
+        if (this.configPositions[i].node_id == this.nodeid) {
+          this.width = this.configPositions[i].width
+          this.height = this.configPositions[i].height
+          this.configPositions[i].z_index = topZ + 1
         }
       }
     },
@@ -301,15 +352,15 @@ export default {
       this.width = width
       this.height = height
     },
-    onResizestop(x, y, width, height, zindex) {
+    onResizestop(x, y, width, height) {
       var localnodeid = this.nodeid
-      zindex = this.pickupz
+      var zindex
       var i
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
-          this.pickupz = this.configPositions[i].z_index
+          zindex = this.configPositions[i].z_index
         }
       }
       this.width = width
@@ -327,9 +378,9 @@ export default {
       this.localx = x
       this.localy = y
     },
-    onDragstop(x, y, width, height, zindex) {
+    onDragstop(x, y, width, height) {
       var localnodeid = this.nodeid
-      zindex = this.pickupz
+      var zindex
       width = this.width
       height = this.height
       var i
@@ -337,7 +388,7 @@ export default {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.localx = this.configPositions[i].x_pos
           this.localy = this.configPositions[i].y_pos
-          this.pickupz = this.configPositions[i].z_index
+          zindex = this.configPositions[i].z_index
         }
       }
       this.$store.dispatch('movePos', {
@@ -366,6 +417,7 @@ export default {
           })
         }
       }
+      this.$options.myArray = this.othernodes_filtered
     },
     append(emoji) {
       this.input += emoji
@@ -445,7 +497,7 @@ h3 {
   /* transform: scale(1.5); */
 }
 .emoji-invoker > svg {
-  fill: #b1c6d0;
+  fill: #4e4e4e;
   margin-top: 10px;
   margin-left: 0.2em;
   transform: scale(1.5);
@@ -479,7 +531,7 @@ h3 {
 .emoji-picker h5 {
   margin-top: 0;
   margin-bottom: 0;
-  color: #b1b1b1;
+  color: #5c5c5c;
   text-transform: uppercase;
   font-size: 0.8rem;
   cursor: default;

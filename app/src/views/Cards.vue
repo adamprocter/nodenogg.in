@@ -2,50 +2,49 @@
   <div id="listwrapper">
     <div v-if="clientset">
       <h1 class="mobile">All nodes - card view</h1>
+      <h2 class="danger">Positions not saved</h2>
+      <CardsLayer @edit-true="(e) => editTrue(e)" :added="added" />
 
-      <CardsLayer @editTrue="(e) => editTrue(e)" />
+      <!-- <OtherCardslayer /> -->
 
-      <OtherCardslayer />
-
-      <div class="btn-row">
-        <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
+      <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
             >Create Node</BaseButton
           > -->
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="80"
-          viewBox="0 0 143 106"
-          class="icon"
-          @click="addNode()"
-        >
-          <g transform="translate(-1345 -843)">
-            <g class="a" transform="translate(1345 865)">
-              <rect class="d" width="127" height="84" />
-              <rect class="e" x="0.5" y="0.5" width="126" height="83" />
-            </g>
-            <g class="b" transform="translate(1361 843)">
-              <rect class="d" width="127" height="84" />
-              <rect class="e" x="3.5" y="3.5" width="120" height="77" />
-            </g>
-            <line class="c" x2="41" transform="translate(1406.5 884.5)" />
-            <line class="c" y2="41" transform="translate(1426.5 863.5)" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="80"
+        viewBox="0 0 143 106"
+        class="icon"
+        @click="addNode()"
+      >
+        <g transform="translate(-1345 -843)">
+          <g class="a" transform="translate(1345 865)">
+            <rect class="d" width="127" height="84" />
+            <rect class="e" x="0.5" y="0.5" width="126" height="83" />
           </g>
-        </svg>
-
-        <UploadLayer
-          v-bind:uploadready="uploadready"
-          v-bind:copyready="copyready"
-          @upload-added="uploadAdded()"
-          @copy-done="copyDone()"
-        />
+          <g class="b" transform="translate(1361 843)">
+            <rect class="d" width="127" height="84" />
+            <rect class="e" x="3.5" y="3.5" width="120" height="77" />
+          </g>
+          <line class="c" x2="41" transform="translate(1406.5 884.5)" />
+          <line class="c" y2="41" transform="translate(1426.5 863.5)" />
+        </g>
+      </svg>
+      <div class="btn-row">
+        <BaseButton class="new" buttonClass="action" @click="uploadAdded()"
+          >Upload</BaseButton
+        >
+        <BaseButton class="new" buttonClass="action" @click="copyDone()"
+          >Get Upload</BaseButton
+        >
       </div>
-      <BaseButton class="new" buttonClass="action" @click="uploadAdded()"
-        >Upload</BaseButton
-      >
-      <BaseButton class="new" buttonClass="action" @click="copyDone()"
-        >Get Upload</BaseButton
-      >
+      <UploadLayer
+        v-bind:uploadready="uploadready"
+        v-bind:copyready="copyready"
+        @upload-added="uploadAdded()"
+        @copy-done="copyDone()"
+      />
     </div>
 
     <div v-else>
@@ -56,9 +55,10 @@
 
 <script>
 import CardsLayer from '@/components/CardsLayer'
-import OtherCardslayer from '@/components/OtherCardslayer'
+// import OtherCardslayer from '@/components/OtherCardslayer'
 import OnBoard from '@/components/OnBoard'
 import UploadLayer from '@/components/UploadLayer'
+
 import { mapState } from 'vuex'
 
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
@@ -72,13 +72,8 @@ export default {
       clientset: false,
       uploadready: false,
       copyready: false,
+      added: true,
     }
-  },
-
-  props: {
-    nodeid: String,
-    nodetext: String,
-    deleted: Boolean,
   },
 
   computed: {
@@ -114,6 +109,7 @@ export default {
 
     addNode() {
       this.$store.dispatch('addNode')
+      this.added = !this.added
     },
 
     editTrue(e) {
@@ -133,7 +129,7 @@ export default {
   },
   components: {
     CardsLayer,
-    OtherCardslayer,
+    // OtherCardslayer,
     UploadLayer,
     OnBoard,
   },
@@ -141,12 +137,19 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.danger {
+  color: red;
+}
 .mobile {
   margin-left: 1em;
   font-size: 1em;
 }
 .new {
   margin-bottom: 1em;
+}
+
+.btn-row {
+  margin-left: 1em;
 }
 
 .example {

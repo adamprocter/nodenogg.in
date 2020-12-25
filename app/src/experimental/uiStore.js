@@ -18,7 +18,7 @@ const store = {
       nodes: [],
     },
     mode: 'select',
-    tipshidden: false,
+
     scale: 1,
     translation: {
       x: 0,

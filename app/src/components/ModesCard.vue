@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="tipsplease" class="nodes welcome">
+    <div v-show="showtipsstate" class="nodes welcome">
       <img src="https://alpha.nodenogg.in/files/collect.png" />
 
       <p>
@@ -101,7 +101,7 @@ import SvgButton from '@/components/SvgButton'
 export default {
   data: function () {
     return {
-      tipsplease: true,
+      // showtipsstate: null,
     }
   },
 
@@ -113,13 +113,13 @@ export default {
   },
 
   computed: mapState({
-    hidetipsstate: (state) => state.hidetipsstate,
+    showtipsstate: (state) => state.showtipsstate,
   }),
 
   methods: {
     hideTips() {
-      this.tipsplease = false
-      //  this.hidetipsstate = false
+      var e = false
+      this.$store.dispatch('showTipsstate', e)
     },
   },
   components: {

@@ -3,12 +3,8 @@
     <div v-if="clientset">
       <div id="listwrapper">
         <ModesCard />
-        <ListLayer @edit-true="(e) => editTrue(e)" />
+        <ListLayer @edit-true="(e) => editTrue(e)" :added="added" />
         <div class="btn-row">
-          <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
-            >Create Node</BaseButton
-          > -->
-
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="80"
@@ -78,13 +74,8 @@ export default {
       clientset: false,
       uploadready: false,
       copyready: false,
+      added: true,
     }
-  },
-
-  props: {
-    nodeid: String,
-    nodetext: String,
-    deleted: Boolean,
   },
 
   computed: {
@@ -103,8 +94,7 @@ export default {
   },
 
   mounted() {
-    var e = false
-    this.$store.dispatch('shortcutState', e)
+    setTimeout(this.loadShortcut, 1000)
   },
 
   beforeDestroy() {
@@ -114,12 +104,19 @@ export default {
   },
 
   methods: {
+    loadShortcut() {
+      var e = false
+      this.$store.dispatch('shortcutState', e)
+    },
+
     clientAdded() {
       this.clientset = !this.clientset
     },
 
     addNode() {
+      // console.log('add called')
       this.$store.dispatch('addNode')
+      this.added = !this.added
     },
 
     editTrue(e) {

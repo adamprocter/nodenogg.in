@@ -1,5 +1,5 @@
 <template>
-  <div v-show="tipsplease">
+  <div v-show="showtipsstate">
     <draggable
       class="innernode"
       :w="450"
@@ -169,7 +169,7 @@
         <SvgButton @click="hideTips()" />
       </div>
     </draggable>
-    <div v-show="!tipsplease"></div>
+    <div v-show="!showtipsstate"></div>
   </div>
 </template>
 
@@ -182,7 +182,7 @@ import draggable from '@/experimental/Draggable'
 export default {
   data: function () {
     return {
-      tipsplease: true,
+      // showtipsstate: true,
     }
   },
 
@@ -194,14 +194,14 @@ export default {
   },
 
   computed: mapState({
-    hidetipsstate: (state) => state.hidetipsstate,
+    showtipsstate: (state) => state.showtipsstate,
     scale: (state) => state.ui.scale,
   }),
 
   methods: {
     hideTips() {
-      this.tipsplease = false
-      //  this.hidetipsstate = false
+      var e = false
+      this.$store.dispatch('showTipsstate', e)
     },
   },
   components: {

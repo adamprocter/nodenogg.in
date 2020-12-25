@@ -12,7 +12,7 @@
             :y="value.y_pos"
             :z="value.z_index"
             :scale="scale"
-            @activated="onActivated(nodes.node_id)"
+            @activated="onActivated(nodes.node_id, value.z_index)"
             :draggable="false"
             :resizable="false"
             @dragging="onDrag"
@@ -20,12 +20,11 @@
             @dragstop="onDragstop"
             @resizestop="onResizestop"
             :drag-cancel="'.drag-cancel'"
-            style="
-              border: 2px dashed black;
-              background-color: rgb(155, 194, 216);
-            "
-            :min-width="200"
-            :min-height="220"
+            :style="{
+              border: border,
+              backgroundColor: nodes.color,
+            }"
+            ref="node"
           >
             <form class="nodes">
               <template v-if="nodes.read_mode == false">
@@ -34,6 +33,7 @@
                   @blur="editTrue(false)"
                   autofocus
                   v-model="nodes.node_text"
+                  v-focus
                   @input="editNode"
                   :id="nodes.node_id"
                   placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
@@ -90,25 +90,26 @@
             :y="value.y_pos"
             :z="value.z_index"
             :scale="scale"
-            @activated="onActivated(nodes.node_id)"
+            @activated="onActivated(nodes.node_id, value.z_index)"
             @dragging="onDrag"
             @resizing="onResize"
             @dragstop="onDragstop"
             @resizestop="onResizestop"
             :drag-cancel="'.drag-cancel'"
-            style="
-              border: 2px dashed black;
-              background-color: rgb(155, 194, 216);
-            "
-            :min-width="200"
-            :min-height="220"
+            :style="{
+              border: border,
+              backgroundColor: nodes.color,
+            }"
+            ref="node"
           >
             <form class="nodes">
               <template v-if="nodes.read_mode == false">
                 <textarea
+                  class="drag-cancel"
                   @focus="editTrue(true)"
                   @blur="editTrue(false)"
                   autofocus
+                  v-focus
                   v-model="nodes.node_text"
                   @input="editNode"
                   :id="nodes.node_id"
@@ -132,6 +133,21 @@
                     buttonClass="nodes"
                     @click.prevent="readFlag(nodes.node_id, nodes.read_mode)"
                   />
+                  <v-swatches
+                    v-model="color"
+                    @input="chooseColor(color, nodes.node_id)"
+                    :swatches="swatches"
+                    :shapes="shapes"
+                    show-border
+                    show-fallback
+                    fallback-input-type="color"
+                  >
+                    <SvgButton3
+                      buttonClass="nodes"
+                      @click.prevent
+                      slot="trigger"
+                    />
+                  </v-swatches>
                 </div>
               </template>
 
@@ -159,7 +175,10 @@ import { mapState } from 'vuex'
 import marked from 'marked'
 import SvgButton from '@/components/SvgButton'
 import SvgButton2 from '@/components/SvgButton2'
+import SvgButton3 from '@/components/SvgButton3'
 import draggable from '@/experimental/Draggable'
+import VSwatches from 'vue-swatches'
+import 'vue-swatches/dist/vue-swatches.css'
 
 var readmode
 
@@ -168,12 +187,29 @@ export default {
 
   data() {
     return {
+      border: '2px dashed black',
+      color: '#9bc2d8',
+      shapes: 'circles',
+
+      // swatches: [{ color: '#F493A7', showBorder: true }],
+      swatches: [
+        ['#EB5757', '#F2994A', '#F2C94C'],
+        ['#219653', '#27AE60', '#6FCF97'],
+        ['#2F80ED', '#2D9CDB', '#56CCF2'],
+        ['#9B51E0', '#BB6BD9', '#E9B7FC'],
+      ],
+
       pickupz: 1,
       localreadmode: false,
       mode: '',
       nodeid: String,
-      // firstload: true,
+      myArray: null,
+      positionsArray: null,
     }
+  },
+
+  props: {
+    added: Boolean,
   },
 
   filters: {
@@ -182,17 +218,15 @@ export default {
 
   // FIXME: how do we know how to focus on the newest node ?
   // FIXME: Tab between them would also be good
-  // var delay = 100
-  // var input
-  // mounted() {
-  //   setTimeout(this.setFocus, delay)
-  //   input = this.$refs.nodetext
-  //   // console.log(input)
-  // },
-  // method
-  // setFocus() {
-  //   this.$refs.nodetext.focus()
-  // },
+  watch: {
+    added: {
+      deep: true,
+
+      handler() {
+        setTimeout(this.loadData, 200)
+      },
+    },
+  },
 
   computed: {
     ...mapState({
@@ -206,10 +240,13 @@ export default {
 
     nodes_filtered: function () {
       return this.myNodes.filter((nodes) => {
+        // backwards compatablity fix
+        if (nodes.color == undefined || '') {
+          nodes.color = '#A4C2D6'
+        }
         return nodes.deleted == false
       })
     },
-    // this is not working correctly as dragging around moves wrong things
     positions_filtered: function () {
       return this.configPositions.filter((positions) => {
         return this.myNodes.some((node) => {
@@ -219,32 +256,85 @@ export default {
     },
   },
   // this is to stop sync chasing bug
-  myArray: null,
-  positionsArray: null,
-  // NOTE: ok as created here but NOT if this is the first view to load
-  created() {
-    //access the custom option using $options
-    this.$options.myArray = this.nodes_filtered
-    this.$options.positionsArray = this.positions_filtered
+
+  mounted() {
+    setTimeout(this.loadData, 500)
+
+    const unwatch = this.$watch('nodes_filtered', (value) => {
+      this.$options.myArray = this.nodes_filtered
+      // this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+      // ignore falsy values
+      if (!value) return
+
+      // stop watching when nodes_filtered[] is not empty
+      if (value && value.length) unwatch()
+
+      // process value here
+    })
+
+    const unwatchtwo = this.$watch('positions_filtered', (value) => {
+      // this.$options.myArray = this.nodes_filtered
+      this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+      // ignore falsy values
+      if (!value) return
+
+      // stop watching when nodes_filtered[] is not empty
+      if (value && value.length) unwatchtwo()
+
+      // process value here
+    })
   },
 
   updated() {
     this.$options.positionsArray = this.positions_filtered
 
     if (this.toolmode == 'addNode') {
-      this.$options.myArray = this.nodes_filtered
+      setTimeout(this.loadData, 300)
+      // this.$options.myArray = this.nodes_filtered
       this.$store.commit('ui/setMode', 'select')
     }
   },
 
   methods: {
-    onActivated(e) {
-      this.nodeid = e
+    chooseColor(color, nodeid) {
+      this.$store.dispatch('colorNode', { nodeid, color })
+      this.$options.myArray = this.nodes_filtered
+    },
+
+    loadData() {
+      this.$options.myArray = this.nodes_filtered
+      this.$options.positionsArray = this.positions_filtered
+      this.$forceUpdate()
+    },
+
+    onActivated(id, zindex) {
+      this.zindex = zindex
+      this.nodeid = id
       var i
+      var zindexes = []
+
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+        zindexes.push(this.configPositions[i].z_index)
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
+          this.zindex = this.configPositions[i].z_index
+        }
+        // console.log(zindexes)
+      }
+      var topZ = Math.max(...zindexes)
+
+      for (i = 0; i < Object.keys(this.configPositions).length; i++) {
+        if (topZ > 2147483640) {
+          this.configPositions[i].z_index = 0
+        }
+
+        if (this.configPositions[i].node_id == this.nodeid) {
+          this.width = this.configPositions[i].width
+          this.height = this.configPositions[i].height
+          this.configPositions[i].z_index = topZ + 1
         }
       }
     },
@@ -254,19 +344,27 @@ export default {
       this.width = width
       this.height = height
     },
-    onResizestop(x, y, width, height, zindex) {
+    onResizestop(x, y, width, height) {
+      // var nodecontentHeight = document.getElementById(this.nodeid).clientHeight
+
       var localnodeid = this.nodeid
-      zindex = this.pickupz
+      var zindex
       var i
+
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.width = this.configPositions[i].width
           this.height = this.configPositions[i].height
-          this.pickupz = this.configPositions[i].z_index
+          zindex = this.configPositions[i].z_index
         }
       }
       this.width = width
       this.height = height
+
+      // if (nodecontentHeight > this.height) {
+      //   height = nodecontentHeight + 150
+      // }
+
       this.$store.dispatch('movePos', {
         localnodeid,
         x,
@@ -280,18 +378,24 @@ export default {
       this.localx = x
       this.localy = y
     },
-    onDragstop(x, y, width, height, zindex) {
+    onDragstop(x, y, width, height) {
+      var nodecontentHeight = document.getElementById(this.nodeid).clientHeight
+
       var localnodeid = this.nodeid
-      zindex = this.pickupz
+      var zindex
       width = this.width
       height = this.height
       var i
+
+      if (nodecontentHeight > this.height) {
+        this.height = nodecontentHeight + 150
+      }
       // FIXME: What is this for loop doing ??
       for (i = 0; i < Object.keys(this.configPositions).length; i++) {
         if (this.configPositions[i].node_id == this.nodeid) {
           this.localx = this.configPositions[i].x_pos
           this.localy = this.configPositions[i].y_pos
-          this.pickupz = this.configPositions[i].z_index
+          zindex = this.configPositions[i].z_index
         }
       }
       this.$store.dispatch('movePos', {
@@ -320,6 +424,7 @@ export default {
           })
         }
       }
+      this.$options.myArray = this.nodes_filtered
     },
 
     editTrue(e) {
@@ -357,6 +462,8 @@ export default {
     draggable,
     SvgButton,
     SvgButton2,
+    SvgButton3,
+    VSwatches,
   },
 }
 </script>
@@ -369,6 +476,8 @@ export default {
 
 .vdr {
   padding: 0 0.5em;
+  min-width: 260px;
+  min-height: 265px;
 }
 
 .info {
