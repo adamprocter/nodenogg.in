@@ -35,7 +35,7 @@
 
 <script>
 // This is for detecting offline issues
-var serverUrl = 'http://127.0.0.1:5984'
+var serverUrl = 'http://192.168.1.179:5984'
 import { mapState } from 'vuex'
 
 export default {
