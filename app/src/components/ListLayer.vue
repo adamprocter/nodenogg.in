@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :key="componentKey">
     <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
       <form
         class="nodes"
@@ -87,6 +87,7 @@ export default {
 
   data: function () {
     return {
+      componentKey: 0,
       color: '#9bc2d8',
       shapes: 'circles',
       // swatches: [{ color: '#F493A7', showBorder: true }],
@@ -109,7 +110,7 @@ export default {
   computed: {
     ...mapState({
       myNodes: (state) => state.myNodes,
-      configPositions: (state) => state.configPositions,
+      //  configPositions: (state) => state.configPositions,
       configEmoji: (state) => state.configEmoji,
       // toolmode: (state) => state.ui.mode,
     }),
@@ -126,7 +127,8 @@ export default {
 
     const unwatch = this.$watch('nodes_filtered', (value) => {
       this.$options.myArray = this.nodes_filtered
-      this.$forceUpdate()
+      this.forceRerender()
+      //this.$forceUpdate()
       // this.focusInput()
       // ignore falsy values
       if (!value) return
@@ -156,6 +158,10 @@ export default {
   },
 
   methods: {
+    forceRerender(child) {
+      console.log(child)
+      this.componentKey += 1
+    },
     chooseColor(color, nodeid) {
       this.$store.dispatch('colorNode', { nodeid, color })
       this.$options.myArray = this.nodes_filtered
@@ -164,8 +170,10 @@ export default {
       this.update = !this.update
     },
     loadData() {
+      console.log('called')
       this.$options.myArray = this.nodes_filtered
-      this.$forceUpdate()
+      this.forceRerender()
+      //this.$forceUpdate()
     },
     editNode(e) {
       var nodeid = e.target.id
