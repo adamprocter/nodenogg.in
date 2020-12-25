@@ -1,3 +1,143 @@
+# 0.1.47
+
+_23rd December 2020_
+
+### Changed
+
+- Hiding shortcut tips now will stay hidden per session. (n.b this hides them on all views)
+- Focusses input when creating new node enabling fasting entry.
+  - in Collect view press n, instantly type in ideas, press tab, press n for next idea (SO FAST!)
+
+### Fixed
+
+- Fixed min width and height on nodes (support towards better auto resizing).
+- Keyboard shortcut n key more fixes in Organise and Card view.(should work all the time)
+
+### Removed
+
+- Removed Specific offline component as if app goes offline mid connection it should work just fine, in all views.
+
+# 0.1.46
+
+_18th Decemeber 2020_
+
+### Fixed
+
+- The initial onboarding microcosm should not longer allow you to save nodes.
+- Keyboard shortcut n now works on Collect view on first visit to new microcosm.
+
+# 0.1.45
+
+_17th December 2020_
+
+### Changed
+
+- Card view can now be sorted however this is not saved yet.
+
+### Fixed
+
+- Some sync bug fixes.
+- You can now colour nodes in Collect and Card views.
+- initial node creation failed on new microcosm without switching views.
+- Force load on Collect view.
+
+# 0.1.44
+
+_14th December 2020_
+
+### Changed
+
+- Upload is now smarter and will generate markdown for images, video and audio "automagically", media that is not recognised will be uploaded and generated as a plain URL (link).
+- Now using Cloudflare's IPFS Gateway as we move towards more robust upload support.
+- Video is using using infura gateway (cloudflares gateway doesnt like playing back video)
+
+### Added
+
+- You can now Drag and drop to upload.
+
+# 0.1.43
+
+_12th December 2020_
+
+### Fixed
+
+- Partial fix so that nodes will resize to fit content (after dragging into position)
+
+# 0.1.42
+
+_11th December 2020_
+
+### Added
+
+- You can now colour code your nodes.
+
+# 0.1.41
+
+_11th December 2020_
+
+### Changed
+
+- added basic z-index incrementing, when you touch a node it will jump to the front a node gets to within max z-index > 2147483640 all nodes will reset to 0.
+
+# 0.1.40
+
+_9th December 2020_
+
+## Fixed
+
+- Connections are now working in the same way as before but using native SVG code and no longer the pixi library.
+
+# 0.1.39
+
+_8th December 2020_
+
+### Changed
+
+- edits to the new computed filter to use watch / unwatch over a timer for initial load should mean doesn't matter on hardware or network all nodes will load when ready.
+
+### Fixed
+
+- brought back selecting text and not dragging missed class.
+
+# 0.1.38
+
+_7th December 2020_
+
+### Changed
+
+- read mode is now attached to each node instead of positions.
+- node text and positioning is now using a computed filter - so the iterating should be less CPU intensive.
+
+### Fixed
+
+- pressing n on keyboard when editing node in card view no longer creates nodes.
+
+### Removed
+
+- Pixi.js for drawing connections (temporary removal replacement tech needed).
+
+# 0.1.37
+
+_30th November 2020_
+
+### Fixed
+
+- Add emoji reactions is no longer missing from Cards view.
+- Long URLS now wrap when viewing on smaller screen sizes, to accommodate increased link text.
+
+# 0.1.36
+
+_20th November 2020_
+
+### Changed
+
+- Custom Events now use kebab-case as best practice and also prep for Vue 3
+
+### Fixed
+
+- a human can use spaces, dashes and caps if they like in name and microcosm but couchDB doesn't like them so they are removed on input
+- you can no longer join a microcosm without setting a name, this stops human from thinking they are safe to create nodes
+
 # 0.1.35
 
 _7th November 2020_

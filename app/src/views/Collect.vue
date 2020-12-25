@@ -3,19 +3,8 @@
     <div v-if="clientset">
       <div id="listwrapper">
         <ModesCard />
-        <ListLayer
-          @editTrue="(e) => editTrue(e)"
-          v-for="value in myNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          v-bind:deleted="value.deleted"
-        />
+        <ListLayer @edit-true="(e) => editTrue(e)" :added="added" />
         <div class="btn-row">
-          <!-- <BaseButton class="new" buttonClass="action" @click="addNode()"
-            >Create Node</BaseButton
-          > -->
-
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="80"
@@ -47,8 +36,8 @@
         <UploadLayer
           v-bind:uploadready="uploadready"
           v-bind:copyready="copyready"
-          @uploadAdded="uploadAdded()"
-          @copyDone="copyDone()"
+          @upload-added="uploadAdded()"
+          @copy-done="copyDone()"
         />
       </div>
     </div>
@@ -60,7 +49,7 @@
         v-bind:nodetext="value.node_text"
         v-bind:deleted="value.deleted"
       />
-      <OnBoard @clientAdded="clientAdded()" @editTrue="(e) => editTrue(e)" />
+      <OnBoard @client-added="clientAdded()" @edit-true="(e) => editTrue(e)" />
     </div>
   </div>
 </template>
@@ -77,7 +66,7 @@ import { mapState } from 'vuex'
 import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
 
 export default {
-  name: 'List',
+  name: 'Collect',
 
   mixins: [shortcutsMixin],
   data: function () {
@@ -85,13 +74,8 @@ export default {
       clientset: false,
       uploadready: false,
       copyready: false,
+      added: true,
     }
-  },
-
-  props: {
-    nodeid: String,
-    nodetext: String,
-    deleted: Boolean,
   },
 
   computed: {
@@ -110,8 +94,7 @@ export default {
   },
 
   mounted() {
-    var e = false
-    this.$store.dispatch('shortcutState', e)
+    setTimeout(this.loadShortcut, 1000)
   },
 
   beforeDestroy() {
@@ -121,12 +104,19 @@ export default {
   },
 
   methods: {
+    loadShortcut() {
+      var e = false
+      this.$store.dispatch('shortcutState', e)
+    },
+
     clientAdded() {
       this.clientset = !this.clientset
     },
 
     addNode() {
+      // console.log('add called')
       this.$store.dispatch('addNode')
+      this.added = !this.added
     },
 
     editTrue(e) {

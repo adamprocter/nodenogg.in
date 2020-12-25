@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import List from '../views/List.vue'
+import Collect from '../views/Collect.vue'
 import Organise from '../views/Organise.vue'
 import Cards from '../views/Cards.vue'
 import Discarded from '../views/Discarded.vue'
 import Leave from '../views/Leave.vue'
 import About from '../views/About.vue'
 import NotFound from '../views/NotFound.vue'
+import NitPicky from '../views/NitPicky.vue'
 //import store from '../store'
 // import Oldhome from '../views/Oldhome'
 //import Test from '../views/Test'
@@ -17,7 +18,7 @@ export const routes = [
   {
     path: '/',
     name: 'Collect',
-    component: List,
+    component: Collect,
   },
   {
     path: '/organise',
@@ -46,6 +47,11 @@ export const routes = [
     name: 'About',
     component: About,
   },
+  {
+    path: '/nitpicky',
+    name: 'NitPicky',
+    component: NitPicky,
+  },
 
   {
     // catches 404 errors
@@ -57,7 +63,7 @@ export const routes = [
   // dynamic segement `:microcosm` is added to the path
   {
     path: '/microcosm/:microcosm',
-    component: List,
+    component: Collect,
   },
 ]
 

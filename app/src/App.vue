@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <navigation />
+
     <router-view />
+    <!-- <router-view v-if="this.window.width < 600" name="this.name" />
+    <router-view v-else to="/organise" /> -->
   </div>
 </template>
 
@@ -11,12 +14,30 @@ import Navigation from './components/Navigation'
 export default {
   data: function () {
     return {
+      // name: '',
+      // window: {
+      //   width: 0,
+      //   height: 0,
+      // },
       routes: routes.filter((route) => !!route.name),
     }
   },
   components: {
     navigation: Navigation,
   },
+  // mounted() {
+  //   window.addEventListener('resize', this.handleResize)
+  //   this.handleResize()
+  //   this.name = routes[1].name
+  // },
+  // destroyed() {
+  //   window.removeEventListener('resize', this.handleResize)
+  // },
+  // methods: {
+  //   handleResize() {
+  //     this.window.width = window.innerWidth
+  //   },
+  // },
 }
 </script>
 <style>

@@ -1,101 +1,48 @@
 <template>
   <div>
-    <div class="offline" v-if="clientset && offline">
-      <div ref="container" class="wrapper" v-bind:style="modeContainerStyle">
-        <h2>Offline</h2>
-        <p>
-          nodenogg.in appears to be offline, which means you cant see other data
-          at this stage, as it maybe out of date. Once you reconnect. Your data
-          will sync and the main views will reappear. This maybe down to you or
-          maybe us. If you think it's us let us know.
-        </p>
-        <OffLine
-          v-for="value in myNodes"
-          v-bind:key="value.node_id"
-          v-bind:nodeid="value.node_id"
-          v-bind:nodetext="value.node_text"
-          @editTrue="(e) => editTrue(e)"
-        />
-        <ModeToolbar
-          @offlineTriggered="offlineTriggered()"
-          @onlineTriggered="onlineTriggered()"
-        />
-        <ViewToolbar />
+    <div ref="container" class="wrapper" v-bind:style="modeContainerStyle">
+      <PanZoomContainer
+        v-bind:width="width"
+        v-bind:height="height"
+        v-bind:scale="scale"
+        v-bind:translation="translation"
+      >
+        <div v-if="clientset">
+          <OtherNodeslayer />
+          <NodesLayer @edit-true="(e) => editTrue(e)" :added="added" />
+          <TipsLayer />
+          <ModeCardorg />
+          <ConnectionsLayer />
+        </div>
 
-        <!-- <OnBoard v-else @clientAdded="clientAdded()" /> -->
-      </div>
-    </div>
+        <div v-else>
+          <OtherNodeslayer />
+          <NodesLayer @edit-true="(e) => editTrue(e)" :added="added" />
+          <OnBoard
+            @client-added="clientAdded()"
+            @edit-true="(e) => editTrue(e)"
+          />
+          <ConnectionsLayer />
+        </div>
+        <!-- <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer> -->
+      </PanZoomContainer>
+      <!-- <ToolBar /> -->
 
-    <div class="online" v-else>
-      <div ref="container" class="wrapper" v-bind:style="modeContainerStyle">
-        <PanZoomContainer
-          v-bind:width="width"
-          v-bind:height="height"
-          v-bind:scale="scale"
-          v-bind:translation="translation"
-        >
-          <div v-if="clientset">
-            <OtherNodeslayer
-              v-for="value in otherNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
-            <NodesLayer
-              @editTrue="(e) => editTrue(e)"
-              v-for="value in myNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
-            <TipsLayer />
-            <ModeCardorg />
-            <ConnectionsLayer />
-          </div>
-
-          <div v-else>
-            <OtherNodeslayer
-              v-for="value in otherNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
-            <NodesLayer
-              @editTrue="(e) => editTrue(e)"
-              v-for="value in myNodes"
-              v-bind:key="value.node_id"
-              v-bind:nodeid="value.node_id"
-              v-bind:nodetext="value.node_text"
-              v-bind:deleted="value.deleted"
-            />
-            <OnBoard
-              @clientAdded="clientAdded()"
-              @editTrue="(e) => editTrue(e)"
-            />
-            <ConnectionsLayer />
-          </div>
-          <ScribbleLayer v-bind:drawready="drawready"></ScribbleLayer>
-        </PanZoomContainer>
-        <!-- <ToolBar /> -->
-        <ModeToolbar
-          @offlineTriggered="offlineTriggered()"
-          @onlineTriggered="onlineTriggered()"
-          @uploadAdded="uploadAdded()"
-          @copyDone="copyDone()"
-          @drawOn="drawOn()"
-          @drawOff="drawOff()"
-        />
-        <ViewToolbar />
-        <UploadLayer
-          v-bind:uploadready="uploadready"
-          v-bind:copyready="copyready"
-          @uploadAdded="uploadAdded()"
-          @copyDone="copyDone()"
-        />
-      </div>
+      <ModeToolbar
+        @upload-added="uploadAdded()"
+        @copy-done="copyDone()"
+        @draw-on="drawOn()"
+        @draw-off="drawOff()"
+        @add-node="addNode()"
+      />
+      <ViewToolbar />
+      <UploadLayer
+        class="orgupload"
+        v-bind:uploadready="uploadready"
+        v-bind:copyready="copyready"
+        @upload-added="uploadAdded()"
+        @copy-done="copyDone()"
+      />
     </div>
   </div>
 </template>
@@ -104,10 +51,9 @@
 import PanZoomContainer from '@/experimental/PanZoomContainer'
 import ConnectionsLayer from '@/components/ConnectionsLayer'
 import NodesLayer from '@/components/NodesLayer'
-import OffLine from '@/components/OffLine'
 
 // import ToolBar from '@/components/ToolBar'
-import ScribbleLayer from '@/components/ScribbleLayer'
+//import ScribbleLayer from '@/components/ScribbleLayer'
 import UploadLayer from '@/components/UploadLayer'
 import OtherNodeslayer from '@/components/OtherNodeslayer.vue'
 import OnBoard from '@/components/OnBoard.vue'
@@ -120,7 +66,7 @@ import { shortcutsMixin } from '@/components/mixins/shortcutsMixin.js'
 import { mapGetters, mapState } from 'vuex'
 
 export default {
-  name: 'Home',
+  name: 'Organise',
   mixins: [shortcutsMixin],
   data: function () {
     return {
@@ -130,10 +76,12 @@ export default {
       height: 2000,
       clientset: false,
       // listview: false,
-      offline: false,
+      added: true,
+
       uploadready: false,
       copyready: false,
       drawready: false,
+
       // shortcutstate: false,
     }
   },
@@ -162,9 +110,9 @@ export default {
     }),
   },
   mounted() {
-    var e = false
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
+    var e = false
     this.$store.dispatch('shortcutState', e)
   },
 
@@ -218,16 +166,10 @@ export default {
     // This is here to support the shortcuts
     addNode() {
       this.$store.dispatch('addNode')
+      this.added = !this.added
     },
     selectMode(mode) {
       this.$store.commit('ui/setMode', mode)
-    },
-
-    offlineTriggered() {
-      this.offline = true
-    },
-    onlineTriggered() {
-      this.offline = false
     },
   },
   components: {
@@ -241,9 +183,9 @@ export default {
     ConnectionsLayer,
     OnBoard,
     // ToolBar,
-    OffLine,
+
     UploadLayer,
-    ScribbleLayer,
+    // ScribbleLayer,
     TipsLayer,
     ModeCardorg,
   },
@@ -256,5 +198,30 @@ export default {
   width: calc(100%);
   margin: 0px;
   position: relative;
+}
+.orgupload {
+}
+
+.a {
+  fill: #333;
+  stroke: #707070;
+}
+.b {
+  fill: #fff;
+  stroke: #333;
+}
+.b,
+.c {
+  stroke-width: 7px;
+}
+.c,
+.e {
+  fill: none;
+}
+.c {
+  stroke: #2d9cdb;
+}
+.d {
+  stroke: none;
 }
 </style>

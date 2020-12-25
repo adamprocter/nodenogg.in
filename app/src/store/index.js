@@ -40,7 +40,7 @@ var remote =
 const store = new Vuex.Store({
   state: {
     shortcutstate: false,
-    hidetipsstate: true,
+    showtipsstate: true,
     //  connectionstate: false,
     version: process.env.VUE_APP_VERSION,
     localnodeid: '',
@@ -69,6 +69,18 @@ const store = new Vuex.Store({
     configEmoji: [
       //{}
     ],
+    configRemote: [
+      // {
+      // protocol: 'https://',
+      // couchusername: 'something',
+      // couchpassword: 'passcouch',
+      // couchurl: 'domain.com',
+      // },
+      //{ https://,
+      // couchusername
+      // couchpassword
+      // couchURL}
+    ],
   },
   mutations: {
     CREATE_MICROCOSM(state, doc) {
@@ -82,16 +94,31 @@ const store = new Vuex.Store({
         } else {
           microcosm = doc
         }
+
         pouchdb = new PouchDB(microcosm)
-        remote =
-          process.env.VUE_APP_COUCH_HTTP +
-          '://' +
-          process.env.VUE_APP_COUCH_USER +
-          ':' +
-          process.env.VUE_APP_COUCH_PASS +
-          process.env.VUE_APP_COUCH_URL +
-          microcosm +
-          '/'
+        if (state.configRemote && state.configRemote.length > 0) {
+          remote =
+            state.configRemote[0].protocol +
+            state.configRemote[0].couchusername +
+            ':' +
+            state.configRemote[0].couchpassword +
+            '@' +
+            state.configRemote[0].couchurl +
+            '/' +
+            microcosm +
+            '/'
+        } else {
+          remote =
+            process.env.VUE_APP_COUCH_HTTP +
+            '://' +
+            process.env.VUE_APP_COUCH_USER +
+            ':' +
+            process.env.VUE_APP_COUCH_PASS +
+            process.env.VUE_APP_COUCH_URL +
+            microcosm +
+            '/'
+        }
+
         store.dispatch('syncDB')
       })
     },
@@ -136,6 +163,7 @@ const store = new Vuex.Store({
               node_id: state.allNodes[i].doc.nodes[j].node_id,
               node_text: state.allNodes[i].doc.nodes[j].node_text,
               deleted: state.allNodes[i].doc.nodes[j].deleted,
+              color: state.allNodes[i].doc.nodes[j].color,
             }
 
             state.otherNodes.push(newNode)
@@ -183,10 +211,10 @@ const store = new Vuex.Store({
               nodes: [
                 {
                   // FIXME: these values are here as GET_ALL_NODES cant hunt a blank
-                  // this shouldnt need to be here though
+                  // this shouldn't need to be here though
                   node_id: startup,
                   node_text:
-                    '## Welcome \n This node was automatically by the system as a workaround for an iOS and URL routing bug, just ignore for now please \n ## 🤦🏻‍♂️',
+                    '## Welcome \n This node was automatically created by the system as a workaround for an iOS and URL routing bug, just ignore for now please \n ## 🤦🏻‍♂️',
                   node_owner: state.myclient,
                   content_type: 'sheet',
                   // NOTE: the first node is also hidden due to a position not being created
@@ -386,96 +414,131 @@ const store = new Vuex.Store({
       state.shortcutstate = e
     },
 
-    // CONNECTION_STATE(state, e) {
-    //   state.connectionstate = e
-    // },
+    SHOWTIPS_STATE(state, e) {
+      state.showtipsstate = e
+    },
 
-    ADD_NODE(state, e) {
+    UPDATE_REMOTE(state, e) {
+      state.configRemote = [
+        {
+          protocol: e.protocol,
+          couchusername: e.couchusername,
+          couchpassword: e.couchpassword,
+          couchurl: e.couchurl,
+        },
+      ]
+    },
+
+    ADD_NODE(state) {
+      var i
+      var zindex
+      var totalNodes = []
+      for (i = 0; i < Object.keys(state.allNodes).length; i++) {
+        if (
+          state.allNodes[i].id != state.global_pos_name &&
+          state.allNodes[i].id != state.global_emoji_name &&
+          state.allNodes[i].id != state.global_con_name //&&
+          //
+        ) {
+          // console.log(state.allNodes[i].doc.nodes.length)
+          totalNodes.push(state.allNodes[i].doc.nodes.length)
+        }
+      }
+      const reducer = (accumulator, currentValue) => accumulator + currentValue
+      if (totalNodes && totalNodes.length > 0) {
+        zindex = totalNodes.reduce(reducer)
+      } else {
+        zindex = 1
+      }
+
       var uniqueid =
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15)
       state.localnodeid = uniqueid
-
-      pouchdb.get(state.myclient).then(function (doc) {
-        if (e == undefined) {
+      if (state.microcosm == 'firstvisit') {
+        console.log('not allowed on this microcosm')
+      } else {
+        pouchdb.get(state.myclient).then(function (doc) {
           doc.nodes.push({
             node_id: uniqueid,
             node_text: '',
             node_owner: state.myclient,
             content_type: 'sheet',
             deleted: false,
-            attachment_name: e,
+            read_mode: false,
+            color: '#9bc2d8',
           })
-        }
 
-        return pouchdb
-          .put({
-            _id: state.myclient,
-            _rev: doc._rev,
-            _attachments: doc._attachments,
-            nodes: doc.nodes,
-          })
-          .then(function () {
-            return pouchdb.get(state.myclient).then(function (doc) {
-              state.myNodes = doc.nodes
-              var end = Object.keys(state.myNodes).length - 1
-              const newNode = {
-                nodeid: state.myNodes[end].id,
-                nodetext: state.myNodes[end].text,
-                //  content_type: state.notes[end].content_type
-              }
-              state.activeNode = newNode
+          return pouchdb
+            .put({
+              _id: state.myclient,
+              _rev: doc._rev,
+              _attachments: doc._attachments,
+              nodes: doc.nodes,
             })
-          })
-          .catch(function (err) {
-            if (err.status == 404) {
-              // pouchdb.put({  })
-            }
-          })
-      })
-      pouchdb.get(state.global_pos_name).then(function (doc) {
-        //console.log(doc.positions[doc.positions.length - 1].z_index)
-        var i
-        localxpos = 50
-        localypos = 50
-        for (i = 0; i < Object.keys(doc.positions).length; i++) {
-          if (doc.positions[i].x_pos == 50) {
-            localxpos = 70
-            localypos = 70
-          }
-          if (doc.positions[i].x_pos == 70) {
-            localxpos = 90
-            localypos = 90
-          }
-          if (doc.positions[i].x_pos == 90) {
-            localxpos = 110
-            localypos = 110
-          }
-          if (doc.positions[i].x_pos == 110) {
-            localxpos = 50
-            localypos = 50
-          }
-        }
-
-        doc.positions.push({
-          node_id: uniqueid,
-          x_pos: localxpos,
-          y_pos: localypos,
-          width: 200,
-          height: 370,
-          z_index: 10,
-          read_mode: false,
+            .then(function () {
+              return pouchdb.get(state.myclient).then(function (doc) {
+                state.myNodes = doc.nodes
+                var end = Object.keys(state.myNodes).length - 1
+                const newNode = {
+                  nodeid: state.myNodes[end].id,
+                  nodetext: state.myNodes[end].text,
+                  //  content_type: state.notes[end].content_type
+                }
+                state.activeNode = newNode
+              })
+            })
+            .catch(function (err) {
+              if (err.status == 404) {
+                // pouchdb.put({  })
+              }
+            })
         })
-        return pouchdb
-          .put({
-            _id: state.global_pos_name,
-            _rev: doc._rev,
-            positions: doc.positions,
+        pouchdb.get(state.global_pos_name).then(function (doc) {
+          //console.log(doc.positions[doc.positions.length - 1].z_index)
+          var i
+          localxpos = 50
+          localypos = 50
+          for (i = 0; i < Object.keys(doc.positions).length; i++) {
+            if (doc.positions[i].x_pos == 50) {
+              localxpos = 70
+              localypos = 70
+            }
+            if (doc.positions[i].x_pos == 70) {
+              localxpos = 90
+              localypos = 90
+            }
+            if (doc.positions[i].x_pos == 90) {
+              localxpos = 110
+              localypos = 110
+            }
+            if (doc.positions[i].x_pos == 110) {
+              localxpos = 50
+              localypos = 50
+            }
+          }
+
+          doc.positions.push({
+            node_id: uniqueid,
+            x_pos: localxpos,
+            y_pos: localypos,
+            width: 200,
+            height: 370,
+            z_index: zindex,
+            read_mode: false,
+            node_sort: 0,
           })
-          .catch(function (err) {
-            console.log(err)
-          })
-      })
+          return pouchdb
+            .put({
+              _id: state.global_pos_name,
+              _rev: doc._rev,
+              positions: doc.positions,
+            })
+            .catch(function (err) {
+              console.log(err)
+            })
+        })
+      }
     },
 
     EDIT_NODE(state, e) {
@@ -484,6 +547,40 @@ const store = new Vuex.Store({
       for (i = 0; i < Object.keys(state.myNodes).length; i++) {
         if (e.nodeid == state.myNodes[i].node_id) {
           state.myNodes[i].node_text = e.nodetext
+        }
+      }
+      pouchdb
+        .get(state.myclient)
+        .then(function (doc) {
+          // put the store into pouchdb
+
+          return pouchdb.bulkDocs([
+            {
+              _id: state.myclient,
+              _rev: doc._rev,
+              _attachments: doc._attachments,
+              nodes: state.myNodes,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.myclient).then(function (doc) {
+            state.myNodes = doc.nodes
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
+    COLOR_NODE(state, e) {
+      //   console.log(e)
+      var i
+      for (i = 0; i < Object.keys(state.myNodes).length; i++) {
+        if (e.nodeid == state.myNodes[i].node_id) {
+          state.myNodes[i].color = e.color
         }
       }
       pouchdb
@@ -545,7 +642,7 @@ const store = new Vuex.Store({
     },
 
     RESTORE_NODE(state, e) {
-      console.log(e)
+      // console.log(e)
       var i
       for (i = 0; i < Object.keys(state.myNodes).length; i++) {
         if (e.e == state.myNodes[i].node_id) {
@@ -578,6 +675,70 @@ const store = new Vuex.Store({
     },
 
     READ_FLAG(state, e) {
+      var i
+      for (i = 0; i < Object.keys(state.myNodes).length; i++) {
+        if (e.e == state.myNodes[i].node_id) {
+          state.myNodes[i].read_mode = e.readmode
+        }
+      }
+      pouchdb
+        .get(state.myclient)
+        .then(function (doc) {
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.myclient,
+              _rev: doc._rev,
+              _attachments: doc._attachments,
+              nodes: state.myNodes,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.myclient).then(function (doc) {
+            state.myNodes = doc.nodes
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
+    SORT_NODE(state, e) {
+      var i
+      for (i = 0; i < Object.keys(state.configPositions).length; i++) {
+        if (e.nodeid == state.configPositions[i].node_id) {
+          state.configPositions[i].node_sort = e.nodesort
+        }
+      }
+      pouchdb
+        .get(state.global_pos_name)
+        .then(function (doc) {
+          //  // console.log(doc)
+          // put the store into pouchdb
+          return pouchdb.bulkDocs([
+            {
+              _id: state.global_pos_name,
+              _rev: doc._rev,
+              positions: state.configPositions,
+            },
+          ])
+        })
+        .then(function () {
+          return pouchdb.get(state.global_pos_name).then(function (doc) {
+            state.configPositions = doc.positions
+          })
+        })
+        .catch(function (err) {
+          if (err.status == 404) {
+            // pouchdb.put({  })
+          }
+        })
+    },
+
+    LEGACY_READ_FLAG(state, e) {
       var i
       // console.log(e.e)
       for (i = 0; i < Object.keys(state.configPositions).length; i++) {
@@ -713,11 +874,19 @@ const store = new Vuex.Store({
       commit('MOVE_POS', nodeid, xpos, ypos, width, height, zindex)
     },
 
+    sortNode: ({ commit }, e) => {
+      commit('SORT_NODE', e)
+    },
     updateConnect: ({ commit }, fromnode, xposstart, yposstart) => {
       commit('UPDATE_CONNECT', fromnode, xposstart, yposstart)
     },
     updateConnectTwo: ({ commit }, tonode, xposend, yposend) => {
       commit('UPDATE_CONNECT_TWO', tonode, xposend, yposend)
+    },
+
+    legacyreadFlag: ({ commit }, e) => {
+      // var text = e.target.value
+      commit('LEGACY_READ_FLAG', e)
     },
 
     readFlag: ({ commit }, e) => {
@@ -729,6 +898,22 @@ const store = new Vuex.Store({
     },
     editNode: ({ commit }, { nodeid, nodetext }) => {
       commit('EDIT_NODE', { nodeid, nodetext })
+    },
+
+    colorNode: ({ commit }, { nodeid, color }) => {
+      commit('COLOR_NODE', { nodeid, color })
+    },
+
+    updateRemote: (
+      { commit },
+      { protocol, couchusername, couchpassword, couchurl }
+    ) => {
+      commit('UPDATE_REMOTE', {
+        protocol,
+        couchusername,
+        couchpassword,
+        couchurl,
+      })
     },
 
     makeConnect: (
@@ -746,6 +931,10 @@ const store = new Vuex.Store({
     },
     shortcutState: ({ commit }, e) => {
       commit('SHORTCUT_STATE', e)
+    },
+
+    showTipsstate: ({ commit }, e) => {
+      commit('SHOWTIPS_STATE', e)
     },
 
     // connectionState: ({ commit }, e) => {

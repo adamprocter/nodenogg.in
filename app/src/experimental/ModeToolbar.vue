@@ -12,20 +12,17 @@
       />
     </button>
 
-    <p>{{ clientid }} / {{ microcosm }}</p>
+    <!-- <p>{{ clientid }} / {{ microcosm }}</p> -->
   </nav>
 </template>
 
 <script>
-var serverUrl = 'https://nodenogg.in'
 import { mapState, mapGetters } from 'vuex'
 
 import * as allModes from '@/experimental/modes'
 
 export default {
   mounted() {
-    window.addEventListener('online', this.handleConnection)
-    window.addEventListener('offline', this.handleConnection)
     this.clientid = localStorage.myNNClient
     this.microcosm = localStorage.mylastMicrocosm
   },
@@ -49,24 +46,25 @@ export default {
         }
       }
       if (mode == 'addNode') {
-        this.$store.dispatch('addNode')
+        this.$emit('add-node')
+        // this.$store.dispatch('addNode')
       }
       if (mode == 'upload') {
-        this.$emit('uploadAdded')
+        this.$emit('upload-added')
       }
       if (mode == 'copy') {
-        this.$emit('copyDone')
+        this.$emit('copy-done')
 
         alert(
           'Now all you need to do is paste into a new node to display your media'
         )
       }
       if (mode == 'draw') {
-        this.$emit('drawOn')
+        this.$emit('draw-on')
         // console.log(mode)
       }
       if (mode != 'draw') {
-        this.$emit('drawOff')
+        this.$emit('draw-off')
         //console.log(mode)
       }
     },
@@ -81,38 +79,6 @@ export default {
       location.assign(
         process.env.VUE_APP_HTTP + '://' + process.env.VUE_APP_URL + '/'
       )
-    },
-
-    handleConnection: function () {
-      var ref = this
-      if (navigator.onLine) {
-        this.isReachable(this.getServerUrl()).then(function (online) {
-          if (online) {
-            // handle online status
-            console.log('online')
-            location.reload()
-          } else {
-            console.log('no connectivity')
-          }
-        })
-      } else {
-        // handle offline status
-        console.log('offline')
-        ref.$emit('offlineTriggered')
-      }
-    },
-    isReachable: function (url) {
-      // This should pick up a CORS error but it doesnt seem to //
-      return fetch(url, { method: 'HEAD', mode: 'no-cors' })
-        .then(function (resp) {
-          return resp && (resp.ok || resp.type === 'opaque')
-        })
-        .catch(function (err) {
-          console.warn('[conn test failure]:', err)
-        })
-    },
-    getServerUrl: function () {
-      return serverUrl || window.location.origin
     },
   },
   data() {

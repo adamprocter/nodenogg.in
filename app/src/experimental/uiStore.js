@@ -18,6 +18,7 @@ const store = {
       nodes: [],
     },
     mode: 'select',
+
     scale: 1,
     translation: {
       x: 0,

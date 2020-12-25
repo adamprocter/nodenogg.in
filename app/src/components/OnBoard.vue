@@ -196,13 +196,31 @@ export default {
 
   methods: {
     createMicrocosm() {
-      this.$store.dispatch('createMicrocosm', this.localmicrocosm)
-      localStorage.setItem('mylastMicrocosm', this.localmicrocosm)
-      this.microcosm = true
+      var result
+      var str = this.localmicrocosm
+      var lower = str.toLowerCase()
+      var spaces = lower
+      lower = spaces.split(' ').join('')
+      result = lower.split('-').join('')
+
+      if (this.clientid != '') {
+        this.$store.dispatch('createMicrocosm', result)
+        localStorage.setItem('mylastMicrocosm', result)
+        this.microcosm = true
+      } else {
+        // console.log('name not set')
+      }
     },
     setClient() {
-      this.$store.dispatch('setClient', this.clientid),
-        localStorage.setItem('myNNClient', this.clientid)
+      var result
+      var str = this.clientid
+      var lower = str.toLowerCase()
+      var spaces = lower
+      lower = spaces.split(' ').join('')
+      result = lower.split('-').join('')
+
+      this.$store.dispatch('setClient', result),
+        localStorage.setItem('myNNClient', result)
       this.name = true
       this.focusInput()
     },
@@ -213,11 +231,17 @@ export default {
     },
 
     editTrue(e) {
-      this.$emit('editTrue', e)
+      // needs to be KebabCase now
+      //  this.$emit('my-event')
+      this.$emit('edit-true', e)
     },
 
     letsGo() {
-      this.$emit('clientAdded')
+      if (this.clientid != '') {
+        this.$emit('client-added')
+      } else {
+        //console.log('name not set ')
+      }
     },
 
     focusInput() {
@@ -225,7 +249,7 @@ export default {
     },
   },
   computed: mapState({
-        scale: (state) => state.ui.scale
+    scale: (state) => state.ui.scale,
   }),
   components: {
     draggable,
