@@ -1,68 +1,27 @@
 <template>
   <div>
-    <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
+    <div v-for="(nodes, index) in nodes_filtered" v-bind:key="index">
       <form
         class="nodes"
         :style="{
           backgroundColor: nodes.color,
         }"
       >
-        <template v-if="nodes.read_mode == false">
-          <textarea
-            @focus="editTrue(true)"
-            @blur="editTrue(false)"
-            autofocus
-            v-model="nodes.node_text"
-            @input="editNode"
-            :id="nodes.node_id"
-            v-focus
-            ref="textentry"
-            placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
-          ></textarea>
-          <p class="info">*markdown supported &amp; autosaves</p>
-        </template>
-        <template v-else>
-          <p
-            :id="nodes.node_id"
-            :inner-html.prop="nodes.node_text | marked"
-          ></p>
-        </template>
-
-        <div class="btn-row">
-          <SvgButton
-            buttonClass="nodes"
-            @click.prevent="deleteFlag(nodes.node_id), updateNodes()"
-          />
-          <SvgButton2
-            buttonClass="nodes"
-            @click.prevent="
-              readFlag(nodes.node_id, nodes.read_mode), updateNodes()
-            "
-          />
-          <v-swatches
-            v-model="color"
-            @input="chooseColor(color, nodes.node_id)"
-            :swatches="swatches"
-            :shapes="shapes"
-            show-border
-            show-fallback
-            fallback-input-type="color"
-          >
-            <SvgButton3 buttonClass="nodes" @click.prevent slot="trigger" />
-          </v-swatches>
-        </div>
-
-        <div class="allemoji">
-          <div
-            class="eachemoji"
-            v-for="(emojis, index) in configEmoji"
-            :key="index"
-          >
-            <template v-if="emojis.node_id == nodes.node_id">{{
-              emojis.emoji_text
-            }}</template>
-          </div>
-        </div>
+        <!-- <template v-if="nodes.read_mode == false"> -->
+        <textarea
+          @focus="editTrue(true)"
+          @blur="editTrue(false)"
+          autofocus
+          v-model="nodes.node_text"
+          @input="editNode"
+          :id="nodes.node_id"
+          placeholder="Type your thoughts and ideas here! (auto saved every keystroke)"
+        ></textarea>
+        <p class="info">*markdown supported &amp; autosaves</p>
+        <!-- </template> -->
+        <!-- <template v-else> -->
+        <!-- <p :id="nodes.node_id" :inner-html.prop="nodes.node_text | marked"></p> -->
+        <!-- </template> -->
       </form>
     </div>
   </div>
@@ -71,11 +30,11 @@
 <script>
 import { mapState } from 'vuex'
 import marked from 'marked'
-import SvgButton from '@/components/SvgButton'
-import SvgButton2 from '@/components/SvgButton2'
-import SvgButton3 from '@/components/SvgButton3'
-import VSwatches from 'vue-swatches'
-import 'vue-swatches/dist/vue-swatches.css'
+// import SvgButton from '@/components/SvgButton'
+// import SvgButton2 from '@/components/SvgButton2'
+// import SvgButton3 from '@/components/SvgButton3'
+// import VSwatches from 'vue-swatches'
+//import 'vue-swatches/dist/vue-swatches.css'
 
 var readmode
 export default {
@@ -99,6 +58,7 @@ export default {
       localreadmode: false,
       myArray: null,
       update: false,
+      dummyArray: null,
     }
   },
 
@@ -109,7 +69,7 @@ export default {
   computed: {
     ...mapState({
       myNodes: (state) => state.myNodes,
-      configPositions: (state) => state.configPositions,
+      // configPositions: (state) => state.configPositions,
       configEmoji: (state) => state.configEmoji,
       // toolmode: (state) => state.ui.mode,
     }),
@@ -122,18 +82,19 @@ export default {
   },
 
   mounted() {
-    setTimeout(this.loadData, 500)
-
+    //setTimeout(this.loadData, 500)
+    //alert(this.nodes_filtered)
     const unwatch = this.$watch('nodes_filtered', (value) => {
-      this.$options.myArray = this.nodes_filtered
-      this.$forceUpdate()
+      // this.$forceUpdate()
       // this.focusInput()
       // ignore falsy values
       if (!value) return
 
       // stop watching when nodes_filtered[] is not empty
       if (value && value.length) unwatch()
-
+      Object.freeze(this.nodes_filtered)
+      //setTimeout(this.loadData, 500)
+      // this.myArray = this.nodes_filtered
       // process value here
     })
   },
@@ -158,14 +119,15 @@ export default {
   methods: {
     chooseColor(color, nodeid) {
       this.$store.dispatch('colorNode', { nodeid, color })
-      this.$options.myArray = this.nodes_filtered
+      // this.$options.myArray = this.nodes_filtered
     },
     updateNodes() {
       this.update = !this.update
     },
     loadData() {
-      this.$options.myArray = this.nodes_filtered
-      this.$forceUpdate()
+      alert('log')
+      //this.myArray = this.nodes_filtered
+      // this.$forceUpdate()
     },
     editNode(e) {
       var nodeid = e.target.id
@@ -197,10 +159,10 @@ export default {
     },
   },
   components: {
-    SvgButton,
-    SvgButton2,
-    SvgButton3,
-    VSwatches,
+    // SvgButton,
+    // SvgButton2,
+    // SvgButton3,
+    // VSwatches,
   },
 }
 </script>

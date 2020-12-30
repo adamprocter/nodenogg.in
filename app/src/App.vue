@@ -41,7 +41,7 @@ export default {
 }
 </script>
 <style>
-@import url('https://rsms.me/inter/inter.css');
+/* @import url('https://rsms.me/inter/inter.css'); */
 body {
   padding: 0;
   margin: 0;
