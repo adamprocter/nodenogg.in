@@ -474,7 +474,7 @@ export default {
 
 .vdr {
   padding: 0 0.5em;
-  min-width: 260px;
+  /* min-width: 260px;*/
   min-height: 265px;
 }
 

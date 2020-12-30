@@ -5,6 +5,7 @@ _30th December 2020_
 ### Fixed
 
 - bug that causes ios devices to crash html5 element autofocus on components being mounted appears to have been the issue.
+- connections button placement fixed
 
 # 0.1.47
 
