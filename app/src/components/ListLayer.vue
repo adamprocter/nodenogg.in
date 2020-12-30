@@ -1,6 +1,6 @@
 <template>
   <div :key="componentKey">
-    <div v-for="(nodes, index) in $options.myArray" v-bind:key="index">
+    <div v-for="(nodes, index) in myArray" v-bind:key="index">
       <form
         class="nodes"
         :style="{
@@ -126,8 +126,7 @@ export default {
     setTimeout(this.loadData, 500)
 
     const unwatch = this.$watch('nodes_filtered', (value) => {
-      this.$options.myArray = this.nodes_filtered
-      this.forceRerender()
+      // this.forceRerender()
       //this.$forceUpdate()
       // this.focusInput()
       // ignore falsy values
@@ -135,7 +134,9 @@ export default {
 
       // stop watching when nodes_filtered[] is not empty
       if (value && value.length) unwatch()
+      this.myArray = Object.freeze(this.nodes_filtered)
 
+      //this.myArray[Object.freeze] = this.nodes_filtered
       // process value here
     })
   },
@@ -164,15 +165,17 @@ export default {
     },
     chooseColor(color, nodeid) {
       this.$store.dispatch('colorNode', { nodeid, color })
-      this.$options.myArray = this.nodes_filtered
+            this.myArray = Object.freeze(this.nodes_filtered)
+ 
     },
     updateNodes() {
       this.update = !this.update
     },
     loadData() {
       console.log('called')
-      this.$options.myArray = this.nodes_filtered
-      this.forceRerender()
+      //this.myArray[Object.freeze] = this.nodes_filtered
+
+      //this.forceRerender()
       //this.$forceUpdate()
     },
     editNode(e) {
