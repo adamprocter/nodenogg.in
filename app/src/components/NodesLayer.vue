@@ -31,7 +31,6 @@
                 <textarea
                   @focus="editTrue(true)"
                   @blur="editTrue(false)"
-                  autofocus
                   v-model="nodes.node_text"
                   v-focus
                   @input="editNode"
@@ -108,7 +107,6 @@
                   class="drag-cancel"
                   @focus="editTrue(true)"
                   @blur="editTrue(false)"
-                  autofocus
                   v-focus
                   v-model="nodes.node_text"
                   @input="editNode"

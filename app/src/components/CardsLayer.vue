@@ -21,7 +21,6 @@
               <textarea
                 @focus="editTrue(true)"
                 @blur="editTrue(false)"
-                autofocus
                 v-focus
                 v-model="nodes.node_text"
                 @input="editNode"

@@ -2,7 +2,9 @@
   <div id="listwrapper">
     <div v-if="clientset">
       <h1 class="mobile">All nodes - card view</h1>
-      <h2 class="danger">Positions not saved</h2>
+      <h2 class="danger">
+        Order of cards is currently not stored after reload
+      </h2>
       <CardsLayer @edit-true="(e) => editTrue(e)" :added="added" />
 
       <!-- <OtherCardslayer /> -->

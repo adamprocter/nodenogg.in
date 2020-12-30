@@ -89,7 +89,7 @@
 
       <SvgButton @click="hideTips()" />
     </div>
-    <div v-show="!tipsplease"></div>
+    <div v-show="!showtipsstate"></div>
   </div>
 </template>
 

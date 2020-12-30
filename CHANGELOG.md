@@ -1,3 +1,11 @@
+# 0.1.48
+
+_30th December 2020_
+
+### Fixed
+
+- bug that causes ios devices to crash html5 element autofocus on components being mounted appears to have been the issue.
+
 # 0.1.47
 
 _23rd December 2020_

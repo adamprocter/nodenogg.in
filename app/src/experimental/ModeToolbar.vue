@@ -39,7 +39,7 @@ export default {
     setMode(mode) {
       this.$store.commit('ui/setMode', mode)
       if (mode == 'exit') {
-        if (confirm('Are you sure you want to leave this microcoms?')) {
+        if (confirm('Are you sure you want to leave this microcosm ?')) {
           this.removeLocal()
         } else {
           // nothing happens
