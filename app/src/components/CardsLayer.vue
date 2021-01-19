@@ -31,6 +31,7 @@
             </template>
             <template v-else>
               <p
+                class="readmode"
                 :id="nodes.node_id"
                 :inner-html.prop="nodes.node_text | marked"
               ></p>
@@ -84,7 +85,10 @@
             backgroundColor: othernodes.color,
           }"
         >
-          <p :inner-html.prop="othernodes.node_text | marked"></p>
+          <p
+            class="readmode"
+            :inner-html.prop="othernodes.node_text | marked"
+          ></p>
 
           <div class="eeee">
             <input :value="othernodes.node_id" name="id" readonly hidden />

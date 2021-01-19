@@ -22,6 +22,7 @@
         </template>
         <template v-else>
           <p
+            class="readmode"
             :id="nodes.node_id"
             :inner-html.prop="nodes.node_text | marked"
           ></p>
