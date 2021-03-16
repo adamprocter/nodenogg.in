@@ -1,3 +1,9 @@
+# 0.1.49
+
+_16th March 2021_
+
+- updated dependancy packages
+
 # 0.1.48
 
 _30th December 2020_
