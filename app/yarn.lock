@@ -7282,8 +7282,8 @@ just-safe-get@^2.0.0:
   resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-2.0.0.tgz#a028262a8f1896fac4de90227b2d192dfdc3f907"
 
 just-safe-set@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/just-safe-set/-/just-safe-set-2.1.0.tgz#237234e681a4f330b5dfa71a5251f34962813ef9"
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/just-safe-set/-/just-safe-set-2.2.3.tgz#b717b71a7237ff9f4b9d1220128a576001a11535"
 
 jwa@^2.0.0:
   version "2.0.0"
